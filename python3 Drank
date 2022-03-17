@@ -1,0 +1,11 @@
+# D002　数の比較
+# utf-8
+a,b = input().rastrip().split()
+if int(a) > int(b):
+    print(a)
+elif int(b) > int(a):
+    print(b)
+else:
+    prnt("eq")
+		
+# D003 
