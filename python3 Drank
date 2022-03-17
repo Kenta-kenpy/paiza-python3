@@ -1,6 +1,6 @@
 # D002　数の比較
 # utf-8
-a,b = input().rastrip().split()
+a,b = input().rstrip().split()
 if int(a) > int(b):
     print(a)
 elif int(b) > int(a):
@@ -8,4 +8,10 @@ elif int(b) > int(a):
 else:
     prnt("eq")
 		
-# D003 
+# D003 掛け算のリスト
+# utf-8
+n = int(input())
+print(*[n * i for i in range(1,10)])
+
+# D004 文字列の結合
+
