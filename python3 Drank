@@ -6,7 +6,7 @@ if int(a) > int(b):
 elif int(b) > int(a):
     print(b)
 else:
-    prnt("eq")
+    print("eq")
 		
 # D003 掛け算のリスト
 # utf-8
@@ -14,4 +14,28 @@ n = int(input())
 print(*[n * i for i in range(1,10)])
 
 # D004 文字列の結合
+# utf-8
+s = int(input())
+print("Hello ", end="")
+for i in range(s-1):
+    ns = input()
+    print(ns + ",", end="")
+ns = input()
+print(ns + ".")
+
+# D189 何周年の確認
+# utf-8
+a = int(input())
+b = int(input())
+
+if b > a:
+    print(b-a)
+else:
+    print()
+
+# D192 感嘆符の付与
+# utf-8
+input_line = input()
+print(f"{input_line}" + "!")
+
 
