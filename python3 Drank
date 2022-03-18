@@ -23,6 +23,11 @@ for i in range(s-1):
 ns = input()
 print(ns + ".")
 
+# D007 N倍の文字列
+# utf-8
+n = int(input())
+print("*" * n)
+
 # D008 奇数か偶数か
 # utf-8
 i = int(input())
@@ -49,6 +54,11 @@ n = int(input())
 for i in range(n, 0, -1):
     print(i)
 
+# D016 N文字目まで出力
+# utf-8
+abc = input()
+n = int(input())
+print(abc[:n])
 
 # D021 文字列の一致
 # utf-8
@@ -91,6 +101,12 @@ print(len(str(s)))
 s = int(input())
 print(7-s)
 
+# D031 分から秒へ
+# utf-8
+min = int(input())
+sec = min * 60
+print(sec)
+
 # D032 充電時間
 # utf-8
 s = int(input())
@@ -103,6 +119,17 @@ m = int(input())
 n = int(input())
 Ans = n//m
 print(Ans+1)
+
+
+# D041 本棚選び
+# utf-8
+a = int(input())
+b = int(input())
+
+if a+b ==21:
+    print("Win")
+else:
+    print(a+b)
 
 
 # D043 天気の表示
@@ -125,9 +152,11 @@ print("Gold", line1)
 print("Silver", line2)
 print("Bronze", line3)
 
-
-
-
+# D052 ピラミッドの作り方
+# utf-8
+n = int(input())
+sum = n*(n+1)//2
+print(sum)
 
 
 # D061 3倍返し?
@@ -194,14 +223,28 @@ else:
 
 
 # D103 逆さ読み
+# utf-8
 s = input()
 print(s[::-1])
+
+# D106 割った余り
+# utf-8
+N = int(input())
+M = int(input())
+print(N % M)
 
 # D107 文字列を囲う
 # utf-8
 S = input()
 C = input()
 print(C+S+C)
+
+# D111 文字を切り詰める
+# utf-8
+n = int(input())
+S = input()
+
+print(S[:n])
 
 # D112 工場の生産力
 # utf-8
@@ -261,15 +304,30 @@ print(num - human)
 signal = int(input())
 print(2**signal)
 
+# D158 湿度の確認
+# utf-8
+moist = int(input())
+if 40 <= moist <= 60:
+    print("OK")
+else:
+    print("NG")
 
 # D160 N合目の高さ
 # utf-8
 s = input()
 t = input()
-
 print(s+"/"+t)
 
+# D162 お米の重さ
+# utf-8
+gou = int(input())
+total = gou * 150
+print(total)
 
+# D166 何日後になるか
+# utf-8
+s = int(input())
+print(s*7)
 
 # D167 買い物袋
 # utf-8
@@ -333,6 +391,19 @@ s = input()
 t = input()
 
 print(s+"/"+t)
+
+# D188 2枚のカード
+# utf-8
+a = int(input())
+b = int(input())
+
+if a+b ==21:
+    print("Win")
+else:
+    print(a+b)
+
+
+
 
 # D189 何周年の確認
 # utf-8
