@@ -23,6 +23,14 @@ for i in range(s-1):
 ns = input()
 print(ns + ".")
 
+
+# D006 単位の計算
+# utf-8
+n,s = input().rastrip().split()
+p = int(n) * 1000 * 100 * 10
+print(p)
+
+
 # D007 N倍の文字列
 # utf-8
 n = int(input())
@@ -37,11 +45,24 @@ if i % 2 == 0:
 else:
     print("odd")
 
+# D009 西暦の計算
+# utf-8
+a,b = input().rstrip().split()
+print(int(b) - int(a))
+
 # D010 Eメールアドレス
 # utf-8
 s = input()
 t = input()
 print(s+"@"+t) 
+
+# D012 絶対値を求めよ
+# utf-8
+s = int(input())
+if s >= 0:
+    print(s)
+else:
+    print((-1)*s)
 
 # D014 小文字を大文字に
 # utf-8
@@ -131,7 +152,6 @@ if a+b ==21:
 else:
     print(a+b)
 
-
 # D043 天気の表示
 # utf-8
 percent = int(input())
@@ -158,6 +178,10 @@ n = int(input())
 sum = n*(n+1)//2
 print(sum)
 
+# D055 ワインのキャッチコピー
+# utf-8
+line = input()
+print("Best in" + line)
 
 # D061 3倍返し?
 # utf-8
@@ -178,6 +202,58 @@ if switch % 2 == 1:
     print("ON")
 else:
     print("OFF")
+    
+# D074 時間の表記    
+# utf-8
+time = int(input())
+if time % 24 == 1:
+    print(1)
+elif time % 24 == 2 :
+    print(2)
+elif time % 24 == 3:
+    print(3)
+elif time % 24 == 4:
+    print(4)
+elif time % 24 == 5:
+    print(5)
+elif time % 24 == 6:
+    print(6)
+elif time % 24 == 7:
+    print(7)
+elif time % 24 == 8:
+    print(8)
+elif time % 24 == 9:
+    print(9)
+elif time % 24 == 10:
+    print(10)
+elif time % 24 == 11:
+    print(11)
+elif time % 24 == 12:
+    print(12)
+elif time % 24 == 13:
+    print(13)
+elif time % 24 == 14:
+    print(14)
+elif time % 24 == 15:
+    print(15)
+elif time % 24 == 16:
+    print(16)
+elif time % 24 == 17:
+    print(17)
+elif time % 24 == 18:
+    print(18)
+elif time % 24 == 19:
+    print(19)
+elif time % 24 == 20:
+    print(20)
+elif time % 24 == 21:
+    print(21)
+elif time % 24 == 22:
+    print(22)
+elif time % 24 == 23:
+    print(23)
+else:
+    print(0)
 
 # D075  足りないカード
 # utf-8
@@ -195,6 +271,11 @@ print(last_card)
 # utf-8
 cut = int(input())
 print(cut * 5)
+
+# D088 温度差の計算
+# utf-8
+t,u = input().rstrip().split()
+print(int(t) - int(u))
 
 
 # D093 切りの良い番号
@@ -222,10 +303,29 @@ else:
     print(n)
 
 
+
+
+# D099 短冊づくり
+# utf-8
+s = input()
+for i in range(len(s)):
+    print(s[i])
+
 # D103 逆さ読み
 # utf-8
 s = input()
 print(s[::-1])
+
+
+# D105 長さの一致
+# utf-8
+s_1 = input()
+s_2 = input()
+
+if len(s_1) == len(s_2):
+    print("Yes")
+else:
+    print("No")
 
 # D106 割った余り
 # utf-8
@@ -258,6 +358,14 @@ print(day)
 okasi = int(input())
 A = okasi // 2
 print(A)
+
+# D122　足して0になる数
+# utf-8
+n = int(input())
+if n == 0:
+    print(0)
+else:
+    print(n * (-1))
 
 # D123 自動でチャージ
 # utf-8
@@ -377,6 +485,15 @@ print(line1, end="-")
 print(line2, end="-")
 print(line3)
 
+
+# D185 時給の計算
+# utf-8
+jikyu = int(input())
+jikan = int(input())
+
+kyuyo = jikyu * jikan
+print(kyuyo)
+
 # D186 暑さの基準
 # utf-8
 Temp = int(input())
@@ -402,9 +519,6 @@ if a+b ==21:
 else:
     print(a+b)
 
-
-
-
 # D189 何周年の確認
 # utf-8
 a = int(input())
@@ -415,10 +529,24 @@ if b > a:
 else:
     print()
 
+# D190 センチをミリに
+# utf-8
+centi = int(input())
+mili = centi * 10
+print(mili)
+
 # D192 感嘆符の付与
 # utf-8
 input_line = input()
 print(f"{input_line}" + "!")
+
+# D194 カロリーの計算
+# utf-8
+input_gou = input()
+kcal = 540
+
+total = int(input_gou) * kcal
+print(total)
 
 # D195 ワインの作り方
 # utf-8
@@ -441,4 +569,19 @@ print(a,end="")
 print("/",end="")
 print(b,end="")
 
+# D199 お餅の個数
+# utf-8
+mochi = input()
+number = input()
+
+print(int(mochi)*int(number))
+
+# D200 電気代の計算
+# utf-8
+kwh = int(input())
+nedan = 25
+jikan = 24
+
+cost = int(kwh * nedan * jikan)
+print(cost)
 
