@@ -23,6 +23,317 @@ for i in range(s-1):
 ns = input()
 print(ns + ".")
 
+# D008 奇数か偶数か
+# utf-8
+i = int(input())
+
+if i % 2 == 0:
+    print("even")
+else:
+    print("odd")
+
+# D010 Eメールアドレス
+# utf-8
+s = input()
+t = input()
+print(s+"@"+t) 
+
+# D014 小文字を大文字に
+# utf-8
+text = input()
+print(text.upper())
+
+# D015 カウントダウン
+# utf-8
+n = int(input())
+for i in range(n, 0, -1):
+    print(i)
+
+
+# D021 文字列の一致
+# utf-8
+S = input().split()
+T = input().split()
+
+if S == T:
+    print("Yes")
+else:
+    print("No")
+
+
+# D022 表面積の計算
+# utf-8
+a = int(input())
+print(6* a**2)
+
+
+# D024 三角形の内角の和
+# utf-8
+a = int(input())
+b = int(input())
+
+nokori = 180-(a+b)
+print(nokori)
+
+# D027 nまでの和
+# utf-8
+s = int(input())
+sum = (s*(s+1))//2
+print(sum)
+
+# D028 数字の桁数
+# utf-8
+s = int(input())
+print(len(str(s)))
+
+# D029 サイコロの裏面
+# utf-8
+s = int(input())
+print(7-s)
+
+# D032 充電時間
+# utf-8
+s = int(input())
+v = 100 - s
+print(v)
+
+# D037 花粉症でつらい
+# utf-8
+m = int(input())
+n = int(input())
+Ans = n//m
+print(Ans+1)
+
+
+# D043 天気の表示
+# utf-8
+percent = int(input())
+if percent <= 30:
+    print("sunny")
+elif percent <= 70:
+    print("cloudy")
+elif percent <= 100:
+    print("rainy")
+    
+# D047 メダリストの表示    
+# utf-8
+line1 = input()
+line2 = input()
+line3 = input()
+
+print("Gold", line1)
+print("Silver", line2)
+print("Bronze", line3)
+
+
+
+
+
+
+# D061 3倍返し?
+# utf-8
+choco = int(input())
+
+if choco >= 1:
+    print(choco*3)
+else:
+    print(1)
+
+
+
+
+# D067 スイッチのオンオフ
+# utf-8
+switch = int(input())
+if switch % 2 == 1:
+    print("ON")
+else:
+    print("OFF")
+
+# D075  足りないカード
+# utf-8
+card_1 = int(input())
+card_2 = int(input())
+card_3 = int(input())
+card_4 = int(input())
+
+card_total = card_1 + card_2 + card_3 + card_4
+last_card = (1+2+3+4+5) - card_total
+print(last_card)
+
+
+# D086 門松の作成    
+# utf-8
+cut = int(input())
+print(cut * 5)
+
+
+# D093 切りの良い番号
+# utf-8
+n = int(input())
+if n == 9999:
+    print(9999)
+elif n == 8888:
+    print(8888)
+elif n == 7777:
+    print(7777)
+elif n == 6666:
+    print(6666)
+elif n == 5555:
+    print(5555)
+elif n == 4444:
+    print(4444)
+elif n == 3333:
+    print(3333)
+elif n == 2222:
+    print(2222)
+elif n == 1111:
+    print(1111)
+else:
+    print(n)
+
+
+# D103 逆さ読み
+s = input()
+print(s[::-1])
+
+# D107 文字列を囲う
+# utf-8
+S = input()
+C = input()
+print(C+S+C)
+
+# D112 工場の生産力
+# utf-8
+n = int(input())
+h = int(input())
+day = n * h
+print(day)
+
+# D115 おかしの二等分
+# utf-8
+okasi = int(input())
+A = okasi // 2
+print(A)
+
+# D123 自動でチャージ
+# utf-8
+cash = int(input())
+if cash < 10000:
+    print(cash + 10000)
+else:
+    print(cash)
+
+# D135 多角形の調査
+# utf-8
+D = int(input())       # n角形の内角の和
+N = int(D//180) + 2    # n角形か
+print(N)
+
+# D136 空港の呼称
+# utf-8
+s = input()
+print(s[:3])
+
+# D150 達成の確認
+# utf-8
+x = int(input())
+y = int(input())
+
+if x > y:
+    print("Thank you")
+else:
+    print(y-x)
+
+
+# D154 画面の構成
+# utf-8
+monitor = int(input())
+human = int(input())
+
+num = monitor**2
+
+print(num - human)
+
+
+# D157 信号の組み合わせ
+# utf-8
+signal = int(input())
+print(2**signal)
+
+
+# D160 N合目の高さ
+# utf-8
+s = input()
+t = input()
+
+print(s+"/"+t)
+
+
+
+# D167 買い物袋
+# utf-8
+s = int(input())
+if s >= 1000:
+    print(s+3)
+else:
+    print(s)
+
+# D168 日付の表記
+# utf-8
+year = input()
+month = input()
+day = input()
+print(month + "/" + day + "/" + year)
+
+
+# D170 校庭マラソン
+# utf-8
+n = int(input())
+m = int(input())
+total = n * m
+print(total)
+
+
+# D176 文字数制限
+# utf-8
+line = input()
+if len(line) <= 20:
+    print("OK")
+else:
+    print("NG")
+
+
+
+
+
+
+
+# D181 住所の表記 
+# utf-8
+line1 = input()
+line2 = input()
+line3 = input()
+
+print(line1, end="-")
+print(line2, end="-")
+print(line3)
+
+# D186 暑さの基準
+# utf-8
+Temp = int(input())
+if 30 <= Temp < 35:
+    print("M")
+else:
+    print(Temp)
+    
+# D187 曲名の表記
+# utf-8
+s = input()
+t = input()
+
+print(s+"/"+t)
+
 # D189 何周年の確認
 # utf-8
 a = int(input())
@@ -37,5 +348,26 @@ else:
 # utf-8
 input_line = input()
 print(f"{input_line}" + "!")
+
+# D195 ワインの作り方
+# utf-8
+wine = int(input())
+print(wine*1.5)
+
+# D197 買い物のポイント
+# utf-8
+s = int(input())
+if s >= 1000:
+    print(s//10)
+else:
+    print(0)
+
+# D198 区切って出力
+# utf-8
+a = int(input())
+b = int(input())
+print(a,end="")
+print("/",end="")
+print(b,end="")
 
 
