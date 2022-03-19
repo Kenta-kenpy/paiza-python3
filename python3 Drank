@@ -141,6 +141,12 @@ n = int(input())
 Ans = n//m
 print(Ans+1)
 
+# D038 試合の回数
+# utf-8
+player = int(input())
+game = (player*(player-1)) //2
+print(game)
+
 
 # D041 本棚選び
 # utf-8
@@ -302,6 +308,12 @@ elif n == 1111:
 else:
     print(n)
 
+# D095 ジュースの分配
+# utf-8
+n = int(input())
+m = int(input())
+
+print(n//m)
 
 
 
@@ -310,6 +322,12 @@ else:
 s = input()
 for i in range(len(s)):
     print(s[i])
+
+# D102 運賃の計算
+# utf-8
+kukan = int(input())
+unchin = (kukan*10)+100
+print(unchin)
 
 # D103 逆さ読み
 # utf-8
@@ -359,6 +377,12 @@ okasi = int(input())
 A = okasi // 2
 print(A)
 
+# D120 鉛筆の数
+# utf-8
+dars = int(input())
+total = dars * 12
+print(total)
+
 # D122　足して0になる数
 # utf-8
 n = int(input())
@@ -374,6 +398,24 @@ if cash < 10000:
     print(cash + 10000)
 else:
     print(cash)
+
+# D124 あと何日
+# utf-8
+t = int(input())
+
+s = t // 24
+
+if s <= 1:
+    print(1)
+elif s <= 2:
+    print(2)
+elif s <= 3:
+    print(3)
+elif s <= 4:
+    print(4)
+else:
+    print(5)
+    
 
 # D135 多角形の調査
 # utf-8
@@ -396,6 +438,19 @@ if x > y:
 else:
     print(y-x)
 
+# D153 食材選び
+# utf-8
+a,b,c = input().rstrip().split()
+
+if a > b:
+    a,b = b,a
+elif b > c:
+    b,c = c,b
+elif c > a:
+    c,a = a,c
+
+print(b)
+
 
 # D154 画面の構成
 # utf-8
@@ -406,6 +461,13 @@ num = monitor**2
 
 print(num - human)
 
+# D156 密度の計算
+# utf-8
+tani_menseki = int(input())
+ninzuu = int(input())
+
+total_menseki = tani_menseki * ninzuu
+print(total_menseki)
 
 # D157 信号の組み合わせ
 # utf-8
@@ -432,6 +494,12 @@ gou = int(input())
 total = gou * 150
 print(total)
 
+# D163 縦にする
+s = input()
+s = input()
+for i in range(len(s)):
+    print(s[i])
+
 # D166 何日後になるか
 # utf-8
 s = int(input())
@@ -452,7 +520,6 @@ month = input()
 day = input()
 print(month + "/" + day + "/" + year)
 
-
 # D170 校庭マラソン
 # utf-8
 n = int(input())
@@ -460,6 +527,16 @@ m = int(input())
 total = n * m
 print(total)
 
+# D172 イヴの日付
+# utf-8
+num1 = int(input())
+num2 = num1 - 1
+print(num2)
+
+# D174　栄養の摂取
+# utf-8
+p = int(input())
+print(p*1500)
 
 # D176 文字数制限
 # utf-8
@@ -468,12 +545,6 @@ if len(line) <= 20:
     print("OK")
 else:
     print("NG")
-
-
-
-
-
-
 
 # D181 住所の表記 
 # utf-8
@@ -523,7 +594,7 @@ else:
 # utf-8
 a = int(input())
 b = int(input())
-
+   
 if b > a:
     print(b-a)
 else:
@@ -534,6 +605,14 @@ else:
 centi = int(input())
 mili = centi * 10
 print(mili)
+
+# D191 体温チェック
+# utf-8
+n = float(input())
+if n < 37.0:
+    print("OK")
+else:
+    print("NG")
 
 # D192 感嘆符の付与
 # utf-8
@@ -552,6 +631,15 @@ print(total)
 # utf-8
 wine = int(input())
 print(wine*1.5)
+
+# D196　パーティーの用意
+# utf-8
+n = int(input())
+p_1 = int(input())
+p_2 = int(input())
+p_3 = int(input())
+s = p_1 + p_2 + p_3
+print(s)
 
 # D197 買い物のポイント
 # utf-8
