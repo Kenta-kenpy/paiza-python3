@@ -111,8 +111,8 @@ num_3 = int(input())
 num_4 = int(input())
 num_5 = int(input())
 
-print(max(m,n,o,p,q)) # 最大値
-print(min(m,n,o,p,q)) # 最小値
+print(max(num_1,num_2,num_3,num_4,num_5)) # 最大値
+print(min(num_1,num_2,num_3,num_4,num_5)) # 最小値
 
 # D019 文字列からN番目
 # utf-8
