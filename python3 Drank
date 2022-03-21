@@ -65,7 +65,6 @@ print(s+"@"+t)
 # D011 アルファベットで何番目
 # utf-8
 import string
-
 alphabets = string.ascii_uppercase
 # ABCDEFGHIJKLMNOPQRSTUVWXYZ
 # ?は何番目のインデックスか
