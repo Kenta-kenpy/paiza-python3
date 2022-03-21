@@ -437,6 +437,18 @@ if x > y:
     print("Thank you")
 else:
     print(y-x)
+    
+# D151 お菓子のプレゼント    
+# utf-8
+s = str(input())
+N = int(input())
+
+if s == "chocolate":
+    print(int(N)*2)
+elif s == "cake":
+    print(int(N)*5)
+else:
+    print()
 
 # D153 食材選び
 # utf-8
@@ -538,6 +550,11 @@ print(num2)
 p = int(input())
 print(p*1500)
 
+# D175 12進数
+# utf-8
+twelve = int(input(),12) # 12進数に変換 (元の記数法,変換後)
+print(twelve)
+
 # D176 文字数制限
 # utf-8
 line = input()
@@ -555,6 +572,15 @@ line3 = input()
 print(line1, end="-")
 print(line2, end="-")
 print(line3)
+
+# D182 燃費の計算
+# utf-8
+input_mile = int(input())
+input_oil = int(input())
+
+mile_per_oil = input_mile // input_oil
+
+print(mile_per_oil)
 
 
 # D185 時給の計算
@@ -673,3 +699,15 @@ jikan = 24
 cost = int(kwh * nedan * jikan)
 print(cost)
 
+# D202 価格の比較
+# utf-8
+p1,f1 = input().rstrip().split()
+p2,f2 = input().rstrip().split()
+
+A = int(p1)+int(f1)
+B = int(p2)+int(f2)
+
+if A > B:
+    print(B)
+else:
+    print(A)
