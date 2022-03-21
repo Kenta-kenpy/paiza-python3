@@ -1,3 +1,4 @@
+※欠番が存在する理由につきましては、出題自体を公開終了した問題が欠番となっております。　
 # D002　数の比較
 # utf-8
 a,b = input().rstrip().split()
@@ -23,13 +24,18 @@ for i in range(s-1):
 ns = input()
 print(ns + ".")
 
+# D005 等差数列
+# utf-8
+import numpy as np
+a,b = map(int, input().split())
+arr = np.arange(a, (a+b*10), b)
+print(*arr)
 
 # D006 単位の計算
 # utf-8
 n,s = input().rastrip().split()
 p = int(n) * 1000 * 100 * 10
 print(p)
-
 
 # D007 N倍の文字列
 # utf-8
@@ -56,6 +62,15 @@ s = input()
 t = input()
 print(s+"@"+t) 
 
+# D011 アルファベットで何番目
+# utf-8
+import string
+
+alphabets = string.ascii_uppercase
+# ABCDEFGHIJKLMNOPQRSTUVWXYZ
+# ?は何番目のインデックスか
+print(alphabets.index(input())+1)
+
 # D012 絶対値を求めよ
 # utf-8
 s = int(input())
@@ -63,6 +78,13 @@ if s >= 0:
     print(s)
 else:
     print((-1)*s)
+
+# D013 割り算
+# utf-8
+m,n = input().rstrip().split()
+a = int(m)//int(n)
+b = int(m)%int(n)
+print(a,b)
 
 # D014 小文字を大文字に
 # utf-8
@@ -81,6 +103,22 @@ abc = input()
 n = int(input())
 print(abc[:n])
 
+# D017 最大と最小
+# utf-8
+num_1 = int(input())
+num_2 = int(input())
+num_3 = int(input())
+num_4 = int(input())
+num_5 = int(input())
+
+print(max(m,n,o,p,q)) # 最大値
+print(min(m,n,o,p,q)) # 最小値
+
+# D019 文字列からN番目
+# utf-8
+a,b = input().split()
+print(a[int(b)-1])
+
 # D021 文字列の一致
 # utf-8
 S = input().split()
@@ -91,12 +129,15 @@ if S == T:
 else:
     print("No")
 
-
 # D022 表面積の計算
 # utf-8
 a = int(input())
 print(6* a**2)
 
+# D023 Aの個数
+# utf-8
+s = input()
+print(s.count('A')) # 文字列に含まれるAの数をカウント
 
 # D024 三角形の内角の和
 # utf-8
@@ -105,6 +146,18 @@ b = int(input())
 
 nokori = 180-(a+b)
 print(nokori)
+
+# D026 一週間の予定
+# utf-8
+n1 = input()
+n2 = input()
+n3 = input()
+n4 = input()
+n5 = input()
+n6 = input()
+n7 = input()
+
+print((n1,n2,n3,n4,n5,n6,n7).count("no"))
 
 # D027 nまでの和
 # utf-8
@@ -133,6 +186,16 @@ print(sec)
 s = int(input())
 v = 100 - s
 print(v)
+
+# D033 頭文字
+# utf-8
+name = input().split()
+list = []
+for i in name:
+    cap_name = i.capitalize()
+    list.append(cap_name[0])
+    
+print('.'.join(list))
 
 # D037 花粉症でつらい
 # utf-8
@@ -208,7 +271,25 @@ if switch % 2 == 1:
     print("ON")
 else:
     print("OFF")
-    
+
+# D070 残りのページ
+# utf-8
+m,n = input().split()
+print(int(m) - int(n))
+
+# D071 洗濯物と砂ぼこり
+# utf-8
+t,m = input().rstrip().split() # 気温,湿度
+
+if (int(t) >= 25) or (int(m) <= 40):
+    result = "Yes"
+elif (int(t) >= 25) and (int(m) <= 40):
+    result = "No"
+else:
+    result = "No"
+
+print(result)
+
 # D074 時間の表記    
 # utf-8
 time = int(input())
@@ -272,6 +353,13 @@ card_total = card_1 + card_2 + card_3 + card_4
 last_card = (1+2+3+4+5) - card_total
 print(last_card)
 
+# D077 計算機の表示
+# utf-8
+a,b = input().split()
+if int(a)*int(b) < 10000:
+    print(int(a) * int(b))
+else:
+    print("NG")
 
 # D086 門松の作成    
 # utf-8
@@ -377,6 +465,13 @@ okasi = int(input())
 A = okasi // 2
 print(A)
 
+# D119 円周率の日
+# utf-8
+s = "3."
+t = "141592653589793"
+i = int(input())
+print(s+t[:i])
+
 # D120 鉛筆の数
 # utf-8
 dars = int(input())
@@ -415,7 +510,11 @@ elif s <= 4:
     print(4)
 else:
     print(5)
-    
+
+# D131 脱出ゲーム
+# utf-8
+S = str(input()) # 0,1,2からなる文字列
+print(S.replace("0","C").replace("1","A").replace("2","B")) # 文字列一括置換
 
 # D135 多角形の調査
 # utf-8
@@ -427,6 +526,18 @@ print(N)
 # utf-8
 s = input()
 print(s[:3])
+
+
+# D142 イルミネーションの数
+# utf-8
+n,x,y = input().split() # 木の数, 電飾間隔, 1本の木に必要な電球の数
+z = round(int(n)/int(x),0) # 小数点以下0桁に丸める 7÷2 =3.5 ≒4
+print(int(z)*int(y))
+
+# D145 ゲームのスタミナ
+# utf-8
+stamina, shouhi = input().rstrip().split()
+print(int(stamina) // int(shouhi))
 
 # D150 達成の確認
 # utf-8
@@ -463,12 +574,10 @@ elif c > a:
 
 print(b)
 
-
 # D154 画面の構成
 # utf-8
 monitor = int(input())
 human = int(input())
-
 num = monitor**2
 
 print(num - human)
@@ -507,10 +616,51 @@ total = gou * 150
 print(total)
 
 # D163 縦にする
+# utf-8
 s = input()
 s = input()
 for i in range(len(s)):
     print(s[i])
+
+# D164 区切りの良い日
+# utf-8
+x = int(input()) # 1月1日から何番目の日付か　2の累乗はOK それ以外をNG
+if x == 2:
+    print("OK")
+elif x == 4:
+    print("OK")
+elif x == 8:
+    print("OK")
+elif x == 16:
+    print("OK")
+elif x == 32:
+    print("OK")
+elif x == 64:
+    print("OK")
+elif x == 128:
+    print("OK")
+elif x == 256:
+    print("OK")
+else:
+    print("NG")
+
+# D165 安全な数字
+# utf-8
+nums = input()
+if nums[0] == nums[1]:
+    print("NG")
+elif nums[0] == nums[2]:
+    print("NG")
+elif nums[0] == nums[3]:
+    print("NG")
+elif nums[1] == nums[2]:
+    print("NG")
+elif nums[1] == nums[3]:
+    print("NG")
+elif nums[2] == nums[3]:
+    print("NG")
+else:
+    print("OK")
 
 # D166 何日後になるか
 # utf-8
@@ -563,6 +713,25 @@ if len(line) <= 20:
 else:
     print("NG")
 
+# D177 通信料の計算
+# utf-8
+a,n = input().strip().split()
+print(int(a)*int(n))
+
+# D179 分け前の計算
+# utf-8
+m = int(input())
+n = int(input())
+print(n%m)
+
+# D180 音のうなり
+# utf-8
+Hz_1, Hz_2 = input().strip().split()
+if Hz_1 > Hz_2:
+    print(int(Hz_1)-int(Hz_2))
+else:
+    print(int(Hz_2)-int(Hz_1))
+
 # D181 住所の表記 
 # utf-8
 line1 = input()
@@ -577,11 +746,17 @@ print(line3)
 # utf-8
 input_mile = int(input())
 input_oil = int(input())
-
 mile_per_oil = input_mile // input_oil
 
 print(mile_per_oil)
 
+# D184 縦に表示
+# utf-8
+s = int(input())
+t = str(input())
+
+for i in range(len(t)):
+    print(t[i])
 
 # D185 時給の計算
 # utf-8
@@ -645,6 +820,13 @@ else:
 input_line = input()
 print(f"{input_line}" + "!")
 
+# D193 電池の本数
+# utf-8
+n = int(input())
+m = int(input())
+print(m//n)
+print(m%n)
+
 # D194 カロリーの計算
 # utf-8
 input_gou = input()
@@ -699,6 +881,13 @@ jikan = 24
 cost = int(kwh * nedan * jikan)
 print(cost)
 
+# D201 節分の用意
+# utf-8
+import sys
+s = input()
+print(sum(int(s) for s in sys.stdin.read().split()))
+# 文字列sを1つ読み込んで数値に替える→改行区切り
+
 # D202 価格の比較
 # utf-8
 p1,f1 = input().rstrip().split()
@@ -711,3 +900,22 @@ if A > B:
     print(B)
 else:
     print(A)
+
+# D203 文字のチェック
+# utf-8
+s = str(input()) # 基準文字列
+c = str(input()) # 検索したい文字
+n = int(input()) # 何文字目か
+
+p = s.find(c) # cはsの何文字目か
+
+if n == int(p+1): # インデックス0スタートのため調整する
+   print("Yes")
+else:
+    print("No")
+
+# D204 2にする
+# utf-8
+n = int(input())
+print(222-n)
+
