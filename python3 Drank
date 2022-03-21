@@ -196,6 +196,28 @@ for i in name:
     
 print('.'.join(list))
 
+# D034 どれにしようかな
+# utf-8
+m = int(input()) # 到着するメニューの順番
+if m == 3:
+    print(m)
+elif m == 7:
+    print(m)
+else:
+    print(21%m) # 剰余ありの場合
+
+# D035 日付のデータ
+# utf-8
+y,m,d = input().rastrip().split()
+print(str(y)+"/"+str(m)+"/"+str(d))
+
+# D036 アットマーク
+# utf-8
+S = str(input()) # 文字列S
+# atを@に全置換
+S_2 = S.replace("at","@")
+print(S_2)
+
 # D037 花粉症でつらい
 # utf-8
 m = int(input())
@@ -209,6 +231,30 @@ player = int(input())
 game = (player*(player-1)) //2
 print(game)
 
+# D039 正三角形かどうか
+# utf-8
+a = int(input())
+b = int(input())
+c = int(input())
+
+if a == b and a == c:
+    print("YES")
+elif b == c and b == a:
+    print("YES")
+elif c == a and c == b:
+    print("YES")
+else:
+    print("NO")
+
+# D040 連休の天気
+# utf-8
+count = 0
+for i in range(7):
+    input_num = int(input())
+    if (input_num <= 30):
+        # 湿度30%以下
+        count += 1
+print(count)
 
 # D041 本棚選び
 # utf-8
@@ -220,6 +266,13 @@ if a+b ==21:
 else:
     print(a+b)
 
+# D042 行列
+n1,n2 = input().rstrip().split()
+n3,n4 = input().rstrip().split()
+
+gyouretsushiki = (int(n1)*int(n4)) - (int(n2)*int(n3))
+print(gyouretsushiki)
+
 # D043 天気の表示
 # utf-8
 percent = int(input())
@@ -229,7 +282,38 @@ elif percent <= 70:
     print("cloudy")
 elif percent <= 100:
     print("rainy")
+
+# D044 はじめまして
+# utf-8
+s1,s2 = input().rstrip().split()
+if s2 == "M":
+    print("Hi, Mr. " + str(s1))
+elif s2 == "F":
+    print("Hi, Ms. " + str(s1))
+else:
+    print()
     
+# D045 通知票
+# utf-8
+n = int(input())
+if n == 5:
+    print(str("A"))
+elif n == 4:
+    print(str("B"))
+elif n == 3:
+    print(str("C"))
+elif n == 2:
+    print(str("D"))
+elif n == 1:
+    print(str("E"))
+else:
+    print()
+
+# D046 不思議なタマゴ
+# utf-8
+a,b,c = input().rstrip().split()
+print(max(a,b,c))
+
 # D047 メダリストの表示    
 # utf-8
 line1 = input()
@@ -239,6 +323,23 @@ line3 = input()
 print("Gold", line1)
 print("Silver", line2)
 print("Bronze", line3)
+
+# D048 台風の間隔
+# utf-8
+l = []
+while True:
+    try:
+        l.append(int(input().strip()))
+    except EOFError:
+        break
+    
+# for i in range(l, len(l)):
+#    print(l[i] - l[i-1])
+for i,o in enumerate(l):
+    if i == 0:
+        continue
+    print(l[i]-l[i-1])
+
 
 # D052 ピラミッドの作り方
 # utf-8
@@ -286,8 +387,20 @@ elif (int(t) >= 25) and (int(m) <= 40):
     result = "No"
 else:
     result = "No"
-
 print(result)
+
+# D072 データのバックアップ
+# utf-8
+import math
+s = input().strip().split(" ")
+# 数値変換 map関数で入力数値sにint型を適用しリストにした
+n = list(map(itn,s))
+print(math.ceil(n[0]/n[1]*n[2]) # math.ceilでx/y以上の最小の数値を表示
+
+# D073 文字の反転
+# utf-8
+s = input().strip()
+print(s[::-1])
 
 # D074 時間の表記    
 # utf-8
@@ -476,6 +589,14 @@ print(s+t[:i])
 dars = int(input())
 total = dars * 12
 print(total)
+
+# D121 AからRへ
+# utf-8
+X = str(input())
+if "A" in X:
+    print(X.replace("A","R")) # 文字列の置換
+else:
+    print(X)
 
 # D122　足して0になる数
 # utf-8
@@ -716,6 +837,12 @@ else:
 # utf-8
 a,n = input().strip().split()
 print(int(a)*int(n))
+
+# D178 逆さにする
+# utf-8
+n = int(input())
+S = str(input())
+print(S[::-1])
 
 # D179 分け前の計算
 # utf-8
