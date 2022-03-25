@@ -1,16 +1,78 @@
 ## 標準入出力
 # 単純な入出力
-# 複数行にわたる出力
-# 複数行にわたる入力
-# 入力の配列による保持
-# 半角スペース区切りでの出力
-# 改行区切りでの出力
-# 標準入出力
+s = input()
+print(s)
 
+# 複数行にわたる出力
+n = int(input())
+
+for i in range(n):
+    print("paiza")
+    
+# 複数行にわたる入力
+N = int(input()) # n行
+
+for i in range(N):
+    a = input()
+    print(a)
+
+# 入力の配列による保持
+n = int(input())
+
+A = [0]*n
+
+for i in range(n):
+    a = int(input())
+    A[i] = a
+
+print(max(A))
+
+# 半角スペース区切りでの出力
+n = int(input())
+
+a = ["paiza"]*n
+
+print(" ".join(a))
+
+# 改行区切りでの出力
+n = int(input())
+
+a = input().split()
+
+for i in range(n):
+    print(a[i])
+    
+# 標準入出力
+n = int(input())
+
+a = input().split()
+
+for i in range(n):
+    print(a[i])
+    
 ## 文字列
 # 整数と文字列
+n = int(input())
+
+for i in range(n):
+    a = input()
+    print(len(a))
+    
 # 部分文字列
+n = int(input())
+
+for i in range(n):
+    a = input()
+    print(len(a))
+
 # 数字の文字列操作(基本)
+S = input()
+
+a = int(S[0]) + int(S[3])
+b = int(S[1]) + int(S[2])
+
+print(str(a) + str(b))
+
 # 数字の文字列操作(0埋め)
 # 数字の文字列操作(時刻1)
 # 数字の文字列操作(時刻2)
