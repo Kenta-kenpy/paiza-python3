@@ -1,0 +1,30 @@
+# 総和の計算
+a,b = input().split()
+
+print((int(b)*(int(b)+1) - int(a)*(int(a)-1))//2)
+
+# ifを使いますか? 三項演算子を使いますか?
+a = int(input())
+print("plus" if a >= 0 else a)
+
+b = input()
+print("yes" if b == "hoge" else b)
+
+c = input()
+print("ten" if len(c) == 10 else c)
+
+d = input()
+print(d.index("x") if "x" in d else "nothing")
+
+e = input()
+print("five" if len(e) == 5 else e[0])
+
+# 数の並び替え
+n = int(input())
+n_list = []
+for i in range(n):
+    a = int(input())
+    n_list.append(a)
+sorted_l = sorted(n_list)
+for i in sorted_l:
+    print(i)
