@@ -1,1 +1,86 @@
+# 掛け算
+m = int(input())
+n = int(input())
+print(m*n)
 
+# 足し算
+a,b = map(int, input().split())
+print(a+b)
+
+# 一番小さい値
+n = [int(input()) for _ in range(5)]
+print(min(n))
+
+# 文字の一致
+s = input()
+t = input()
+if s == t:
+    print("OK")
+else:
+    print("NG")
+    
+# Fizz Buzz
+n = int(input())
+
+for x in range(1,n+1):
+    if x%15 == 0:
+        print("Fizz Buzz")
+    elif x%3 == 0:
+        print("Fizz")
+    elif x%5 == 0:
+        print("Buzz")
+    else:
+        print(x)
+# 長テーブルのうなぎ屋
+n,m = map[int, input().split()]
+
+vacant = [True] * n  # 空席状態 Trueで空席
+for _ in range(m):
+    a,b = map(int, input().split())
+# 座席番号bから連続してa人の客が座ることができるかを確認して　可能な場合はvacantを更新
+
+    can_sit = True
+    for i in range(b, b+a):
+        if not vacant(i%n):
+            can_sit = False
+            break
+        
+    if not can_sit:
+        continue
+    
+    for i in range(b, b+a):
+        vacant[i%n] = False
+
+ans = 0
+for v in vacant:
+    if not v:
+        ans += 1
+        
+print(ans)
+
+# じゃんけんの手の出し方
+n,m = map(int, input().split())
+s = input()
+
+enemy_g, enemy_c, enemy_p = 0,0,0
+for v in s:
+    if v == "G":
+        enemy_g += 1
+    elif v == "C":
+        enemy_c += 1
+    else:
+        enemy_p += 1
+
+ans = 0
+for p in range(m//5 + 1):
+    c = (m - p*5) //2
+    g = n - p - c
+    
+    if g < 0:
+        continue
+    if p*5 + c*2 != m:
+        continue
+    
+    ans = max(ans, min(p,enemy_g) + min(c, enemy_p) + min(g, enemy_c))
+
+print(ans)
