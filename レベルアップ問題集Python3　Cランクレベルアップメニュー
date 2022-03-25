@@ -74,14 +74,93 @@ b = int(S[1]) + int(S[2])
 print(str(a) + str(b))
 
 # 数字の文字列操作(0埋め)
-# 数字の文字列操作(時刻1)
-# 数字の文字列操作(時刻2)
-# 文字列
+N = input()
 
+while len(N) < 3:
+    N = "0" + N
+print(N)
+
+# 数字の文字列操作(時刻1)
+S = input()
+h = int(S[:2])
+m = int(S[3:])
+
+print(h)
+print(m)
+
+# 数字の文字列操作(時刻2)
+S = input()
+h = int(S[:2])
+m = int(S[3:])
+
+if m+30 >= 60:
+    h = str(h+1)
+    m = str(m+30-60)
+else:
+    h = str(h)
+    m = str(m+30)
+if len(h) == 1:
+    h = "0" + h
+if len(m) == 1:
+    m = "0" + m
+    
+print(h+":"+m)
+
+# 文字列
+N = int(input())
+
+for i in range(N):
+    [t, h, m] = input().split()
+    th = int(t[:2])
+    tm = int(t[3:])
+    h = int(h)
+    m = int(m)
+    
+    ah = th + h
+    am = tm + m
+    
+    if am >= 60:
+        ah += 1
+        am -= 60
+    if ah >= 24:
+        ah -= 24
+        
 ## forループ
 # 3の倍数のカウント
+N = int(input())
+
+for i in range(N):
+    [t, h, m] = input().split()
+    th = int(t[:2])
+    tm = int(t[3:])
+    h = int(h)
+    m = int(m)
+    
+    ah = th + h
+    am = tm + m
+    
+    if am >= 60:
+        ah += 1
+        am -= 60
+    if ah >= 24:
+        ah -= 24
+        
 # フラグ管理
+n = int(input())
+flag = False
+
+for i in range(n):
+    a = int(input())
+    if a == 7:
+        flag = True
+
+if flag:
+    print("YES")
+else:
+    print("NO")
+       
 # インデックス取得
+
 # 多重ループ
 # forループ
 
