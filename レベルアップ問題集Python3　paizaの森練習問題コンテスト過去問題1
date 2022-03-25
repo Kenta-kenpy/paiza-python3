@@ -1,0 +1,52 @@
+# スポーツの人数
+s = input()
+if s == "baseball":
+    print(9)
+elif s == "soccer":
+    print(11)
+elif s == "rugby":
+    print(15)
+elif s == "basketball":
+    print(5)
+elif s == "volleyball":
+    print(6)
+else:
+    print()
+    
+# バイトの休憩時間
+h = int(input()) # 勤務時間
+
+"""
+・勤務時間が6時間を超え8時間以下の時 45分
+・勤務時間が8時間を超えるとき60分
+"""
+
+if h <= 6:
+    print("no break")
+elif 6 < h <=8:
+    print("45 min")
+elif 8 < h:
+    print("60 min")
+else:
+    print()
+
+# 自動車の燃費
+v,d = input().rstrip().split() # 給油量[L]と記録した走行距離[km]
+print(int(d)//int(v))
+
+# 背番号順
+players = {}
+n = int(input())
+
+i = 0
+
+while i < n:
+    s = input()
+    s = s.split()
+    no = int(s[0])
+    name = s[1]
+    players[no] = name
+    i += 1
+
+for key in sorted(players.keys()):
+    print(f"{key}{players[key]}")
