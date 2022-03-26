@@ -1,0 +1,19 @@
+# 1つのデータの入力
+s = input()
+print(s)
+
+# 1行のデータの入力
+n = input()
+print(n)
+
+# 3行のデータの入力
+for i in range(3):
+    s = input()
+    print(s)
+
+# N行のデータの入力
+n = int(input())
+
+for i in range(n):
+    s = input()
+    print(s)
