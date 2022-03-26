@@ -348,7 +348,7 @@ if "noaki" in S:
 else:
     print(S)
 
-# お月見だんご
+# D050 お月見だんご
 # utf-8
 S = input().rstrip().split(" ")
 n1 = int(s[0])
@@ -362,7 +362,7 @@ if n2 > 5:
     
 print(n1 + n2)
 
-# 衣替え
+# D051衣替え
 # utf-8
 # 夏物S,冬物W
 # 10着のうち冬物5着以上でOK
@@ -556,9 +556,10 @@ if  N >= int(M):
 else:
     print(N * int(B))
 
-# 忘年会の予算
+# D080 忘年会の予算
 # utf-8
-
+n,m = input().rstrip().split()
+print((6000*int(n))+(4000*int(m)))
 
 # D081 家族で分ける
 # utf-8
@@ -567,6 +568,10 @@ H,W = input().rstrip().split() # 縦の数,横の数
 
 J = (int(H)*int(W))%int(N) # 剰余
 print(J)
+
+# D082 2つの単語
+# utf-8
+
 
 # D086 門松の作成    
 # utf-8
