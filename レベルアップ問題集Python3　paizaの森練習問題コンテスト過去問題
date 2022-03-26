@@ -51,3 +51,44 @@ while i < n:
 
 for key in sorted(players.keys()):
     print(f"{key}{players[key]}")
+
+# paizaの森練習問題コンテスト過去問題2
+# 競輪のユニフォーム
+n = int(input())
+
+if n == 1:
+    print("white")
+elif n == 2:
+    print("black")
+elif n == 3:
+    print("red")
+elif n == 4:
+    print("blue")
+elif n == 5:
+    print("yellow")
+elif n == 6:
+    print("green")
+elif n == 7:
+    print("orange")
+elif n == 8:
+    print("pink")
+elif n == 9:
+    prnt("purple")
+else:
+    print()
+
+# エレベーターの行き先
+f1,f2 = input().split()
+
+if f2 > f1:
+    print("up")
+else:
+    print("down")
+    
+# 長方形の面積
+e1,e2 = input().split()
+
+if int(e1) != 0 and int(e2) != 0:
+    print(int(e1)*int(e2))
+elif int(e1) == 0 or int(e2) == 0:
+    print("invalid")
