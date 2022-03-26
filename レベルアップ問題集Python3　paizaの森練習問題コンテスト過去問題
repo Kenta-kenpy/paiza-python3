@@ -1,3 +1,4 @@
+# paizaの森練習問題コンテスト過去問題1
 # スポーツの人数
 s = input()
 if s == "baseball":
