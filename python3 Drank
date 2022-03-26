@@ -406,7 +406,18 @@ print(s[n-1])
 
 # D058 初詣で
 # utf-8
+s = input().split("")
+n1 = int(s[0])
+n2 = int(s[1])
+n3 = int(s[2])
+print("A" * n1 + "B" * n2 + "A" * n3)
 
+# D059 トランプ占い
+# utf-8
+s = input().strip().split("")
+if s[0] == "J" and s[0] == s[1]:
+    s[1] = "Q"
+print("{0}{1}".format(s[0],s[1]))
 
 # D060 AボタンとBボタン
 # utf-8
@@ -544,6 +555,10 @@ if  N >= int(M):
     print(N * int(A))
 else:
     print(N * int(B))
+
+# 忘年会の予算
+# utf-8
+
 
 # D081 家族で分ける
 # utf-8
