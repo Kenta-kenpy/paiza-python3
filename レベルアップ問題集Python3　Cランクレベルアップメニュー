@@ -160,23 +160,229 @@ else:
     print("NO")
        
 # インデックス取得
+n = int(input())
 
+a = [0]*n
+
+for i in range(n):
+    a[i] = input()
+
+k = input()
+
+for i in range(n):
+    if a[i] == k:
+        print(k+1)
+        break
+        
 # 多重ループ
-# forループ
+m = int(input())
+c = [""]*m
 
+for i in range(m):
+    c[i] = input()
+
+n = int(input())
+S = [""]*n
+
+for i in range(n):
+    S[i] = input()
+    
+for i in range(m):
+    for j in range(n):
+        if c[i] in S[j]:
+            print("YES")
+        else:
+            print("NO")
+            
+# forループ
+N, M, K = map(int, input().split())
+
+for i in range(N):
+    a = [int(j) for j in input().split()]
+    ans = 0
+    for j in range(M):
+        if a[j] == K:
+            ans += 1
+    print(ans)
+    
 ## ソート
 # 昇順ソート
-# 降順ソート
-# 辞書式ソート
-# ソート
+n = int(input())
+a = [0]*n
 
+for i in range(n):
+    a[i] = int(input())
+    
+a.sort()
+
+for i in range(n):
+    print(a[i])
+    
+# 降順ソート
+n = int(input())
+a = [0]*n
+
+for i in range(n):
+    a[i] = int(input())
+    
+a.sort(reverse=True)
+
+for i in range(n):
+    print(a[i])
+    
+# 辞書式ソート
+n = int(input())
+ab = [None] * n
+
+for i in range(n):
+    [a,b] = input().split()
+    a = int(a)
+    b = int(b)
+    ab[i] = [a,b]
+
+ab.sort(reverse = True)
+
+for i in range(n):
+    [a,b] = ab[i]
+    print(a,b)
+    
+# ソート
+N = int(input())
+kingin = [0] * N
+
+for i in range(N):
+    [a,b] = [int(j) for j in input().split()]
+    kingin[i] = [b,a]
+    
+kingin.sort(reverse = True)
+for i in range(N):
+    [a,b] = kingin[i]
+    print(b,a)
+    
 ## 辞書
 # 辞書の基本
-# 辞書のデータ更新
-# 辞書データの順序
-# 辞書
+n = int(input())
+zaisan = {}
 
+for i in range(n):
+    [s,a] = input().split()
+    zaisan[s] = a
+
+S = input()
+print(zaisan[S])
+
+# 辞書のデータ更新
+n = int(input())
+dmg = {}
+
+for i in range(n):
+    s = input()
+    dmg[s] = 0
+
+m = int(input())
+
+for i in range(m):
+    [p,a] = input().split()
+    a = int(a)
+    dmg[p] += a
+    
+S = input()
+
+print(dmg[S])
+
+# 辞書データの順序
+n = int(input())
+dmg = {}
+
+for i in range(n):
+    s = input()
+    dmg[s] = 0
+
+m = int(input())
+
+for i in range(m):
+    [p,a] = input().split()
+    a = int(a)
+    dmg[p] += a
+    
+S = input()
+
+print(dmg[S])
+
+# 辞書
+[p,q,r] = [int(i) for i in input().split()]
+AB = {}
+BC = {}
+
+for _ in range(p):
+    [i,j] = [int(n) for n in input().split()]
+    AB[i] = j
+    
+for _ in range(q):
+    [j,k] = [int(n) for n in input().split()]
+    BC[j] = k
+
+AC = {}
+
+for i in range(1,p+1):
+    AC[i] = BC[AB[i]]
+
+for i, k in AC.items():
+    print(i,k)
+    
 ## シミュレーション
 # 条件を満たす最小の自然数
+n = 10000
+
+while True:
+    if n % 13 == 0:
+        break
+    n += 1
+print(n)
+
 # シミュレーションの練習
+n = int(input())
+[a,b] = input().split()
+a,b = int(a), int(b)
+paiza = 1
+kyoko = 1
+
+times = 0
+
+while True:
+    times += 1
+    kyoko += paiza * a
+    
+    if kyoko > n:
+        break
+    
+    paiza += kyoko % b
+
+print(times)
+
 # シミュレーション
+H = int(input())
+
+# N <= 10**12
+
+a = [0,1,1]
+b = [0,1,1]
+
+dmg = 2
+
+i = 2
+
+while dmg < H:
+    a[0] = a[1]
+    a[1] = a[2]
+    b[0] = b[1]
+    b[1] = b[2]
+    
+    a[2] = b[0] + b[1]
+    b[2] = a[0] +2 * a[1]
+    
+    dmg += b[2]
+    
+    i += 1
+
+print(i)
