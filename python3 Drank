@@ -340,17 +340,78 @@ for i,o in enumerate(l):
         continue
     print(l[i]-l[i-1])
 
+# D049 〇〇の秋
+# utf-8
+S = str(input())
+if "noaki" in S:
+    print(S[:-5])
+else:
+    print(S)
 
+# お月見だんご
+# utf-8
+S = input().rstrip().split(" ")
+n1 = int(s[0])
+n2 = int(s[1])
+
+if n1 > 5:
+    n1 = 5
+
+if n2 > 5:
+    n2 = 5
+    
+print(n1 + n2)
+
+# 衣替え
+# utf-8
+# 夏物S,冬物W
+# 10着のうち冬物5着以上でOK
+
+C = input().rstrip().split()
+W = C.count("W")
+
+if int(W) >= S:
+    print("OK")
+else:
+    print("NG")
+    
 # D052 ピラミッドの作り方
 # utf-8
 n = int(input())
 sum = n*(n+1)//2
 print(sum)
 
+# D053 トリック・オア・トリート
+# utf-8
+s = input().split()
+ans = "Thanks!" if s == "chocolate" or s == "candy" else "No!"
+print(ans)
+
+# D054 11/11
+# utf-8
+n = len(str(input().split()))
+ans = "OK" if n >= 11 else 11 - n
+print(ans)
+
 # D055 ワインのキャッチコピー
 # utf-8
 line = input()
 print("Best in" + line)
+
+# D057 プレゼント選び
+# utf-8
+n = int(input())
+s = input().strip().split("")
+print(s[n-1])
+
+# D058 初詣で
+# utf-8
+
+
+# D060 AボタンとBボタン
+# utf-8
+a,b = input().rstrip().split()
+print(int(a)-int(b))
 
 # D061 3倍返し?
 # utf-8
@@ -472,6 +533,25 @@ if int(a)*int(b) < 10000:
     print(int(a) * int(b))
 else:
     print("NG")
+
+# D079 同じ文字
+# utf-8
+N = int(input()) # 博物館の観光客人数
+M,A,B = input().split() #団体料金適用となる最低人数,団体での一人当たりの料金,個人料金
+# 求めるもの入館料
+
+if  N >= int(M):
+    print(N * int(A))
+else:
+    print(N * int(B))
+
+# D081 家族で分ける
+# utf-8
+N = int(input()) # 家族の人数
+H,W = input().rstrip().split() # 縦の数,横の数
+
+J = (int(H)*int(W))%int(N) # 剰余
+print(J)
 
 # D086 門松の作成    
 # utf-8
@@ -681,6 +761,18 @@ elif s == "cake":
 else:
     print()
 
+# D152 部分点
+# utf-8
+S = str(input()) # 正誤を表す  R正解  W不正解
+N = int(input()) # 部分点のために必要な正解数 SのうちRがこの数以上でないとNG
+
+L = S.count("R")
+
+if int(L) < N:
+    print("NG")
+else:
+    print("Yes")
+
 # D153 食材選び
 # utf-8
 a,b,c = input().rstrip().split()
@@ -701,6 +793,17 @@ human = int(input())
 num = monitor**2
 
 print(num - human)
+
+# D155 入館料の計算
+# utf-8
+N = int(input()) # 博物館の観光客人数
+M,A,B = input().split() #団体料金適用となる最低人数,団体での一人当たりの料金,個人料金
+# 求めるもの入館料
+
+if  N >= int(M):
+    print(N * int(A))
+else:
+    print(N * int(B))
 
 # D156 密度の計算
 # utf-8
@@ -723,11 +826,36 @@ if 40 <= moist <= 60:
 else:
     print("NG")
 
+# D159 短冊の大きさ
+s_1 = str(input())
+s_2 = str(input())
+s_3 = str(input())
+
+print(max(len(s_1),len(s_2),len(s_3)))
+
 # D160 N合目の高さ
 # utf-8
 s = input()
 t = input()
 print(s+"/"+t)
+
+# D161 貯水タンク
+# utf-8
+N = int(input()) # 貯水タンク容量
+A_1 = int(input()) # 1日目の降水量
+A_2 = int(input())
+A_3 = int(input())
+A_4 = int(input())
+A_5 = int(input())
+A_6 = int(input())
+A_7 = int(input())
+
+sum = A_1 + A_2 + A_3 + A_4 + A_5 + A_6 + A_7
+
+if sum <= N:
+    print(sum)
+else:
+    print(N)
 
 # D162 お米の重さ
 # utf-8
