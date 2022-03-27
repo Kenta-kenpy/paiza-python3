@@ -571,7 +571,15 @@ print(J)
 
 # D082 2つの単語
 # utf-8
+A = str(input()) # しりとりで先に出た単語
+B = str(input()) # しりとりで次に出た単語
 
+if str(B[-1]) == "n":
+    print("NG")
+elif str(A[-1]) == str(B[0]):
+    print("OK")
+else:
+    print()
 
 # D086 門松の作成    
 # utf-8
@@ -583,6 +591,20 @@ print(cut * 5)
 t,u = input().rstrip().split()
 print(int(t) - int(u))
 
+# D092 花見の準備
+# utf-8
+x1,y1,p1 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
+x2,y2,p2 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
+
+price1 = int(p1)/(int(x1)*int(y1)) # レジャーシート1の価格
+price2 = int(p2)/(int(x2)*int(y2)) # レジャーシート2の価格
+
+if pm1 > pm2:
+    print(x2,y2,p2)
+elif pm1 == pm2:
+    print("DRAW")
+else:
+    print(x1,y1,p1)
 
 # D093 切りの良い番号
 # utf-8
@@ -615,6 +637,8 @@ m = int(input())
 
 print(n//m)
 
+# D098 ボーナスの計算
+# utf-8
 
 
 # D099 短冊づくり
