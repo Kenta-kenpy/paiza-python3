@@ -593,15 +593,16 @@ print(int(t) - int(u))
 
 # D092 花見の準備
 # utf-8
+# utf-8
 x1,y1,p1 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
 x2,y2,p2 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
 
 price1 = int(p1)/(int(x1)*int(y1)) # レジャーシート1の価格
 price2 = int(p2)/(int(x2)*int(y2)) # レジャーシート2の価格
 
-if pm1 > pm2:
+if price1 > price2:
     print(x2,y2,p2)
-elif pm1 == pm2:
+elif price1 == price2:
     print("DRAW")
 else:
     print(x1,y1,p1)
@@ -639,7 +640,10 @@ print(n//m)
 
 # D098 ボーナスの計算
 # utf-8
-
+# utf-8
+kyuyo,keisuu = input().rstrip().split()
+bonus = int(kyuyo)*int(keisuu)
+print(bonus)
 
 # D099 短冊づくり
 # utf-8
@@ -681,11 +685,14 @@ S = input()
 C = input()
 print(C+S+C)
 
+# D109 ゾロ目の日付
+# utf-8
+
+
 # D111 文字を切り詰める
 # utf-8
 n = int(input())
 S = input()
-
 print(S[:n])
 
 # D112 工場の生産力
