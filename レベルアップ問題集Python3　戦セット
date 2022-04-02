@@ -1,1 +1,102 @@
+# 競技1　合格判定
+# coding: utf-8
+n = int(input())
+if n >= 80:
+    print("pass")
+else:
+    print("fail")
+    
+# 競技2  間違い探し
+# coding: utf-8
+a = input()
+b = input()
+if a == b:
+    print("YES")
+else:
+    print("NO")
+    
+# 競技3  深夜時間の表記
+# coding: utf-8
+n = int(input())
+print(n - 24)
 
+# 競技4  明日天気にな～れ！
+# coding: utf-8
+n = int(input())
+for i in range(n):
+    s = input()
+    if s == "forward":
+        print("Sunny")
+    elif s == "reverse":
+        print("Rainy")
+    else:
+        print("Cloudy")
+       
+# 競技5  ゆで卵
+# coding: utf-8
+n = int(input())
+if 0 <= m and m <= 5:
+    print("raw")
+elif 6 <= m and m <= 7:
+    print("soft boiled")
+else:
+    print("hard boiled")
+
+# 競技6  匿名希望さん
+# coding: utf-8
+a,b = input().split()
+print(a[0] + '_' + b[0] + '_')
+
+# 競技7  奇数大好き山田さん
+# coding: utf-8
+n = int(input())
+list = []
+for i in range(n):
+    num = int(input())
+    if num%2 == 1:
+        lis.append(num)
+list.sort()
+for i in list:
+    print(i)
+
+# 競技8  お一人様一点限り
+# coding: utf-8
+n = int(input())
+list = []
+for i in range(n):
+    s = input()
+    if s in list:
+        print("NO")
+    else:
+        list.append(s)
+        print("YES")
+
+# 競技9  線対象と点対称
+# coding: utf-8
+n,m = map(int, input().split())
+hoge = []
+huga = []
+piyo = []
+hogera = []
+
+for i in range(n):
+    s = input()
+    list1 = []
+    list2 = []
+    for j in range(m):
+        list1.append(s[j])
+        list2.append(s[m-j-1])
+    hoge.append(list1)
+    huga.append(list2)
+    hogera.append(list2)
+for i in range(n):
+    piyo.append(hoge[n-i-1])
+hogera.reverse()
+if (hoge == huga or hoge == piyo) and hoge == hogera:
+    print("line point symmetry")
+elif hoge == huga or hoge == piyo:
+    print("line symmetry")
+elif hoge == hogera:
+    print("point symmetry")
+else:
+    print("none")
