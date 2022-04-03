@@ -148,7 +148,7 @@ b = int(input())
 nokori = 180-(a+b)
 print(nokori)
 
-# D025 数字の出力
+# D025 数字の出力 ●Word保存まだ
 # utf-8
 n = str(input())
 
@@ -158,6 +158,7 @@ elif len(n) == 2:
     print("0" + n)
 else:
     print()
+    
 # D026 一週間の予定
 # utf-8
 n1 = input()
