@@ -801,6 +801,11 @@ print(N)
 s = input()
 print(s[:3])
 
+# D137 契約の交渉
+# utf-8
+s = input()
+print(s.count("y"))
+
 # D138 おうむ返し
 # utf-8
 m,n = [int(x) for x in input().rastrip().split()]
@@ -820,6 +825,13 @@ elif line.count("G") == line.count("P"):
 else:
     print()
 
+# D140 N番目の単語
+# utf-8
+N = int(input()) # 1~10の整数
+from sys import stdin
+S = stdin.readline().split() # 区切り
+print(S[N-1]) # n単語目 0スタート
+
 # D141 縦書きと横書き
 # utf-8
 n = int(input())
@@ -836,6 +848,24 @@ print(int(z)*int(y))
 # utf-8
 stamina, shouhi = input().rstrip().split()
 print(int(stamina) // int(shouhi))
+
+# D148 ある試験の境目
+# utf-8
+A,B = input().rastrip().split() # 試験1,2の得点
+C = input() # 試験1の必要最低点
+# AがC以上でないとBの加点なし
+
+if int(A) >= int(C):
+    print(int(A)+int(B))
+else:
+    print(int(A))
+
+# D149 文字のだるま落とし
+# utf-8
+a = str(input())
+b = int(input())
+c = a[:b-1]+a[b:]
+print(c)
 
 # D150 達成の確認
 # utf-8
