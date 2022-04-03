@@ -701,6 +701,10 @@ def main():
 
 main()
 
+# D110 3つの数字
+# utf-8
+
+
 # D111 文字を切り詰める
 # utf-8
 n = int(input())
@@ -797,6 +801,30 @@ print(N)
 s = input()
 print(s[:3])
 
+# D138 おうむ返し
+# utf-8
+m,n = [int(x) for x in input().rastrip().split()]
+ss = [input() for _ in range(n)]
+for s in ss:
+    print(s)
+
+# D139 少ない方の勝ち
+# utf-8
+n = int(input())
+line = input().rstrip().split()
+
+if line.count("G") > line.count("P"):
+    print("P")
+elif line.count("G") == line.count("P"):
+    print("Draw")
+else:
+    print()
+
+# D141 縦書きと横書き
+# utf-8
+n = int(input())
+names = [input() for _ in range(n)]
+priint(*names)
 
 # D142 イルミネーションの数
 # utf-8
@@ -1264,3 +1292,8 @@ else:
 n = int(input())
 print(222-n)
 
+# D206 数値の入れ替え
+# utf-8
+a,b = input().rstrip().split()
+a,b = b,a
+print(a,b)
