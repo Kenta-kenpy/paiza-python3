@@ -398,6 +398,11 @@ print(ans)
 line = input()
 print("Best in" + line)
 
+# D056 かまくらづくり
+# utf-8
+r_1,r_2 = input().rstrip().split()
+print(int(r_1)**3 - int(r_2)**3)
+
 # D057 プレゼント選び
 # utf-8
 n = int(input())
@@ -687,7 +692,14 @@ print(C+S+C)
 
 # D109 ゾロ目の日付
 # utf-8
+def main():
+    date = input().replace(' ', '')
+    if len(set(date)) == 1:
+        print("YES")
+    else:
+        print("NO")
 
+main()
 
 # D111 文字を切り詰める
 # utf-8
@@ -766,6 +778,13 @@ else:
 # utf-8
 S = str(input()) # 0,1,2からなる文字列
 print(S.replace("0","C").replace("1","A").replace("2","B")) # 文字列一括置換
+
+# D132 N回ゲーム
+# utf-8
+n = int(input())
+S = str(input())
+
+print(S*n)
 
 # D135 多角形の調査
 # utf-8
@@ -981,6 +1000,11 @@ month = input()
 day = input()
 print(month + "/" + day + "/" + year)
 
+# D169 気温の差
+# utf-8
+M,L = input().rstrip().split()
+print(int(M)-int(L))
+
 # D170 校庭マラソン
 # utf-8
 n = int(input())
@@ -988,11 +1012,27 @@ m = int(input())
 total = n * m
 print(total)
 
+# D171　数当てゲーム
+# utf-8
+# あなたが紙に書いた数値 P_1, paizaさんが紙に書いた数値 P_2
+
+P_1,P_2 = input().rstrip().split()
+N = int(input()) # 目標の数値
+A_1 = int(P_1) - N
+A_2 = int(P_2) - N
+
+print(A_1, A_2)
+
 # D172 イヴの日付
 # utf-8
 num1 = int(input())
 num2 = num1 - 1
 print(num2)
+
+# D173  単語の入れ替え
+# utf-8
+s1,s2 = input().rstrip().split()
+print(s2,s1)
 
 # D174　栄養の摂取
 # utf-8
