@@ -456,11 +456,41 @@ if choco >= 1:
 else:
     print(1)
 
-# D062 ひな祭り　★
+# D062 ひな祭り
+# utf-8
+s = input().strip().split(" ")
+s = list(map(int, s))  # 数値変換
+hina = "ABCDEFGHIJ"
+print(hina[:s[0]])
+print(hina[s[0]:(s[0] + s[1])])
+print(hina[(s[0] + s[1]):])
+
 # D063 ◆
-# D064 嘘つきの日　★ 
-# D065 エラーコードの分類　★
-# D066 スタミナの計算　★
+
+# D064 嘘つきの日
+# utf-8
+s = input().strip()
+ans = s.replace('False', 'True')
+print(ans)
+
+# D065 エラーコードの分類
+# utf-8
+s = int(input())
+n = int(s / 100)
+ans = "unknown"
+if n == 2:
+    ans = "ok"
+elif n == 4:
+    ans = "error"
+print(ans)
+
+# D066 スタミナの計算
+s = input().strip().split(" ")
+n1 = int(s[0])
+n2 = int(s[1])
+
+ans = "No" if n2-n1 < 0 else n2-n1
+print(ans)
 
 # D067 スイッチのオンオフ
 # utf-8
@@ -470,8 +500,23 @@ if switch % 2 == 1:
 else:
     print("OFF")
 
-# D068 雨と晴れの記録 ★
-# D069 割り切れない平均点 ★
+# D068 雨と晴れの記録
+n = int(input())
+s = input().strip()
+a1 = 0
+a2 = 0
+for i in range(n):
+    if s[i] == "S":
+        a1 += 1
+    else:
+        a2 += 1
+print("{0} {1}".format(a1, a2))
+
+# D069 割り切れない平均点
+# utf-8
+s = input().strip().split(" ")
+s = list(map(int, s))  # 数値変換
+print(round(sum(s) / len(s), 1))
 
 # D070 残りのページ
 # utf-8
@@ -566,8 +611,18 @@ card_total = card_1 + card_2 + card_3 + card_4
 last_card = (1+2+3+4+5) - card_total
 print(last_card)
 
-# D076 禁止ワード ★
+# D076 禁止ワード
+# utf-8
+W = str(input()) # 禁止ワード
+S = str(input()) # 判定文字列
 
+# SにWが含まれる場合"NG",それ以外は文字列Sをそのまま出力
+
+if W in S:
+    print("NG")
+else:
+    print(S)
+    
 # D077 計算機の表示
 # utf-8
 a,b = input().split()
@@ -576,8 +631,18 @@ if int(a)*int(b) < 10000:
 else:
     print("NG")
 
-# D078 入学試験 ★
+# D078 入学試験
+# 7科目100点満点のテスト　平均点が合格点以上で合格
+a_1,a_2,a_3,a_4,a_5,a_6,a_7 = input().rstrip().split() # 7科目の点数
+X = int(input()) # 合格点
 
+Ave = (int(a_1)+int(a_2)+int(a_3)+int(a_4)+int(a_5)+int(a_6)+int(a_7))//7
+
+if Ave >= X:
+    print("pass") # 合格
+else:
+    print("failure") # 不合格
+    
 # D079 同じ文字
 # utf-8
 N = int(input()) # 博物館の観光客人数
@@ -614,23 +679,64 @@ elif str(A[-1]) == str(B[0]):
 else:
     print()
 
-# D083 ブラックジャック ★
-# D084 英語で何月？ ★
+# D083 ブラックジャック
+# utf-8
+s = input().rstrip().split(' ')
+s = list(map(int, s))  # 数値変換
+n = sum(s)
+
+print("HIT" if n < 16 else "STAND")
+
+# D084 英語で何月？
+# utf-8
+s = input()
+d = {1: "January", 2: "February", 3: "March", 4: "April", 5: "May",
+     6: "June", 7: "July", 8: "August", 9: "September", 10: "October",
+     11: "November", 12: "December"}
+
+val = d[int(s)]
+print(val)
+
 # D085 ◆
+
 # D086 門松の作成    
 # utf-8
 cut = int(input())
 print(cut * 5)
 
-# D087 文字をくっつける ★
+# D087 文字をくっつける
+# utf-8
+n = int(input())
+str_list = []
+while True:
+    try:
+        buf = input()
+        if buf:
+            str_list.append(buf)
+    except EOFError:
+        break
+
+for item in str_list:
+    print(item, end='')
 
 # D088 温度差の計算
 # utf-8
 t,u = input().rstrip().split()
 print(int(t) - int(u))
 
-# D089 数字の取得 ★
-# D090 下一桁はいくつ ★
+# D089 数字の取得
+# utf-8
+import re
+nS =input()
+numbers = re.sub(r'[^0-9]', '', nS)
+print(numbers)
+
+# D090 下一桁はいくつ
+# utf-8
+s = input().rstrip().split(' ')
+s = list(map(int, s))  # 数値変換
+n = sum(s)
+print(str(n)[-1])
 ---------------------------------------------D091
 # D091 花粉の予想 ★
 
