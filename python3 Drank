@@ -738,7 +738,10 @@ s = list(map(int, s))  # 数値変換
 n = sum(s)
 print(str(n)[-1])
 ---------------------------------------------D091
-# D091 花粉の予想 ★
+# D091 花粉の予想
+# utf-8
+s = input().rstrip().split(' ')
+print(s.count('1') + s.count('2'))
 
 # D092 花見の準備
 # utf-8
@@ -780,7 +783,15 @@ elif n == 1111:
 else:
     print(n)
 
-# D094 犬派か猫派か　★
+# D094 犬派か猫派か
+# utf-8
+# coding: utf-8
+s = []
+for i in range(3):
+    s.append(input())
+
+print("cat" if s.count("cat") > s.count("dog") else "dog")
+
 # D095 ジュースの分配
 # utf-8
 n = int(input())
@@ -788,11 +799,22 @@ m = int(input())
 
 print(n//m)
 
-# D096 含んではいけない文字 ★
-# D097 梅雨入りの予想 ★
+# D096 含んではいけない文字
+# utf-8
+s = input()
+
+if 'I' in s or 'i' in s or 'l' in s:
+    print("caution")
+else:
+    print(s)
+    
+# D097 梅雨入りの予想
+# utf-8
+s = input().rstrip().split(' ')
+
+print("yes" if s.count('1') >= 5 else "no")
 
 # D098 ボーナスの計算
-# utf-8
 # utf-8
 kyuyo,keisuu = input().rstrip().split()
 bonus = int(kyuyo)*int(keisuu)
@@ -804,10 +826,28 @@ s = input()
 for i in range(len(s)):
     print(s[i])
 
-# D100 区切り文字の統一 ★
+# D100 区切り文字の統一
+s = input()
+c1 = s.count('-')
+c2 = s.count('_')
+if c1 < c2 or c1 == c2:
+    s = s.replace('-', '_')
+else:
+    s = s.replace('_', '-')
 
+print(s)
 ---------------------------------------------D101
-# D101 偶数派と奇数派 ★
+# D101 偶数派と奇数派
+# utf-8
+s = input().rstrip().split(' ')
+
+a = int(s[0]) % 2
+b = int(s[1]) % 2
+
+if a + b == 1:
+    print("YES")
+else:
+    print("NO")
 
 # D102 運賃の計算
 # utf-8
@@ -820,7 +860,11 @@ print(unchin)
 s = input()
 print(s[::-1])
 
-# D104 送料の計算 ★
+# D104 送料の計算
+# utf-8
+n = int(input())
+print(1000 if n < 10 else 150*n)
+
 # D105 長さの一致
 # utf-8
 s_1 = input()
@@ -843,7 +887,12 @@ S = input()
 C = input()
 print(C+S+C)
 
-# D108 薬の効き目 ★
+# D108 薬の効き目
+# utf-8
+import math
+n = int(input())
+print(str(math.ceil(24 / n)))
+
 # D109 ゾロ目の日付
 # utf-8
 def main():
@@ -855,8 +904,10 @@ def main():
 
 main()
 
-# D110 3つの数字 ★
+# D110 3つの数字
 # utf-8
+a,b,c = input().rstrip().split()
+print(int(a)*int(b)*int(c))
 
 ---------------------------------------------D111
 # D111 文字を切り詰める
@@ -872,8 +923,28 @@ h = int(input())
 day = n * h
 print(day)
 
-# D113 初日の出 ★
-# D114 税込の価格 ★
+# D113 初日の出
+# utf-8
+t = input().strip().split(":")
+t = list(map(int, t))   # int変換
+
+x = t[0] - 8
+
+if x < 0:
+    x = 24 + x
+
+print(str(x) + ":" + str(t[1]))
+
+# D114 税込の価格
+# 消費税a%で税抜き価格b円の買い物をした
+# 税込み価格を求める(小数点以下切り捨て)
+# utf-8
+import math
+a,b = input().rstrip().split()
+
+N = int(b)*(1 + int(a)/100)
+
+print(math.floor(N))
 
 # D115 おかしの二等分
 # utf-8
@@ -882,9 +953,26 @@ A = okasi // 2
 print(A)
 
 # D116 サービス料金 ★
-# D117 すごろくのサイコロ ★
-# D118 こよみの変換 ★
+# D117 すごろくのサイコロ
+# utf-8
+N = int(input())
+print(sum(map(int, input().split())))
 
+# D118 こよみの変換
+# utf-8
+S = str(input()) # 和暦の"S"(昭和)または"H"(平成)
+N = int(input()) # 和暦何年
+
+# 和歴を西暦に変換
+# 昭和 1926～1989 昭和64年
+# 平成 1989～2019 平成31年
+
+if S == "S": # 昭和の時
+    print(1925 + N)
+elif S == "H": # 平成の時
+    print(1988 + N)
+else:
+    print()
 # D119 円周率の日
 # utf-8
 s = "3."
@@ -1014,14 +1102,39 @@ n,x,y = input().split() # 木の数, 電飾間隔, 1本の木に必要な電球�
 z = round(int(n)/int(x),0) # 小数点以下0桁に丸める 7÷2 =3.5 ≒4
 print(int(z)*int(y))
 
-# D143 制動距離の計算 ★
-# D144 5桁の数字 ★
+# D143 制動距離の計算
+# 制動距離:ブレーキをかけてから停止するまで車が進む距離 ※ただし摩擦は無視する
+# 制動距離L
+# 自動車の質量m
+# ブレーキをかけ始めた時の自動車の速度v
+# ブレーキ強度f
+# L = m*(v**2)//(2*f)
+# utf-8
+m,v,f = input().rstrip().split()
+
+L = int(m)*(int(v)**2)//(2*int(f))
+print(L)
+
+# D144 5桁の数字
+# utf-8
+S = input()
+
+T = int(S[0])*(2**4) + int(S[1])*(2**3) + int(S[2])*(2**2) + int(S[3])*(2**1) + int(S[4])*(2**0)
+print(T)
+# pythonの累乗の記号は**
+
 # D145 ゲームのスタミナ
 # utf-8
 stamina, shouhi = input().rstrip().split()
 print(int(stamina) // int(shouhi))
 
-# D146 単語の省略 ★
+# D146 単語の省略
+# utf-8
+remove = 'aeiouAEIOU' # 母音
+sentence = str(input()) # 文字列
+newsentence = ''.join(s for s in sentence if s not in remove) # 削除について
+print(newsentence)
+
 # D147 桶の水量 ★
 # D148 ある試験の境目
 # utf-8
