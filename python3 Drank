@@ -1066,7 +1066,13 @@ else:
     print("No")
     
 # D128 略語の生成 ★
-# D129 税率の変更 ★
+# D129 税率の変更
+# utf-8
+p,x,y = input().rstrip().split() # 商品価格,旧税率,新税率
+
+S = ((int(y)-int(x))*int(p))//100
+print(S)
+
 # D130 ◆
 ---------------------------------------------D131
 # D131 脱出ゲーム
@@ -1081,8 +1087,31 @@ S = str(input())
 
 print(S*n)
 
-# D133 株の利益 ★
-# D134 タイトルの長さ ★
+# D133 株の利益
+# utf-8
+X = int(input()) # 元手となる資金額 〇円分の株
+A = int(input()) # 上昇前の１単位当たりの株価　Xをいくらで買ったか
+B = int(input()) # 上昇後の１単位当たりの株価　Xをいくらで売ったか
+
+# あなたは、X 円の資金を元に株式投資を始めようと思っています。
+# 株価の上昇が見込めそうな銘柄を見つけたので、全財産を投じ買えるだけ買って株価が上がったら売ろうと考えました。
+# 上昇前の株価 A 円と上昇後の株価 B 円が与えられるので、いくら利益を上げることができたか計算。
+# 株は１単位ごとにしか購入できない
+# 100円分で50単位
+# 求めるもの　投資の利益
+
+print((X//A) *(B-A))
+
+# D134 タイトルの長さ
+# utf-8
+import re
+S = input()
+if len(S) >= 10:
+    print(S[0:10])
+    print(S[10:])
+else:
+    print(S[:])
+
 # D135 多角形の調査
 # utf-8
 D = int(input())       # n角形の内角の和
@@ -1170,7 +1199,13 @@ sentence = str(input()) # 文字列
 newsentence = ''.join(s for s in sentence if s not in remove) # 削除について
 print(newsentence)
 
-# D147 桶の水量 ★
+# D147 桶の水量
+# utf-8
+S = int(input())
+A = input().rstrip().split()
+B = min(A)
+print(S *int(B))
+
 # D148 ある試験の境目
 # utf-8
 A,B = input().rastrip().split() # 試験1,2の得点
