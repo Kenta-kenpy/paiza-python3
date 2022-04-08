@@ -1038,7 +1038,33 @@ print(sum([int(input()) for _ in range(N)])//N)
 C,T,A = input().rstrip().split()
 print(int(C) +int(T) + int(A))
 
-# D127 座席番号のくじ ★
+# D127 座席番号のくじ
+# utf-8
+S = input()
+ 
+if "111" in S:
+    print("Yes")
+elif "222" in S:
+    print("Yes")
+elif "333" in S:
+    print("Yes")
+elif "444" in S:
+    print("Yes")
+elif "555" in S:
+    print("Yes")
+elif "666" in S:
+    print("Yes")
+elif "777" in S:
+    print("Yes")
+elif "888" in S:
+    print("Yes")
+elif "999" in S:
+    print("Yes")
+elif "000" in S:
+    print("Yes")
+else:
+    print("No")
+    
 # D128 略語の生成 ★
 # D129 税率の変更 ★
 # D130 ◆
