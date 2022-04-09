@@ -35,9 +35,21 @@ print(*arr)
 
 # D006 単位の計算
 # utf-8
+'''
+1km = 1000m
+1m = 100cm
+1cm = 10mm
+'''
 n,s = input().rstrip().split()
-p = int(n) * 1000 * 100 * 10
-print(p)
+
+if s == "km":
+    print(int(n)*1000*100*10)
+elif s == "m":
+    print(int(n)*100*10)
+elif s == "cm":
+    print(int(n)*10)
+else:
+    print()
 
 # D007 N倍の文字列
 # utf-8
