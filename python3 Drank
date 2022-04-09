@@ -35,7 +35,7 @@ print(*arr)
 
 # D006 単位の計算
 # utf-8
-n,s = input().rastrip().split()
+n,s = input().rstrip().split()
 p = int(n) * 1000 * 100 * 10
 print(p)
 
