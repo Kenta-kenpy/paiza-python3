@@ -1712,3 +1712,9 @@ print(222-n)
 a,b = input().rstrip().split()
 a,b = b,a
 print(a,b)
+
+# D207 文字列の省略
+# utf-8
+s = input()
+print(s[:3])
+
