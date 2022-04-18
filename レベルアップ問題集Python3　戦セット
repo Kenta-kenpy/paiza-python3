@@ -45,7 +45,7 @@ else:
 # 競技6  匿名希望さん
 # coding: utf-8
 a,b = input().split()
-print(a[0] + '_' + b[0] + '_')
+print(a[0] + '.' + b[0] + '.')
 
 # 競技7  奇数大好き山田さん
 # coding: utf-8
