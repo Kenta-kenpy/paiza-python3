@@ -250,7 +250,7 @@ print(S_2)
 m = int(input())
 n = int(input())
 
-if n//m == 0:
+if n%m == 0:
     print(n//m)
 else:
     print((n//m)+1)
