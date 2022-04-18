@@ -250,7 +250,7 @@ print(S_2)
 m = int(input())
 n = int(input())
 Ans = n//m
-print(Ans+1)
+print(int(Ans)+1)
 
 # D038 試合の回数
 # utf-8
