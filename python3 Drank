@@ -247,14 +247,14 @@ print(S_2)
 
 # D037 花粉症でつらい
 # utf-8
+# utf-8
 m = int(input())
 n = int(input())
-Ans = n//m
 
-if Ans == 0:
-    print(Ans)
+if n//m == 0:
+    print(n//m)
 else:
-    print(int(Ans)+1)
+    print((n//m)+1)
 
 # D038 試合の回数
 # utf-8
