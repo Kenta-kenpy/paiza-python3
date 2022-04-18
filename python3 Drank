@@ -228,12 +228,10 @@ print('.'.join(list))
 # D034 どれにしようかな
 # utf-8
 m = int(input()) # 到着するメニューの順番
-if m == 3:
-    print(m)
-elif m == 7:
-    print(m)
+if 21%m != 0:
+    print(21%m)
 else:
-    print(21%m) # 剰余ありの場合
+    print(m)
 
 # D035 日付のデータ
 # utf-8
