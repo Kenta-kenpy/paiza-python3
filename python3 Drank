@@ -235,7 +235,7 @@ else:
 
 # D035 日付のデータ
 # utf-8
-y,m,d = input().rastrip().split()
+y,m,d = input().rstrip().split()
 print(str(y)+"/"+str(m)+"/"+str(d))
 
 # D036 アットマーク
@@ -1154,7 +1154,7 @@ print(s.count("y"))
 
 # D138 おうむ返し
 # utf-8
-m,n = [int(x) for x in input().rastrip().split()]
+m,n = [int(x) for x in input().rstrip().split()]
 ss = [input() for _ in range(n)]
 for s in ss:
     print(s)
@@ -1232,7 +1232,7 @@ print(S *int(B))
 
 # D148 ある試験の境目
 # utf-8
-A,B = input().rastrip().split() # 試験1,2の得点
+A,B = input().rstrip().split() # 試験1,2の得点
 C = input() # 試験1の必要最低点
 # AがC以上でないとBの加点なし
 
