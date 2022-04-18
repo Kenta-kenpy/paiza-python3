@@ -247,7 +247,6 @@ print(S_2)
 
 # D037 花粉症でつらい
 # utf-8
-# utf-8
 m = int(input())
 n = int(input())
 
