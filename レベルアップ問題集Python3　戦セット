@@ -34,7 +34,7 @@ for i in range(n):
        
 # 競技5  ゆで卵
 # coding: utf-8
-n = int(input())
+m = int(input())
 if 0 <= m and m <= 5:
     print("raw")
 elif 6 <= m and m <= 7:
