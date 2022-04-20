@@ -287,6 +287,7 @@ for i in range(7):
 print(count)
 --------------------------------------------- D041　※欠番 ◆
 # D041 本棚選び
+# utf-8
 n,d,e = input().rstrip().split()
 
 if int(n) <= int(d) * int(e):
@@ -295,6 +296,7 @@ else:
     print("NG")
 
 # D042 行列
+# utf-8
 n1,n2 = input().rstrip().split()
 n3,n4 = input().rstrip().split()
 
