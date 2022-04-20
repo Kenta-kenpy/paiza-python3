@@ -294,16 +294,6 @@ if int(n) <= int(d) * int(e):
 else:
     print("NG")
 
-# ???　★
-# utf-8
-a = int(input())
-b = int(input())
-
-if a+b ==21:
-    print("Win")
-else:
-    print(a+b)
-
 # D042 行列
 n1,n2 = input().rstrip().split()
 n3,n4 = input().rstrip().split()
