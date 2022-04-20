@@ -287,6 +287,14 @@ for i in range(7):
 print(count)
 --------------------------------------------- D041　※欠番 ◆
 # D041 本棚選び
+n,d,e = input().rstrip().split()
+
+if int(n) <= int(d) * int(e):
+    print("OK")
+else:
+    print("NG")
+
+# ???　★
 # utf-8
 a = int(input())
 b = int(input())
