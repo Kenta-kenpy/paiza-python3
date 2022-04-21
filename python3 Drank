@@ -399,11 +399,13 @@ print(n1 + n2)
 
 C = input().rstrip().split()
 W = C.count("W")
+S = C.count("S")
 
 if int(W) >= S:
     print("OK")
 else:
     print("NG")
+
     
 # D052 ピラミッドの作り方
 # utf-8
