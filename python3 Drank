@@ -405,7 +405,6 @@ if int(W) >= S:
     print("OK")
 else:
     print("NG")
-
     
 # D052 ピラミッドの作り方
 # utf-8
