@@ -427,7 +427,7 @@ print(ans)
 # D055 ワインのキャッチコピー
 # utf-8
 line = input()
-print("Best in" + line)
+print("Best in " + line)
 
 # D056 かまくらづくり
 # utf-8
