@@ -658,14 +658,12 @@ else:
     
 # D079 同じ文字
 # utf-8
-N = int(input()) # 博物館の観光客人数
-M,A,B = input().split() #団体料金適用となる最低人数,団体での一人当たりの料金,個人料金
-# 求めるもの入館料
-
-if  N >= int(M):
-    print(N * int(A))
+a = input()
+b = len(set(a)) 
+if b ==1:
+    print("NG")
 else:
-    print(N * int(B))
+    print("OK")
 
 # D080 忘年会の予算
 # utf-8
