@@ -756,7 +756,6 @@ print(s.count('1') + s.count('2'))
 
 # D092 花見の準備
 # utf-8
-# utf-8
 x1,y1,p1 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
 x2,y2,p2 = input().rstrip().split() # レジャーシートの横の長さ,縦の長さ,価格
 
