@@ -1717,3 +1717,8 @@ print(a,b)
 s = input()
 print(s[:3])
 
+# D208 値下げクーポン
+# utf-8
+x,y = input().rstrip().split()
+print(int(x)-int(y))
+
