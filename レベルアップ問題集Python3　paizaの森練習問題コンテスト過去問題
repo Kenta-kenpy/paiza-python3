@@ -92,3 +92,26 @@ if int(e1) != 0 and int(e2) != 0:
     print(int(e1)*int(e2))
 elif int(e1) == 0 or int(e2) == 0:
     print("invalid")
+
+# セール販売
+'''
+bool型を持つpantsを初期値ではFalseに設定しておき、入力cにpantsが含まれている場合にはpantsをTrueにする。
+最終的に合計金額が2000円以上になり、かつpantsがTrueのときに合計金額から500円引くことで答えを導ける。
+'''
+# utf-8
+
+n = int(input())
+
+sum = 0
+pants = False
+
+for i in range(n):
+    c, p = input().split()
+    sum = sum + int(p)
+    if c == "pants":
+        pants = True
+
+if pants and sum >= 2000:
+    sum = sum - 500
+
+print(sum)
