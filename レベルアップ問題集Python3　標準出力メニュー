@@ -31,7 +31,16 @@ step1　2つの数値を出力
 print("{}{}".format(1,1))
 
 step2　3つの数値を出力
+# utf-8
+print("{}{}{}".format(8, 1, 3))
+
 step3　１０個の数値を出力（末尾に半角スペース有）
+# utf-8
+for i in range(10):
+    print(i + 1, end=" ")
+
+print()
+
 step4　１０個の数値を出力
 final　１０００個の数値を出力（半角スペース区切り）
 ＜文字列の出力＞
