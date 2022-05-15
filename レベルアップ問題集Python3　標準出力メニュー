@@ -42,13 +42,56 @@ for i in range(10):
 print()
 
 step4　１０個の数値を出力
+# utf-8
+for i in range(10):
+    if i != 9:
+        print(i+1, end= " ")
+    else:
+        print(i+1)
+        
 final　１０００個の数値を出力（半角スペース区切り）
+# utf-8
+for i in range(1000):
+    if i != 999:
+        print(i+1, end= " ")
+    else:
+        print(i+1)
+        
 ＜文字列の出力＞
 step1　１つの文字列を出力
+# utf-8
+print("paiza")
+
 step2　２つの文字列を出力
+# utf-8
+print("paiza learning")
+
 step3　入力された２つの文字列を出力
+# utf-8
+S = input()
+T = input()
+
+print(S)
+print(T)
+
 step4　入力された１０個の文字列を出力（半角スペース区切り）
+# utf-8
+strings = []
+for i in range(10):
+    strings.append(input())
+    
+for i in range(10):
+    if i != 9:
+        print(strings(i), end=" ")
+    else:
+        print(strings(i))
+        
 final　入力された１０個の文字列を出力（改行区切り）
+# utf-8
+strings = input8).split()
+for s in strings:
+    print(s)
+ 
 ＜n行の出力＞
 step1　１行または２行の出力
 step2　数行の出力
