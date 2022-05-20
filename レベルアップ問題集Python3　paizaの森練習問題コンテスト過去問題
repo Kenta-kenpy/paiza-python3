@@ -115,3 +115,23 @@ if pants and sum >= 2000:
     sum = sum - 500
 
 print(sum)
+
+# paizaの森練習問題コンテスト過去問題3
+# 文字列の逆順
+# utf-8
+s = input()
+print(s[::-1])
+
+# 英単語の生成（連結）
+# utf-8
+s1,s2 = input().split()
+print(s1+s2)
+
+# 小文字にする
+# utf-8
+s = input()
+print(s.lower())
+
+# キーボードのシミュレーション
+
+# ラッキーナンバー
