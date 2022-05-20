@@ -1723,3 +1723,5 @@ print(s[:3])
 x,y = input().rstrip().split()
 print(int(x)-int(y))
 
+# D209 数字探し ★
+# utf-8
