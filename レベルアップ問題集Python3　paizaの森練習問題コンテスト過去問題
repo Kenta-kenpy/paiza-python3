@@ -1,4 +1,4 @@
-# paizaの森練習問題コンテスト過去問題1
+# paizaの森練習問題コンテスト過去問題1　★
 # スポーツの人数
 s = input()
 if s == "baseball":
@@ -52,7 +52,7 @@ while i < n:
 for key in sorted(players.keys()):
     print(f"{key}{players[key]}")
 
-# paizaの森練習問題コンテスト過去問題2
+# paizaの森練習問題コンテスト過去問題2　★
 # 競輪のユニフォーム
 n = int(input())
 
@@ -116,7 +116,7 @@ if pants and sum >= 2000:
 
 print(sum)
 
-# paizaの森練習問題コンテスト過去問題3
+# paizaの森練習問題コンテスト過去問題3　★
 # 文字列の逆順
 # utf-8
 s = input()
