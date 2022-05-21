@@ -94,11 +94,50 @@ for s in strings:
  
 ＜n行の出力＞
 step1　１行または２行の出力
+# utf-8
+N = int(input())
+
+if N == 1:
+    print(1)
+else:
+    print(1)
+    print(2)
+    
 step2　数行の出力
+# utf-8
+N = int(input())
+
+if N == 1:
+    print(1)
+if N == 2:
+    print(2)
+if N == 3:
+    print(3)
+if N == 4:
+    print(4)
+if N == 5:
+    print(5)
+    
 step3　１０行以内の出力
+# utf-8
+N = int(input())
+
+for i in range(N):
+    print(i+1)
+    
 final　１０００行以内の出力
+# utf-8
+N = int(input())
+
+for i in range(N):
+    print(i+1)
+    
 ＜特定の文字で区切り1行で出力＞
 step1　カンマ区切りで2つ出力
+# utf-8
+N,M = input().split()
+print(N+","+M)
+
 step2　バーティカルライン区切りで3つの文字列を出力
 step3　カンマ区切りで10個出力1
 step4　カンマ区切りで10個出力2
