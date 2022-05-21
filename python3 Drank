@@ -1729,5 +1729,6 @@ print(int(x)-int(y))
 # 文字列s
 n = input()
 s = input()
-
 print(s.count(n))
+
+# D210
