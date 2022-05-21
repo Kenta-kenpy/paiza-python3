@@ -1723,5 +1723,11 @@ print(s[:3])
 x,y = input().rstrip().split()
 print(int(x)-int(y))
 
-# D209 数字探し ★
+# D209 数字探し
 # utf-8
+# 個数を数える数字n
+# 文字列s
+n = input()
+s = input()
+
+print(s.count(n))
