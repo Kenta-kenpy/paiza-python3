@@ -160,4 +160,34 @@ print()
 
 # ラッキーナンバー
 # utf-8
+n = int(input())
+numbers = []
+for i in range(n):
+    numbers.append(int(input()))
+    
+numbers_777 = []
+answer_count = 0
+ # ビット全探索
+# 0000, 0001, 0011, 0100, 0101, 0110, 0111, 1000, 1001, 1010, 1011, 1101, 1110, 1111
+for comb_bits in range(1<<n):
+    sum = 0
+    for index in range(n): # n回ループ
+       if (comb_bits >> index) & 1 == 1:  # indexは1
+           # print(index, end='')
+           sum += numbers[index]
+    # print()
+    if sum == 777:
+        if answer_count == 0: # 最初に見つけた答えのみ保存
+            for index in range(n): # n回ループ
+                if (comb_bits >> index) & 1 == 1: # indexは1になっている
+                    numbers_777.append(numbers[index])
+        answer_count += 1
+        
+if answer_count == 0:
+    print('no answer')
+elif answer_count >= 2:
+    print('multiple answers')
+else:
+    numbers_777.sort()
+    print(' '.join(map(str, numbers_777)))
 
