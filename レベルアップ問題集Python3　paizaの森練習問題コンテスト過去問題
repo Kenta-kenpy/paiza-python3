@@ -1,5 +1,6 @@
 # paizaの森練習問題コンテスト過去問題1　★
 # スポーツの人数
+# utf-8
 s = input()
 if s == "baseball":
     print(9)
@@ -15,6 +16,7 @@ else:
     print()
     
 # バイトの休憩時間
+# utf-8
 h = int(input()) # 勤務時間
 
 """
@@ -32,10 +34,12 @@ else:
     print()
 
 # 自動車の燃費
+# utf-8
 v,d = input().rstrip().split() # 給油量[L]と記録した走行距離[km]
 print(int(d)//int(v))
 
 # 背番号順
+# utf-8
 players = {}
 n = int(input())
 
@@ -54,6 +58,7 @@ for key in sorted(players.keys()):
 
 # paizaの森練習問題コンテスト過去問題2　★
 # 競輪のユニフォーム
+# utf-8
 n = int(input())
 
 if n == 1:
@@ -78,6 +83,7 @@ else:
     print()
 
 # エレベーターの行き先
+# utf-8
 f1,f2 = input().split()
 
 if f2 > f1:
@@ -86,6 +92,7 @@ else:
     print("down")
     
 # 長方形の面積
+# utf-8
 e1,e2 = input().split()
 
 if int(e1) != 0 and int(e2) != 0:
@@ -133,5 +140,24 @@ s = input()
 print(s.lower())
 
 # キーボードのシミュレーション
+# utf-8
+n = int(input())
+
+capped = False # 初期状態はcapslockキーが押されていない
+for i in range(n):
+    c = input()
+    if c == 'capslock':
+        capped = not capped
+    elif c.startswith('shift'):
+        x = c.split(' ')[1] # 小文字1文字が入力される場合
+        print(x.upper(), end='') # 大文字1文字として出力
+    else: # 小文字1文字が入力される場合
+        if capped:
+            print(c.upper(), end='')
+        else:
+            print(c, end='')
+print()
 
 # ラッキーナンバー
+# utf-8
+
