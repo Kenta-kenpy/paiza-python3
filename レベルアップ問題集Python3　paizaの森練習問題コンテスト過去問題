@@ -1,5 +1,5 @@
 # paizaの森練習問題コンテスト過去問題1　★
-# スポーツの人数
+# Q.　スポーツの人数
 # utf-8
 s = input()
 if s == "baseball":
@@ -15,7 +15,7 @@ elif s == "volleyball":
 else:
     print()
     
-# バイトの休憩時間
+# Q.　バイトの休憩時間
 # utf-8
 h = int(input()) # 勤務時間
 
@@ -33,12 +33,12 @@ elif 8 < h:
 else:
     print()
 
-# 自動車の燃費
+# Q.　自動車の燃費
 # utf-8
 v,d = input().rstrip().split() # 給油量[L]と記録した走行距離[km]
 print(int(d)//int(v))
 
-# 背番号順
+# Q.　背番号順
 # utf-8
 players = {}
 n = int(input())
@@ -57,7 +57,7 @@ for key in sorted(players.keys()):
     print(f"{key}{players[key]}")
 
 # paizaの森練習問題コンテスト過去問題2　★
-# 競輪のユニフォーム
+# Q.　競輪のユニフォーム
 # utf-8
 n = int(input())
 
@@ -82,7 +82,7 @@ elif n == 9:
 else:
     print()
 
-# エレベーターの行き先
+# Q.　エレベーターの行き先
 # utf-8
 f1,f2 = input().split()
 
@@ -91,7 +91,7 @@ if f2 > f1:
 else:
     print("down")
     
-# 長方形の面積
+# Q.　長方形の面積
 # utf-8
 e1,e2 = input().split()
 
@@ -100,7 +100,7 @@ if int(e1) != 0 and int(e2) != 0:
 elif int(e1) == 0 or int(e2) == 0:
     print("invalid")
 
-# セール販売
+# Q.　セール販売
 '''
 bool型を持つpantsを初期値ではFalseに設定しておき、入力cにpantsが含まれている場合にはpantsをTrueにする。
 最終的に合計金額が2000円以上になり、かつpantsがTrueのときに合計金額から500円引くことで答えを導ける。
@@ -124,22 +124,22 @@ if pants and sum >= 2000:
 print(sum)
 
 # paizaの森練習問題コンテスト過去問題3　★
-# 文字列の逆順
+# Q.　文字列の逆順
 # utf-8
 s = input()
 print(s[::-1])
 
-# 英単語の生成（連結）
+# Q.　英単語の生成（連結）
 # utf-8
 s1,s2 = input().split()
 print(s1+s2)
 
-# 小文字にする
+# Q.　小文字にする
 # utf-8
 s = input()
 print(s.lower())
 
-# キーボードのシミュレーション
+# Q.　キーボードのシミュレーション
 # utf-8
 n = int(input())
 
@@ -158,7 +158,7 @@ for i in range(n):
             print(c, end='')
 print()
 
-# ラッキーナンバー
+# Q.　ラッキーナンバー
 # utf-8
 n = int(input())
 numbers = []
