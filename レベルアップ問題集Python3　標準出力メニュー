@@ -139,6 +139,12 @@ N,M = input().split()
 print(N+","+M)
 
 step2　バーティカルライン区切りで3つの文字列を出力
+# utf-8
+S1 = input()
+S2 = input()
+S3 = input()
+print("{}|{}|{}".format(S1, S2, S3))
+
 step3　カンマ区切りで10個出力1
 step4　カンマ区切りで10個出力2
 step5　半角スペースとバーティカルライン区切りで10個出力
