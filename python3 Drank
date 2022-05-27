@@ -1731,4 +1731,9 @@ n = input()
 s = input()
 print(s.count(n))
 
-# D210
+# D210 年間の料金
+# utf-8
+p = int(input())
+print(p*12)
+
+
