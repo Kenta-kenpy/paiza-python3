@@ -155,12 +155,46 @@ for num in nums:
 print()
 
 step4　カンマ区切りで10個出力2
+# utf-8
+S = input().split()
+print(",".join(S))
 
 step5　半角スペースとバーティカルライン区切りで10個出力
+# utf-8
+for i in range(10):
+    if i == 9:
+        print(input())
+    else:
+        print(input(), end=" | ")
+
 step6　大きな数値を3桁ごとにカンマ区切りで出力
+# utf-8
+N = input()
+
+for i in range(len(N)):
+    if i % 3 == 0 and i != 0:
+        print(",", end="")
+
+    print(N[i], end="")
+
+print()
+
 final　 大きな数値を3桁ごとにカンマ区切りで出力2
+# utf-8
+N = input()
+x = len(N) % 3
+
+for i in range(len(N)):
+    if (i - x) % 3 == 0 and i != 0:
+        print(",", end="")
+
+    print(N[i], end="")
+
+print()
+
 ＜n*nの2次元配列の表示＞
 step1　２＊２の出力
+
 step2　３＊３の出力
 step3　九九表の出力
 final　Ｎ＊Ｎの九九表の出力
