@@ -34,14 +34,14 @@ step2　3つの数値を出力
 # utf-8
 print("{}{}{}".format(8, 1, 3))
 
-step3　１０個の数値を出力（末尾に半角スペース有）
+step3　10個の数値を出力（末尾に半角スペース有）
 # utf-8
 for i in range(10):
     print(i + 1, end=" ")
 
 print()
 
-step4　１０個の数値を出力
+step4　10個の数値を出力
 # utf-8
 for i in range(10):
     if i != 9:
@@ -49,7 +49,7 @@ for i in range(10):
     else:
         print(i+1)
         
-final　１０００個の数値を出力（半角スペース区切り）
+final　1000個の数値を出力（半角スペース区切り）
 # utf-8
 for i in range(1000):
     if i != 999:
@@ -58,15 +58,15 @@ for i in range(1000):
         print(i+1)
         
 ＜文字列の出力＞
-step1　１つの文字列を出力
+step1　1つの文字列を出力
 # utf-8
 print("paiza")
 
-step2　２つの文字列を出力
+step2　2つの文字列を出力
 # utf-8
 print("paiza learning")
 
-step3　入力された２つの文字列を出力
+step3　入力された2つの文字列を出力
 # utf-8
 S = input()
 T = input()
@@ -74,7 +74,7 @@ T = input()
 print(S)
 print(T)
 
-step4　入力された１０個の文字列を出力（半角スペース区切り）
+step4　入力された10個の文字列を出力（半角スペース区切り）
 # utf-8
 strings = []
 for i in range(10):
@@ -86,14 +86,14 @@ for i in range(10):
     else:
         print(strings(i))
         
-final　入力された１０個の文字列を出力（改行区切り）
+final　入力された10個の文字列を出力（改行区切り）
 # utf-8
 strings = input8).split()
 for s in strings:
     print(s)
  
 ＜n行の出力＞
-step1　１行または２行の出力
+step1　1行または2行の出力
 # utf-8
 N = int(input())
 
@@ -118,14 +118,14 @@ if N == 4:
 if N == 5:
     print(5)
     
-step3　１０行以内の出力
+step3　10行以内の出力
 # utf-8
 N = int(input())
 
 for i in range(N):
     print(i+1)
     
-final　１０００行以内の出力
+final　1000行以内の出力
 # utf-8
 N = int(input())
 
@@ -193,16 +193,16 @@ for i in range(len(N)):
 print()
 
 ＜n*nの2次元配列の表示＞
-step1　２＊２の出力
+step1　2＊2の出力
 
-step2　３＊３の出力
+step2　3＊3の出力
 step3　九九表の出力
 final　Ｎ＊Ｎの九九表の出力
 ＜実数をフォーマット指定して出力＞
-step1　１つの実数を出力
-step2　１つの実数を出力2
-step3　１つの実数を出力3
-step4　１つの実数を出力4
+step1　1つの実数を出力
+step2　1つの実数を出力2
+step3　1つの実数を出力3
+step4　1つの実数を出力4
 final　 複数の実数を出力
 ＜出力幅を指定して出力＞
 step1　数値を半角スペース埋めで出力
