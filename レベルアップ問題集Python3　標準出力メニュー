@@ -194,9 +194,22 @@ print()
 
 ＜n*nの2次元配列の表示＞
 step1　2＊2の出力
+# utf-8
+print("0 8\n1 3")
 
 step2　3＊3の出力
+# utf-8
+N = input().split()
+
+for i in range(len(N)):
+    print(N[i], end="")
+    if i % 3 == 2:
+        print()
+    else:
+        print(" ", end="")
+        
 step3　九九表の出力
+
 final　Ｎ＊Ｎの九九表の出力
 ＜実数をフォーマット指定して出力＞
 step1　1つの実数を出力
