@@ -191,3 +191,29 @@ else:
     numbers_777.sort()
     print(' '.join(map(str, numbers_777)))
 
+# paizaの森練習問題コンテスト過去問題4　★
+# Q.　花言葉
+# utf-8
+s = input()
+if s == "rose":
+    print("I love you")
+elif s == "cosmos":
+    print("harmony")
+elif s == "tulip":
+    print("perfect lover")
+elif s == "hydrangea":
+    print("heartlessness")
+elif s == "jasmine":
+    print("amiability")
+else:
+    print()
+
+# Q.　じゃんけん
+# Q.　四季
+# Q.　オルタネーティングキャップス
+# Q.　パワー100倍
+# Q.　おつり
+# Q.　ゾロ目
+# Q.　いちばんお得
+# Q.　重さの計算
+# Q.　寒暖差
