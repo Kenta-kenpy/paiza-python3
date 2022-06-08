@@ -195,15 +195,15 @@ else:
 # Q.　花言葉
 # utf-8
 s = input()
-if s == "rose":
+if s == "rose": # バラ
     print("I love you")
-elif s == "cosmos":
+elif s == "cosmos": # コスモス
     print("harmony")
-elif s == "tulip":
+elif s == "tulip": # チューリップ
     print("perfect lover")
-elif s == "hydrangea":
+elif s == "hydrangea": # あじさい
     print("heartlessness")
-elif s == "jasmine":
+elif s == "jasmine": # ジャスミン
     print("amiability")
 else:
     print()
