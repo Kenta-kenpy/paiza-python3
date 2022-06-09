@@ -1736,4 +1736,9 @@ print(s.count(n))
 p = int(input())
 print(p*12)
 ---------------------------------------------D211　※欠番 ◆
+# D211 飴の余り
+# utf-8
+n,m = input().rstrip().split() # 飴の数, 子どもの人数
+print(int(n)%int(m))
 
+# D212
