@@ -209,6 +209,17 @@ else:
     print()
 
 # Q.　じゃんけん
+# utf-8
+h = input() # じゃんけんで相手の手 R(グー) P(パー) S(チョキ)
+if h == "R":
+    print("P")
+elif h == "P":
+    print("S")
+elif h == "S":
+    print("R")
+else:
+    print()
+    
 # Q.　四季
 # Q.　オルタネーティングキャップス
 # Q.　パワー100倍
