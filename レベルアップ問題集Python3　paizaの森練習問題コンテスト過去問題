@@ -238,6 +238,9 @@ elif m == 12:
     print("winter")
     
 # Q.　オルタネーティングキャップス
+# coding: utf-8
+s = input()
+print(s.lower())
 
 # Q.　パワー100倍
 # Q.　おつり
