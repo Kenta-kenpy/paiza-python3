@@ -279,4 +279,11 @@ else:
     print(2)
 
 # Q.　重さの計算
+# utf-8
+n,k,x = input().rstrip().split() # 未知のボールの数, 既知のボールの数, 既知のボールの重さ
+# 既知のボール1つ当たりの重さを求める
+m = int(x)/int(k)
+import math
+print(math.floor(m*int(n))) # 値以下最大の整数を返すmath.floor関数
+
 # Q.　寒暖差
