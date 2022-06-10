@@ -238,7 +238,7 @@ elif m == 12:
     print("winter")
     
 # Q.　オルタネーティングキャップス
-# coding: utf-8
+# utf-8
 s = input()
 print(s.lower())
 
@@ -248,7 +248,21 @@ p = int(input())
 print(p*100)
 
 # Q.　おつり
+# utf-8
+p = int(input())
+coins = [500, 100, 50, 10, 5, 1] # coinsリスト
+
+answer = 0 # 初期化
+# 変数cでcoinsを繰り返す
+for c in coins: 
+    while p >= c: # おつりpがc以上
+        p -= c # p = p-cを代入
+        answer += 1 # 初期化したanswerを増やす
+
+print(answer)
+
 # Q.　ゾロ目
+
 # Q.　いちばんお得
 # Q.　重さの計算
 # Q.　寒暖差
