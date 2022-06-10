@@ -287,3 +287,14 @@ import math
 print(math.floor(m*int(n))) # 値以下最大の整数を返すmath.floor関数
 
 # Q.　寒暖差
+# utf-8
+bef = int(input()) # i日目の最高気温
+
+for _ in range(9):
+    now = int(input()) # 10日分の最高気温データ
+    if abs(now - bef) >= 3: # 今i日目の最高気温から見て3度以上の温度差あり
+        print("Yes") # 寒暖差ありと判断
+        exit(0) # 差が0のときは例外
+    bef = now # 差が0のときは一致するものを最高気温と判断
+
+print("No") # 寒暖差なし(連続する2日間の最高気温の差が3度未満)
