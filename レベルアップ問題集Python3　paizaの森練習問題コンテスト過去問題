@@ -243,6 +243,10 @@ s = input()
 print(s.lower())
 
 # Q.　パワー100倍
+# utf-8
+p = int(input())
+print(p*100)
+
 # Q.　おつり
 # Q.　ゾロ目
 # Q.　いちばんお得
