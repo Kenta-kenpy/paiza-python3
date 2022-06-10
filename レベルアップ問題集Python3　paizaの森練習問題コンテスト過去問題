@@ -221,7 +221,24 @@ else:
     print()
     
 # Q.　四季
+# utf-8
+# 春　3~5月　夏　6~8月　秋　9~11月 冬　12~2月
+
+m = int(input()) # m月
+
+if m <= 2:
+    print("winter")
+elif m <= 5:
+    print("spring")
+elif m <= 8:
+    print("summer")
+elif m <= 11:
+    print("autumn")
+elif m == 12:
+    print("winter")
+    
 # Q.　オルタネーティングキャップス
+
 # Q.　パワー100倍
 # Q.　おつり
 # Q.　ゾロ目
