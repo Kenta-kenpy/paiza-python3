@@ -238,11 +238,38 @@ final　すべての行の長さと値が不定な2次元配列の出力
 ＜実数をフォーマット指定して出力＞
 step1　1つの実数を出力
 # utf-8
+N = float(input())
+print(N)
 
 step2　1つの実数を出力2
+# utf-8
+N = input()
+print(N)
+
 step3　1つの実数を出力3
+# utf-8
+N = float(input())
+print("{:.3f}".format(N))
+
 step4　1つの実数を出力4
+# utf-8
+values = input().split()
+N = float(values[0])
+M = int(values[1])
+
+print("{:.{}f}".format(N, M))
+
 final　複数の実数を出力
+# utf-8
+Q = int(input())
+
+for _ in range(Q):
+    values = input().split()
+    n = float(values[0])
+    m = int(values[1])
+
+    print("{:.{}f}".format(n, m))
+
 ＜出力幅を指定して出力＞
 step1　数値を半角スペース埋めで出力
 step2　数値をゼロ埋めで出力
