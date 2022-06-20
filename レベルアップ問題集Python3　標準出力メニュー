@@ -272,7 +272,15 @@ for _ in range(Q):
 
 ＜出力幅を指定して出力＞
 step1　数値を半角スペース埋めで出力
+# utf-8
+N = input()
+print("{: >3}".format(N))
+
 step2　数値をゼロ埋めで出力
+# utf-8
+N = input()
+print("{:0>3}".format(N))
+
 step3　複数の数値を半角スペース埋めで出力
 step4　数値をM桁半角スペース埋めで出力
 final　N個の数値をM桁半角スペース埋めで出力
