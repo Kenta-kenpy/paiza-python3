@@ -282,8 +282,18 @@ N = input()
 print("{:0>3}".format(N))
 
 step3　複数の数値を半角スペース埋めで出力
+# utf-8
+N = int(input())
+
+for _ in range(N):
+    m = input()
+
+    print("{: >3}".format(m))
+    
 step4　数値をM桁半角スペース埋めで出力
 final　N個の数値をM桁半角スペース埋めで出力
+# utf-8
+
 ＜出力形式を指定して出力＞
 step1　2つの文字列を出力
 step2　文字列とN個の整数の出力
