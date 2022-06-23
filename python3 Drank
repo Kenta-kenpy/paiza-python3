@@ -1741,4 +1741,11 @@ print(p*12)
 n,m = input().rstrip().split() # 飴の数, 子どもの人数
 print(int(n)%int(m))
 
-# D212
+# D212 繋げた長さ
+# utf-8
+N = int(input())
+print(N*10)
+
+# D213
+
+
