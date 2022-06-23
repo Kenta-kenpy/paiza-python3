@@ -290,6 +290,8 @@ for _ in range(N):
     print("{: >3}".format(m))
     
 step4　数値をM桁半角スペース埋めで出力
+# utf-8
+
 final　N個の数値をM桁半角スペース埋めで出力
 # utf-8
 
