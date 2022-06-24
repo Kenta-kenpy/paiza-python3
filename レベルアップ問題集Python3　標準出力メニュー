@@ -291,9 +291,22 @@ for _ in range(N):
     
 step4　数値をM桁半角スペース埋めで出力
 # utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+print("{: >{}}".format(N, M))
 
 final　N個の数値をM桁半角スペース埋めで出力
 # utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+for _ in range(N):
+    a = int(input())
+
+    print("{: >{}}".format(a, M))
 
 ＜出力形式を指定して出力＞
 step1　2つの文字列を出力
