@@ -310,6 +310,12 @@ for _ in range(N):
 
 ＜出力形式を指定して出力＞
 step1　2つの文字列を出力
+# utf-8
+S = input()
+T = input()
+
+print("{} + {} = {}".format(S, T, S + T))
+
 step2　文字列とN個の整数の出力
 step3　九九表を罫線入りで出力
 step4　ペアの数値の入った表を罫線入りで出力
