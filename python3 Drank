@@ -1746,6 +1746,9 @@ print(int(n)%int(m))
 N = int(input())
 print(N*10)
 
-# D213
+# D213 タイプ数の予想
+# utf-8
+push = int(input())
+print(push * 365)
 
 
