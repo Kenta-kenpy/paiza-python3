@@ -1751,4 +1751,10 @@ print(N*10)
 push = int(input())
 print(push * 365)
 
+# D214 身長差
+# utf-8
+a = int(input()) # 兄の身長
+b = int(input()) # 弟の身長
+# a >= b
 
+print(a-b)
