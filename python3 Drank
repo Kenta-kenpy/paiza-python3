@@ -1756,5 +1756,6 @@ print(push * 365)
 a = int(input()) # 兄の身長
 b = int(input()) # 弟の身長
 # a >= b
-
 print(a-b)
+
+# D215
