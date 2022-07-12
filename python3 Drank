@@ -1130,7 +1130,6 @@ print((X//A) *(B-A))
 
 # D134 タイトルの長さ
 # utf-8
-import re
 S = input()
 if len(S) >= 10:
     print(S[0:10])
