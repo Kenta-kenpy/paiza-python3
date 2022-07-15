@@ -1183,7 +1183,7 @@ print(S[N-1]) # n単語目 0スタート
 # utf-8
 n = int(input())
 names = [input() for _ in range(n)]
-priint(*names)
+print(*names)
 
 # D142 イルミネーションの数
 # utf-8
