@@ -1376,7 +1376,6 @@ print(total)
 # D163 縦にする
 # utf-8
 s = input()
-s = input()
 for i in range(len(s)):
     print(s[i])
 
