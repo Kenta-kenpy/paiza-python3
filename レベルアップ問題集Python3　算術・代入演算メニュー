@@ -1,1 +1,47 @@
 <累乗2>
+step1　足し算
+# utf-8
+print(1231 + 5178)
+
+step2　引き算・掛け算
+# utf-8
+a, b = map(int, input().split())
+
+print(a - b, a * b)
+
+step3　割り算
+# utf-8
+a = 437326
+b = 9085
+
+print(a // b, a % b)
+
+step4　掛け算2
+# utf-8
+a, b, c = map(int, input().split())
+
+print(a * a, b * b + c * c)
+
+step5  累乗
+# utf-8
+a = 202
+b = 134
+c = 107
+
+print(((a + b) * c) ** 2)
+
+final  累乗2
+# utf-8
+a, b, c, d = map(int, input().split())
+
+print(((a + b) * c) ** 2 % d)
+
+<代入演算4>
+step1  代入演算1
+
+step2  代入演算2
+
+step3  代入演算3
+
+step4  代入演算4
+
