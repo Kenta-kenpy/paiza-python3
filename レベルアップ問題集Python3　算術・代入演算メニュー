@@ -38,10 +38,34 @@ print(((a + b) * c) ** 2 % d)
 
 <代入演算4>
 step1  代入演算1
+# utf-8
+n = 0
+n = n + 3286
+n = n * 4736
+n = n % 12312
+print(n)
 
 step2  代入演算2
+# utf-8
+a, b, c = map(int, input().split())
+
+n = 0       # 初期値
+n = n + a   # n+aを代入
+n = n * b　 # n*bを代入
+n = n % c   # n%cを代入
+print(n)    # 最終的なnを出力
 
 step3  代入演算3
+# utf-8
+n = 10000
+n = n // 361
+n = n % 28
+print(n)
 
 step4  代入演算4
-
+# utf-8
+a, b = map(int, input().split())
+n = 10000
+n = n // a # 商の整数部分
+n = n % b  # 剰余
+print(n)
