@@ -1763,3 +1763,9 @@ if S == "paiza":
     print("Yes")
 else:
     print("No")
+
+# D216 夏休みの課題
+# utf-8
+a = int(input())
+b = int(input())
+print(500-a-b)
