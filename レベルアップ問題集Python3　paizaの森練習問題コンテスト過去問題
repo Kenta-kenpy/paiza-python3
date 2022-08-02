@@ -329,13 +329,49 @@ print(s[::-1])
 # utf-8
 n = int(input())
 
+# 初期値0
 seconds = 0
-for _ in range(n):
+# n曲 分と秒を入力 秒にする式
+for _ in range(n): 
     m, s = map(int, input().split())
     seconds += 60 * m + s
 
+# CDの最大収録可能時間以下か判定
 if seconds <= 74 * 60:
     print("Yes")
 else:
     print("No")
 
+# Q.　サイクルヒット
+# utf-8
+'''
+サイクルヒットは1 人のバッターが 1 試合の中で単打（シングルヒット）、二塁打（ツーベース）、三塁打（スリーベース）、
+本塁打（ホームラン）全てを 1 本以上打った場合に成立する記録のこと
+打席の結果は単打が1、二塁打が2、三塁打が3、本塁打が4、それ以外の結果は0と記録されます。
+'''
+v = [False] * 5 # サイクルヒットのリスト
+
+for i in range(5): # 打席ごとの結果について
+    m = int(input())
+    v[m] = True
+
+res = True
+for i in range(1, 5):
+    if v[i] == False:
+        res = False
+        break
+
+if res:
+    print("Yes") # サイクルヒット達成
+else:
+    print("No")  # サイクルヒット未達成
+
+# Q.　条件を満たす最小の整数
+# utf-8
+# x 以上であって、y で割った余りが z であるような整数のうち、最小のもの
+x, y, z = map(int, input().split())
+
+while x % y != z: # xをyで割った剰余がz
+    x += 1
+
+print(x)
