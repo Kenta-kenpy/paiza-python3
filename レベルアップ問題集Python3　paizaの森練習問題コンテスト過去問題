@@ -309,3 +309,33 @@ if int(m) >= int(n) * 0.3:
 else:
         print("No")
 
+# Q.　テレワーク可能か
+# utf-8
+a,b = input().split()
+# a 会社のデスク使用率, b 天候(rain sunny cloudy)
+# テレワーク a>=30以上　または bがrainのとき
+
+if int(a) >= 30 or str(b) == "rain":
+        print("Yes")
+else:
+        print("No")
+        
+# Q.　文字列の反転
+# utf-8
+s = input()
+print(s[::-1])
+
+# Q.　CD
+# utf-8
+n = int(input())
+
+seconds = 0
+for _ in range(n):
+    m, s = map(int, input().split())
+    seconds += 60 * m + s
+
+if seconds <= 74 * 60:
+    print("Yes")
+else:
+    print("No")
+
