@@ -298,3 +298,14 @@ for _ in range(9):
     bef = now # 差が0のときは一致するものを最高気温と判断
 
 print("No") # 寒暖差なし(連続する2日間の最高気温の差が3度未満)
+
+# paizaの森練習問題コンテスト過去問題5　★
+# Q. 3割打者
+# utf-8
+n,m = input().split() # 打数n 安打数m
+# 3割以上で一流
+if int(m) >= int(n) * 0.3:
+        print("Yes")
+else:
+        print("No")
+
