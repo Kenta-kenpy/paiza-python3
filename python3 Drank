@@ -1769,3 +1769,8 @@ else:
 a = int(input())
 b = int(input())
 print(500-a-b)
+
+D217 キャラクターの名前
+# utf-8
+S = str(input())
+print(len(S))
