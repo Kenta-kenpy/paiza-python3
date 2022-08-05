@@ -1,1 +1,11 @@
-
+<論理演算を用いた計算のまとめ>
+step1　論理積       AND  の基本
+step2　論理和       OR   の基本
+step3　否定 　      NOT  の基本
+step4　排他的論理和 NAND の基本
+step5　NAND　演算の基本
+step6　NOR　 演算の基本
+step7　XNOR　演算の基本
+step8　半加算器
+step9  全加算器
+final　論理演算を用いた計算のまとめ
