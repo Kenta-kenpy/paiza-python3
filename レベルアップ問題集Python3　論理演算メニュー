@@ -1,11 +1,66 @@
 <論理演算を用いた計算のまとめ>
 step1　論理積       AND  の基本
+# utf-8
+a, b = map(int, input().split())
+print(a and b)
+
 step2　論理和       OR   の基本
+# utf-8
+a, b = map(int, input().split())
+print(a or b)
+
 step3　否定 　      NOT  の基本
-step4　排他的論理和 NAND の基本
+# utf-8
+a = int(input())
+print(int(not a))
+
+step4　排他的論理和 XOR の基本
+# utf-8
+a, b = map(int, input().split())
+print(a ^ b)
+
 step5　NAND　演算の基本
+# utf-8
+a, b = map(int, input().split())
+print(int(not (a and b)))
+
 step6　NOR　 演算の基本
+# utf-8
+a, b = map(int, input().split())
+print(int(not (a or b)))
+
 step7　XNOR　演算の基本
+# utf-8
+a, b = map(int, input().split())
+print(int(not (a ^ b)))
+
 step8　半加算器
+# utf-8
+a, b = map(int, input().split())
+
+c = a & b
+s = a ^ b
+
+print(c, s)
+
 step9  全加算器
+# utf-8
+a, b, c1 = map(int, input().split())
+
+# 半加算器のプログラム
+def halfAdder(a, b):
+    c = a & b
+    s = a ^ b
+    return (c, s)
+
+cx, sy = halfAdder(a, b)
+cy, s = halfAdder(sy, c1)
+c2 = cx ^ cy
+
+print(c2, s)
+
+
 final　論理演算を用いた計算のまとめ
+# utf-8
+a, b, c, d = map(int, input().split())
+print(int(not((not (a) and not (b)) or not (c)) ^ d))
