@@ -1774,3 +1774,15 @@ D217 キャラクターの名前
 # utf-8
 S = str(input())
 print(len(S))
+
+D218　買い物
+# utf-8
+'''
+商品Aの値段　Bの所持金N
+'''
+N = int(input())
+
+if  N >= 1000:
+        print("Yes")
+else:
+        print("No")
