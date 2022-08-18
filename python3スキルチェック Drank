@@ -1786,3 +1786,11 @@ if  N >= 1000:
         print("Yes")
 else:
         print("No")
+
+D219　犬猿の仲
+# utf-8
+S = str(input())
+if S == "saru": # inuと犬猿の仲
+        print("No")
+else:
+        print("Yes")
