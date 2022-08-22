@@ -1794,3 +1794,9 @@ if S == "saru": # inuと犬猿の仲
         print("No")
 else:
         print("Yes")
+
+D220　従業員の数
+# utf-8
+a = int(input())
+b = int(input())
+print(a+b)
