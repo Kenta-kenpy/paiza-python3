@@ -1,34 +1,156 @@
 <0が含まれていないか判定>
 step1　単純な条件分岐
+# utf-8
+s = input()
 
+if s == "paiza":
+    print("YES")
+else:
+    print("NO")
+    
 step2　数値の分岐
+# utf-8
+n = int(input())
 
+if n <= 100:
+    print("YES")
+else:
+    print("NO")
+    
 step3　数値演算結果で分岐
+# utf-8
+a, b, c = [int(x) for x in input().split()]
 
+if a * b <= c:
+    print("YES")
+else:
+    print("NO")
+    
 step4　ゼロ以外
+# utf-8
+n = int(input())
 
+if n == 0:
+    print("NO")
+else:
+    print("YES")
+    
 final　0が含まれていないか判定
+# utf-8
+n = int(input())
+a = [int(input()) for x in range(n)]
 
+if 0 in a:
+    print("NO")
+else:
+    print("YES")
+    
 <AND+OR>
 step1　AND
+# utf-8
+a, b = [int(x) for x in input().split()]
 
+if a >= 10 and b >= 10:
+    print("YES")
+else:
+    print("NO")
+    
 step2　大文字判定
+# utf-8
+c = input()
 
+if c.isupper():
+    print("YES")
+else:
+    print("NO")
+    
 step3　OR
+# utf-8
+a, b = [int(x) for x in input().split()]
 
+if a >= 10 or b >= 10:
+    print("YES")
+else:
+    print("NO")
+    
 step4　NOT
+# utf-8
+x = int(input())
 
+if not x >= 10:
+    print("YES")
+else:
+    print("NO")
+    
 step5　AND+NOT
+# utf-8
+a, b = [int(x) for x in input().split()]
 
+if a >= 10 and not b >= 10:
+    print("YES")
+else:
+    print("NO")
+    
 final　AND+OR
+# utf-8
+x, y, z = [int(x) for x in input().split()]
 
+if z >= 10 or x >= 10 and y >= 10:
+    print("YES")
+else:
+    print("NO")
+    
 <FizzBuzz>
 step1　3の倍数判定
-step2　2つの倍数判定
-step3　偶奇の判定
-step4　曜日の判定
-final　FizzBuzz
+# utf-8
+n = int(input())
 
+if n % 3 == 0:
+    print("YES")
+else:
+    print("NO")
+    
+step2　2つの倍数判定
+# utf-8
+n = int(input())
+
+if n % 15 == 0:
+    print("YES")
+else:
+    print("NO")
+    
+step3　偶奇の判定
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+
+even = 0
+for ele in a:
+    if ele % 2 == 0:
+        even += 1
+
+print(even, n - even)
+
+step4　曜日の判定
+# utf-8
+x = int(input())
+week = ["Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"]
+
+print(week[x % 7])
+
+final　FizzBuzz
+# utf-8
+n = int(input())
+
+if n % 3 == 0 and n % 5 == 0:
+    print("FizzBuzz")
+elif n % 3 == 0:
+    print("Fizz")
+elif n % 5 == 0:
+    print("Buzz")
+else:
+    print(n)
+    
 <積の最小化>
 step1　けた数の判定
 step2　足したり引いたり
