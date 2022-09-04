@@ -125,6 +125,7 @@ n = int(input())
 a = [int(x) for x in input().split()]
 
 even = 0
+
 for ele in a:
     if ele % 2 == 0:
         even += 1
