@@ -154,6 +154,10 @@ else:
     
 <積の最小化>
 step1　けた数の判定
+# utf-8
+N = int(input())
+print(len(str(N)))
+
 step2　足したり引いたり
 step3　同値判定
 step4　終了判定
