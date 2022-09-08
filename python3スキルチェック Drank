@@ -1806,3 +1806,13 @@ print(a+b)
 N = int(input()) # 偶数の生徒人数
 # これを2人ペアにする
 print(N//2)
+
+# D222　どちらが沢山食べたか
+# utf-8
+X = int(input()) # Aが食べたラーメン量
+Y = int(input()) # Bが食べたラーメン量
+
+if X > Y:
+    print(X)
+else:
+    print(Y)
