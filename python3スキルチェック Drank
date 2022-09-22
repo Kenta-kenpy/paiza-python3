@@ -1816,3 +1816,10 @@ if X > Y:
     print(X)
 else:
     print(Y)
+
+# D223　新しい呪文
+# utf-8
+B = input()
+C = input()
+print(B+C)
+
