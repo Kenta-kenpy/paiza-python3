@@ -159,10 +159,98 @@ N = int(input())
 print(len(str(N)))
 
 step2　足したり引いたり
+# utf-8
+n, a, b = [int(x) for x in input().split()]
+
+if n + a + b == 0:
+    print("YES")
+elif n + a - b == 0:
+    print("YES")
+elif n - a + b == 0:
+    print("YES")
+elif n - a - b == 0:
+    print("YES")
+else:
+    print("NO")
+    
 step3　同値判定
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+b = [int(x) for x in input().split()]
+
+ans = 0
+for i in range(n):
+    if a[i] == b[i]:
+        ans += 1
+
+print(ans)
+
 step4　終了判定
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+
+ans = 0
+for ele in a:
+    if ele % 2 == 1:
+        break
+
+    ans += ele
+
+print(ans)
+
 step5　終了判定2
+# utf-8
+n, k = [int(x) for x in input().split()]
+
+m = 0
+while n < k:
+    n *= 2
+    m += 1
+
+print(m)
+
 step6　池の周回
+# utf-8
+n, k, t = [int(x) for x in input().split()]
+
+if k * t % n == 0:
+    print("YES")
+else:
+    print("NO")
+    
 step7　崖に落ちるか判定
+# utf-8
+n, k, t = [int(x) for x in input().split()]
+
+if n * k < t + 0.1:
+    print("YES")
+else:
+    print("NO")
+    
 step8　タイルの敷き詰め
+# utf-8
+h, w = [int(x) for x in input().split()]
+
+if h == 0 or w == 0:
+    print("NO")
+elif h % 2 == 0 and w % 2 == 0:
+    print("YES")
+else:
+    print("NO")
+
 final　積の最小化
+# utf-8
+a, b = [int(x) for x in input().split()]
+
+if a <= 0 and b >= 0:
+    # a から b の間に 0 が含まれる
+    print(a * b)
+elif a > 0:
+    # a と b が両方とも正の数
+    print(a * a)
+else:
+    # a と b が両方とも負の数
+    print(b * b)
+    
