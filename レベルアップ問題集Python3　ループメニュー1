@@ -1,10 +1,10 @@
 <a～zまでを表示>
-step1　ある数字までの出力１
-step2　ある数字までの出力２
-step3　数字の受け取り１
-step4　数字の受け取り２
-step5　ある数をある回数表示１
-step6　ある数をある回数表示２
+step1　ある数字までの出力1
+step2　ある数字までの出力2
+step3　数字の受け取り1
+step4　数字の受け取り2
+step5　ある数をある回数表示1
+step6　ある数をある回数表示2
 final　a～zまでを表示
 
 <数列同士の引き算>
@@ -15,8 +15,8 @@ final　数列同士の引き算
 
 <FizzBuzz>
 step1　数列の反転
-step2　九九の表示１
-step3　九九の表示２
+step2　九九の表示1
+step3　九九の表示2
 step4　2の累乗を表示
 final　FizzBuzz
 
