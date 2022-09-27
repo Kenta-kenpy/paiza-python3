@@ -1,5 +1,13 @@
 <a～zまでを表示>
 step1　ある数字までの出力1
+# utf-8
+for i in range(1,11):
+    print(i)
+または
+# utf-8
+for i in range(10):
+    print(i + 1)
+
 step2　ある数字までの出力2
 step3　数字の受け取り1
 step4　数字の受け取り2
