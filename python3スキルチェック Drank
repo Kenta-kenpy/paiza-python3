@@ -1823,3 +1823,7 @@ B = input()
 C = input()
 print(B+C)
 
+# D224　繰り返す
+# utf-8
+S = input()
+print(S*3)
