@@ -9,6 +9,11 @@ for i in range(10):
     print(i + 1)
 
 step2　ある数字までの出力2
+# utf-8
+N = int(input())
+for i in range(N):
+    print(i + 1)
+    
 step3　数字の受け取り1
 step4　数字の受け取り2
 step5　ある数をある回数表示1
