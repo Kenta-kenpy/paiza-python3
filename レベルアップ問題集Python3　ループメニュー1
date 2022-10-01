@@ -15,6 +15,11 @@ for i in range(N):
     print(i + 1)
     
 step3　数字の受け取り1
+# utf-8
+K = list(map(int, input().split()))
+for i in range(10):
+    print(K[i])
+    
 step4　数字の受け取り2
 step5　ある数をある回数表示1
 step6　ある数をある回数表示2
