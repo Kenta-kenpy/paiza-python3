@@ -21,6 +21,12 @@ for i in range(10):
     print(K[i])
     
 step4　数字の受け取り2
+# utf-8
+N = int(input())
+K = list(map(int, input().split()))
+for i in range(N):
+    print(K[i])
+    
 step5　ある数をある回数表示1
 step6　ある数をある回数表示2
 final　a～zまでを表示
