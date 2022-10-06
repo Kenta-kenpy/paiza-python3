@@ -376,3 +376,77 @@ while x % y != z: # xをyで割った剰余がzではないとき
 
 print(x)
 
+# paizaの森練習問題コンテスト過去問題6　★
+# Q.　球数制限
+# utf-8
+n, k = map(int, input().split())
+sum = 0
+
+for i in range(n):
+    m = int(input())
+    sum += m
+
+if sum < k:
+    print("Yes")
+else:
+    print("No")
+    
+# Q.　最大イニング
+# utf-8
+k = int(input())
+sum = 0
+
+flag = True
+for i in range(1, 10):
+    m = int(input())
+    sum += m
+    if sum > k:
+        print(i)
+        flag = False
+        break
+if flag:
+    print("Yes")
+    
+# Q.　ロボットの移動
+# utf-8
+x, y = map(int, input().split())
+print(abs(x) + abs(y))
+
+# Q.　最大の差
+# utf-8
+v = [0] * 5
+
+for i in range(5):
+    m = int(input())
+    v[i] = m
+v.sort()
+print(v[4] - v[0])
+
+# Q.　中央値
+# utf-8
+v = [0] * 5
+
+for i in range(5):
+    m = int(input())
+    v[i] = m
+
+v.sort()
+
+print(v[5 // 2])
+
+# Q.　採点
+# utf-8
+n = int(input())
+
+sum = 0
+
+for i in range(n):
+    m = input()
+    if m == "correct":
+        sum += 2
+    elif m == "incorrect":
+        sum -= 1
+
+print(sum)
+
+
