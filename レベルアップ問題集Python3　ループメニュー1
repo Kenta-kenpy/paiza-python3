@@ -28,6 +28,10 @@ for i in range(N):
     print(K[i])
     
 step5　ある数をある回数表示1
+# utf-8
+for _ in range(8):
+    print(3)
+    
 step6　ある数をある回数表示2
 final　a～zまでを表示
 
