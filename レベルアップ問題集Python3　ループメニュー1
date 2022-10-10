@@ -33,6 +33,11 @@ for _ in range(8):
     print(3)
     
 step6　ある数をある回数表示2
+# utf-8
+N, K = map(int, input().split())
+for _ in range(K):
+    print(N)
+    
 final　a～zまでを表示
 
 <数列同士の引き算>
