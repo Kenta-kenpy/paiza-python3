@@ -39,6 +39,9 @@ for _ in range(K):
     print(N)
     
 final　a～zまでを表示
+# utf-8
+for i in range(97, 97 + 26):
+    print(chr(i))
 
 <数列同士の引き算>
 step1　数列の和
