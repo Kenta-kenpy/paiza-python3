@@ -45,16 +45,71 @@ for i in range(97, 97 + 26):
 
 <数列同士の引き算>
 step1　数列の和
-step2　数列のA番目からB番目までの和
-step3　数列の和を全部＊2して出力
-final　数列同士の引き算
+# utf-8
+input()
+a = list(map(int, input().split()))
+print(sum(a))
 
+step2　数列のA番目からB番目までの和
+# utf-8
+N, A, B = map(int, input().split())
+a = list(map(int, input().split()))
+ans = 0
+for i in range(A - 1, B):
+    ans += a[i]
+print(ans)
+
+step3　数列の和を全部＊2して出力
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+
+for i in range(N):
+    print(a[i] * 2)
+    
+final　数列同士の引き算
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+for i in range(N):
+    print(a[i] - b[i])
+    
 <FizzBuzz>
 step1　数列の反転
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))[::-1]
+for i in range(N):
+    print(a[i])
+    
+'''
+配列を受け取る際に、末尾に [::-1] を付け加えることで配列を逆順で受け取ることができ、
+出力するときのループで扱う range() 関数を 1 つの引数で扱うことができます。
+'''
 step2　九九の表示1
+# utf-8
+print(*[8 * i for i in range(1, 10)])
+'''
+Python のリスト内包表記を使って出力します。内包表記を使うと、ループ処理を実行してリストに格納する操作を 1 行で記述することができます。
+内包表記は、ループを表す for 文の前に式を記述することで、その式を満たすリストを簡単に得ることができます。
+リストの前に * を書くことで、リストを、その要素を文字列にして羅列したものに変更することができます。
+'''
 step3　九九の表示2
+# utf-8
+N = int(input())
+print(*[N * i for i in range(1, 10)])
+
 step4　2の累乗を表示
+# utf-8
+N = int(input())
+pow = 1
+for _ in range(N):
+    pow *= 2
+    print(pow)
+    
 final　FizzBuzz
+# utf-8
 
 <数列の中に何個ある？>
 step1　数列の最大値
