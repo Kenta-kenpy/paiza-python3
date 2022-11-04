@@ -1832,3 +1832,9 @@ print(S*3)
 # utf-8
 N = int(input())
 print(N*3)
+
+# D226 伸びる身長
+# utf-8
+N = int(input())
+print(170 + N)
+
