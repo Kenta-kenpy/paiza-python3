@@ -122,6 +122,15 @@ for i in range(1, 101):
         
 <数列の中に何個ある？>
 step1　数列の最大値
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+max_num = 0
+for i in range(N):
+    if a[i] > max_num:
+        max_num = a[i]
+print(max_num)
+
 step2　数列の最小値
 step3　数列の何番目にある？
 final　数列の中に何個ある？
