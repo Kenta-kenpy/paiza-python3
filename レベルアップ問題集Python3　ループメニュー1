@@ -132,5 +132,14 @@ for i in range(N):
 print(max_num)
 
 step2　数列の最小値
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+min_num = 100
+for i in range(N):
+    if a[i] < min_num:
+        min_num = a[i]
+print(min_num)
+
 step3　数列の何番目にある？
 final　数列の中に何個ある？
