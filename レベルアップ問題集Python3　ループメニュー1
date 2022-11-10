@@ -142,4 +142,12 @@ for i in range(N):
 print(min_num)
 
 step3　数列の何番目にある？
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+for i in range(N):
+    if a[i] == 1:
+        print(i + 1)
+        break
+        
 final　数列の中に何個ある？
