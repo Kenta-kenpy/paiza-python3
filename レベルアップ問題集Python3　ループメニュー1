@@ -151,3 +151,7 @@ for i in range(N):
         break
         
 final　数列の中に何個ある？
+# utf-8
+N = input()
+a = list(map(int, input().split()))
+print(a.count(1))
