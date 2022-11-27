@@ -1838,3 +1838,10 @@ print(N*3)
 N = int(input())
 print(170 + N)
 
+# D227 引き落としの手数料
+# utf-8
+N = int(input())
+if N >= 120:
+    print(N - 120)
+else:
+    print()
