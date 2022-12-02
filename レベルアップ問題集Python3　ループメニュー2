@@ -56,6 +56,16 @@ for i in range(N):
 
 <約数の列挙>
 step1　 各桁の和
+# utf-8
+N = int(input())
+
+digit_sum = 0
+while N > 0:
+    digit_sum += N % 10
+    N //= 10
+
+print(digit_sum)
+
 step2　 カウント変数を使った計算
 step3　 2で何回割れる？
 step4　 任意の数で何回割れる？
