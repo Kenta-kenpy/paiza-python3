@@ -67,6 +67,13 @@ while N > 0:
 print(digit_sum)
 
 step2　 カウント変数を使った計算
+# utf-8
+N = int(input())
+M = list(map(int, input().split()))
+
+for i in range(N):
+    print(M[i] * (i + 1))
+    
 step3　 2で何回割れる？
 step4　 任意の数で何回割れる？
 step5　 10進数から2進数に変換
