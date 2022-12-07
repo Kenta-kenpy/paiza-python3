@@ -451,10 +451,89 @@ print(sum)
 
 # paizaの森練習問題コンテスト過去問題7　★
 # Q.　占い
-# Q.　年収計算
-# Q.　気温
-# Q.　気温２
-# Q.　ブロックの埋め込み
-# Q.　最も大きな最大公約数
-# Q.　三冠王
+# utf-8
+n = int(input())
 
+if n == 7:
+    print("Yes")
+else:
+    print("No")
+    
+# Q.　年収計算
+# utf-8
+a, b, c = map(int, input().split())
+
+print(a + c // 5 * b)
+
+# Q.　気温
+# utf-8
+x = int(input())
+
+if x >= 35:
+    print("extremely hot day")
+elif x >= 30:
+    print("hot summer day")
+elif x >= 25:
+    print("summer day")
+elif x < 0:
+    print("ice day")
+else:
+    print("normal day")
+    
+# Q.　気温２
+# utf-8
+n = int(input())
+max_val = -21
+min_val = 41
+x = [int(a) for a in input().split()]
+
+for i in range(n):
+    if x[i] > max_val:
+        max_val = x[i]
+    if x[i] < min_val:
+        min_val = x[i]
+print(max_val - min_val)
+
+# Q.　ブロックの埋め込み
+# utf-8
+n, m = map(int, input().split())
+
+print(n * m // 2)
+
+# Q.　最も大きな最大公約数
+# utf-8
+n = int(input())
+
+print(n // 2)
+
+# Q.　三冠王
+# utf-8
+n = int(input())
+
+b = [0] * n
+r = [0] * n
+h = [0] * n
+for i in range(n):
+    x, y, z = input().split()
+    b[i] = float(x)
+    r[i] = int(y)
+    h[i] = int(z)
+flag = [0] * n
+max_b = max(b)
+max_r = max(r)
+max_h = max(h)
+for i in range(n):
+    if b[i] == max_b:
+        flag[i] += 1
+    if r[i] == max_r:
+        flag[i] += 1
+    if h[i] == max_h:
+        flag[i] += 1
+
+if max(flag) == 3:
+    print("Triple")
+elif max(flag) == 2:
+    print("Double")
+else:
+    print("Nobody")
+    
