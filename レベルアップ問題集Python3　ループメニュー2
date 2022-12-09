@@ -94,6 +94,22 @@ N が 2 で割れなくなった場合に breakすることで無限ループか
 '''
 
 step4　 任意の数で何回割れる？
+# utf-8
+N, M = map(int, input().split())
+
+div_count = 0
+while True:
+    if N % M == 0:
+        N //= M
+        div_count += 1
+    else:
+        break
+
+print(div_count)
+'''
+Python の場合、While True: と記述することで永遠にループを回すことができます。
+N が M で割れなくなった場合に breakすることで無限ループからブレイクするようにしましょう。
+'''
 step5　 10進数から2進数に変換
 step6　 10進数からM進数に変換
 step7　 NがMずつ増えたときにいつKを越える？
