@@ -149,6 +149,16 @@ print(num)
 '''
 
 step8　 毎日増加するお金
+# utf-8
+A, B = map(int, input().split())
+
+num = 0
+while A <= B:
+    A = int(A * 1.1)
+    num += 1
+
+print(num)
+
 step9　 階乗の計算
 step10　階乗の末尾に0はいくつ付く？
 step11　加算された数列の最大値
