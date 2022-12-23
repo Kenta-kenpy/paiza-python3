@@ -1877,4 +1877,8 @@ elif int(H) == int(S): # 時は同じ
 else: # 時は超えていないとき
     print("Yes")
 
-# D229
+# D229　どれだけ増えた
+# utf-8
+weight = int(input())
+print(weight-10)
+
