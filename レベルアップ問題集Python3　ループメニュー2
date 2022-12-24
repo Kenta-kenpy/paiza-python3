@@ -160,6 +160,15 @@ while A <= B:
 print(num)
 
 step9　 階乗の計算
+# utf-8
+from math import factorial
+
+N = int(input())
+print(factorial(N))
+'''
+Python の場合、 math モジュールの factorial 関数を使用すると、階乗の計算を行うことができます。
+'''
+
 step10　階乗の末尾に0はいくつ付く？
 step11　加算された数列の最大値
 step12　加算された数列の最小値
