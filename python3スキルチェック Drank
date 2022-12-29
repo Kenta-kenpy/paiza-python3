@@ -1882,3 +1882,10 @@ else: # 時は超えていないとき
 weight = int(input())
 print(weight-10)
 
+# D230　鞄の合計代金
+# utf-8
+a = int(input())
+b = int(input())
+print(a*b)
+
+# D231　
