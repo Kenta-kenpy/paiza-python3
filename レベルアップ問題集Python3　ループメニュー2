@@ -181,6 +181,16 @@ while N > 0:
 print(count_zero)
 
 step11　加算された数列の最大値
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+
+ans = 0
+for i in range(N):
+    ans = max(ans, a[i] + (i + 1))
+
+print(ans)
+
 step12　加算された数列の最小値
 step13　1はどこにある？
 step14　約数の個数
