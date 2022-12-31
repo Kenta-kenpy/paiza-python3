@@ -192,6 +192,16 @@ for i in range(N):
 print(ans)
 
 step12　加算された数列の最小値
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+
+ans = 10000
+for i in range(N):
+    ans = min(ans, a[i] + (i + 1))
+
+print(ans)
+
 step13　1はどこにある？
 step14　約数の個数
 final　 約数の列挙
