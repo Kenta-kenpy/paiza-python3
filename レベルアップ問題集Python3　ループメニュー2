@@ -203,5 +203,18 @@ for i in range(N):
 print(ans)
 
 step13　1はどこにある？
+# utf-8
+N = int(input())
+a = list(map(int, input().split()))
+
+for i in range(N):
+    if a[i] == 1:
+        print(i + 1)
+        
+'''
+ループ処理を用いて a[0] ~ a[N-1] を順番に見ていき、1 だった場合はその場所を改行区切りで出力します。
+位置を出力するとき、a_1 を 1 番目とするので、i+1 を出力しています。
+'''
+
 step14　約数の個数
 final　 約数の列挙
