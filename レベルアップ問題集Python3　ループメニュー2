@@ -217,4 +217,14 @@ for i in range(N):
 '''
 
 step14　約数の個数
+# utf-8
+N = int(input())
+
+div_count = 0
+for i in range(1, N + 1):
+    if N % i == 0:
+        div_count += 1
+
+print(div_count)
+
 final　 約数の列挙
