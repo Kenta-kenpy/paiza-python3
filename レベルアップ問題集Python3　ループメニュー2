@@ -228,3 +228,13 @@ for i in range(1, N + 1):
 print(div_count)
 
 final　 約数の列挙
+# utf-8
+N = int(input())
+
+for i in range(1, N + 1):
+    if N % i == 0:
+        print(i)
+'''
+ループ処理でカウント変数を 1 ~ N まで遷移させ、N がカウント変数で割り切れるかどうか判別し、
+割り切れる場合は改行区切りで出力しています。
+'''
