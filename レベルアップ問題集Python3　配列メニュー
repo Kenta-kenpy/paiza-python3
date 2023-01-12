@@ -1,5 +1,9 @@
 <【次元配列の入出力】i番目の出力 Boss>
 step1　要素数の出力
+# utf-8
+list = [5, 1, 3, 4, 5, 12, 6, 8, 1, 3]
+print(len(list))
+
 step2　全要素の出力
 step3　i番目の出力
 step4　配列の入力１
