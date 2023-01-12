@@ -1888,4 +1888,12 @@ a = int(input())
 b = int(input())
 print(a*b)
 
-# D231　
+# D231　文字列の2番目
+# uyf-8
+S = str(input())
+print(S[1])
+
+# D232
+
+# D233
+
