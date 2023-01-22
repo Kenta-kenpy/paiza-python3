@@ -20,6 +20,17 @@ print(li[3])
 '''
 
 step4　配列の入力１
+# utf-8
+li = [8, 1, 3, 3, 8, 1, 1, 3, 8, 8]
+
+for ele in li:
+    print(ele)
+'''
+for 文を用いて出力します。
+for 文で for ele in li: のように記述すると、変数 ele にリスト li の要素が順に代入されます。
+for 文の処理ブロック内で、print 関数を用いて出力をすれば解くことができます。
+'''
+
 step5　配列の入力２
 step6　配列の入力３
 step7  i番目の出力１
