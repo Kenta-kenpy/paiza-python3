@@ -47,6 +47,36 @@ split() で input() で取得した標準入力 1 行の文字列を半角スペ
 '''
 
 step6　配列の入力３
+# utf-8
+n = int(input())
+li = input().split()
+
+for ele in li:
+    print(ele)
+'''
+Python3 では、標準入力を行単位で文字列として受け取るので、この様な書き方もできます。
+input().split() で a_1 ... a_N を半角スペースで区切ってリストを生成するので N の情報がなくてもリストを生成できます。
+'''
+
+# 別解
+# utf-8
+n = int(input())
+
+li = [0] * n
+values = input().split()
+for i in range(n):
+    li[i] = int(values[i])
+
+for ele in li:
+    print(ele)
+
+'''
+標準入力 1 行目で、要素数 n が与えられるので、それに応じてリストを用意します。
+li = [0] * n では 「要素数が n で全ての要素が 0 であるリストを生成する」 という操作を行っています。
+変数values で数列を半角スペース区切りで受け取ったあと、for文 を用いて 
+変数li の i 番目の要素に 変数values の i 番目の要素を整数に変換して代入します。
+'''
+
 step7  i番目の出力１
 step8　i番目の出力２
 final  i番目の出力Boss
