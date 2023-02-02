@@ -1889,7 +1889,7 @@ b = int(input())
 print(a*b)
 
 # D231　文字列の2番目
-# uyf-8
+# utf-8
 S = str(input())
 print(S[1])
 
@@ -1898,5 +1898,12 @@ print(S[1])
 N = int(input())
 print(N*100)
 
-# D233
+# D233　3人の経験値
+# utf-8
+a = int(input())
+b = int(input())
+c = int(input())
+
+print(a+b+c)
+
 
