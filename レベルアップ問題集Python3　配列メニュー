@@ -208,6 +208,15 @@ len(li[0]), len(li[1]), len(li[2]) のどれを出力しても構いません。
 '''
 
 step5　各行の要素数の出力
+# utf-8
+li = [[1], [2, 3], [4, 5, 6]]
+for ele_li in li:
+    print(len(ele_li))
+'''
+for ele_li in li: で変数 ele_li に変数 li の各要素が順に代入されます。
+for ele_li in li: のループ処理内で、len 関数を用いて変数 ele_li の要素数を出力することで求められている出力ができます。
+'''
+
 step6　i行目j列目の出力
 step7  二次元配列の入力１
 step8　二次元配列の入力２
