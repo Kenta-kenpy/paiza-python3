@@ -364,6 +364,31 @@ for i in range(N):
 '''
 
 step10　二次元配列の入力４
+# utf-8
+values = [int(x) for x in input().split()]
+N = values[0]
+M = values[1]
+
+A = [[int(x) for x in input().split()] for _ in range(N)]
+for i in range(N):
+    for j in range(M):
+        print(A[i][j], end="")
+
+        if j < M - 1:
+            print(end=" ")
+        else:
+            print()
+
+'''
+内包表記で入力を受け取ると、このようにコードを簡潔に書くことができます。
+以下で簡単に説明します。
+変数 x には input().split() で入力を受け取り、半角スペースで区切って生成したリストの各要素が順に代入されます。
+[int(x) for x in input().split()] では、変数 x の値を整数型に変換した値を要素にもつリストを生成しています。
+[[int(x) for x in input().split()] for _ in range(N)] では、入力が N 行であることがわかっているので、
+[int(x) for x in input().split()] を N 回繰り返して 2 次元リストを生成します。
+'''
+
+
 step11  i番目の出力１
 step12  i番目の出力２
 final  i番目の出力Boss
