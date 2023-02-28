@@ -537,3 +537,88 @@ elif max(flag) == 2:
 else:
     print("Nobody")
     
+# paizaの森練習問題コンテスト過去問題8　★
+# Q.　文字数カウント
+# utf-8
+m = input()
+print(len(m))
+
+# Q.　乗客人数
+# utf-8
+a, b, c = map(int, input().split())
+print(a - b + c)
+
+# Q.  OPS(野球のバッターを評価する指標)
+# utf-8
+n, m = map(float, input().split())
+print("{:.3f}".format(n + m))
+
+# Q.　通貨レート
+# utf-8
+n = int(input())
+
+m = [0] * n
+for i in range(n):
+    m[i] = int(input())
+
+first = -1
+second = -1
+max_diff = 1
+for i in range(n):
+    for j in range(i + 1, n):
+        if m[j] / m[i] > max_diff:
+            first = i
+            second = j
+            max_diff = m[j] / m[i]
+if max_diff > 1:
+    print(first + 1)
+    print(second + 1)
+else:
+    print("No")
+    
+# Q.　乗客人数その2
+# utf-8
+n = int(input())
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+
+ans = 0
+now = 0
+
+for i in range(n):
+    now -= a[i]
+    now += b[i]
+    ans = max(ans, now)
+
+print(ans)
+
+# Q.　OPSその2
+# utf-8
+n = int(input())
+ma = 0
+res = 0
+for i in range(n):
+    b, s = map(float, input().split())
+    if ma < b + s:
+        res = i + 1
+        ma = b + s
+print(res)
+
+# Q.　タスクスケジューリング
+# utf-8
+n = int(input())
+
+d = {}
+for i in range(n):
+    s, t = map(int, input().split())
+    d[t] = s
+d = sorted(d.items())
+
+ans = 0
+time = 0
+
+for i in range(n):
+    if d[i][1] > time:
+        ans += 1
+        time = d[i][0]
+print(ans)
