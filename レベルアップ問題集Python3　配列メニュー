@@ -508,6 +508,15 @@ else:
 '''
 
 step3　配列に含まれている?３
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+if M in A:
+    print("Yes")
+else:
+    print("No")
+    
 step4　何番目にある？１
 step5　何番目にある？２
 step6　何番目にある？３
