@@ -1920,3 +1920,8 @@ print(5 * N)
 # utf-8
 n = int(input())
 print(n//4)
+
+# D237 フルネーム
+# utf-8
+S = str(input())
+print("paiza" + S)
