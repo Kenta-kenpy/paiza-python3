@@ -518,6 +518,32 @@ else:
     print("No")
     
 step4　何番目にある？１
+# utf-8
+li = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6]
+
+for i in range(len(li)):
+    if li[i] == 8:
+        print(i + 1)
+'''
+for i in range(len(li)) はリスト li の長さ (要素数) 分繰り返し処理を行う for 文です。
+インデックスは 0 から始まるので、i+1 を出力します。
+'''
+
+# utf-8　別解
+li = [1, 10, 2, 9, 3, 8, 4, 7, 5, 6]
+for i, ele in enumerate(li)
+    if ele == 8:
+        print(i + 1)
+'''
+enumerate 関数を用いた方法です。
+以下で、enumerate 関数について説明します。
+【 enumerate 関数の説明 】
+for 文で enumerate 関数を用いると インデックス と インデックスに対応する要素 を同時に取得することができます。
+for i in enumerate(li) のように使うと、変数 i に (インデックス, 要素) のようなタプルオブジェクトが代入されます。
+for i, ele in enumerate(li)、i には インデックス が、ele には 要素 が代入されます。
+リストのインデックスは 0 から始まることに注意して下さい。
+'''
+
 step5　何番目にある？２
 step6　何番目にある？３
 step7  何個ある？１
