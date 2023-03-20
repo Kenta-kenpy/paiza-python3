@@ -1887,7 +1887,7 @@ print(weight-10)
 a = int(input())
 b = int(input())
 print(a*b)
-
+---------------------------------------------D221　※欠番 ◆
 # D231　文字列の2番目
 # utf-8
 S = str(input())
@@ -1925,3 +1925,11 @@ print(n//4)
 # utf-8
 S = str(input())
 print("paiza" + S)
+
+# D238　飴を分ける
+# utf-8
+N = int(input())
+print(N//10)
+
+
+
