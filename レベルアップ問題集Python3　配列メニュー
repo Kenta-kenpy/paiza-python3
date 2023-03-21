@@ -552,6 +552,21 @@ li = [1, 5, 9, 7, 3, 2, 4, 8, 6, 10]
 print(li.index(N) + 1)
 
 step6　何番目にある？３
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+for i, ele in enumerate(A):
+    if ele == N:
+        print(i + 1)
+'''
+# 別解
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+print(A.index(N) + 1)
+'''
+
 step7  何個ある？１
 step8　何個ある？２
 final  何個ある？Boss
