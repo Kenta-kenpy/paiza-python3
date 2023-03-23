@@ -1931,5 +1931,9 @@ print("paiza" + S)
 N = int(input())
 print(N//10)
 
+# D239　増えるリンゴ
+# utf-8
+N = int(input())
+print(N+10)
 
 
