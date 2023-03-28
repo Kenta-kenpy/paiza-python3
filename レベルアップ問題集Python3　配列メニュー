@@ -647,6 +647,31 @@ print(ans)
 
 <【文字列の配列】辞書順に出力 Boss>
 step1　配列の書き換え
+# utf-8
+values = input().split()
+A = int(values[0])
+B = int(values[1])
+N = int(values[2])
+
+a = [0] * N
+values = input().split()
+for i in range(N):
+    a[i] = int(values[i])
+
+for i, ele in enumerate(a):
+    if ele == A:
+        a[i] = B
+
+for ele in a:
+    print(ele)
+    
+'''
+丁度 N 個の要素を持つリストを用意しているのが li = [0] * N です。* 演算子を用いることで、
+0 を要素として N 個持つリストを生成しています。
+用意したリストに、入力値を半角スペースで区切ってリストにした各要素を整数に変換して代入していきます。
+リストのインデックス i の要素の更新するには、li[i] = 更新したい値 のように書きます。
+'''
+
 step2　2変数の入れ替え
 step3　配列の要素の入れ替え
 step4　部分配列
