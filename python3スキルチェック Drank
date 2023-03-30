@@ -1936,4 +1936,7 @@ print(N//10)
 N = int(input())
 print(N+10)
 
-
+# D240　ゲームID
+# utf-8
+S = input()
+print(S + "A")
