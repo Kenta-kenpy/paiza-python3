@@ -694,6 +694,25 @@ for ele in a:
     print(ele)
     
 step4　部分配列
+# utf-8
+values = input().split()
+A = int(values[0])
+B = int(values[1])
+N = int(values[2])
+
+a = [0] * N
+values = input().split()
+for i in range(N):
+    a[i] = int(values[i])
+
+for i in range(A - 1, B):
+    print(a[i])
+'''
+入力を受け取る部分は前問と同じなので、「A 番目から B 番目の要素を出力する」方法のついて説明します。
+リストのインデックスは 0 から始まるので、A 番目の要素のインデックスは A-1 に、B 番目の要素のインデックスは B-1 になります。
+range 関数は　range(s, t) のように使うと、s 以上 t 未満の整数列を生成するので、今回の場合は、A-1 以上 B 未満の整数列を生成するために range(A-1, B) とします。
+'''
+
 step5　配列の連結
 step6　配列のソート
 step7  配列の反転
