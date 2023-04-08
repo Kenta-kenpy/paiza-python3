@@ -714,6 +714,15 @@ range 関数は　range(s, t) のように使うと、s 以上 t 未満の整数
 '''
 
 step5　配列の連結
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+B = [int(x) for x in input().split()]
+
+ans = A + B
+for ele in ans:
+    print(ele)
+
 step6　配列のソート
 step7  配列の反転
 step8　要素のカウント
