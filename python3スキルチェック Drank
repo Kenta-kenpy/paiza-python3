@@ -1946,5 +1946,10 @@ print(S + "A")
 N = int(input())
 print(N*100)
 
-# D242	
+# D242　所持金の合計
+# utf-8
+a = int(input())
+b = int(input())
+print(a+b)
+
 
