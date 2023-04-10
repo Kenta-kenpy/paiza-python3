@@ -725,6 +725,50 @@ for ele in ans:
     print(ele)
 
 step6　配列のソート
+# utf-8
+N = int(input())
+
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
+
+sorted_A = sorted(A)
+
+for a in sorted_A:
+    print(a)
+'''
+N 個の 0 を持つリストを反復を用いて用意して、入力値を整数に変換しながら受け取ります。
+ソートは sorted 関数を使っています。
+【 sorted 関数の説明 】
+sorted 関数は sorted(ソートしたいリスト) のように使うと、リストの要素を昇順に整列して返します。
+sorted 関数は元の引数で渡したリストなどのオブジェクトの要素の順番は変えません。
+昇順とは、数値だったら小さい順、文字列だったら辞書順に並んでいることを言います。
+
+
+<別解>
+N = int(input())
+
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
+
+A.sort()
+
+for a in A:
+    print(a)
+    
+# sort メソッドは元のリストの要素の順番を変えます。
+
+<別解>
+N = int(input())
+A = [int(x) for x in input().split()]
+
+for a in sorted(A):
+    print(a)
+'''
+
 step7  配列の反転
 step8　要素のカウント
 step9  配列末尾への追加
