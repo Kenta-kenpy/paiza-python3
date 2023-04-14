@@ -251,9 +251,121 @@ for i in range(n):
     result = compare_cards(parent_card, child_card)
     print(result)
 
-# C018
-# C019
-# C020
+# C018 何人前作れる?
+# レシピに書かれている食材の数を取得
+n = int(input())
+
+# レシピの食材と必要量を辞書に格納
+recipe = {}
+for i in range(n):
+    a, b = input().split()
+    recipe[a] = int(b)
+
+# あなたが所持している食材の数を取得
+m = int(input())
+
+# 所持している食材と数量を辞書に格納
+ingredients = {}
+for i in range(m):
+    c, d = input().split()
+    ingredients[c] = int(d)
+
+# 最大で何人前作れるかを計算
+max_servings = float('inf')  # 初期値を無限大に設定
+
+# レシピの食材と必要量をループし、所持している食材と比較
+for ingredient, amount in recipe.items():
+    if ingredient in ingredients:
+        max_servings = min(max_servings, ingredients[ingredient] // amount)
+    else:
+        max_servings = 0
+        break
+
+# 最大で何人前作れるかを出力
+print(max_servings)
+
+# C019 完全数とほぼ完全数
+# utf-8
+def is_perfect_or_almost_perfect_number(n):
+    """
+    入力された整数が完全数かほぼ完全数かそのいずれでもないかを判定する関数
+
+    Args:
+        n (int): 判定する整数
+
+    Returns:
+        str: 完全数、ほぼ完全数、そのいずれでもないことを示す文字列
+    """
+    # 約数の和を計算
+    s = 0
+    for i in range(1, n):
+        if n % i == 0:
+            s += i
+
+    # 完全数の判定
+    if n == s:
+        return "perfect"
+
+    # ほぼ完全数の判定
+    if abs(n - s) == 1:
+        return "nearly"
+
+    # その他の場合
+    return "neither"
+
+
+# 判定したい整数の個数を入力
+q = int(input())
+
+# 入力範囲を満たすかチェック
+if q < 1 or q > 50:
+    print("Error: 1 ≦ Q ≦ 50 の範囲で入力してください。")
+    exit(1)
+
+# 各整数について判定を行い結果を出力
+for i in range(q):
+    n = int(input())
+
+    # 入力範囲を満たすかチェック
+    if n < 2 or n > 1000:
+        print("Error: 2 ≦ N_i ≦ 1000 の範囲で入力してください。")
+        exit(1)
+
+    result = is_perfect_or_almost_perfect_number(n)
+    print(result)
+        
+# C020　残り物の量
+# utf-8
+def calculate_leftover_amount(m, p, q):
+    """
+    生鮮食品の売れ残り量を計算する関数
+
+    Args:
+        m (int): 生鮮食品の仕入れ量(kg)
+        p (int): 生のまま売れた割合(%)
+        q (int): お総菜に変換された売れ残りの割合(%)
+
+    Returns:
+        float: 最終的な売れ残り量(kg)
+    """
+    # 生鮮食品の売れ残り量を計算
+    leftover_amount = m * (100 - p) / 100
+
+    # お総菜に変換された売れ残り量を計算
+    leftover_amount = leftover_amount * (100 - q) / 100
+
+    return leftover_amount
+
+
+# 生鮮食品の仕入れ量、生のまま売れた割合、お総菜に変換された売れ残りの割合を入力
+m, p, q = map(int, input().split())
+
+# 生鮮食品の売れ残り量を計算
+leftover_amount = calculate_leftover_amount(m, p, q)
+
+# 売れ残り量を小数値で出力
+print("{:.4f}".format(leftover_amount))
+
 # C021
 # C022
 # C023
