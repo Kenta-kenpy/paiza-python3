@@ -2,9 +2,9 @@
 
 --------------------------------------------- C001　※欠番 ◆
 # C001 ◆
-# C002　
-# C003
-# C004
+# C002 ◆
+# C003 ◆
+# C004 ◆
 # C005　アドレス調査
 utf-8
 def is_valid_ipv4(ip_string):
@@ -79,9 +79,9 @@ top_k_scores = top_k_scores(C, X, M, K)
 for i in range(K):
     print(top_k_scores[i])
     
-# C007
-# C008
-# C009
+# C007 ◆
+# C008 ◆
+# C009 ◆
 # C010 安息の地を求めて
 # utf-8
 s = input().strip().split(" ")
@@ -99,8 +99,8 @@ for i in range(cnt):
         print("noisy")
         
 --------------------------------------------- C011　※欠番 ◆
-# C011
-# C012
+# C011 ◆
+# C012 ◆
 # C013　嫌いな数字
 # utf-8
 # 嫌いな数字を入力
@@ -366,28 +366,221 @@ leftover_amount = calculate_leftover_amount(m, p, q)
 # 売れ残り量を小数値で出力
 print("{:.4f}".format(leftover_amount))
 
-# C021
-# C022
-# C023
+# C021　暴風域にいますか
+# utf-8
+import math
+
+def is_in_typhoon(xc, yc, r1, r2, x, y):
+    """
+    台風の暴風域にあるかどうかを判定する関数
+
+    Args:
+        xc (int): 台風1の中心のx座標
+        yc (int): 台風1の中心のy座標
+        r1 (int): 台風1の半径
+        r2 (int): 台風2の半径
+        x (int): 判定する人のx座標
+        y (int): 判定する人のy座標
+
+    Returns:
+        bool: 台風の暴風域にある場合True、そうでない場合False
+    """
+    distance_squared = (x - xc) ** 2 + (y - yc) ** 2
+    if r1 ** 2 <= distance_squared <= r2 ** 2:
+        return True
+    else:
+        return False
+
+# 台風情報の入力
+xc, yc, r1, r2 = map(int, input().split())
+# 人の数の入力
+n = int(input())
+
+# 各人の座標の入力と判定
+for i in range(n):
+    x, y = map(int, input().split())
+    if is_in_typhoon(xc, yc, r1, r2, x, y):
+        print("yes")
+    else:
+        print("no")
+    
+# C022 ローソク足
+# utf-8
+# 日数 n を入力
+n = int(input())
+
+# 株価データを入力し、始値、終値、高値、安値を計算
+start_prices = []
+end_prices = []
+high_prices = []
+low_prices = []
+
+for i in range(n):
+    s, e, h, l = map(int, input().split())
+    start_prices.append(s)
+    end_prices.append(e)
+    high_prices.append(h)
+    low_prices.append(l)
+
+# n日間の始値を計算
+start_price = start_prices[0]
+
+# n日間の終値を計算
+end_price = end_prices[-1]
+
+# n日間の高値を計算
+high_price = max(high_prices)
+
+# n日間の安値を計算
+low_price = min(low_prices)
+
+# 結果を出力
+print(start_price, end_price, high_price, low_price, end='')
+
+# C023 クジの当選番号
+# utf-8
+import sys
+a = [int(s) for s in sys.stdin.readline().split()]
+N=int(input())
+b = [[int(s) for s in line.split()] for line in sys.stdin]
+for j in range(N):
+    c=0
+    for i in range(len(b[0])):
+        if a[i] in b[j]:
+            c += 1
+    print(c)
+    
 # C024
-# C025
-# C026
+# coding: utf-8
+n = int(input())
+num1 = 0
+num2 = 0
+
+cul = []
+
+for i in range(0, n):
+    cul.append(input().split(" "))
+
+    #SET
+    if("SET" in cul[i]):
+        if(cul[i][1] == "1"):
+            num1 = int(cul[i][2])
+        else:
+            num2 = int(cul[i][2])
+    #ADD
+    elif("ADD" in cul[i]):
+        num2 = num1 + int(cul[i][1])
+    #SUB
+    else:
+        num2 = num1 - int(cul[i][1])
+
+print(num1, num2)
+
+# C025　ファックスの用紙回収
+# utf-8
+def simulate_computer(instructions):
+    """
+    コンピュータをシミュレートする関数
+
+    Args:
+        instructions (list): コンピュータに与える命令のリスト
+
+    Returns:
+        tuple: 変数1と変数2の最終的な値のタプル
+    """
+    var1 = 0  # 変数1の初期値
+    var2 = 0  # 変数2の初期値
+
+    for instruction in instructions:
+        operation = instruction[0]
+        value = instruction[1]
+
+        if operation == "SET":
+            var_idx = int(instruction[2]) - 1  # 変数のインデックス
+            if var_idx == 0:
+                var1 = value
+            elif var_idx == 1:
+                var2 = value
+        elif operation == "ADD":
+            var2 += value
+        elif operation == "SUB":
+            var2 -= value
+
+    return var1, var2
+
+# 命令の数を入力
+n = int(input("命令の個数を入力してください: "))
+
+instructions = []
+# 命令のリストを入力
+for i in range(n):
+    while True:
+        instr = input(f"命令{i+1}を入力してください（例: SET 1 10、ADD 5、SUB 3）: ").split()
+        if len(instr) != 3 or instr[0] not in ["SET", "ADD", "SUB"] or not instr[1].isdigit() or not instr[2].isdigit():
+            print("命令のフォーマットが不正です。再度入力してください。")
+        else:
+            break
+    instructions.append([instr[0], int(instr[1]), int(instr[2])])
+
+# コンピュータをシミュレートし、変数1と変数2の最終的な値を取得
+result = simulate_computer(instructions)
+
+# 変数1と変数2の最終的な値を半角スペース区切りで1行に出力し、最後に改行を追加
+print(*result, sep=" ", end="\n")
+
+# C026　ウサギと人参
+# utf-8
+# 入力を受け取る
+N, S, p = map(int, input().split())  # 人参のデータの数、目安となる糖分、許容誤差
+
+max_mass = -1  # 最大質量を初期化
+max_index = -1  # 最大質量の人参の番号を初期化
+
+# N個の人参データを入力として受け取る
+for i in range(1, N + 1):
+    data = list(map(int, input().split()))  # 質量と糖分をスペース区切りで入力
+    mass = data[0]  # 人参の質量
+    sugar = data[1]  # 人参の糖分
+
+    # 糖分が許容範囲内でかつ質量が最大の場合、最大質量とその人参の番号を更新
+    if S - p <= sugar <= S + p and mass > max_mass:
+        max_mass = mass
+        max_index = i
+
+if max_index != -1:
+    print(max_index)  # 最大質量の人参の番号を出力
+else:
+    print("not found")  # 見つからなかった場合は "not found" を出力
+
 # C027
 # C028
 # C029
 # C030
-
-
-
-
-
-
-
-
-
-
-
-
+# C031
+# C032
+# C033
+# C034
+# C035
+# C036
+# C037
+# C038
+# C039
+# C040
+# C041
+# C042
+# C043
+# C044
+# C045
+# C046
+# C047
+# C048
+# C049
+# C050
+# C051
+# C052
+# C053
+# C054
+# C055
 
 
 # C128
