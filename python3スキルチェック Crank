@@ -141,7 +141,7 @@ if len(desired_rooms) > 0:
 else:
     print("none")
         
-# C014
+# C014　ボールが入る箱
 # utf-8
 # 入力からボールの半径と箱の情報を取得
 n, r = map(int, input().split())
@@ -365,7 +365,7 @@ leftover_amount = calculate_leftover_amount(m, p, q)
 
 # 売れ残り量を小数値で出力
 print("{:.4f}".format(leftover_amount))
-
+--------------------------------------------- C021　※欠番 ◆
 # C021　暴風域にいますか
 # utf-8
 import math
@@ -450,7 +450,7 @@ for j in range(N):
             c += 1
     print(c)
     
-# C024
+# C024　ミニ・コンピュータ
 # coding: utf-8
 n = int(input())
 num1 = 0
@@ -552,35 +552,325 @@ if max_index != -1:
 else:
     print("not found")  # 見つからなかった場合は "not found" を出力
 
-# C027
-# C028
-# C029
-# C030
-# C031
-# C032
-# C033
-# C034
-# C035
-# C036
-# C037
-# C038
-# C039
-# C040
-# C041
-# C042
-# C043
-# C044
-# C045
-# C046
-# C047
-# C048
-# C049
-# C050
-# C051
-# C052
-# C053
-# C054
-# C055
+# C027　◆
+# C028　単語テストの採点
+# utf-8
+N = int(input())
+words = [input().split() for x in range(N)] #出力[q_1,a_1][q_2,a_2]....
+score = 0
 
+for word in words:
+    if len(word[0]) == len(word[1]):
+        miss = 0 #missは毎回０になる必要がある
+        for i in range(len(word[0])):#文字の長さだけ繰り返される(if文で文字列の数が違うものは省いているので差異を気にする必要はない)
+            if (word[0])[i] != (word[1])[i]:#リストにしている単語を1文字ずつ(i)比べる
+                miss += 1
+        
+        if miss < 1:
+            score += 2
+            
+        elif miss < 2:
+            score += 1
+            
+print(score)
 
-# C128
+# C029　旅行の計画
+# utf-8
+# 連休の日数を表す整数 M と 旅行の日数を表す整数 N を入力から取得
+M, N = map(int, input().split())
+
+# 連休の日付と降水確率を格納するリスト
+dates = []
+rainfall_probs = []
+
+# 連休の日付と降水確率を入力から取得
+for _ in range(M):
+    d, r = map(int, input().split())
+    dates.append(d)
+    rainfall_probs.append(r)
+
+# N日間の降水確率の平均が最も低くなる日程の最初の日付と最後の日付を初期化
+min_avg_rainfall_prob = float('inf')
+start_date = -1
+end_date = -1
+
+# 連休の日付をスライドさせながらN日間の降水確率の平均を計算し、最も低い値を探索
+for i in range(M - N + 1):
+    avg_rainfall_prob = sum(rainfall_probs[i:i+N]) / N
+    if avg_rainfall_prob < min_avg_rainfall_prob:
+        min_avg_rainfall_prob = avg_rainfall_prob
+        start_date = dates[i]
+        end_date = dates[i + N - 1]
+
+# 結果を出力
+print(start_date, end_date)
+
+# C030　白にするか黒にするか
+# utf-8
+# 画像のサイズを表す整数 H, W を入力から取得
+H, W = map(int, input().split())
+
+# 画像の各画素値を表す整数の二次元配列 img を入力から取得
+img = []
+for _ in range(H):
+    row = list(map(int, input().split()))
+    img.append(row)
+
+# 二値画像に変換して結果を出力
+for i in range(H):
+    for j in range(W):
+        # 画素値が 128 以上ならば 1 (白)、それ以下ならば 0 (黒) に変換
+        if img[i][j] >= 128:
+            img[i][j] = 1
+        else:
+            img[i][j] = 0
+        print(img[i][j], end=" ")  # 変換結果をスペース区切りで出力
+    print()  # 改行して次の行を出力
+
+--------------------------------------------- C031　※欠番 ◆
+# C031　時差を求めたい
+# utf-8
+# 都市ごとの時差を管理する辞書を作成
+time_difference = {}
+
+# 都市の総数を入力
+N = int(input())
+
+# 都市ごとの時差情報を入力
+for i in range(N):
+    city_info = input().split()
+    city_name = city_info[0]
+    time_difference[city_name] = int(city_info[1])
+
+# ユーザの所在地の都市と投稿時刻を入力
+user_city, user_time = input().split()
+
+# ユーザの所在地の都市の時差を取得
+user_time_difference = time_difference[user_city]
+
+# ユーザの投稿時刻を時と分に分割
+user_hour, user_minute = map(int, user_time.split(':'))
+
+# 各都市ごとに投稿時刻を修正して出力
+for city, diff in time_difference.items():
+    # ユーザの所在地の都市の場合はそのまま出力
+    if city == user_city:
+        print(user_time)
+    else:
+        # 各都市の時差を考慮して投稿時刻を修正
+        city_hour = (user_hour + diff - user_time_difference + 24) % 24
+        city_minute = user_minute
+        # 時と分を0埋め2桁の文字列に変換して出力
+        print('{:02d}:{:02d}'.format(city_hour, city_minute))
+
+# C032　お得な買い物
+# utf-8
+n=int(input())
+a=[0]*4
+for i in range(n):
+    v,p=map(int, input().split())
+    a[v]=a[v]+p
+print(a[0]//100*5+a[1]//100*3+a[2]//100*2+a[3]//100*1)
+
+# C033　◆
+# C034　先生の宿題
+def calculate_answer(problem):
+    # 問題をスペースで分割して、各要素を取得
+    elements = problem.split(" ")
+    a = elements[0]
+    op = elements[1]
+    b = elements[2]
+    c = elements[4]
+    
+    # a, b, c のうち空欄を特定し、答えを計算
+    if a == "x":
+        if op == "+":
+            answer = int(c) - int(b)
+        elif op == "-":
+            answer = int(c) + int(b)
+    elif b == "x":
+        if op == "+":
+            answer = int(c) - int(a)
+        elif op == "-":
+            answer = int(a) - int(c)
+    elif c == "x":
+        if op == "+":
+            answer = int(a) + int(b)
+        elif op == "-":
+            answer = int(a) - int(b)
+    
+    # 答えが 0 から 9 の間に収まるように制限
+    if answer < 0:
+        answer = 0
+    elif answer > 9:
+        answer = 9
+        
+    return str(answer)
+            
+# 問題を入力として受け取る
+problem = input()
+
+# 答えを計算して出力
+answer = calculate_answer(problem)
+print(answer)
+
+# C035　試験の合格判定
+# utf-8
+# 受験者の人数を入力
+N = int(input())
+
+# 2段階選抜を通過できる人数をカウントする変数を初期化
+passed_count = 0
+
+# 各受験者の情報を入力し、2段階選抜を通過できるかを判定
+for i in range(N):
+    # 受験者の情報を入力
+    data = input().split()
+    t_i = data[0]  # 文理の区分
+    e_i = int(data[1])  # 英語の点数
+    m_i = int(data[2])  # 数学の点数
+    s_i = int(data[3])  # 理科の点数
+    j_i = int(data[4])  # 国語の点数
+    g_i = int(data[5])  # 地理歴史の点数
+    
+    # 各科目の合計得点を計算
+    total_score = e_i + m_i + s_i + j_i + g_i
+    
+    # 理系か文系かを判定
+    is_science_major = t_i == "s"
+    is_literature_major = t_i == "l"
+    
+    # 2段階選抜の条件を満たすかを判定
+    if total_score >= 350 and ((is_science_major and (m_i + s_i) >= 160) or (is_literature_major and (j_i + g_i) >= 160)):
+        passed_count += 1
+
+# 2段階選抜を通過できる人数を出力
+print(passed_count)
+
+# C036　犬ぞりトーナメント
+# C037　アニメの日時
+# C038　お菓子の分配
+# C039　古代の数式
+# C040　背比べ
+--------------------------------------------- C041　※欠番 ◆
+# C041　メダルランキングの作成
+# C042　リーグ表の作成
+# C043　使用回数の調査
+# C044　手の組み合わせ
+# C045　ページネーション
+# C046　書籍購入費ランキング
+# C047　◆
+# C048　タダ飲みコーヒー
+# C049　エレベーター
+# C050　オークションの結果
+--------------------------------------------- C051　※欠番 ◆
+# C051　カード並べ
+# C052　ゲームの画面
+# C053　カードの合計
+# C054　スピード違反の取り締まり
+# C055　ログのフィルター
+# C056　テストの採点
+# C057　シャボン玉飛ばし
+# C058　模様そろえ
+# C059　パリティチェック
+# C060　辞書の作成
+--------------------------------------------- C061　※欠番 ◆
+# C061　繰り上がりのない足し算
+# C062　回転寿司のメロン
+# C063　ガーデニング
+# C064　paizaでお食事
+# C065　数字あてゲーム
+# C066　金魚すくい
+# C067　数字の調査
+# C068　秘密の手紙
+# C069　お祭りの日付
+# C070　簡易カードゲーム
+--------------------------------------------- C071　※欠番 ◆
+# C071　直角三角形
+# C072　モンスターの進化
+# C073　うさぎとかめ
+# C074　文章サイズ変更
+# C075　ポイント払い
+# C076　給与の計算
+# C077　レポートの評価
+# C078　株の売買
+# C079　カードを集める
+# C080　ボタンを押すゲーム
+--------------------------------------------- C081　※欠番 ◆
+# C081　靴下の整理
+# C082　テストの赤点
+# C083　売上の発表
+# C084　枠で囲む
+# C085　壊れかけのキーボード
+# C086　ハンドルネームの生成
+# C087　数字の規則
+# C088　RPGでお買い物
+# C089　ストラックアウト
+# C090　黒電話
+--------------------------------------------- C091　※欠番 ◆
+# C091　みかんの仕分け
+# C092　工場のベルトコンベア
+# C093　下桁ルール
+# C094　国民の税金
+# C095　合言葉
+# C095　バスの時間(番号ダブり)
+# C096　夏休み
+# C097　プレゼント応募企画の実施
+# C098　多重パス回し
+# C099　折り紙の貼り合わせ
+# C100　選曲の方法
+--------------------------------------------- C101　※欠番 ◆
+# C101　ラッキーデイ
+# C102　行きたいライブのスケジュール
+# C103　ロボット芸人
+# C104　虫食い算
+# C105　カードのスコア
+# C106　メダル授与式
+# C107　ランクの計算
+# C108　観光の計画
+# C109　IDを登録順に並べよう
+# C110　就職活動
+--------------------------------------------- C111　※欠番 ◆
+# C111　ハッシュ関数
+# C112　時差ボケ
+# C113　一人でスゴロク
+# C114　しりとりの判定
+# C115　渋滞の距離
+# C116　あたり棒の検査
+# C117　大量出店
+# C118　ダイヤル数
+# C119　お菓子かいたずらか
+# C120　花のリース
+--------------------------------------------- C121　※欠番 ◆
+# C121　レストランの人気メニュー
+# C122　プレゼントのセール
+# C123　節分ロボット
+# C124　インターンへの応募
+# C125　カードの積
+# C126　宿泊費と交通費
+# C127　割引キャンペーン
+# C128　連分数
+# C129
+# C130
+--------------------------------------------- C131　※欠番 ◆
+# C131　
+# C132　
+# C133　
+# C134　
+# C135　
+# C136　
+# C137　
+# C138　
+# C139
+# C140
+--------------------------------------------- C141　※欠番 ◆
+# C141　
+# C142　
+# C143　
+# C144　
+# C145　
+# C146　
+# C147　
+# C148　
+# C149
+# C150
