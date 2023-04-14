@@ -1039,17 +1039,275 @@ while True:
         break
 --------------------------------------------- C051　※欠番 ◆
 # C051　カード並べ
+# utf-8
+numlist=list(map(int,input().split()))#a, b, c, d はそれぞれ 4 枚のカード
+newlist=sorted(numlist)#昇順に並び替え #例： 2, 3, 8 , 9
+num1=str(newlist[3])+str(newlist[1])
+num2=str(newlist[2])+str(newlist[0])
+print(int(num1)+int(num2))
+
 # C052　ゲームの画面
+# utf-8
+w = input().strip().split(" ")
+w = list(map(int, w))   # int変換
+
+n = input().strip().split(" ")
+n = list(map(int, n))   # int変換
+
+ful = w[0] * w[1]
+used = (w[0] - abs(n[0])) * (w[1] - abs(n[1]))
+
+print(ful - used)
+
 # C053　カードの合計
+# utf-8
+party = int(input())
+
+cards = input()
+cards_split = cards.split()
+ten = "x10" in cards_split
+
+bonus = 1
+
+if ten is True:
+    cards_split.remove("x10")
+    bonus = 10
+
+cards_split_i = [int(s) for s in cards_split]
+
+zero = "0" in cards_split
+
+if zero is True:
+    max_num = max(cards_split_i)
+    cards_split_i.remove(max_num)
+
+res = sum(cards_split_i) * bonus
+
+print(res)
+
 # C054　スピード違反の取り締まり
+# utf-8
+n = input().strip().split(" ")
+n = list(map(int, n))   # int変換
+
+t = []
+p = []
+while True:
+    try:
+        a = input().strip().split(" ")
+        a = list(map(int, a))   # int変換
+        t.append(a[0])
+        p.append(a[1])
+
+    except EOFError:
+        break
+
+ans = "NO"
+
+for i in range(n[0]):
+    if i == 0:
+        continue
+
+    if (p[i] - p[i-1]) / (t[i] - t[i-1]) > n[1]:
+        ans = "YES"
+        break
+
+print(ans)
+
 # C055　ログのフィルター
+# utf-8
+import re
+
+N = int(input())
+# print(N)
+string = input()
+# print(string)
+flag = 0
+for i in range(N):
+    abc = input()
+    
+    if string in abc:
+        print(abc)
+        flag = 1
+        
+if flag == 0:
+    print('None')
+    
 # C056　テストの採点
+# utf-8
+from sys import stdin
+
+n, m = map(int, stdin.readline().rstrip().split())
+test_results = [list(map(int, stdin.readline().rstrip().split())) for i in range(n)]
+# pass_students_id = [i + 1 for i, result in enumerate(test_results) if (result[0] - result[1] * 5) >= m]
+pass_students_id = []
+for i, result in enumerate(test_results):
+  r1 = result[0] - result[1] * 5
+  r = r1 if r1 >= 0 else 0
+  if r >= m:
+    pass_students_id.append(i+1)
+for i in pass_students_id:
+  print(i)
+
 # C057　シャボン玉飛ばし
+# utf-8
+# 入力を受け取る
+T, x, y = map(int, input().split())
+wind = []
+for _ in range(T):
+    a, b = map(int, input().split())
+    wind.append((a, b))
+
+# シャボン玉の位置を更新しながら最大の x 座標を求める
+max_x = x
+for i in range(T):
+    a, b = wind[i]
+    # シャボン玉の位置を更新
+    x += a
+    y += b
+    # y 座標が 0 以下になったらシャボン玉が割れるので、最大の x 座標を出力して終了
+    if y <= 0:
+        print(max_x)
+        exit()
+    # x 座標の最大値を更新
+    max_x = max(max_x, x)
+
+# T 時間経過後までシャボン玉が割れずに生き残った場合、最終的な x 座標を出力
+print(max_x)
+
 # C058　模様そろえ
+# utf-8
+# 入力を受け取る
+input_line = input().strip().split()
+N = int(input_line[0])  # 箱の側面の数
+t = input_line[1]  # そろえる向きを表す文字列
+s = input_line[2]  # 最初の箱の向きを表す文字列
+
+# 最小回転数を計算
+rotation = (s + s).find(t)  # sを2つ繋げて、tが最初に出現するインデックスを求める
+
+# 最小回転数がN以上の場合は、回転数を修正する
+if rotation >= N:
+    rotation = N - rotation
+
+# 結果を出力
+print(rotation)
+
 # C059　パリティチェック
+# utf-8
+# 入力データの取得
+N = int(input())  # 2進数の数
+binary_list = []  # 2進数のリスト
+for i in range(N):
+    binary = input().strip()
+    binary_list.append(binary)
+
+# 排他的論理和(XOR)を計算して結果を出力する関数
+def calculate_xor(binary_list):
+    result = ""
+    for i in range(4):  # 4桁の2進数なので4回繰り返す
+        count = 0
+        for j in range(N):
+            if binary_list[j][i] == '1':
+                count += 1
+        if count % 2 == 1:
+            result += '1'
+        else:
+            result += '0'
+    return result
+
+# 排他的論理和(XOR)を計算して結果を出力
+result = calculate_xor(binary_list)
+print(result)
+
 # C060　辞書の作成
+# utf-8
+def get_words_on_page(N, K, P, words):
+    # 辞書順に単語を並び替える
+    words.sort()
+
+    # P ページ目に載る単語のインデックスを計算
+    start_idx = (P - 1) * K
+    end_idx = min(start_idx + K, N)
+
+    # P ページ目に載る単語のリストを取得
+    words_on_page = words[start_idx:end_idx]
+
+    return words_on_page
+
+# 入力の受け取り
+N, K, P = map(int, input().split())
+words = input().strip().split()
+
+# 入力のバリデーション
+if not (3 <= N <= 1000) or not (1 <= K <= N) or not (1 <= P <= N):
+    print("入力値が条件を満たしていません。")
+    exit(1)
+
+if len(words) != N or len(set(words)) != N:
+    print("入力される単語が条件を満たしていません。")
+    exit(1)
+
+for word in words:
+    if not (0 <= len(word) <= 10):
+        print("入力される単語の長さが条件を満たしていません。")
+        exit(1)
+
+# P ページ目に載る単語のリストを取得
+words_on_page = get_words_on_page(N, K, P, words)
+
+# 結果を改行区切りで出力
+print("\n".join(words_on_page))
+
+'''
+# 別解
+N, K, P = map(int,input().split())
+s = input().split()
+s.sort()
+j = []
+for i in range(0, N, K):
+    j.append(s[i:i+K])
+for k in j[P-1]:
+    print(k)
+
+'''
 --------------------------------------------- C061　※欠番 ◆
 # C061　繰り上がりのない足し算
+# utf-8
+A, B = map(str,input().split())
+s = ""
+if max(len(A), len(B)) == 3:
+    s += str((int(A) // 100 + int(B) // 100) % 10)
+if max(len(A), len(B)) >= 2:
+    s += str((int(A) // 10 + int(B) // 10) % 10)
+s += str((int(A) + int(B)) % 10)
+print(s)
+
+# 別解
+def add_with_kids_method(num1, num2):
+    len_diff = abs(len(num1) - len(num2))
+
+    if len(num1) > len(num2):
+        num2 = '0' * len_diff + num2
+    else:
+        num1 = '0' * len_diff + num1
+
+    result = ''
+    for i in range(len(num1)-1, -1, -1):
+        digit1 = int(num1[i])
+        digit2 = int(num2[i])
+        sum_digits = digit1 + digit2
+        result = str(sum_digits % 10) + result
+
+    return result
+
+
+# 入力を受け取る
+input_str = input().rstrip()  # 入力を1行受け取り、末尾の改行を削除
+num1, num2 = input_str.split()  # スペース区切りで入力を分割
+result = add_with_kids_method(num1, num2)  # 繰り上がりを無視して足し算を実行
+print(result)  # 結果を出力
+
 # C062　回転寿司のメロン
 # C063　ガーデニング
 # C064　paizaでお食事
