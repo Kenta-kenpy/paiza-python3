@@ -760,10 +760,73 @@ s.sort()
 print(s[0] if t2[0] < t2[1] else s[1])
 print(s[1] if t2[0] < t2[1] else s[0])
 
-# C037　アニメの日時
+# C037　アニメの日時　△
+# utf-8
+a = input().split(" ")
+date=a[0].split("/")
+time=a[1].split(":")
+#print(date)
+#print(time)
+if int(time[0])>=24:
+    day = int(date[1]) + int(time[0]) // 24
+    hour = "{0:02d}".format(int(time[0]) % 24)
+else:
+    day = int(date[1])
+    hour = "{0:02d}".format(int(time[0]))
+#print(hour)
+print(str(date[0]) + "/" + str(day) + " " + str(hour) + ":" + str(time[1]))
+
 # C038　お菓子の分配
+# utf-8
+n = input().strip().split(" ")
+n = list(map(int, n))   # int変換
+
+ans = [0, 1001, 1001]  # No, mod, q
+
+for i in range(n[0]):
+    a = int(input())
+    m = n[1] % a
+    q = n[1] // a
+
+    if (m < ans[1])or (m == ans[1] and q < ans[2]):
+        ans[0] = i + 1
+        ans[1] = m
+        ans[2] = q
+
+print(ans[0])
+
 # C039　古代の数式
+# utf-8
+line = input()
+# print(line)
+line_list = list(line)
+# print(line_list)
+
+cnt_k=0
+cnt_l=0
+
+for i in range(len(line)):
+    # print(i)
+    if line_list[i]=="<":
+        cnt_k += 1
+    # print(cnt_k)
+    if line_list[i]=="/":
+        cnt_l += 1
+    
+print(cnt_k*10 + cnt_l)
+
 # C040　背比べ
+# utf-8
+n = int(input())
+comps = [input().split() for x in range(n)]
+l,r=0,1000
+for comp in comps:
+  if comp[0] == 'ge':
+    l = max(l,float(comp[1]))
+  else:
+    r = min(r,float(comp[1]))
+print(l,r)
+
 --------------------------------------------- C041　※欠番 ◆
 # C041　メダルランキングの作成
 # C042　リーグ表の作成
