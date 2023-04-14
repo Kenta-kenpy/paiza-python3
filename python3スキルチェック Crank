@@ -6,7 +6,7 @@
 # C003 ◆
 # C004 ◆
 # C005　アドレス調査
-utf-8
+# utf-8
 def is_valid_ipv4(ip_string):
     # 入力されたIPアドレスを"."で分割し、各部分が10進数の範囲内にあるかをチェック
     parts = ip_string.split(".")
@@ -958,10 +958,85 @@ else:
     print(*result)
     
 # C046　書籍購入費ランキング
+# utf-8
+member = int(input())
+name = input()
+names = name.split()
+
+book = int(input())
+buy = [input() for i in range(book)]
+
+dic = {}
+
+for members in range(member):
+	dic[names[members]] = 0
+
+for books in buy:
+	temp = books.split()
+	dic[temp[0]] += int(temp[1])
+	
+for k, v in sorted(dic.items(), key=lambda x: x[1], reverse=True):
+	print(k)
+    
 # C047　◆
 # C048　タダ飲みコーヒー
+# utf-8
+import math
+
+row = input()
+
+sp = row.split()
+
+# print(sp)
+
+price = int(sp[0])
+discount = int(sp[1])
+
+after_price = price
+total = price
+count = 0
+
+while after_price > 0:
+	# 切り捨て
+	after_price = math.floor(after_price * (100 - discount)/100)
+	total += after_price
+	
+print(total)
+
 # C049　エレベーター
+# utf-8
+# 入力を受け取る
+N = int(input())  # ログの行数
+floors = []  # エレベーターが止まった階のリスト
+for _ in range(N):
+    floor = int(input())
+    floors.append(floor)
+
+# エレベーターが合計で何階分の距離を動いたか計算する
+total_distance = 0  # 合計の距離
+current_floor = 1  # 現在の階数は必ず1階とする
+for floor in floors:
+    distance = abs(floor - current_floor)  # 現在の階数から目的の階数までの距離
+    total_distance += distance  # 合計の距離に加算
+    current_floor = floor  # 現在の階数を更新
+
+# 結果を出力
+print(total_distance)
+
 # C050　オークションの結果
+# utf-8
+S,a,b=map(int,input().split())
+while True:
+    if a>=S+10:
+        S=S+10
+    else:
+        print("B",S)
+        break
+    if b>=S+1000:
+        S=S+1000
+    else:
+        print("A",S)
+        break
 --------------------------------------------- C051　※欠番 ◆
 # C051　カード並べ
 # C052　ゲームの画面
