@@ -848,8 +848,48 @@ print(l,r)
 
 --------------------------------------------- C041　※欠番 ◆
 # C041　メダルランキングの作成
+# utf-8
+# 入力を受け取る
+N = int(input())  # 国の総数
+medals = []  # メダルの獲得数を格納するリスト
+
+# メダルの獲得数を入力から取得し、リストに格納
+for i in range(N):
+    g, s, b = map(int, input().split())
+    medals.append((g, s, b))
+
+# メダルの獲得数を条件にそってソート
+medals.sort(reverse=True)
+
+# ソートされたメダルの獲得数を出力
+for medal in medals:
+    print(*medal)
+
 # C042　リーグ表の作成
+# utf-8
+# 参加者数を入力から取得
+N = int(input())
+
+# 各試合の結果を入力から取得
+results = {}
+for i in range(1, N * (N - 1) // 2 + 1):
+    f, s = map(int, input().split())
+    results[i] = (f, s)
+
+# 表の初期化
+table = [['-' for _ in range(N)] for _ in range(N)]
+
+# 各試合の結果を表に反映
+for i, (f, s) in results.items():
+    table[f - 1][s - 1] = 'W'
+    table[s - 1][f - 1] = 'L'
+
+# 表の出力
+for row in table:
+    print(' '.join(row))
+    
 # C043　使用回数の調査
+
 # C044　手の組み合わせ
 # C045　ページネーション
 # C046　書籍購入費ランキング
