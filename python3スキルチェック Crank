@@ -747,7 +747,22 @@ for i in range(N):
 # 2段階選抜を通過できる人数を出力
 print(passed_count)
 
-# C036　犬ぞりトーナメント
+# C036　犬ぞりトーナメント　△半正解
+# utf-8
+e = [1,2,3,4]
+k = []
+for i in range(2):
+    k = k + input().split()
+j = []
+for i in range(2):
+    j = j + input().split()
+o = dict(zip(j,e))
+l = [o[str(min(j[int(k[0])-1],j[int(k[1])-1]))], o[str(min(j[int(k[2])-1],j[int(k[3])-1]))]]
+l.sort()
+o = dict(zip(j[4:6],l))
+print(o[str(min(j[4],j[5]))])
+print(o[str(max(j[4],j[5]))])
+
 # C037　アニメの日時
 # C038　お菓子の分配
 # C039　古代の数式
