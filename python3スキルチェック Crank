@@ -760,21 +760,40 @@ s.sort()
 print(s[0] if t2[0] < t2[1] else s[1])
 print(s[1] if t2[0] < t2[1] else s[0])
 
-# C037　アニメの日時　△
+# C037　アニメの日時
 # utf-8
-a = input().split(" ")
-date=a[0].split("/")
-time=a[1].split(":")
-#print(date)
-#print(time)
-if int(time[0])>=24:
-    day = int(date[1]) + int(time[0]) // 24
-    hour = "{0:02d}".format(int(time[0]) % 24)
+import re
+# 入力を受け取る
+t = input().rstrip()
+
+# 正規表現を使って入力の日付時刻をパース
+pattern = r'(\d{2})/(\d{2}) (\d{2}):(\d{2})'
+match = re.match(pattern, t)
+
+if match:
+    # パースに成功した場合
+    month = int(match.group(1))
+    day = int(match.group(2))
+    hour = int(match.group(3))
+    minute = int(match.group(4))
+    
+    # 月と日が不正な値の場合には修正する
+    while month > 12 or day > 31:
+        if month > 12:
+            month -= 12
+        if day > 31:
+            day -= 31
+    
+    # 時間が 24 以上の場合は日付を繰り上げる
+    while hour >= 24:
+        hour -= 24
+        day += 1
+        
+    # パースした値を元のフォーマットで出力
+    print("{:02d}/{:02d} {:02d}:{:02d}".format(month, day, hour, minute))
 else:
-    day = int(date[1])
-    hour = "{0:02d}".format(int(time[0]))
-#print(hour)
-print(str(date[0]) + "/" + str(day) + " " + str(hour) + ":" + str(time[1]))
+    # パースに失敗した場合は入力の日付時刻をそのまま出力
+    print(t)
 
 # C038　お菓子の分配
 # utf-8
