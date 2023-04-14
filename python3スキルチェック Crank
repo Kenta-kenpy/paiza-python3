@@ -747,21 +747,18 @@ for i in range(N):
 # 2段階選抜を通過できる人数を出力
 print(passed_count)
 
-# C036　犬ぞりトーナメント　△半正解
+# C036　犬ぞりトーナメント
 # utf-8
-e = [1,2,3,4]
-k = []
-for i in range(2):
-    k = k + input().split()
-j = []
-for i in range(2):
-    j = j + input().split()
-o = dict(zip(j,e))
-l = [o[str(min(j[int(k[0])-1],j[int(k[1])-1]))], o[str(min(j[int(k[2])-1],j[int(k[3])-1]))]]
-l.sort()
-o = dict(zip(j[4:6],l))
-print(o[str(min(j[4],j[5]))])
-print(o[str(max(j[4],j[5]))])
+f1 = [int(_) for _ in sorted(input().split())]
+f2 = [int(_) for _ in sorted(input().split())]
+t1 = [int(_) for _ in input().split()]
+t2 = [int(_) for _ in input().split()]
+
+s = [f1[0] if t1[f1[0]-1] < t1[f1[1]-1] else f1[1]]
+s += [f2[0] if t1[f2[0]-1] < t1[f2[1]-1] else f2[1]]
+s.sort()
+print(s[0] if t2[0] < t2[1] else s[1])
+print(s[1] if t2[0] < t2[1] else s[0])
 
 # C037　アニメの日時
 # C038　お菓子の分配
