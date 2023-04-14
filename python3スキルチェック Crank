@@ -889,9 +889,74 @@ for row in table:
     print(' '.join(row))
     
 # C043　使用回数の調査
+# utf-8
+import collections
+
+n = int(input())
+m = input().strip().split(" ")
+m = list(map(int, m))   # int変換
+
+c = collections.Counter(m)
+
+mc = c.most_common()
+
+mx = mc[0][1]
+l = []
+
+for x in mc:
+    if x[1] < mx:
+        break
+    else:
+        l.append(x[0])
+
+l.sort()
+
+print(" ".join([str(x) for x in l]))
 
 # C044　手の組み合わせ
+# utf-8
+n = int(input())
+
+h = []
+for i in range(n):
+    h.append(input())
+
+h = sorted(set(h))
+
+if len(h) == 2:
+    if h[0] == 'paper':
+        if h[1] == 'rock':
+            print(h[0])
+        else:
+            print(h[1])
+    else:
+        print(h[0])
+
+else:
+    print("draw")
+    
 # C045　ページネーション
+# utf-8
+def paginate_search_results(n, s, p):
+    start = (p - 1) * s + 1 # 開始番号
+    end = min(n, p * s) # 終了番号
+    if start > n:
+        return "none" # 検索結果が存在しない場合は"none"を返す
+    else:
+        return list(range(start, end + 1)) # 開始番号から終了番号までのリストを返す
+
+# 入力の取得
+n, s, p = map(int, input().split())
+
+# ページネーションの実行
+result = paginate_search_results(n, s, p)
+
+# 出力
+if result == "none":
+    print(result)
+else:
+    print(*result)
+    
 # C046　書籍購入費ランキング
 # C047　◆
 # C048　タダ飲みコーヒー
