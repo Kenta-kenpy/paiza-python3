@@ -1401,6 +1401,7 @@ result = find_unique_integer(N, hints)
 print(result)
 
 # C066　金魚すくい
+# utf-8
 M, N, X = map(int, input().split())
 w = [int(input()) for _ in range(M)]
 c = 0
