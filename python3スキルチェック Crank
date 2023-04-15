@@ -1325,8 +1325,44 @@ for i in range(t):
 print(a)  # 結果を出力
 
 # C063　ガーデニング
+# utf-8
+N = int(input())
+
+flowers = [[int(i) for i in input().split()] for j in range(N)]
+bloom_days = []
+max_count = 0
+max_date = 10000
+
+for i, j in flowers:
+    bloom_day = i + j
+    bloom_days.append(bloom_day)
+
+for day in bloom_days:
+    count = bloom_days.count(day)
+    if count > max_count or (count == max_count and day < max_date):
+        max_count = count
+        max_date = day
+
+print(max_date)
+'''
+x リストを使用せずに、bloom_days リストに直接花が咲く日数を追加しました。
+2 重の for ループを使用する代わりに、count() メソッドを使用して同じ日数の花の個数を数えました。
+最大の花の個数と日数を更新する際に、max_count と max_date の比較を行い、必要に応じて更新しました。
+'''
+
 # C064　paizaでお食事
+# utf-8
+M, N = map(int, input().split())
+
+c = [int(input()) for i in range(M)]
+a = [list(map(int, input().split())) for i in range(N)]
+
+for i in range(N):
+    total_calories = sum([c[j-1]*a[i][j-1]//100 for j in range(1, M+1)])
+    print(total_calories)
+
 # C065　数字あてゲーム
+
 # C066　金魚すくい
 # C067　数字の調査
 # C068　秘密の手紙
