@@ -784,6 +784,12 @@ for a in A:
     print(a)
 
 step8　要素のカウント
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+print(A.count(M))
+
 step9  配列末尾への追加
 step10　要素の削除
 step11  要素の挿入
