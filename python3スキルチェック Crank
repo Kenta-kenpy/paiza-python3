@@ -1362,6 +1362,43 @@ for i in range(N):
     print(total_calories)
 
 # C065　数字あてゲーム
+# utf-8
+def find_unique_integer(N, hints):
+    nums = set(range(1, 101))
+
+    for hint in hints:
+        op = hint[0]
+        num = hint[1]
+        temp = set()
+
+        if op == '>':
+            for i in nums:
+                if i > num:
+                    temp.add(i)
+        elif op == '<':
+            for i in nums:
+                if i < num:
+                    temp.add(i)
+        elif op == '/':
+            for i in nums:
+                if i % num == 0:
+                    temp.add(i)
+
+        nums = temp
+
+    return nums.pop()
+
+
+# 入力の読み込み
+N = int(input())
+hints = []
+for i in range(N):
+    hint = input().split()
+    hints.append((hint[0], int(hint[1])))
+
+# 一意の正整数を探す
+result = find_unique_integer(N, hints)
+print(result)
 
 # C066　金魚すくい
 # C067　数字の調査
