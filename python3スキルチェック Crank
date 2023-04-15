@@ -1674,10 +1674,115 @@ print(output.rstrip())
 '''
     
 # C075　ポイント払い
+# utf-8
+# 入力を受け取る
+N, M = map(int, input().split(' '))
+fare_list = list()
 
+# バスの運賃を入力してリストに格納
+for i in range(M):
+    fare = int(input())
+    fare_list.append(fare)
+
+point = 0
+for fare in fare_list:
+    if point >= fare:
+        point -= fare
+    else:
+        N -= fare
+        point += fare * 0.1
+
+    # カード残高とポイントを出力
+    print(N, int(point))
+    
 # C076　給与の計算
+# utf-8
+x,y,z = map(int, input().split())
+n=int(input())
+ans=0
+for i in range(n):
+    s,e=map(int, input().split())
+    t=e-s
+    s1,e1=0,0
+    if 9<=s<17:
+        s1=s
+    elif s<9 and e>9:
+        s1=9
+    if 9<e<=17 and e>s:
+        e1=e
+    elif e>17 and s<17:
+        e1=17
+    t1=e1-s1
+    s1,e1=0,0
+    if 17<=s<22:
+        s1=s
+    elif s<17 and e>17:
+        s1=17
+    if 17<e<=22 and e>s:
+        e1=e
+    elif e>22 and s<22:
+        e1=22
+    t2=e1-s1
+    ans=ans+(t1)*x + (t2)*y + (t-t1-t2)*z
+print(ans)
+'''
+与えられた通常の時給、夜の時給、深夜の時給、および出勤日数に基づいて、労働時間に応じた給料の合計金額を計算するものです。
+まず、入力値を取得します。通常の時給、夜の時給、深夜の時給は整数として取得し、出勤日数は整数として取得します。また、出勤日数分の出勤時刻と退勤時刻をリストとして取得します。
+次に、1 時間単位の労働時間を計算するための関数 calculate_work_hours を定義します。
+この関数は、出勤時刻と退勤時刻を受け取り、労働時間を計算します。
+具体的には、出勤時刻と退勤時刻がそれぞれ 17 時以降にある場合は出勤時刻と退勤時刻の差を、出勤時刻が 17 時以降で退勤時刻が 17 時以前の場合は出勤時刻から 17 時までの時間を、
+出勤時刻が 17 時以前で退勤時刻が 17 時以降の場合は退勤時刻から 17 時までの時間を、それ以外の場合は労働時間を 0 時間として返します。
+その後、合計給料を初期化します。
+出勤日数分のループを行い、各日の労働時間を calculate_work_hours 関数を呼び出して計算します。
+労働時間が 8 時間であれば通常の時給を適用し、それ以外の場合は夜の時給と深夜の時給を適用して合計給料に加算します。
+最後に、合計給料を出力します。
+'''
+
 # C077　レポートの評価
+def evaluate_report(k, n, submissions):
+    scores = []
+    for i in range(k):
+        d_i, a_i = submissions[i]
+        if d_i == 0:
+            score = (a_i * 100 // n)
+        elif d_i < 0:
+            score = (a_i * 100 // n)
+        elif d_i <= 9:
+            score = (0.8 * a_i * 100 // n)
+        else:
+            score = 0
+
+        scores.append(score)
+
+    results = []
+    for score in scores:
+        if score >= 80:
+            results.append('A')
+        elif score >= 70:
+            results.append('B')
+        elif score >= 60:
+            results.append('C')
+        else:
+            results.append('D')
+
+    return results
+
+# 入力の受け取り
+k, n = map(int, input().split())
+submissions = []
+for i in range(k):
+    d_i, a_i = map(int, input().split())
+    submissions.append([d_i, a_i])
+
+# レポートの評価を計算
+results = evaluate_report(k, n, submissions)
+
+# 結果を出力
+for result in results:
+    print(result)
+
 # C078　株の売買
+
 # C079　カードを集める
 # C080　ボタンを押すゲーム
 --------------------------------------------- C081　※欠番 ◆
