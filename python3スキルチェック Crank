@@ -1782,8 +1782,40 @@ for result in results:
     print(result)
 
 # C078　株の売買
+# utf-8
+# 入力値の取得
+N, c1, c2 = map(int, input().split())
+prices = []
+for _ in range(N):
+    prices.append(int(input()))
+
+# 初期設定
+stocks = 0
+total_profit = 0
+
+# N日間の売買ルールに従って処理
+for i in range(N):
+    # 株価がc1円以下の場合、1株買う
+    if prices[i] <= c1:
+        stocks += 1
+    # 株価がc2円以上の場合、持ち株をすべて売る
+    elif prices[i] >= c2:
+        total_profit += stocks * prices[i]
+        stocks = 0
+    # 株価がc1円とc2円の間の場合は何もしない
+    # N日目には、持ち株をすべて売る
+    elif i == N - 1:
+        total_profit += stocks * prices[i]
+        stocks = 0
+
+# 残った持ち株を売った後の損益を計算
+total_profit -= stocks * c1
+
+# 結果を出力
+print(total_profit)
 
 # C079　カードを集める
+
 # C080　ボタンを押すゲーム
 --------------------------------------------- C081　※欠番 ◆
 # C081　靴下の整理
