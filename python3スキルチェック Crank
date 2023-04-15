@@ -1401,6 +1401,26 @@ result = find_unique_integer(N, hints)
 print(result)
 
 # C066　金魚すくい
+M, N, X = map(int, input().split())
+w = [int(input()) for _ in range(M)]
+c = 0
+d = 0
+while True:
+    if N <= 0:
+        break
+    if len(w) == d:
+        break
+    p = X
+    N -= 1
+    while len(w) > d:
+        k = w[d]
+        p -= k
+        if p <= 0:
+            break
+        c += 1
+        d += 1
+print(c)
+
 # C067　数字の調査
 # C068　秘密の手紙
 # C069　お祭りの日付
