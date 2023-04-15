@@ -1565,7 +1565,57 @@ for i in range(N):
         print('No Pair')
 --------------------------------------------- C071　※欠番 ◆
 # C071　直角三角形
+'''
+直角三角形の二辺の長さについて　Mより小さい底辺, Nより小さい高さを持つ
+全ての辺の長さは整数
+斜辺も整数である直角三角形の個数を求める
+例: 10 10の時 4   (10-8-6,10-6-8,5-3-4,5-4-3の4組)
+例: 20 20の時 12  (13-12-5, 13-5-12, 10-8-6, 10-6-8, 5-3-4, 5-4-3, 17-15-8, 17-8-15, 
+15-12-9, 15-9-12, 20-16-12, 20-12-16の12組)
+'''
+
+def count_right_angle_triangles(M, N):
+    def pm(a, b):
+        return min(M // a, N // b) + min(M // b, N // a)
+
+    count = 0
+    count += pm(3, 4)
+    count += pm(5, 12)
+    count += pm(7, 24)
+    count += pm(8, 15)
+    count += pm(20, 21)
+
+    return count
+
+# 入力を取得
+M, N = map(int, input().split())
+
+# 直角三角形の個数を計算
+count = count_right_angle_triangles(M - 1, N - 1)  # M, N を修正
+
+# 結果を出力
+print(count)
+
 # C072　モンスターの進化
+# utf-8
+ATK, DEF, AGI = (int(x) for x in input().split())
+N = int(input())
+List = []
+for i in range(N):
+    List.append(input().split())
+
+flag = 0
+for l in List:
+    name = l[0]
+    MINATK, MAXATK, MINDEF, MAXDEF, MINAGI, MAXAGI = int(
+        l[1]), int(l[2]), int(l[3]), int(l[4]), int(l[5]), int(l[6])
+    if MINATK <= ATK and ATK <= MAXATK and MINDEF <= DEF and DEF <= MAXDEF and MINAGI <= AGI and AGI <= MAXAGI:
+        flag = 1
+        print(name)
+
+if flag == 0:
+    print('no evolution')
+    
 # C073　うさぎとかめ
 # C074　文章サイズ変更
 # C075　ポイント払い
