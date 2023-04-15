@@ -1428,9 +1428,141 @@ print(c)
 '''
 
 # C067　数字の調査
+# utf-8
+def binary_digit_check(N, X, k):
+    # Xを2進数に変換し、0bを除いた2進数文字列に変換する
+    binary = bin(X)[2:]
+    # binaryの先頭に0を追加して、指定された桁が存在しない場合に備える
+    binary = '0' + binary
+
+    result = []
+    for ki in k:
+        # 指定された桁の値を判定し、0ならFalse、1ならTrueを追加する
+        result.append(binary[-int(ki)] == '1')
+
+    return result
+
+# 入力の受け取り
+N, X = map(int, input().split())
+k = [int(input()) for _ in range(N)]
+
+# プログラムの実行
+result = binary_digit_check(N, X, k)
+
+# 結果の出力
+for res in result:
+    print(int(res))
+
 # C068　秘密の手紙
+# utf-8
+def decrypt(ciphertext, N):
+    # アルファベットのリストを作成
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    # 復号結果を格納する変数を初期化
+    plaintext = ''
+    # 暗号文の文字を順番に処理
+    for i in range(len(ciphertext)):
+        # 文字が奇数番目の場合
+        if i % 2 == 0:
+            # アルファベットを逆方向に N 文字ずらす
+            shifted_char = alphabet[(alphabet.index(ciphertext[i]) - N) % 26]
+        # 文字が偶数番目の場合
+        else:
+            # アルファベットを順方向に N 文字ずらす
+            shifted_char = alphabet[(alphabet.index(ciphertext[i]) + N) % 26]
+        # 復号結果に追加
+        plaintext += shifted_char
+    return plaintext
+
+# ずらした文字数 N を入力から取得
+N = int(input())
+# 暗号文を入力から取得
+ciphertext = input().rstrip()
+# 元に戻された文字列を取得
+plaintext = decrypt(ciphertext, N)
+# 復号結果を出力
+print(plaintext)
+
 # C069　お祭りの日付
+# utf-8
+def is_leap_year(year):
+    if year % 4 == 1:
+        return True
+    else:
+        return False
+
+def days_in_month(month, leap_year=False):
+    if month % 2 == 0:
+        return 15
+    else:
+        return 13
+
+def days_until_next_paiza_festival(y, m, d, a, b):
+    if m % 2 == 0:
+        c = 15 - d
+    else:
+        c = 13 - d
+    m += 1
+
+    while not is_leap_year(y):
+        c += days_in_month(m)
+        m += 1
+        if m == 14:
+            m = 1
+            y += 1
+
+    for i in range(1, a):
+        c += days_in_month(i)
+
+    if a % 2 == 0:
+        c += b
+    else:
+        c += b
+
+    return c
+
+# 1行目の入力を受け取る
+y, m, d = map(int, input().split())
+
+# 2行目の入力を受け取る
+a, b = map(int, input().split())
+
+# 入力値の範囲チェック
+if not (1 <= y <= 10000) or not (1 <= m <= 13) or not (1 <= d <= days_in_month(m)) or not (1 <= a <= 13) or not (1 <= b <= days_in_month(a)):
+    print("入力値が範囲外です。")
+elif y % 4 == 1:
+    print("入力値 y は 4 で割った余りが 1 になることはありません。")
+else:
+    # パイーザ祭の開催日までの日数を計算
+    days = days_until_next_paiza_festival(y, m, d, a, b)
+
+    # 結果の出力
+    print(days, end="\n")
+
 # C070　簡易カードゲーム
+# utf-8
+N = int(input())
+for i in range(N):
+    k = input()
+    pair = 0
+    for j in range(9):
+        kazu = k.count(str(j+1))
+        if kazu == 4:
+            print('Four Card')
+            pair = -1
+            break
+        elif kazu == 3:
+            print('Three Card')
+            pair = -1
+            break
+        elif kazu == 2:
+            pair += 1
+    if pair == 2:
+        print('Two Pair')
+    elif pair == 1:
+        print('One Pair')
+    elif pair == 0:
+        print('No Pair')
 --------------------------------------------- C071　※欠番 ◆
 # C071　直角三角形
 # C072　モンスターの進化
