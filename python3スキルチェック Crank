@@ -2019,8 +2019,34 @@ decorated_string += "+" * (len(S) + 2) + "\n"
 print(decorated_string, end='')
 
 # C085　壊れかけのキーボード
+# utf-8
+# 入力を受け取る
+t = list(map(int, input().split()))
+S = input()
+
+# 出力文字列を初期化
+output_str = ""
+
+# 入力された文字列を一文字ずつ処理
+for char in S:
+    # 文字に対応するキーの耐久度を取得
+    durability = t[ord(char) - ord('a')]
+    
+    # キーの耐久度を減らす
+    durability -= 1
+    
+    # キーの耐久度が0以上の場合、出力文字列に追加
+    if durability >= 0:
+        output_str += char
+        
+    # キーの耐久度を更新
+    t[ord(char) - ord('a')] = durability
+
+# 出力文字列を表示
+print(output_str)
 
 # C086　ハンドルネームの生成
+
 # C087　数字の規則
 # C088　RPGでお買い物
 # C089　ストラックアウト
