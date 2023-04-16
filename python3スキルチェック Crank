@@ -1815,14 +1815,211 @@ total_profit -= stocks * c1
 print(total_profit)
 
 # C079　カードを集める
+# utf-8
+# 入力の受け取り
+N, M = map(int, input().split()) # N: カードの枚数, M: カードの種類数
+cards = set() # 開封したカードの種類を格納するset
+
+# カードを開封して全種類が揃った回数をカウント
+for i in range(N):
+    card = int(input()) # カード番号を受け取る
+    cards.add(card) # カードをsetに追加
+    if len(cards) == M: # カードの種類数が全種類になったらループを抜ける
+        print(i + 1) # 全種類が揃った回数を出力
+        exit()
+
+# カードを全て開封しても全種類が揃わなかった場合はunluckyを出力
+print("unlucky")
 
 # C080　ボタンを押すゲーム
+# utf-8
+# 入力を受け取る
+N, Y = map(int, input().split())
+M = int(input())
+log = list(map(int, input().split()))
+
+# 正しいボタンを押した回数をカウントする変数
+correct_count = 0
+# 誤ったボタンを押した回数をカウントする変数
+wrong_count = 0
+# 直前に押されたボタンの番号を保持する変数
+prev_button = 1
+
+# 操作ログを順に処理する
+for button in log:
+    # ボタンが正しい場合
+    if button == prev_button:
+        correct_count += 1
+    # ボタンが誤った場合
+    else:
+        wrong_count += 1
+    prev_button = button
+
+# スコアの計算
+score = correct_count * 1000
+
+# 誤ったボタンを押した回数がゲームオーバーの回数以上の場合、スコアを-1にする
+if wrong_count >= Y:
+    score = -1
+
+# スコアの出力
+print(score)
+
 --------------------------------------------- C081　※欠番 ◆
 # C081　靴下の整理
+# utf-8
+# 靴下の数を取得
+N = int(input())
+
+# 靴下の情報を辞書に格納
+socks = {}
+for i in range(N):
+    t, d = input().split()
+    key = t  # 種類のみをキーとする
+    if key in socks:
+        socks[key].append(d)  # 左右の情報をリストとして追加
+    else:
+        socks[key] = [d]  # 新しいキーを作成して左右の情報をリストとして格納
+
+# 同じ種類の靴下で左右が揃っているペアの数を計算
+pairs = 0
+for key in socks:
+    # 同じ種類の靴下が2つ以上ある場合、左右が揃っているペアとしてカウント
+    if len(socks[key]) >= 2 and 'L' in socks[key] and 'R' in socks[key]:
+        pairs += min(socks[key].count('L'), socks[key].count('R'))
+
+# 結果を出力
+print(pairs)
+'''
+# 靴下の数を取得
+N = int(input())
+
+# 靴下の情報を辞書に格納
+socks = {}
+for i in range(N):
+    t, d = input().split()
+    key = t  # 種類のみをキーとする
+    if key in socks:
+        socks[key].append(d)  # 左右の情報をリストとして追加
+    else:
+        socks[key] = [d]  # 新しいキーを作成して左右の情報をリストとして格納
+
+# 同じ種類の靴下で左右が揃っているペアの数を計算
+pairs = 0
+for key in socks:
+    # 同じ種類の靴下が2つ以上ある場合、左右が揃っているペアとしてカウント
+    if len(socks[key]) >= 2 and 'L' in socks[key] and 'R' in socks[key]:
+        pairs += min(socks[key].count('L'), socks[key].count('R'))
+
+# 結果を出力
+print(pairs)
+
+'''
+
 # C082　テストの赤点
+# utf-8
+def count_red_points(X, Y, scores):
+    # 各生徒の赤点科目の数を格納するリスト
+    red_points = []
+
+    # 各生徒の赤点科目の数を計算
+    for i in range(X):
+        count = 0
+        for j in range(X):
+            if i != j:
+                # i番目の生徒の点数がj番目の生徒よりも低い場合にカウント
+                if scores[i][0] <= scores[j][0] and scores[i][1] <= scores[j][1] and scores[i][2] <= scores[j][2]:
+                    count += 1
+        red_points.append(count + 1)  # 下から1位なので1を足す
+
+    return red_points
+
+
+# 入力を受け取る
+X, Y = map(int, input().split())
+
+# 入力値のチェック
+if not (2 <= X <= 100):
+    print("Error: 2 ≦ X ≦ 100 の条件を満たしていません。")
+    exit(1)
+if not (1 <= Y <= X):
+    print("Error: 1 ≦ Y ≦ X の条件を満たしていません。")
+    exit(1)
+
+scores = []
+for i in range(X):
+    E, J, M = map(int, input().split())
+    if not (0 <= E <= 100 and 0 <= J <= 100 and 0 <= M <= 100):
+        print("Error: 0 ≦ E_i, J_i, M_i ≦ 100 の条件を満たしていません。")
+        exit(1)
+    scores.append((E, J, M))
+
+# 赤点科目の数を計算
+red_points = count_red_points(X, Y, scores)
+
+# 結果を出力
+for rp in red_points:
+    print(rp)
+'''
+まず、XとYの値が条件を満たしているかをチェックしています。
+Xは2以上100以下である必要があり、Yは1以上X以下である必要があります。
+もし条件を満たしていない場合には、エラーメッセージを出力し、exit(1)によってプログラムを終了しています。
+次に、scoresというリストに生徒の点数をタプル(E, J, M)の形で格納しています。
+そして、各生徒の赤点科目の数を計算するためのcount_red_points()関数を呼び出しています。
+count_red_points()関数では、scoresリストから生徒の点数を取り出し、各生徒について他の生徒と比較して赤点科目の数を数えています。
+条件を満たす場合には、カウントをインクリメントしています。最終的に、赤点科目の数を格納したリストred_pointsを返します。
+最後に、red_pointsリストの各要素を出力しています。
+このように修正済みのコードでは、入力値が問題の条件を満たしているかをチェックして、
+満たしていない場合にはエラーメッセージを出力し、プログラムを終了するようになっています。
+これにより、正しい条件下でのみプログラムが実行されるようになります。
+'''
+
 # C083　売上の発表
+# utf-8
+# 入力の受け取り
+N, R = map(int, input().split())  # N, Rを受け取る
+sales = []  # 売上データを格納するリスト
+for i in range(N):
+    a = int(input())  # 売上データを受け取る
+    sales.append(a)
+
+# 最大売上データの計算
+max_sales = max(sales)
+
+# 棒グラフの生成
+for i in range(N):
+    bar_length = sales[i] // R  # 棒の長さを計算
+    bar = '*' * bar_length + '.' * (max_sales // R - bar_length)  # "*"と"."を組み合わせて棒グラフを生成
+    print(f"{i + 1}:{bar}")  # 棒グラフを出力
+'''
+まず、入力として N と R を受け取ります。N は売上データの個数を表し、R はデータの表示単位を表します。
+map() 関数を使って入力された値をスペースで区切って int 型に変換して取得します。
+また、sales という空のリストを作成し、売上データをそのリストに追加します。
+sales リストの中から最大の売上データを max() 関数を使って計算し、max_sales という変数に格納します。
+for ループを使って売上データの個数 N 回分繰り返します。各期の売上データを sales リストから取得し、
+R で割って bar_length という変数に格納します。これは、その期の棒グラフの長さを表します。
+次に、'*' と '.' を組み合わせて、棒グラフを生成します。'*' の数は bar_length であり、
+残りのスペースを '.' で埋めるために、max_sales // R - bar_length の数だけ '.' を並べます。
+最後に、print() 関数を使って、期と棒グラフを出力します。f-string を使って、期を i + 1 で表示し、
+棒グラフを bar で表示します。
+以上の処理を通じて、期待する出力の形式で売上の棒グラフを生成し、出力することができます。
+'''
+
 # C084　枠で囲む
+# utf-8
+# 入力を受け取る
+S = input().rstrip()
+
+# 枠で囲んで装飾した文字列を生成
+decorated_string = "+" * (len(S) + 2) + "\n"
+decorated_string += "+" + S + "+" + "\n"
+decorated_string += "+" * (len(S) + 2) + "\n"
+
+# 結果を出力
+print(decorated_string, end='')
+
 # C085　壊れかけのキーボード
+
 # C086　ハンドルネームの生成
 # C087　数字の規則
 # C088　RPGでお買い物
