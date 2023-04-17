@@ -2046,18 +2046,312 @@ for char in S:
 print(output_str)
 
 # C086　ハンドルネームの生成
+# utf-8
+# 名前を入力
+S = input().rstrip()
+
+# 母音を除去して子音のみを連結して生成
+handle_name = "".join(c for c in S if c not in "aeiouAEIOU")
+
+# ハンドルネームを出力
+print(handle_name)
 
 # C087　数字の規則
+# utf-8
+def is_palindrome(n):
+    # 数字が回文数かどうかを判定する関数
+    s = str(n)
+    return s == s[::-1]
+
+def reverse_and_add(n):
+    # 規則に従って数字を反転し足し算を行う関数
+    return n + int(str(n)[::-1])
+
+# 入力を受け取る
+N = int(input())
+
+while True:
+    # 規則に従って計算を繰り返し、回文数が出現するまで続ける
+    N = reverse_and_add(N)
+    if is_palindrome(N):
+        print(N)
+        break
+'''
+この実装では、is_palindrome関数で与えられた数字が回文数かどうかを判定し、reverse_and_add関数で数字を反転し足し算を行います。
+入力された数字に対してこれらの関数を繰り返し適用し、最初に回文数が出現したらそれを出力して終了します。
+'''
+
 # C088　RPGでお買い物
+# utf-8
+# 道具の個数を取得
+N = int(input())
+
+# 道具の単価を取得
+prices = list(map(int, input().split()))
+
+# 初期の所持金と注文回数を取得
+T, Q = map(int, input().split())
+
+# 注文履歴を取得
+orders = []
+for _ in range(Q):
+    order = list(map(int, input().split()))
+    orders.append(order)
+
+# 残金を計算
+remaining_money = T
+for order in orders:
+    item_idx = order[0] - 1
+    item_price = prices[item_idx]
+    item_quantity = order[1]
+    total_cost = item_price * item_quantity
+    if remaining_money >= total_cost:
+        remaining_money -= total_cost
+
+# 残金を出力
+print(remaining_money)
+
+'''
+与えられた入力に基づいて、所持金を管理し、注文を処理して最終的な所持金を計算するプログラムです。
+まず、入力された情報を適切に変数に格納します。例えば、道具の個数を表す整数Nは N に、各道具の単価を表す整数のリストは prices に格納されます。
+また、最初の所持金を表す整数Tは T に、注文回数を表す整数Qは Q に格納されます。
+次に、各注文の情報を処理して所持金を更新していきます。Q 回のループを回して、各注文の情報を取得し、注文の個数を所持金と比較して、
+所持金が足りない場合は注文をキャンセルします。
+最終的に、所持金の値を出力してプログラムの実行を終了します。
+具体的な処理の流れは以下のようになります。
+
+入力された情報を変数に格納する。
+Q 回のループを回して、各注文の情報を取得する。
+注文の個数と道具の単価を掛けて、所持金と比較する。
+所持金が足りない場合は注文をキャンセルし、足りている場合は所持金を更新する。
+全ての注文を処理し終えた後の所持金の値を出力する。
+'''
+
 # C089　ストラックアウト
+# utf-8
+# 入力を受け取る
+H, W = map(int, input().split())
+s = [input().rstrip() for _ in range(H)]
+p = [list(map(int, input().split())) for _ in range(H)]
+
+# 撃ち抜かれたパネルの得点を合計する
+total_score = 0
+for i in range(H):
+    for j in range(W):
+        if s[i][j] == "o":  # "o"は撃ち抜かれた状態を表す
+            total_score += p[i][j]
+
+# 結果を出力
+print(total_score)
+'''
+入力されたHとWに基づいて、sとpのリストを作成します。
+sはゲーム終了時のパネルの状態を示す文字列のリストで、pは各パネルの得点を示す整数のリストです。
+それぞれのi行j列のパネルについて、sが"o"であれば撃ち抜かれたので、対応するpの得点をtotal_scoreに加算します。
+最終的にtotal_scoreを出力します。
+'''
+
 # C090　黒電話
+# utf-8
+def calculate_dial_distance(phone_number):
+    pho_dic = {"0": 12, "1": 3, "2": 4, "3": 5, "4": 6,
+               "5": 7, "6": 8, "7": 9, "8": 10, "9": 11}
+    dial_distance = 0
+    for digit in phone_number:
+        if digit.isdigit():
+            dial_distance += pho_dic[digit]
+    return dial_distance * 2
+
+# 電話番号の入力
+S = input().strip().replace("-", "")
+
+# ダイヤルが回る必要のある総距離を計算
+dial_distance = calculate_dial_distance(S)
+
+# 総距離を整数で出力
+print(dial_distance)
+'''
+def calculate_dial_distance(phone_number):
+電話番号の文字列を引数として受け取り、ダイヤルが回る必要のある総距離を計算する関数です。
+
+pho_dic = {"0": 12, "1": 3, "2": 4, "3": 5, "4": 6, "5": 7, "6": 8, "7": 9, "8": 10, "9": 11}:
+数字に対するダイヤル回転距離の辞書を定義します。例えば、数字 "0" の場合は 12 が対応しています。
+
+dial_distance = 0:
+ダイヤルが回る必要のある総距離を初期化します。
+
+for digit in phone_number::
+電話番号の各文字を順に取り出してループします。
+
+if digit.isdigit(): dial_distance += pho_dic[digit]:
+文字が数字であれば、対応するダイヤル回転距離を dial_distance に加算します。
+
+return dial_distance * 2:
+ダイヤルが回る必要のある総距離を計算し、その値を返します。
+
+S = input().strip().replace("-", ""):
+入力された電話番号を受け取り、不要な空白文字を削除し、ハイフンを除去して S に代入します。
+
+dial_distance = calculate_dial_distance(S):
+S を引数として calculate_dial_distance 関数を呼び出し、ダイヤルが回る必要のある総距離を計算し、dial_distance に代入します。
+
+print(dial_distance):
+計算されたダイヤル回転距離を整数として出力します。
+'''
 --------------------------------------------- C091　※欠番 ◆
 # C091　みかんの仕分け
+# utf-8
+def classify_oranges(weight, num_oranges, oranges):
+    # 仕分け先の重さを格納するリスト
+    class_weights = []
+
+    # 仕分け先の重さを計算してリストに追加
+    for i in range(1, num_oranges + 1):
+        class_weight = weight * i
+        class_weights.append(class_weight)
+
+    # 各みかんの仕分け先の重さを計算して出力
+    for orange in oranges:
+        if orange <= weight:
+            print(weight)
+        elif orange % weight < weight / 2:
+            print(orange // weight * weight)
+        else:
+            print((orange // weight + 1) * weight)
+
+
+# 入力の受け取り
+N, M = map(int, input().split())
+weight = N
+num_oranges = M
+oranges = [int(input()) for i in range(num_oranges)]
+
+# みかんを仕分ける
+classify_oranges(weight, num_oranges, oranges)
+
 # C092　工場のベルトコンベア
+# utf-8
+nab_list = list(input().split())
+s_N = input()
+s_A = input()
+s_B = input()
+
+N = int(nab_list[0])
+A = int(nab_list[1])
+B = int(nab_list[2])
+
+for n in range(N):
+    if A > 0 and s_A[0] == s_N[n]:
+        s_A = s_A[1:]
+        A -= 1
+
+    if B > 0 and s_B[0] == s_N[n]:
+        s_B = s_B[1:]
+        B -= 1
+
+print(A, B)
+
 # C093　下桁ルール
+# utf-8
+# ボブの期末テストの点数とアリスの期末テストの点数を入力から取得
+X, Y = input().split()
+
+# 各位の数を足した数の一の位を計算
+bob_digit_sum = sum(map(int, str(int(X)))) % 10
+alice_digit_sum = sum(map(int, str(int(Y)))) % 10
+
+# 勝敗を判定
+if bob_digit_sum > alice_digit_sum:
+    print("Bob")
+elif bob_digit_sum < alice_digit_sum:
+    print("Alice")
+else:
+    print("Draw")
+
 # C094　国民の税金
+# utf-8
+def calculate_tax(income):
+    if income <= 100000:
+        return 0  # 0 ~ 100,000に対しては税金がかかりません
+    elif income <= 750000:
+        return int((income - 100000) * 0.1)  # 100,001 ~ 750,000に対しては10%の税率がかかります
+    elif income <= 1500000:
+        return int((income - 750000) * 0.2 + 650000 * 0.1)  # 750,001 ~ 1500,000に対しては20%の税率がかかります
+    else:
+        return int((income - 1500000) * 0.4 + 750000 * 0.2 + 650000 * 0.1)  # それ以上に対しては40%の税率がかかります
+
+# 入力の受け取り
+N = int(input())  # PAIZA 国民の人数を受け取る
+incomes = []  # 各人の所得を格納するリストを初期化
+
+# 各人の所得を受け取り、リストに追加
+for i in range(N):
+    x_i = int(input())  # i 番目の人の所得を受け取る
+    incomes.append(x_i)
+
+# 各人の所得に対して税金を計算し、合計を計算
+total_tax = sum(calculate_tax(income) for income in incomes)
+
+# 税金の合計を出力
+print(total_tax)
+
 # C095　合言葉
+# utf-8
+# 入力を取得
+s = input().rstrip()
+t = input().rstrip()
+
+# 文字列tを並び替えてsができるかをチェックし、一致する場合はNOを出力、それ以外はYESを出力
+if sorted(s) == sorted(t) and s != t:
+    print("YES")
+else:
+    print("NO")
+'''
+入力された文字列sとtを取得し、末尾の改行文字を除去します。
+sorted() 関数を使って、文字列sとtをソートします。ソートされた結果が同じであり、かつsとtが一致していない場合、
+tを並び替えてsができると判定し "YES" を出力します。
+上記の条件に該当しない場合は、tがsと一致するか、tを並び替えてsができない場合であるため、 "NO" を出力します。
+'''
+
 # C095　バスの時間(番号ダブり)
+# utf-8
+# 入力の読み込み
+N, K = map(int, input().split())
+bus_times = []
+for _ in range(N):
+    bus_time = int(input())
+    bus_times.append(bus_time)
+
+# K 分後に最も近いバスの時間を求める
+nearest_buses = []
+min_diff = float('inf')
+
+for time in bus_times:
+    diff = abs(K - time)
+    if diff < min_diff:
+        min_diff = diff
+        nearest_buses = [time]
+    elif diff == min_diff:
+        nearest_buses.append(time)
+
+# 最も近いバスの時間を時間の昇順でソート
+nearest_buses.sort()
+
+# 結果の出力
+for bus in nearest_buses:
+    print(bus)
+'''
+入力の読み込み: 最初に N と K を入力として読み込みます。N はバスの時間帯の数を表し、K は K 分後を表します。
+次に、N 回のループでバスの時間帯を入力として読み込み、bus_times というリストに格納しています。
+K 分後に最も近いバスの時間を求める: bus_times に格納されたバスの時間帯ごとに、K 分後に最も近い時間を計算します。
+これには、min_diff という変数を用意し、初期値を正の無限大に設定します。
+次に、bus_times の各要素 time について、abs(K - time) を計算し、K との差分を絶対値で求めます。この差分を diff として取得し、
+diff が min_diff より小さければ、min_diff を diff に更新し、nearest_buses を time で初期化します。
+また、diff が min_diff と等しい場合には、nearest_buses に time を追加します。
+最も近いバスの時間を時間の昇順でソート: 最も近いバスの時間を格納した nearest_buses を時間の昇順でソートします。これには sort() メソッドを使用しています。
+結果の出力: ソートされた nearest_buses の各要素を順に出力します。
+これにより、K 分後に最も近いバスの時間を 2 行で時間の昇順に出力することができます。
+以上の手順を経て、このコードは K 分後に最も近いバスの時間を求め、時間の昇順に出力する処理を行っています。
+'''
 # C096　夏休み
 # C097　プレゼント応募企画の実施
 # C098　多重パス回し
