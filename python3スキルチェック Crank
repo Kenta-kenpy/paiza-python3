@@ -2353,10 +2353,153 @@ diff が min_diff より小さければ、min_diff を diff に更新し、neare
 以上の手順を経て、このコードは K 分後に最も近いバスの時間を求め、時間の昇順に出力する処理を行っています。
 '''
 # C096　夏休み
+# utf-8
+# 入力の読み込み
+N = int(input())  # メンバーの人数
+s_e_list = [list(map(int, input().split())) for _ in range(N)]  # メンバーの休みを取れる期間の入力
+
+# 休みの共通日を探す
+common_days = set(range(1, 32))  # 1～31の整数を集合として初期化
+for s, e in s_e_list:
+    # 各メンバーの休みを取れる期間を集合に変換し、共通日を求める
+    days = set(range(s, e + 1))
+    common_days &= days
+
+# 出力
+if common_days:
+    print("OK")
+else:
+    print("NG")
+'''
+この問題は、複数のメンバーの休みの期間を比較し、共通する日があるかどうかを判定する問題です。
+まず、入力された休みの期間をそれぞれのメンバーごとに集合に変換します。
+集合は重複を許さず、要素の順序は関係ありません。これにより、各メンバーの休みの期間を簡単に比較できるようになります。
+次に、各メンバーの休みの期間の共通部分を求めるために、集合の積集合を計算します。
+集合の積集合は、共通する要素のみを残す演算です。ここで、集合の要素は日付を表しており、
+共通する日付がある場合はその日付が残ります。最終的に、共通する日付があるかどうかを判定します。
+共通する日付があれば "OK"、なければ "NG" を出力します。
+この解答は、入力された休みの期間を集合として扱い、集合の演算を用いて共通する日付を効率的に求めています。
+'''
 # C097　プレゼント応募企画の実施
+# utf-8
+def present_lottery(N, X, Y):
+    result = []
+    for i in range(1, N+1):
+        if i % X == 0 and i % Y == 0:
+            result.append("AB")
+        elif i % X == 0:
+            result.append("A")
+        elif i % Y == 0:
+            result.append("B")
+        else:
+            result.append("N")
+    return result
+
+# 入力の読み込み
+N, X, Y = map(int, input().split())
+
+# 当選情報の計算
+result = present_lottery(N, X, Y)
+
+# 当選情報の出力
+for res in result:
+    print(res)
+
 # C098　多重パス回し
+# utf-8
+# 人数Nの入力
+N = int(input())
+
+# 人ごとの最初のボールの個数の入力
+s = []
+for i in range(N):
+    s_i = int(input())
+    s.append(s_i)
+
+# パス回しの情報の数Mの入力
+M = int(input())
+
+# パス回しの情報の入力と処理
+for i in range(M):
+    a_i, b_i, x_i = map(int, input().split())
+    # パスする相手が持っているボールの個数を計算
+    pass_balls = min(s[a_i-1], x_i)
+    # ボールをパス
+    s[a_i-1] -= pass_balls
+    s[b_i-1] += pass_balls
+
+# 最終的なボールの個数を出力
+for i in range(N):
+    print(s[i])
+'''
+まず、最初に人数Nを入力し、各人の最初のボールの個数をリストsに格納します。
+次に、パス回しの情報の数Mを入力し、各パス回しの情報を処理していきます。
+パス回しの情報は、a_i, b_i, x_iの3つの整数で与えられます。
+a_iはボールをパスする人のインデックス（1からNまでの整数）、
+b_iはボールを受け取る人のインデックス（1からNまでの整数）、x_iはパスするボールの個数を表します。
+パスする相手が持っているボールの個数は、min(s[a_i-1], x_i)で計算されます。
+これは、パスする人a_iが持っているボールの個数s[a_i-1]と、パスするボールの個数x_iのうち、小さい方を取得しています。
+これは、パスする相手に渡すことができる最大のボールの個数を計算するためです。
+その後、s[a_i-1]からpass_ballsを減算し、s[b_i-1]にpass_ballsを加算することで、ボールのパスをシミュレーションしています。
+最終的に、各人の持っているボールの個数がリストsに格納されているので、それを順番に出力することで、最終的なボールの個数を求めることができます。
+'''
+
 # C099　折り紙の貼り合わせ
+# utf-8
+def calculate_banner_area(N, D, overlaps):
+    total_area = D * D  # 最初の折り紙の面積
+
+    for i in range(1, N):
+        overlap = overlaps[i - 1]  # i番目の折り紙の重なり具合
+        width = D - overlap  # 垂れ幕の横幅
+        height = D  # 垂れ幕の縦幅
+        area = width * height  # 折り紙の面積
+        total_area += area  # 面積を合計
+
+    return total_area
+
+# 入力の取得
+N, D = map(int, input().split())  # N: 折り紙の枚数、D: 折り紙の初期の辺の長さ
+overlaps = [int(input()) for _ in range(N - 1)]  # 折り紙の重なり具合の入力
+
+# 垂れ幕の面積の計算
+banner_area = calculate_banner_area(N, D, overlaps)
+
+# 結果の出力
+print(banner_area)
+'''
+与えられた入力に対して垂れ幕の面積を計算する関数 calculate_banner_area を定義しています。
+この関数では、最初の折り紙の面積を total_area として初期化し、2枚目以降の折り紙については、
+直前の折り紙との重なり具合を overlap として取得し、それを用いて垂れ幕の横幅 width を計算しています。
+垂れ幕の縦幅は初期の辺の長さ D となります。折り紙の面積は width * height で計算し、
+それを total_area に加算していくことで、垂れ幕の面積を計算しています。
+最後に、入力を受け取り、垂れ幕の面積を計算して結果を出力しています。
+'''
+
 # C100　選曲の方法
+# utf-8
+def max_songs(N, M, S, songs):
+    total_time = M * 60 + S  # 持ち時間を秒に変換
+    songs.sort()  # 曲を時間順にソート
+    count = 0  # 流すことのできる曲の数をカウントする変数
+    for song in songs:
+        if total_time >= song[0] * 60 + song[1]:
+            total_time -= song[0] * 60 + song[1]
+            count += 1
+        else:
+            break  # 持ち時間を超えたらループを終了
+    return count
+
+# 入力の読み込み
+N, M, S = map(int, input().split())
+songs = []
+for i in range(N):
+    x, y = map(int, input().split())
+    songs.append((x, y))
+
+# 結果の出力
+print(max_songs(N, M, S, songs))
+
 --------------------------------------------- C101　※欠番 ◆
 # C101　ラッキーデイ
 # C102　行きたいライブのスケジュール
