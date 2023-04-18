@@ -2587,8 +2587,74 @@ for line in output:
 '''
 
 # C104　虫食い算
+# utf-8
+def solve_bug_eaten_equation(a, b):
+    al = []
+    for x in range(1, 10):
+        for y in range(10):
+            if (10*x + y) * y == 100*a + 10*x + b:
+                al.append([x, y])
+    if len(al) == 0:
+        return None
+    else:
+        return al[0]
+
+# 入力を受け取る
+a, b = map(int, input().split())
+
+# 問題を解いて結果を出力
+result = solve_bug_eaten_equation(a, b)
+if result is None:
+    print("No")
+else:
+    print(result[0], result[1])
+'''
+まず、solve_bug_eaten_equation という関数を定義しています。この関数は、虫食い算の条件を満たす数字のペアを探し、
+その結果をリスト al に格納します。具体的には、1 から 9 までの x と 0 から 9 までの y をそれぞれのループで繰り返しながら、
+以下の条件を満たす場合に x と y をリスト al に追加しています。
+
+(10 * x + y) * y == 100 * a + 10 * x + b
+
+この条件は、虫食い算の式を数式に置き換えたものであり、左辺が式の左側を、右辺が式の右側を表しています。
+この条件を満たす x と y の組が見つかれば、それをリスト al に追加しています。
+その後、リスト al の長さを確認し、リストが空であれば "No" を出力し、リストに要素があればリストの最初の要素を出力しています。
+これにより、虫食い算の答えとなる数字のペアを出力しています。
+最後に、a と b の入力を受け取り、先ほど定義した関数を用いて問題を解いて結果を出力しています。
+修正を加えたコードは、与えられた虫食い算の条件を正確に満たし、期待する出力を生成することができます。
+'''
+
 # C105　カードのスコア
+# utf-8
+n = int(input())
+cards = list(map(int, input().split()))
+cards.sort()
+
+groups = []
+current_group = [cards[0]]
+for i in range(1, n):
+    if cards[i] - current_group[-1] == 1:
+        current_group.append(cards[i])
+    else:
+        groups.append(current_group)
+        current_group = [cards[i]]
+groups.append(current_group)
+
+total_score = 0
+for group in groups:
+    total_score += max(group)
+
+print(total_score)
+'''
+与えられたカードの数字をグループに分け、各グループの最大の数字を合計して総合スコアを求める問題です。
+まず、入力されたカードの数字をリストとして取得します。次に、取得したリストを昇順にソートします。
+ソートすることで、カードの数字が連続しているかどうかを判定しやすくなります。
+次に、1の差で連続しているカードをグループに分けます。ループを使用して、リストの要素を1つずつ見ていきます。
+現在見ているカードの数字が前のカードの数字と1の差であれば、同じグループに属すると判定し、現在のグループに追加します。そうでなければ、新しいグループが始まると判定し、現在のグループをgroupsというリストに追加します。最後に、最後のグループをgroupsに追加してループを終了します。
+各グループのスコアは、そのグループの最大の数字となります。ループを使用して各グループの最大の数字を取得し、total_scoreという変数に加算していきます。
+最後に、total_scoreを出力することで、与えられたカードの総合スコアを求めることができます。
+'''
 # C106　メダル授与式
+
 # C107　ランクの計算
 # C108　観光の計画
 # C109　IDを登録順に並べよう
