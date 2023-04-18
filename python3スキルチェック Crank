@@ -2654,6 +2654,44 @@ print(total_score)
 最後に、total_scoreを出力することで、与えられたカードの総合スコアを求めることができます。
 '''
 # C106　メダル授与式
+# utf-8
+# 入力から取得する変数
+N = int(input())  # 競技者の人数
+scores = list(map(int, input().split()))  # 競技者の点数をリストとして取得
+
+# 出力する結果を格納するリスト
+medals = []
+
+# 競技者ごとにメダルの色を判定して medals リストに追加
+for i in range(N):
+    if scores[i] == max(scores):
+        medals.append("G")
+    elif scores[i] == sorted(scores, reverse=True)[1]:
+        medals.append("S")
+    elif scores[i] == sorted(scores, reverse=True)[2]:
+        medals.append("B")
+    else:
+        medals.append("N")
+
+# 結果を出力
+for medal in medals:
+    print(medal)
+'''
+入力の受け取り
+最初に、input() 関数を使って競技者の人数を表す整数 N を入力から受け取ります
+。次に、input() 関数と split() メソッドを組み合わせて、半角スペースで区切られた競技者の点数を一度に取得し、リスト scores として格納します。
+
+メダルの色の判定
+次に、for ループを使って、競技者ごとにメダルの色を判定します。scores リストを順番に参照し、
+以下の条件に従ってメダルの色を判定し、medals リストに追加していきます。
+
+競技者の点数が最大値であれば、"G" (金メダル)
+競技者の点数が2番目に高い値であれば、"S" (銀メダル)
+競技者の点数が3番目に高い値であれば、"B" (銅メダル)
+上記のいずれにも該当しない場合は、"N" (メダルなし)
+結果の出力
+for ループを使って medals リストの中身を順番に出力し、競技者ごとのメダルの色を表示します。
+'''
 
 # C107　ランクの計算
 # C108　観光の計画
