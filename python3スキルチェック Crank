@@ -2501,11 +2501,91 @@ for i in range(N):
 print(max_songs(N, M, S, songs))
 
 --------------------------------------------- C101　※欠番 ◆
-# C101　ラッキーデイ
+# C101　ラッキーデイ ※境界条件がエラー
 # utf-8
+def count_lucky_days_in_year(X):
+    count = 0
+    for day in range(1, 365):
+        date = str(day).zfill(3)  # 日を3桁の文字列に変換
+        if str(X) in date:
+            count += 1
+    return count
 
+# 数字Xの入力
+X = input().strip()
+
+# 幸運な日の数を計算
+output = count_lucky_days_in_year(X)
+
+# 結果を出力
+print(output)
+'''
+数字Xを標準入力から取得し、1月1日から12月31日までの日数を順番に調べて、
+文字列としてのXを含む日をカウントしています。結果は整数値として出力されます。
+'''
 # C102　行きたいライブのスケジュール
+# utf-8
+# 入力の取得
+M = int(input())  # バンドAのライブ日数
+A = [int(input()) for _ in range(M)]  # バンドAのライブ日程のリスト
+N = int(input())  # バンドBのライブ日数
+B = [int(input()) for _ in range(N)]  # バンドBのライブ日程のリスト
+
+c = 0
+l = ['A', 'B']
+S = sorted(list(set(A + B)))
+R = list()
+for i in range(1, 32):
+    if i in S:
+        if i in A and i in B:
+            R.append(l[c % 2])
+            c += 1
+        else:
+            R.append(('B', 'A')[i in A])
+    else:
+        R.append('x')
+print('\n'.join(R))
+'''
+バンドAのライブ日程をA、バンドBのライブ日程をBとして、AとBの共通日程をSに取得しています。
+そして、1から31までの日程に対して以下のルールに従って出力を生成しています。
+日程がSに含まれる場合：
+日程がAとBの両方に含まれる場合：lリストの順番に従ってAまたはBを出力し、cを更新する。
+日程がAのみに含まれる場合：Aを出力する。
+日程がBのみに含まれる場合：Bを出力する。
+日程がSに含まれない場合：xを出力する。
+最終的に、出力を改行で結合して出力しています。
+'''
 # C103　ロボット芸人
+# utf-8
+# 入力を取得
+N, M = map(int, input().split())
+conditions = []
+for i in range(M):
+    a, b = input().split()
+    conditions.append((int(a), b))
+
+# ロボットの動きのシミュレーション
+output = []
+for i in range(1, N + 1):
+    result = ""
+    for condition in conditions:
+        a = condition[0]
+        b = condition[1]
+        if i % a == 0:
+            result += b + " "
+    if result == "":
+        output.append(str(i))
+    else:
+        output.append(result.rstrip())
+
+# 結果を出力
+for line in output:
+    print(line)
+'''
+入力された条件に基づいてロボットの動きをシミュレーションし、期待される形式で結果を出力します。
+各条件について、ロボットが条件を満たす場合には対応する文字列を、満たさない場合にはそのままの数字を出力します。
+'''
+
 # C104　虫食い算
 # C105　カードのスコア
 # C106　メダル授与式
