@@ -2694,6 +2694,50 @@ for ループを使って medals リストの中身を順番に出力し、競�
 '''
 
 # C107　ランクの計算
+# utf-8
+n, k = map(int, input().split())
+
+# 各馬のN回分の順位を取得
+horse_a = [int(input()) for _ in range(n)]
+horse_b = [int(input()) for _ in range(n)]
+horse_c = [int(input()) for _ in range(n)]
+
+# 連続するK回分の平均値の最小値を求める関数
+def calc_min_avg(horse):
+    min_avg = float('inf')
+    for i in range(n - k + 1):
+        avg = sum(horse[i:i+k]) / k
+        if avg < min_avg:
+            min_avg = avg
+    return min_avg
+
+# 各馬の連続するK回分の平均値を計算
+avg_a = calc_min_avg(horse_a)
+avg_b = calc_min_avg(horse_b)
+avg_c = calc_min_avg(horse_c)
+
+# ランクを計算
+rank_a = sum(avg_a > avg for avg in [avg_b, avg_c]) + 1
+rank_b = sum(avg_b > avg for avg in [avg_a, avg_c]) + 1
+rank_c = sum(avg_c > avg for avg in [avg_a, avg_b]) + 1
+
+# ランクが最も小さい馬を出力
+if rank_a < rank_b and rank_a < rank_c:
+    print(1)
+elif rank_b < rank_a and rank_b < rank_c:
+    print(2)
+else:
+    print(3)
+
+'''
+この問題は、与えられたデータに対して順位の平均値を求めることが求められているので、
+以下のようなアルゴリズムで解くことができます。
+
+各馬の順位を入力として受け取る
+1位からK位までの順位の平均値を求める
+順位の平均値が最小となる馬を出力する
+'''
+
 # C108　観光の計画
 # C109　IDを登録順に並べよう
 # C110　就職活動
