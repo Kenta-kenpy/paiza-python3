@@ -2908,7 +2908,36 @@ s + f + 24 - t
 
 '''
 
-# C113　一人でスゴロク
+# C113　一人でスゴロク　※間違い　修正必要
+# utf-8
+
+N, M = map(int, input().split())
+
+a = [input() for _ in range(N-2)]
+a = ["start"] + a + ["goal"]
+
+dice = [int(input()) for _ in range(M)]
+
+pos = 0
+
+for d in dice:
+    pos += d
+    if pos >= N:
+        print("goal")
+        print(M)
+        exit()
+    if a[pos] == "r":
+        pos = 0
+    elif a[pos] == "-":
+        pos = max(pos-1, 0)
+    elif a[pos] == "x":
+        continue
+    elif a[pos] == "+":
+        pos = min(pos+1, N-1)
+
+print("still")
+print(pos)
+
 # C114　しりとりの判定
 # C115　渋滞の距離
 # C116　あたり棒の検査
