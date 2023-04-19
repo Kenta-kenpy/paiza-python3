@@ -2991,7 +2991,7 @@ print("Yes")
 '''
 
 # C115　渋滞の距離
-# utf-8 例
+# utf-8
 n, m = map(int, input().split(' '))
 traffic = 0
 
@@ -3003,6 +3003,8 @@ for i in range(n-1):
 print(traffic)
 
 # C116　あたり棒の検査
+# utf-8
+
 # C117　大量出店
 # C118　ダイヤル数
 # C119　お菓子かいたずらか
