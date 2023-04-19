@@ -2969,7 +2969,39 @@ else:
 '''
 
 # C114　しりとりの判定
+# utf-8
+n = int(input())
+words = [input() for _ in range(n)]
+
+for i in range(1, n):
+    if words[i-1][-1] != words[i][0]:
+        print(words[i-1][-1], words[i][0])
+        exit()
+
+print("Yes")
+'''
+【解法】
+しりとりが成立するためには、前の単語の末尾の文字と現在の単語の先頭の文字が一致している
+必要があります。従って、与えられた単語を順に見ていき、前の単語の末尾の文字と現在の単語の
+先頭の文字が異なる場合、その2つの文字を出力して処理を終了します。全ての単語を見終わっても処理が
+終了しない場合は、しりとりが成立するので "Yes" を出力します。
+【注意点】
+入力された単語は英字小文字または英字大文字からなるため、単純に文字列の末尾や先頭の文字を
+取り出すことができます。
+'''
+
 # C115　渋滞の距離
+# utf-8 例
+n, m = map(int, input().split(' '))
+traffic = 0
+
+for i in range(n-1):
+    distance = int(input())
+    if distance <= m:
+        traffic += distance
+
+print(traffic)
+
 # C116　あたり棒の検査
 # C117　大量出店
 # C118　ダイヤル数
