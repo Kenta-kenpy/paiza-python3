@@ -3092,6 +3092,30 @@ total が L を超えていれば解錠することができないため、適�
 '''
 
 # C119　お菓子かいたずらか
+# utf-8
+N, M, K = map(int, input().split())
+houses = set(range(1, N+1))
+trick_houses = set(int(input()) for _ in range(M))
+satisfy_count = 0
+unsatisfy_count = 0
+for house in houses:
+    if house in trick_houses:
+        unsatisfy_count += 1
+        if unsatisfy_count == K:
+            break
+    else:
+        satisfy_count += 1
+        unsatisfy_count = 0
+print(satisfy_count)
+'''
+まず、入力から町の家の数 N、男の子の数 M、K 軒の家で連続して驚かされると泣いて帰る Alice の条件を読み込みます。
+そして、range(1, n+1)で全ての家の集合を作り、男の子たちが隠れている家の集合を作ります。
+その後、for文で、全ての家について以下の処理を行います。
+その家が男の子たちが隠れている家である場合、Alice は驚かされたので、unsatisfy_count を1増やします。
+その家が男の子たちが隠れていない家である場合、Alice は驚かされていないので、satisfy_count を1増やします。
+unsatisfy_count が K に等しくなった場合、Alice は驚かされた家が K 軒以上であるため泣いて帰ってしまうため、for文を抜けます。
+最後に、Alice が貰えるお菓子の個数である satisfy_count を出力します。
+'''
 # C120　花のリース
 --------------------------------------------- C121　※欠番 ◆
 # C121　レストランの人気メニュー
