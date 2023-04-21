@@ -3185,6 +3185,31 @@ else:
 '''
 
 # C122　プレゼントのセール
+# utf-8
+N, X, Y = map(int, input().split())
+prices = []
+for i in range(N):
+    price = int(input())
+    prices.append(price)
+
+prices.sort()
+
+total_price = sum(prices)
+for i in range(Y):
+    if X + i > N:
+        break
+    discount_items = prices[i:X + i]
+    total_price -= min(discount_items)
+
+print(total_price)
+'''
+入力された商品価格のリストを昇順にソートします。
+セール対象となる購入数 X 個までの商品を全て購入し、価格をtotal_priceに加算します。
+Y 品のうち、最も安い商品を1つ選んで無料にします。total_priceからその商品の価格を引きます。
+total_priceを出力します。
+このアプローチは、まず最初に商品価格のリストを昇順にソートすることで、最も安い商品から順に購入していくことを保証します。その後、セール対象となる購入数 X 個までの商品を全て購入することで、最低限の割引を適用します。そして、Y 品のうち最も安い商品を1つ選んで無料にすることで、最大限の割引を適用します。
+このアプローチにより、どのようなテストケースにも対応できるようになっています。
+'''
 # C123　節分ロボット
 # C124　インターンへの応募
 # C125　カードの積
