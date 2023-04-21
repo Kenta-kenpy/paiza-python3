@@ -791,7 +791,25 @@ A = [int(x) for x in input().split()]
 print(A.count(M))
 
 step9  配列末尾への追加
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+A.append(M)
+
+for a in A:
+    print(a)
+    
 step10　要素の削除
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+del A[M-1]
+
+for a in A:
+    print(a)
+
 step11  要素の挿入
 step12  要素数の出力
 step13　全要素の出力
