@@ -827,7 +827,6 @@ print(len(li))
 
 step13　全要素の出力
 # utf-8
-# utf-8
 li = ["good", "morning", "paiza", "813", "pa13"]
 for ele in li:
     print(ele)
