@@ -811,27 +811,304 @@ for a in A:
     print(a)
 
 step11  要素の挿入
+# utf-8
+N, M, K = map(int, input().split())
+A = [int(x) for x in input.split()]
+
+A.insert(M-1, K)
+
+for a in A:
+    print(a)
+    
 step12  要素数の出力
+# utf-8
+li = ["Hello", "paiza", "1234", "pa13"]
+print(len(li))
+
 step13　全要素の出力
+# utf-8
+# utf-8
+li = ["good", "morning", "paiza", "813", "pa13"]
+for ele in li:
+    print(ele)
+
+'''
+複数の文字列をリストを使って保持しています。
+for ele in li: はリスト li の各要素を順に変数 ele に代入して処理を行う for 文です。
+'''
 step14　i番目の出力
+# utf-8
+li = ["good", "morning", "paiza", "813", "pa13"]
+print(li[2])
+
 step15　文字列の配列の入力１
+# utf-8
+li = ["eight", "one", "three", "paiza", "pa13", "813"]
+for ele in li:
+    print(ele)
+
 step16　文字列の配列の入力２
+# utf-8
+S = [""] * 10
+values = input().split()
+for i in range(10):
+    S[i] = values[i]
+
+for s in S:
+    print(s)
+    
 step17　文字列の配列の入力３
+# utf-8
+N = int(input())
+
+S = [0] * N
+values = input().split()
+for i in range(N):
+    S[i] = values[i]
+
+for s in S:
+    print(s)
+
 step18　i番目の出力１
+# utf-8
+N = int(input())
+li = ["good", "morning", "paiza", "813", "pa13"]
+
+print(li[N - 1])
+
 step19　i番目の出力２
+# utf-8
+N = int(input())
+
+S = [0] * 5
+values = input().split()
+for i in range(5):
+    S[i] = values[i]
+
+print(S[N - 1])
+'''
+0 を 5 個持つリストを反復を用いて用意して、半角スペースで分割された入力値を受け取ります。
+リストのインデックスは 0 から始まるので N 番目の要素のインデックスは N-1 となります。
+'''
 step20　i番目の出力３
+# utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+S = [0] * M
+values = input().split()
+for i in range(M):
+    S[i] = values[i]
+
+print(S[N - 1])
+
 step21　i番目の出力４
+# utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+L = int(values[2])
+
+S = [0] * M
+values = input().split()
+for i in range(M):
+    S[i] = values[i]
+
+print(S[N - 1][L - 1])
+
 step22　辞書順に出力１
+# utf-8
+li = ["zaipa", "izapa", "paiza"]
+sorted_li = sorted(li)
+
+for ele in sorted_li:
+    print(ele)
+    
+'''
+# 別解
+li = ["zaipa", "izapa", "paiza"]
+
+li.sort()
+
+for ele in li:
+    print(ele)
+
+'''
+
 step23　辞書順に出力２
+# utf-8
+S = [0] * 5
+values = input().split()
+for i in range(5):
+    S[i] = values[i]
+
+sorted_S = sorted(S)
+
+for s in sorted_S:
+    print(s)
+    
 step24　辞書順に出力３
+# utf-8
+N = int(input())
+
+S = [0] * N
+values = input().split()
+for i in range(N):
+    S[i] = values[i]
+
+sorted_S = sorted(S)
+
+for s in sorted_S:
+    print(s)
+    
 final　 辞書順に出力 Boss
+# utf-8
+values = input().split()
+N = int(values[0])
+K = int(values[1])
+
+S = [0] * N
+values = input().split()
+for i in range(N):
+    S[i] = values[i]
+
+sorted_S = sorted(S)
+
+print(sorted_S[K - 1])
 
 <フィボナッチ数>
 step1　重複の削除
+# utf-8
+li = [1, 3, 5, 1, 2, 3, 6, 6, 5, 1, 4]
+
+li_set = set(li)
+sorted_li_set = sorted(li_set)
+
+for ele in sorted_li_set:
+    print(ele)
+'''
+li_set = set(li) で重複の削除を行っています。
+【 set 関数について 】
+Python では、集合を扱えます。
+ここでの集合とは、数学の集合と基本的に一致します。
+集合は、重複を許さないので集合を用いることで重複の削除ができます。
+リストから集合を生成するとき、set(リスト) のように書くことで集合が生成されます。
+集合生成の際、重複した要素は排除されます。
+集合を生成した後は、sorted 関数を使ってソートして、for 文を用いて出力します。
+'''
+
 step2　配列の最大最小
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+print(max(A), min(A))
+
 step3　ある数以上以下の要素の列挙１
+# utf-8
+N = int(input())
+
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
+
+for a in A:
+    if a >= 5:
+        print(a)
+
 step4　ある数以上以下の要素の列挙２
+# utf-8
+values = input().split()
+N = int(values[0])
+K = int(values[1])
+
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
+
+for a in A:
+    if a >= K:
+        print(a)
+'''
+0 を N 個持つリストを反復を用いて用意して、半角スペースで分割された入力値を整数に変換して受け取ります。
+for 文と if 文を用いてリスト A の各要素が K 以上か判定して、K 以上の要素を出力します。
+'''
 step5　ある数以上以下の要素の列挙３
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+avg = sum(A) / N
+for a in A:
+    if a >= avg:
+        print(a)
+        
 step6　二点間の距離１
+# utf-8
+N = int(input())
+
+X = [0] * N
+Y = [0] * N
+for i in range(N):
+    values = input().split()
+    X[i] = int(values[0])
+    Y[i] = int(values[1])
+
+for i in range(N):
+    print(abs(X[i] - 2) + abs(Y[i] - 3))
+    
 step7　二点間の距離２
+# utf-8
+values = input().split()
+N = int(values[0])
+A = int(values[1])
+B = int(values[2])
+
+X = [0] * N
+Y = [0] * N
+for i in range(N):
+    values = input().split()
+    X[i] = int(values[0])
+    Y[i] = int(values[1])
+
+print(abs(X[B - 1] - X[A - 1]) + abs(Y[B - 1] - Y[A - 1]))
+'''
+0 を N 個持つリスト X, Y を反復を用いて用意します。
+その後、N 行にわたって x_i y_i の形式で入力があるので、半角スペースで分割したリストを生成し、
+それぞれ整数に変換してリスト X, Y に代入します。
+絶対値を求めるために、abs 関数を使っています。リストのインデックスは 0 から始まることに注意して下さい。
+'''
 final　フィボナッチ数
+# utf-8
+N = int(input())
+
+fibo = [0] * N
+fibo[0] = 0
+fibo[1] = 1
+
+for i in range(2, N):
+    fibo[i] = fibo[i - 2] + fibo[i - 1]
+
+for ele in fibo:
+    print(ele)
+'''
+説明の便宜上、N のフィボナッチ数を f(N) とします。
+フィボナッチ数は以下のようにルールが決まっています。
+N = 0 のとき、f(N) = 0
+N = 1 のとき、f(N) = 1
+N ≧ 2 のとき、f(N) = f(N-2) + f(N-1)
+これを今回はリストを用いて実現します。
+リストのインデックス i の要素に f(i) を格納して、この値を上位のフィボナッチ数を求める際に利用します。
+【 詳しい流れ 】
+【 入力 】
+求められている出力は f(0) から f(N-1) までの計 N 個のフィボナッチ数の出力なので、リストの要素数が丁度 N になるように初期化します。
+それが fibo = [0] * N です。
+【 フィボナッチ数 】
+まず、初項である f(0) = 0, f(1) = 1 を設定するために、fibo[0] = 0, fibo[1] = 1 を記述します。
+今回、リスト fibo は 0 で初期化されているので、fibo[0] = 0 は必ずしも記述する必要はありません。
+後は、整数 i (2 ≦ i ≦ n-1) に対して、f(i) = f(i-2) + f(i-1) を行えばよいので、for 文を用いて fibo[i] = fibo[i-2] + fibo[i-1] を記述します。
+最後に for 文を用いて出力します。
+'''
