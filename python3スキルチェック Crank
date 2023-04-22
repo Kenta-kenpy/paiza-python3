@@ -3248,6 +3248,42 @@ ans というリストは、最終的に各参加者が持つ豆の数を格納�
 '''
 
 # C124　インターンへの応募
+# utf-8　△
+n = int(input())
+interns = []
+for i in range(n):
+    c_i = int(input())
+    schedules = []
+    for j in range(c_i):
+        s_j, p_j = map(int, input().split())
+        schedules.append((s_j, s_j + p_j))  # タプルで開始日と終了日を格納
+    interns.append(schedules)
+
+selected = set()  # 選択されたインターン先の集合
+for i in range(n):
+    for schedule in interns[i]:
+        overlapping = False
+        for j in range(i):  # 志望度が高い会社のインターンについてのみ調べる
+            for s, t in interns[j]:
+                if schedule[1] > s and t > schedule[0]:  # 日程が重複している場合
+                    overlapping = True
+                    break
+            if overlapping:  # 既に重複している場合は処理を終了
+                break
+        if not overlapping:  # 重複していない場合は選択されたインターン先に追加
+            selected.add(i)
+            break
+
+print(len(selected))  # 選択されたインターン先の数を出力
+'''
+各会社のインターンの開始日と日数をタプルにまとめ、internsという二重リストに格納します。
+志望度が高い会社から順に、その会社のインターンの日程について、他のインターンと日程が重複するかどうかを調べます。
+日程が重複するインターンが存在する場合は、そのインターンには応募しないようにします。
+重複していない場合は、そのインターンに応募することができるため、選択されたインターン先の集合に追加します。
+選択されたインターン先の数を出力します。
+'''
+
+
 # C125　カードの積
 # C126　宿泊費と交通費
 # C127　割引キャンペーン
