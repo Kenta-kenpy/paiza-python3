@@ -813,7 +813,10 @@ for a in A:
 step11  要素の挿入
 # utf-8
 N, M, K = map(int, input().split())
-A = [int(x) for x in input.split()]
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
 
 A.insert(M-1, K)
 
