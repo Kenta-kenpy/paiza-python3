@@ -1,1 +1,324 @@
+<動的配列>
+step1　ランダムアクセス
+# utf-8
+N, M = map(int, input().split())
+A = [int(x) for x in input().split()]
 
+print(A[M-1])
+
+step2　複数回のランダムアクセス
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+Q = int(input())
+B = [int(x) for x in input().split()]
+
+for i in range(Q):
+    print(A[B[i]-1])
+    
+step3　最大値と最小値
+# utf-8
+li = [int(x) for x in input().split()]
+print(max(li) - min(li))
+
+final　動的配列
+# utf-8
+N, Q = map(int, input().split())
+A = [int(x) for x in input().split()]
+
+for _ in range(Q):
+    query = [int(x) for x in input().split()]
+
+    cmd = query[0]
+    if cmd == 0:
+        # push_back
+        A.append(query[1])
+    elif cmd == 1:
+        # pop_back
+        A.pop()
+    else:
+        # print
+        print(" ".join(map(str, A)))
+'''
+query の処理については以下でまとめます。
+【 push_back 】
+Python では、リストの末尾に要素を追加する appendメソッド があるので、それを使います。
+【 pop_back 】
+Python では、リストの末尾の要素を削除する popメソッド があるので、それを使います。
+【 print 】
+join メソッドを使っています。
+join メソッドは "区切り文字".join(文字列のみを要素としてもつイテラブル) のように使うと 
+文字列のみを要素としてもつイテラブル の各要素を 区切り文字 で連結した文字列を返します。
+この イテラブル とは、たとえば、リストや、タプル、集合などが該当します。
+'''
+
+<文字列の配列>
+step1　とても大きな数値の入力
+# utf-8
+N = int(input())
+print(N)
+
+step2　とても小さな数値の入力
+# utf-8
+print(input())
+'''
+小数点以下が長く続く様な実数を実数型で誤差なく受け取るのは困難です。
+そこで、文字列として受け取り、そのまま出力します。
+'''
+
+final　文字列の配列
+# utf-8
+H, W, r, c = map(int, input().split())
+maze = [input() for _ in range(H)]
+
+if maze[r-1][c-1] == "#":
+    print("Yes")
+else:
+    print("No")
+'''
+リストや文字列のインデックスは 0 から始まることに注意して、壁かどうかの比較処理をおこないます。
+'''
+
+<商品の検索>
+step1　数値の出現率
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+dic = {i: 0 for i in range(10)}
+for num in A:
+    dic[num] += 1
+
+print(" ".join(map(str, dic.values())))
+'''
+辞書を使う方法です。
+考えられうるすべての入力に対応するキーを用意して、その値を加算していく方法です。
+'''
+
+step2　英小文字の出現率
+# utf-8
+N = int(input())
+S = input()
+
+count = {chr(x): 0 for x in range(ord("a"), ord("z")+1)}
+for char in S:
+    count[char] += 1
+
+print(" ".join(map(str, count.values())))
+'''
+内包表記を用いて a, ..., z のキーを持った辞書の初期化を行います。
+今回の内包表記はいままでと少し違うので簡単に以下で説明します。
+ord 関数は、文字の Unicode でのコードポイントと呼ばれる数値を返します。
+a, ..., z の番号は連続しているので、これを利用するように range 関数に引数として渡します。
+変数 x には "a" から "z" までのコードポイントが順に代入されるので、chr 関数を利用して文字列に変換して辞書のキーとします。
+辞書の値は values メソッドで取得できるので、これを使い、map 関数を利用して全要素を文字列に変換し、join メソッドの引数に渡します。
+'''
+
+step3　文字列の出現率
+# utf-8
+N = int(input())
+count = {}
+
+for _ in range(N):
+    s = input()
+    if s not in count:
+        count[s] = 1
+    else:
+        count[s] += 1
+
+for word, times in sorted(count.items()):
+    print(word, times)
+'''
+文字列 s の出現回数を保持したいので、辞書を準備します。
+if s not in dic: では、文字列　s が辞書のキーに登録されていないならこのブロック内の処理が行われます。
+ここでは、文字列 s を辞書のキーとして登録します。この際、値を 1 にするところに注意が必要です。
+else 節では、上記の条件が False になる、つまり、既にキーが登録されている際にこのブロック内の処理が行われます。
+ここでは、キーに対応する値を +1 します。
+'''
+
+step4　価格の算出
+# utf-8
+N, M = map(int, input().split())
+
+stock = {}
+for _ in range(N):
+    a, b = input().split()
+    stock[a] = int(b)
+
+for _ in range(M):
+    s = input()
+    if s in stock:
+        print(stock[s])
+    else:
+        print(-1)
+'''
+N 行に亘って入力される A_i B_i を A_i をキー、B_i を値として辞書に登録していきます。
+辞書の作成が終わったら、Q 行に亘って入力される S_i について以下の処理を行います。
+辞書に登録されている商品 -> その値段を出力
+辞書に登録されてない商品 -> -1 を出力
+「キーが辞書に登録されているか」を確かめるときは in 演算子を使います。
+'''
+
+final　商品の検索
+# utf-8
+N, Q = map(int, input().split())
+
+S = {}
+for i in range(N):
+    s = input()
+    if s not in S:
+        S[s] = i + 1
+
+for _ in range(Q):
+    t = input()
+    if t in S:
+        print(S[t])
+    else:
+        print(-1)
+
+'''
+N 行に亘る入力に対して 文字列S が初めて出てきたときの i+1 をキー S に対応する値とすると、T についての処理を簡単に記述できるようになります。
+上記の注意点として for i in range(N) で for 文を記述すると、0, ..., n-1 が順に i に代入されるので、問題文の番号と一致させるために i+1 を保持する必要があります。
+辞書のキーに含まれているかを確認するために in 演算子を使います。
+'''
+
+<集合の結合>
+step1　集合の探索
+# utf-8
+N, B = map(int, input().split())
+A = {int(x) for x in input().split()}
+
+if B in A:
+    print("Yes")
+else:
+    print("No")
+'''
+集合を内包表記で定義する際は、a = {int(x) for x in input().split()} のように書きます。
+集合は重複が除去されるのが特徴ですが、この書き方でも除去されます。
+「集合に要素があるか」を調べるときは in 演算子を使うと簡単に調べることができます。
+'''
+step2　重複の削除
+'''
+1 つ目は「各数値を 1 つずつ見て、今見ている数値が前の数値と同じ数値なら無視し、違う数値なら答えとして出力する」方法です。
+2 つ目は「集合を扱うデータ構造に数列を全部入れて、そのまま出力する」方法です。
+'''
+# utf-8 方針1
+N = int(input())
+A = [int(x) for x in input().split()]
+
+for i, a in enumerate(A):
+    if i == 0:
+        print(a, end="")
+    elif A[i-1] != A[i]:
+        print(end=" ")
+        print(a, end="")
+'''
+数値を先頭から見ていって、既出でなければ出力するので、i=0 のときは必ず出力してよい、
+0 < i < n のときは前 (i-1) の値と比較して等しくないなら出力する、という書き方をしています。
+'''
+
+# utf-8 方針2 別解
+N = int(input())
+A = {int(x) for x in input().split()}
+
+print(" ".join(map(str, A)))
+'''
+集合は定義時に重複要素を除去してくれる
+'''
+
+step3　重複の判定1
+'''
+方針
+ある値が以前に出現したかどうかを N - 1 回判定する問題です。
+今回は配列を用いた方法と、集合を用いた簡潔な方法を紹介します。
+1 配列 arr を用意し、値 A の出現回数を arr[A] で管理する。値 A を受け取ったときに arr[A] が 0 かどうかを判定する
+2 集合 S を用意し、値 A が S に含まれているかどうかを判定する
+'''
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+memo = {A[0]}
+for i in range(1, N):
+    if A[i] in memo:
+        print("Yes")
+    else:
+        memo.add(A[i])
+        print("No")
+
+'''        
+方針の 前者 に当たります。
+まず、a_i が取り得る値の範囲だけリストの長さを確保します。
+リストの a_i (0 ≦ i < n) 番目の要素が 0 のときは既出でない、1 のときは既出である、ことを表すようにします。
+リストの確保が終わったら、a_i 番目の要素を確認しながら、"Yes" か "No" を出力します。
+count[a] = 0 のとき、処理ブロック内で count[a] に 1 を代入することを忘れないで下さい。
+
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+count = [0] * 10001
+count[A[0]] = 1
+
+for i in range(1, N):
+      a = A[i]
+      if count[a] == 0:
+          count[a] = 1
+          print("No")
+      else:
+          print("Yes")
+
+既出の値を集合を用いて保持しておいて、各要素について「既出かどうか」を判定して "Yes", "No" を出力します。
+「既出かどうか」を判定する際、in 演算子を使います。
+以下の 2 点に注意して下さい。
+集合の初期値として a[0] を設定する
+A[i] が初出の際、集合に追加する
+集合に要素を追加する際は add メソッドを使います。
+'''
+step4　重複の判定2
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+
+memo = {A[0]}
+for i in range(1, N):
+    if A[i] in memo:
+        print("Yes")
+    else:
+        memo.add(A[i])
+        print("No")
+'''
+既出の値を集合を用いて保持しておいて、各要素について「既出かどうか」を判定して "Yes", "No" を出力します。
+「既出かどうか」を判定する際、in 演算子を使います。
+以下の 2 点に注意して下さい。
+集合の初期値として a[0] を設定する
+初出の際、集合に追加する
+集合に追加する際は add メソッドを使います。
+'''
+final　集合の結合
+# utf-8
+N = int(input())
+A = [int(x) for x in input().split()]
+B = [int(x) for x in input().split()]
+
+c = set(A + B)
+
+print(" ".join(map(str, sorted(c))))
+'''
+ここでは、以下の 2 点のポイントがあります。
+集合を用いる
+ソートする
+順に解説していきます。
+【 集合を用いる 】
+まず、数列 A と、数列 B の間には要素の重複が生じえるということに注意が必要です。
+また、数列 A 内、数列 B 内においても重複が生じえることにも注意してください。
+この重複を取り除くために、集合を使います。
+集合を定義する際、set 関数を使います。
+引数に工夫が必要です。
+数列 A と、数列 B を連結し、引数として渡すことで、1 行で簡潔に書けます。
+リストの連結は + 演算子を使います。
+集合は定義の際、重複を除去してくれるので、重複除去の処理を自分で実装する必要はありません。
+【 ソートする 】
+ソートは sorted 関数を使います。
+sorted 関数を sorted(集合) のように使うと、昇順にソートされたリストが返ってきます。
+'''
