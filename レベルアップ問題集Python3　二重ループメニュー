@@ -1,1 +1,235 @@
+<二重ループ　基本編>
+step1 指定された数字までの出力
+# utf-8
+n = int(input())
+for i in range(1, n + 1):
+    if i != n:
+        print(i, end=" ")
+    else:
+        print(i)
+        
+step2 指定された数字までの出力
+# utf-8
+n = int(input())
+for i in range(1, n + 1):
+    print(i)
+    
+step3 指定された行数の数字の出力
+# utf-8
+n = int(input())
+for _ in range(n):
+    for i in range(1, 6):
+        if i == 5:
+            print(i)
+        else:
+            print(i, end=" ")
 
+step4 指定された範囲・行数の数字の出力
+# utf-8
+n, k = map(int, input().split())
+for _ in range(k):
+    for i in range(1, n + 1):
+        if i == n:
+            print(i)
+        else:
+            print(i, end=" ")
+            
+step5 二次元配列の出力
+# utf-8
+n, k = map(int, input().split())
+a = [input().split() for _ in range(n)]
+
+for i in range(n):
+    for j in range(k):
+        if j == k - 1:
+            print(a[i][j])
+        else:
+            print(a[i][j], end=" ")
+            
+step6 二次元配列での要素の検索
+# utf-8
+n, k = map(int, input().split())
+a = [input().split() for _ in range(n)]
+
+for i in range(n):
+    for j in range(k):
+        if a[i][j] == "1":
+            print(i + 1, j + 1)
+            break
+            
+step7 二次元配列の最大の要素
+# utf-8
+n, k = map(int, input().split())
+a = [[int(i) for i in input().split()] for _ in range(n)]
+
+ans = 0
+for i in range(n):
+    for j in range(k):
+        if a[i][j] > ans:
+            ans = a[i][j]
+
+print(ans)
+
+step8 二次元配列の行ごとの和
+# utf-8
+n, k = map(int, input().split())
+a = [[int(i) for i in input().split()] for _ in range(n)]
+
+for i in range(n):
+    s = 0
+    for j in range(k):
+        s += a[i][j]
+    print(s)
+    
+step9 さまざまな長さの配列の和
+# utf-8
+n = int(input())
+
+for _ in range(n):
+    k_a = [int(i) for i in input().split()]
+    k = k_a[0]
+    a = k_a[1:]
+    s = 0
+    for i in range(k):
+        s += a[i]
+    print(s)
+    
+step10 階段の出力
+# utf-8
+n = int(input())
+
+for i in range(1, n + 1):
+    for j in range(1, i + 1):
+        if j == i:
+            print(j)
+        else:
+            print(j, end=" ")
+            
+final 積の最大
+# utf-8
+n, k = map(int, input().split())
+a = [int(i) for i in input().split()]
+b = [int(i) for i in input().split()]
+
+ans = -10000
+for i in range(n):
+    for j in range(k):
+        ab = a[i] * b[j]
+        if ab > ans:
+            ans = ab
+
+print(ans)
+
+<二重ループ　活用編>
+step1 行列の転置
+# utf-8
+n, k = map(int, input().split())
+a = [input().split() for _ in range(n)]
+
+for i in range(k):
+    for j in range(n):
+        if j == n - 1:
+            print(a[j][i])
+        else:
+            print(a[j][i], end=" ")
+            
+step2 かけ算表
+# utf-8
+n = int(input())
+a = [int(i) for i in input().split()]
+b = [[None] * n for _ in range(n)]
+
+for i in range(n):
+    for j in range(n):
+        b[i][j] = a[i] * a[j]
+
+for i in range(n):
+    for j in range(n):
+        if j == n - 1:
+            print(b[i][j])
+        else:
+            print(b[i][j], end=" ")
+            
+step3 素数の個数
+# utf-8
+n = int(input())
+
+ans = 0
+for i in range(2, n + 1):
+    is_prime = True
+    for j in range(2, int(i ** (1 / 2)) + 1):
+        if i % j == 0:
+            is_prime = False
+            break
+    if is_prime:
+        ans += 1
+
+print(ans)
+
+step4 log2
+# utf-8
+n = int(input())
+
+ans = 0
+for i in range(1, n + 1):
+    now = i
+    while now % 2 == 0:
+        now //= 2
+        ans += 1
+
+print(ans)
+
+step5 スーパー鳩時計
+# utf-8
+for h in range(24):
+    for m in range(60):
+        hm = h + m
+        if hm % 15 == 0:
+            print("FIZZBUZZ")
+        elif hm % 3 == 0:
+            print("FIZZ")
+        elif hm % 5 == 0:
+            print("BUZZ")
+        else:
+            print()
+            
+step6 格子点
+# utf-8
+ans = 0
+for x in range(1, 100):
+    for y in range(1, 100 - x):
+        if ans < x * y and x ** 3 + y ** 3 < 100000:
+            ans = x * y
+
+print(ans)
+
+step7 お金の支払い
+# utf-8
+x, y, z = map(int, input().split())
+
+ans = z
+
+for num_x in range(z // x + 1):
+    for num_y in range(z // y + 1):
+        if num_x * x + num_y * y <= z:
+            num_one = z - num_x * x - num_y * y
+            if num_x + num_y + num_one < ans:
+                ans = num_x + num_y + num_one
+
+print(ans)
+
+final 三角形の探索
+# utf-8
+n = int(input())
+
+flag = False
+for b in range(1, n):
+    for c in range(1, n - b):
+        a = n - b - c
+        if a ** 2 == b ** 2 + c ** 2:
+            flag = True
+
+if flag:
+    print("YES")
+else:
+    print("NO")
