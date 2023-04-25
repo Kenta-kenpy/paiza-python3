@@ -1,32 +1,343 @@
  <【配列を参照する操作】全ての要素に対する操作>
  step1 指定の要素のカウント
+ # utf-8
+ n, k = map(int, input().split())
+ a = [int(input()) for _ in range(n)]
+ans = 0
+
+for i in a:
+    if i == k:
+        ans += 1
+
+print(ans)
+
  step2 全ての要素の和
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+ans = 0
+
+for i in a:
+    ans += i
+
+print(ans)
+ 
  step3 配列の最大値
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+ans = 0
+
+for i in a:
+    if i > ans:
+        ans = i
+
+print(ans)
+
  step4 配列の最小値
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+ans = 100
+
+for i in a:
+    if i < ans:
+        ans = i
+
+print(ans)
+ 
  step5 指定要素があるかの判定
+ # utf-8
+ n, k = map(int, input().split())
+a = [int(input()) for _ in range(n)]
+flag = False
+
+for i in a:
+    if i == k:
+        flag = True
+
+if flag:
+    print("Yes")
+else:
+    print("No")
+
  step6 指定要素の先頭配置
+ # utf-8
+ n, k = map(int, input().split())
+a = [int(input()) for _ in range(n)]
+ans = -1
+
+for i in range(n):
+    if a[i] == k:
+        ans = i + 1
+        break
+
+print(ans)
+
  step7 要素の種類数
+ # utf-8
+ n = int(input())
+numbers = [0] * 101
+ans = 0
+
+for _ in range(n):
+    a = int(input())
+    if numbers[a] == 0:
+        ans += 1
+        numbers[a] = 1
+
+print(ans)
+
  final 全ての要素に対する操作
+ # utf-8
+ n, k = map(int, input().split())
+a = []
+
+for i in range(n):
+    a_i = int(input())
+    a.append(a_i + k)
+
+for i in a:
+    print(i)
  
  <【配列への副作用を伴う操作】条件を満たす要素のみの配列作成>
  step1 配列の順序の反転
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+b = [None] * n
+
+for i in range(n):
+    b[i] = a[n - i - 1]
+
+for i in b:
+    print(i)
+    
  step2 変数の入れ替え
+ # utf-8
+ x, y = map(int, input().split())
+
+tmp = x
+x = y
+y = tmp
+
+print(x, y)
+ 
  step3 指定要素の入れ替え
+ # utf-8
+n = int(input())
+a = [int(input()) for _ in range(n)]
+x, y = map(int, input().split())
+
+tmp = a[x - 1]
+a[x - 1] = a[y - 1]
+a[y - 1] = tmp
+
+for i in a:
+    print(i)
+    
  step4 末尾への要素の追加
+ # utf-8
+n = int(input())
+a = [int(input()) for _ in range(n)]
+b = int(input())
+
+a.append(b)
+
+for i in a:
+    print(i)
+    
  step5 指定位置への要素の追加
+ # utf-8
+N = int(input())
+a = [int(input()) for _ in range(N)]
+n, b = map(int, input().split())
+
+a.insert(n, b)
+
+for i in a:
+    print(i)
+    
  step6 指定要素の削除
+ # utf-8
+N = int(input())
+a = [int(input()) for _ in range(N)]
+n = int(input())
+
+a.pop(n - 1)
+
+for i in a:
+    print(i)
+    
  step7 九九表
+ # utf-8
+ for i in range(1, 10):
+    for j in range(1, 10):
+        print(i * j, end="")
+        if j != 9:
+            print(" ", end="")
+    print()
+    
  step8 全ての要素を用いた処理
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+
+for i in range(n):
+    for j in range(i):
+        print(a[i] * a[j])
+        
  step9 配列のサイズの変更
+ # utf-8
+ N, n = map(int, input().split())
+a = [0] * n
+
+for i in range(N):
+    a_i = input()
+    if i < n:
+        a[i] = a_i
+
+for ele in a:
+    print(ele)
+    
  step10 重複要素の削除
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+b = []
+
+for a_i in a:
+    if a_i not in b:
+        b.append(a_i)
+
+for i in b:
+    print(i)
+    
  final 条件を満たす要素のみの配列作成
+ # utf-8
+ n, k = map(int, input().split())
+a = [int(input()) for _ in range(n)]
+b = []
+
+for i in range(n):
+    if a[i] >= k:
+        b.append(a[i])
+
+for i in b:
+    print(i)
  
  <【配列に対しての複雑な処理】集団行動>
  step1 傾斜配点
+ # utf-8
+ n = int(input())
+m = list(map(int,input().split()))
+ans = 0
+
+for i in range(n):
+    a = list(map(int, input().split()))
+    score = 0
+    for j in range(5):
+        score += a[j] * m[j]
+    if score > ans:
+        ans = score
+
+print(ans)
+
  step2 内定
+ # utf-8
+ n, k, m = map(int, input().split())
+a = [int(input()) for _ in range(n)]
+ans = 0
+
+for i in a:
+    if i >= k:
+        ans += 1
+ans -= m
+if ans < 0:
+    ans = 0
+
+print(ans)
+
  step3 queue(9)係
+ # utf-8
+ n = int(input())
+queue = []
+
+for i in range(n):
+    s_i = input().split()
+    if s_i[0] == "in":
+        queue.append(s_i[1])
+    elif s_i[0] == "out" and len(queue) > 0:
+        queue.pop(0)
+
+for i in queue:
+    print(i)
+    
  step4 二人三脚
+ # utf-8
+ n = int(input())
+a = [int(input()) for _ in range(n)]
+ans = [None, None]
+diff = 101
+
+for i in range(n):
+    for j in range(i + 1, n):
+        if abs(a[i] - a[j]) < diff:
+            diff = abs(a[i] - a[j])
+            ans = [a[i], a[j]]
+
+ans.sort()
+for i in ans:
+    print(i)
+    
  step5 場所取り
+ # utf-8
+ n, k, f = map(int, input().split())
+a = [int(input()) for _ in range(k)]
+a_removed = a[f:]
+ans = []
+
+for i in a_removed:
+    if i not in ans:
+        ans.append(i)
+        print(i)
+        
  step6 ボウリング
+ # utf-8
+ p = []
+ans_p = 0
+ans_num = 0
+
+for i in range(4):
+    p += input().split()
+
+for i in range(10):
+    if p[i] == "1":
+        ans_num += 1
+        ans_p = 10 - i
+
+print(ans_p)
+print(ans_num)
+
  final 集団行動
- 
+ # utf-8
+ n, q = map(int, input().split())
+students = list(range(1, n + 1))
+
+for _ in range(q):
+    s = input().split()
+    if s[0] == "swap":
+        a = int(s[1]) - 1
+        b = int(s[2]) - 1
+        tmp = students[a]
+        students[a] = students[b]
+        students[b] = tmp
+    elif s[0] == "reverse":
+        students.reverse()
+    else:
+        c = int(s[1])
+        if len(students) > c:
+            students = students[:c]
+
+for student in students:
+    print(student)
