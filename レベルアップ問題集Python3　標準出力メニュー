@@ -228,12 +228,165 @@ for i in range(1, N + 1):
         else:
             print(i * j, end=" ")
 
-＜行によって長さが違う二次元配列の表示＞ Bランク　飛ばす
+＜行によって長さが違う二次元配列の表示＞
 step1　N個の文字を半分ずつ出力
+# utf-8
+N = int(input())
+
+for i in range(1, N + 1):
+    if i % (N // 2) == 0:
+        print(i)
+    else:
+        print(i, end=" ")
+'''
+改行の位置に気をつければ解くことができる問題です。
+for 文と range 関数を用いて整数列 1, 2, ... , n の各要素について出力を行います。
+改行が必要なのはどの要素のときか、それはインデックスが N // 2 で割り切れる要素を出力したあとです。
+'''
+
 step2　数値を異なる長さで2行出力
+# utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+for i in range(1, N + 1):
+    if i == N:
+        print(i)
+    else:
+        print(i, end=" ")
+
+for i in range(1, M + 1):
+    if i == M:
+        print(i)
+    else:
+        print(i, end=" ")
+'''
+「1 以上 N 以下」、「1 以上 M 以下」の値をそれぞれ出力するので、range 関数を使う際には注意が必要です。
+for 文内に if 文を記述して「改行するか、しないか」、「半角スペースを入れるか、入れないか」の処理をします。
+'''
+
 step3　直角三角形の出力
+# utf-8
+N = int(input())
+
+for i in range(1, N + 1):
+    for j in range(1, i + 1):
+        if j == i:
+            print(j)
+        else:
+            print(j, end=" ")
+'''
+2 重ループを使います。
+考え方は以下の通りです。
+出力は全部で N 行である
+各行で出力される整数の個数は、1, 2, ..., N と段々増え、それは「その行が何行目か」と一致する
+各行で出力される整数は、1, ..., (その行で出力される整数の個数) となっている
+以上より、以下のように考えられます。
+出力する行数だけ繰り返す ループA を作る
+ループA のカウンタ変数を i とする
+ループA の内部で各行に適した出力を行うために、各行で出力する整数列についての特性(上記)を思い出し、i 回だけ繰り返す ループB を作る
+以上の考え方を実装するために、2 重ループを使います。
+range 関数は　range(a, b) のように使うと、a 以上 b 未満の整数が小さい方から順に並んだ整数列を生成します。
+for 文内に if 文を記述して「改行するか、しないか」、「半角スペースを入れるか、入れないか」の処理をします。
+'''
+
 step4　すべての行の長さが不定な2次元配列の出力
+# utf-8
+N = int(input())
+M = [int(x) for x in input().split()]
+
+for i in range(N):
+    for j in range(1, M[i] + 1):
+        if j == M[i]:
+            print(j)
+        else:
+            print(j, end=" ")
+ # utf-8 別解
+ N = int(input())
+
+M = [0] * N
+values = input().split()
+for i in range(N):
+    M[i] = int(values[i])
+
+for i in range(N):
+    for j in range(1, M[i] + 1):
+        if j == M[i]:
+            print(j)
+        else:
+            print(j, end=" ")
+'''
+2 行目で入力される N 個の整数 m_i を受け取るために要素数 N のリストを M を [0] * N で用意します。
+input().split() で入力を受け取り、for 文内で値を整数型に変換しながら、用意したリスト M に要素として代入します。
+次は、出力の処理です。
+for i in range(n): を ループA と名付けると、ループA 内部で以下のことをすればいいことが分かります。
+m_i の値に応じて処理を繰り返す for 文を定義する (これを ループB とする)
+ループB で値を改行無しで出力する
+M[i] を出力する際に改行する
+以上の考え方を実装することで、解くことができます。
+range 関数の扱いには注意して下さい。
+'''
+
 final　すべての行の長さと値が不定な2次元配列の出力
+# utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+A = [0] * N
+values = input().split()
+for i in range(N):
+    A[i] = int(values[i])
+
+B = [0] * M
+values = input().split()
+for i in range(M):
+    B[i] = int(values[i])
+
+head = 0
+for i in B:
+    for j in range(i):
+        if j == i - 1:
+            print(A[head])
+        else:
+            print(A[head], end=" ")
+
+        head += 1
+'''
+イメージとしては 数列A を M 個に分割するというものです。
+1 行目は数列のここからここまでを出力、2 行目は数列のここからここまでを出力...ということがわかれば前問と同じように解くことができます。
+さて、各行で出力する区間なのですが、始点(begin)がわかれば終点(end)は end = begin + B[i] - 1 と、容易に求まります。
+注意点として、end = begin + B[i] とすると、最後の要素は範囲外なので出力してはいけません(今回は数学の言葉で「閉区間」として考えます。)。
+次に始点について考えてみます。最初に出力する数列の始点は 0 です(問題文では 1 - indexed でしたが、解説では 0 -indexed です)。
+i番目に出力する数列の始点について考えてみます。これは、(i - 1 番目に出力する数列の終点) + 1 であることがわかります。
+よって、すべての数列の始点と終点がわかりました。
+
+今回の問題の壁は、数列 A の出力を前の行の続きからやる方法をどのようにして実装するか、ということだったと思います。
+上記の壁を攻略するために、解答コードでは変数 head を用意しました。
+この変数 head は「次出力するインデックス」の情報を保持しています。
+出力とセットで head の値を +1 することで、head は常に次のインデックスを指し示すことになります。
+あとは、改行の位置に気をつければ解くことができます。
+
+# 別解 内包表記を用いた解法です。
+# utf-8
+values = input().split()
+N = int(values[0])
+M = int(values[1])
+
+A = [int(x) for x in input().split()]
+B = [int(x) for x in input().split()]
+
+head = 0
+for i in B:
+    for j in range(i):
+        if j == i - 1:
+            print(A[head])
+        else:
+            print(A[head], end=" ")
+
+        head += 1
+'''
 
 ＜実数をフォーマット指定して出力＞
 step1　1つの実数を出力
