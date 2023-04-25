@@ -1,0 +1,341 @@
+# 文字列の出力
+# utf-8
+print("paiza")
+
+# 文字列の受け取り
+# utf-8
+s = input()
+print(s)
+
+# i文字目の出力
+# utf-8
+s = input()
+i = int(input())
+
+print(s[i-1])
+
+# 文字列の文字数
+# utf-8
+s = input()
+
+if s == "paiza":
+    print("YES")
+else:
+    print("NO")
+
+# 文字の検索
+# utf-8
+s = input()
+print(len(s))
+
+# 文字列の連結
+# utf-8
+n = int(input())
+
+ans = ""
+for _ in range(n):
+    ans += input()
+
+print(ans)
+
+# 部分文字列
+# utf-8
+s = input()
+
+values = input().split()
+i = int(values[0])
+j = int(values[1])
+
+print(s[i-1:j])
+
+# 文字列の挿入
+# utf-8
+s = input()
+t = input()
+n = int(input())
+
+print(s[:n] + t + s[n:])
+
+# 文字列の書き換え
+# utf-8
+s = input()
+
+values = input().split()
+i = int(values[0])
+c = values[1]
+
+print(s[:i-1] + c + s[i:])
+
+# 文字列から数値への変換
+# utf-8
+s = input()
+print(int(s) - 813)
+
+# 数値から文字列への変換
+# utf-8
+x = int(input())
+y = int(input())
+n = int(input())
+
+print(str(x + y)[n-1])
+
+# 大文字から小文字への変換
+# utf-8
+s = input()
+print(s.lower())
+
+# 小文字から大文字への変換
+# utf-8
+s = input()
+print(s.upper())
+
+# 大文字小文字の反転
+# utf-8
+s = input()
+
+for ele in s:
+    if ele.islower():
+        print(ele.upper(), end="")
+    else:
+        print(ele.lower(), end="")
+
+print()
+
+# 文字列の検索
+# utf-8
+s = input()
+t = input()
+
+if t in s:
+    print("YES")
+else:
+    print("NO")
+
+# 文字列の反転
+# utf-8
+s = input()
+print(s[::-1])
+
+# 回文判定
+# utf-8
+s = input()
+r = s[::-1]
+
+if s == r:
+    print("YES")
+else:
+    print("NO")
+    
+# 文字列の分割
+# utf-8
+s = input().split(",")
+
+for ele in s:
+    print(ele)
+    
+# 日時データの変換その1
+# utf-8
+s = input()
+
+y = s[:4]
+M = s[5:7]
+d = s[8:10]
+h = s[11:13]
+m = s[14:]
+
+print(y)
+print(M)
+print(d)
+print(h)
+print(m)
+
+# 日時データの変換その2
+# utf-8
+s = input()
+
+y = s[:4]
+M = s[5:7]
+d = s[8:10]
+h = s[11:13]
+m = s[14:]
+
+print(y)
+print(M)
+print(d)
+print(h)
+print(m)
+
+# 数値判定
+# utf-8
+s = input()
+
+if s.isdigit():
+    print("YES")
+else:
+    print("NO")
+    
+# 重複の削除
+# utf-8
+s = input()
+
+st = set()
+for ele in s:
+    if ele not in st:
+        st.add(ele)
+        print(ele, end="")
+
+# パスワード作成
+# utf-8
+N = int(input())
+Q = int(input())
+n = [0] * Q
+c = [""] * Q
+
+for i in range(Q):
+    values = input().split()
+    n[i] = int(values[0]) - 1
+    c[i] = values[1]
+
+C = input()
+
+ans = [C] * N
+for i in range(Q):
+    ans[n[i]] = c[i]
+
+print("".join(ans))
+
+# 表記の訂正
+# utf-8
+s = input()
+
+if "." not in s:
+    i = 0
+    while i < len(s):
+        if s[i] != "0":
+            break
+        i += 1
+
+    if i == len(s):
+        print(0)
+    else:
+        print(s[i:])
+else:
+    ans = ""
+    start = 0
+
+    for i in range(len(s)):
+        if s[i] != "0":
+            if s[i] == ".":
+                ans += "0"
+
+            start = i
+            break
+
+    last = 0
+    for i in range(len(s)):
+        if s[i] != "0":
+            last = i
+
+    first_dot = s.find(".")
+    for i in range(start, last + 1):
+        if s[i] != ".":
+            ans += s[i]
+        elif i == first_dot:
+            ans += s[i]
+
+    print(ans)
+    
+# 数式の計算(1桁)
+# utf-8
+s = input()
+
+ans = 0
+add = True
+for i in range(len(s)):
+    if i % 2 == 0:
+        if add:
+            ans += int(s[i])
+        else:
+            ans -= int(s[i])
+    else:
+        if s[i] == "+":
+            add = True
+        else:
+            add = False
+
+print(ans)
+
+# 数式の計算
+# utf-8
+s = input()
+
+s += "."
+add = True
+ans = 0
+t = ""
+for ele in s:
+    if ele.isdigit():
+        t += ele
+    else:
+        if add:
+            ans += int(t)
+        else:
+            ans -= int(t)
+
+        if ele == "+":
+            add = True
+        else:
+            add = False
+
+        t = ""
+
+print(ans)
+
+# 巨大な数の足し算(繰り上がりなし)
+# utf-8
+s = input()
+t = input()
+
+ans = ""
+for i in range(len(s)):
+    ans += str(int(s[i]) + int(t[i]))
+
+print(ans)
+
+# 巨大な数の足し算
+# utf-8
+s = input()
+t = input()
+
+ans = ""
+upper = 0
+for i in range(len(s) - 1, -1, -1):
+    z = int(s[i]) + int(t[i]) + upper
+    upper = z // 10
+    ans = str(z % 10) + ans
+
+    if i == 0 and upper > 0:
+        ans = str(upper) + ans
+
+print(ans)
+
+# 巨大な数のかけ算
+# utf-8
+s = input()
+t = int(input())
+
+if t == 0:
+    print(0)
+else:
+    ans = ""
+    upper = 0
+    for i in range(len(s) - 1, -1, -1):
+        z = int(s[i]) * t + upper
+        upper = z // 10
+        ans = str(z % 10) + ans
+
+        if i == 0 and upper > 0:
+            ans = str(upper) + ans
+
+    print(ans)
+    
