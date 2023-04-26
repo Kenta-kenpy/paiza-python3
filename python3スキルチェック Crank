@@ -3247,64 +3247,71 @@ ans というリストは、最終的に各参加者が持つ豆の数を格納�
 ここで、タプルを year と mame に分割して、mame の値を出力しています。
 '''
 
-# C124　インターンへの応募  ※回答不十分
+# C124　インターンへの応募  ※回答不十分 今のところ最高得点コード
 # utf-8
 n = int(input())
-interns = []
+companies = []
 for i in range(n):
-    c_i = int(input())
-    schedules = []
-    for j in range(c_i):
-        s_j, p_j = map(int, input().split())
-        schedules.append((s_j, s_j + p_j))  # タプルで開始日と終了日を格納
-    interns.append(schedules)
+    c = int(input())
+    company_interns = []
+    for j in range(c):
+        s, p = map(int, input().split())
+        e = s + p
+        company_interns.append((s, e))
+    companies.append(company_interns)
 
-selected = set()  # 選択されたインターン先の集合
+# 各企業について、参加可能なインターンの開始日と終了日を記録するリストを作成
+possible_dates = []
 for i in range(n):
-    for schedule in interns[i]:
-        overlapping = False
-        for j in range(i):  # 志望度が高い会社のインターンについてのみ調べる
-            for s, t in interns[j]:
-                if schedule[1] > s and t > schedule[0]:  # 日程が重複している場合
-                    overlapping = True
+    possible_dates_i = set()  # 集合を使って重複を省く
+    for j in range(i+1):  # i 番目の企業と、それより志望度の高い企業のみを調べる
+        for intern in companies[j]:
+            is_possible = True
+            for k in range(j+1, i+1):  # i 番目以降の企業のインターンと重複するか調べる
+                for intern2 in companies[k]:
+                    if intern[1] > intern2[0] and intern[0] < intern2[1]:
+                        is_possible = False
+                        break
+                if not is_possible:
                     break
-            if overlapping:  # 既に重複している場合は処理を終了
-                break
-        if not overlapping:  # 重複していない場合は選択されたインターン先に追加
-            selected.add(i)
-            break
+            if is_possible:
+                possible_dates_i.add(intern)  # 参加可能なインターンの開始日と終了日のタプルを追加
+    possible_dates.append(possible_dates_i)
 
-print(len(selected))  # 選択されたインターン先の数を出力
-'''
-各会社のインターンの開始日と日数をタプルにまとめ、internsという二重リストに格納します。
-志望度が高い会社から順に、その会社のインターンの日程について、他のインターンと日程が重複するかどうかを調べます。
-日程が重複するインターンが存在する場合は、そのインターンには応募しないようにします。
-重複していない場合は、そのインターンに応募することができるため、選択されたインターン先の集合に追加します。
-選択されたインターン先の数を出力します。
-'''
+# 参加可能なインターンのうち、最も志望度が高い企業のインターンのみに応募する
+applied = set()
+for dates in possible_dates:
+    if not dates:  # 参加可能なインターンがない場合はスキップ
+        continue
+    best_intern = max(dates, key=lambda x: x[1])  # 終了日が最も遅いインターンを選ぶ
+    applied.add(best_intern)
 
-# C125　カードの積　※回答不十分
+print(len(applied))
+
+# C125　カードの積　※回答不十分 今のところ最高得点コード
 # utf-8
 n = int(input())
 cards = list(map(int, input().split()))
 
-max_product = -float('inf')
+max_score = float('-inf')
 
 for i in range(n):
     for j in range(i+1, n):
+        # 2枚のカードを選び、数字を1つずつ増減させる
         new_cards = cards.copy()
         new_cards[i] += 1
         new_cards[j] -= 1
-        new_product = 1
-        for k in range(n):
-            new_product *= new_cards[k]
-        if new_product > max_product:
-            max_product = new_product
 
-print(max_product)
-'''
+        # スコアを計算
+        score = 1
+        for c in new_cards:
+            score *= c
 
-'''
+        # 最大値を更新
+        max_score = max(max_score, score)
+
+print(max_score)
+
 # C126　宿泊費と交通費
 # C127　割引キャンペーン
 # C128　連分数
