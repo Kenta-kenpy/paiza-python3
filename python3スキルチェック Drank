@@ -1952,7 +1952,7 @@ a = int(input())
 b = int(input())
 print(a+b)
 
-# D243　取引の計算
+# D242(2)　取引の計算 ※番号ダブり
 # utf-8
 x = int(input())
 y = int(input())
@@ -1960,6 +1960,11 @@ z = int(input())
 total_money = x + y - z
 
 print(total_money)
+
+# D243 会社の募金
+# utf-8
+X = int(input())
+print(X%10)
 
 # D244
 # D245
