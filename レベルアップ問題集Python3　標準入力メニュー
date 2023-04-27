@@ -1,69 +1,405 @@
 <行入力>
 step1 1行の入力
+# utf-8
+s = input()
+print(s)
+'''
+input は入力値を文字列として受け取る関数です。s = input() でこれを変数 s に代入しています。
+print は文字列や数を出力する関数です。print(s) とすると s が出力されます。
+Python の print は自動的に末尾に改行を追加します。
+'''
+
 step2 2行の入力
+# utf-8
+s = input()
+t = input()
+
+print(s)
+print(t)
+'''
+2 行の入力を受け取るので、input() を 2 回使います。
+print() は末尾に改行を出力するので、今回は print() を 2 回使って s と t を出力します。
+'''
+
 step3 3行の入力
+# utf-8
+s = input()
+t = input()
+u = input()
+
+print(s)
+print(t)
+print(u)
+
 step4 10行の入力
+# utf-8
+for i in range(10):
+    s = input()
+    print(s)
+    
 final 1000行の入力
+# utf-8
+for i in range(1000):
+    s = input()
+    print(s)
 
 <半角スペース区切りでの文字列の分割>
 step1 2つの文字列の半角スペース区切りでの分割
-step2 3つの文字列の半角スペース区切りでの分割
-final 5つの文字列の半角スペース区切りでの分割
+# utf-8
+s = "Hello paiza"
+a, b = s.split(" ")
+print(a)
+print(b)
 
+step2 3つの文字列の半角スペース区切りでの分割
+# utf-8
+s = "He likes paiza"
+a, b, c = s.split(" ")
+print(a)
+print(b)
+print(c)
+
+final 5つの文字列の半角スペース区切りでの分割
+# utf-8
+s = "one two three four five"
+for i in s.split(" "):
+    print(i)
+    
 <半角スペース区切りの入力>
 step1 1つの入力
+# utf-8
+s = input()
+print(s)
+
 step2 半角スペース区切りの2つの入力
+# utf-8
+s, t = input().split(" ")
+print(s)
+print(t)
+
 step3 半角スペース区切りの3つの入力
+# utf-8
+s, t, u = input().split(" ")
+print(s)
+print(t)
+print(u)
+
 step4 半角スペース区切りの10個の入力
+# utf-8
+s = input().split(" ")
+for i in range(10):
+    print(s[i])
+
 final 半角スペース区切りの1000個の入力
+# utf-8
+s = input().split(" ")
+for i in range(1000):
+    print(s[i])
 
 <整数の行入力>
 step1 1行の整数の入力
+# utf-8
+a = int(input())
+print(a)
+
 step2 2行の整数の入力
+# utf-8
+a = int(input())
+b = int(input())
+print(a)
+print(b)
+
 step3 5行の整数の入力
+# utf-8
+a = []
+for i in range(5):
+    a_i = int(input())
+    a.append(a_i)
+
+for i in range(5):
+    print(a[i])
+    
 step4 100行の整数の入力
+# utf-8
+a = []
+for i in range(100):
+    a_i = int(input())
+    a.append(a_i)
+
+for i in range(100):
+    print(a[i])
+    
 final 1000行の整数の入力
+# utf-8
+a = []
+for i in range(1000):
+    a_i = int(input())
+    a.append(a_i)
+
+for i in range(1000):
+    print(a[i])
 
 <整数の半角スペース区切りの入力>
 step1 1つの整数の入力
-step2 2つの整数の半角スペース区切りの入力
-step3 5つの整数の半角スペース区切りの入力
-step4 10個の整数の半角スペース区切りの入力
-final 1000個の整数の半角スペース区切りの入力
+# utf-8
+a = int(input())
+print(a)
 
+step2 2つの整数の半角スペース区切りの入力
+# utf-8
+a, b = map(int, input().split(" "))
+print(a)
+print(b)
+
+step3 5つの整数の半角スペース区切りの入力
+# utf-8
+a = map(int, input().split(" "))
+for a_i in a:
+    print(a_i)
+
+step4 10個の整数の半角スペース区切りの入力
+# utf-8
+a = map(int, input().split(" "))
+for a_i in a:
+    print(a_i)
+    
+final 1000個の整数の半角スペース区切りの入力
+# utf-8
+a = map(int, input().split(" "))
+for a_i in a:
+    print(a_i)
+    
 <N個の整数の入力>
 step1 改行区切りでのN個の整数の入力
+# utf-8
+N = int(input())
+a = []
+for i in range(N):
+    a_i = int(input())
+    a.append(a_i)
+for i in range(N):
+    print(a[i])
+    
 step2 2行目で与えられるN個の整数の入力
+# utf-8
+N = int(input())
+a = list(map(int, input().split(" ")))
+for i in range(N):
+    print(a[i])
+    
 step3 1行目で与えられるN個の整数の入力
+# utf-8
+N_and_a = list(map(int, input().split(" ")))
+N = N_and_a[0]
+a = N_and_a[1:]
+for i in range(N):
+    print(a[i])
+    
 step4 2行目で与えられるN個の整数の入力(large)
+# utf-8
+N = int(input())
+a = list(map(int, input().split(" ")))
+for i in range(N):
+    print(a[i])
+    
 final 1行目で与えられるN個の整数の入力(large)
-
+# utf-8
+N_and_a = list(map(int, input().split(" ")))
+N = N_and_a[0]
+a = N_and_a[1:]
+for i in range(N):
+    print(a[i])
+    
 <N個の文字列の入力>
 step1 改行区切りでのN個の文字列の入力
+# utf-8
+N = int(input())
+s = []
+for i in range(N):
+    s_i = input()
+    s.append(s_i)
+for i in range(N):
+    print(s[i])
+    
 step2 2行目で与えられるN個の文字列の入力
+# utf-8
+N = int(input())
+s = input().split(" ")
+for i in range(N):
+    print(s[i])
+    
 step3 1行目で与えられるN個の文字列の入力
+# utf-8
+N_and_s = input().split(" ")
+N = int(N_and_s[0])
+s = N_and_s[1:]
+for i in range(N):
+    print(s[i])
+    
 step4 2行目で与えられるN個の文字列の入力(large)
+# utf-8
+N = int(input())
+s = input().split(" ")
+for i in range(N):
+    print(s[i])
+
 final 1行目で与えられるN個の文字列の入力(large)
+# utf-8
+N_and_s = input().split(" ")
+N = int(N_and_s[0])
+s = N_and_s[1:]
+for i in range(N):
+    print(s[i])
 
 <1行目で与えられるN個の実数の入力(large)>
 step1 改行区切りでのN個の実数の入力
+# utf-8
+N = int(input())
+a = []
+for i in range(N):
+    a_i = float(input())
+    a.append(a_i)
+for i in range(N):
+    print(a[i])
+    
 step2 2行目で与えられるN個の実数の入力
+# utf-8
+N = int(input())
+a = list(map(float, input().split(" ")))
+for i in range(N):
+    print(a[i])
+    
 step3 1行目で与えられるN個の実数の入力
+# utf-8
+N_and_a = input().split(" ")
+N = int(N_and_a[0])
+a = list(map(float, N_and_a[1:]))
+for i in range(N):
+    print(a[i])
+    
 step4 2行目で与えられるN個の実数の入力(large)
+# utf-8
+N = int(input())
+a = list(map(float, input().split(" ")))
+for i in range(N):
+    print(a[i])
+    
 final 1行目で与えられるN個の実数の入力(large)
-
+# utf-8
+N_and_a = input().split(" ")
+N = int(N_and_a[0])
+a = list(map(float, N_and_a[1:]))
+for i in range(N):
+    print(a[i])
+    
 <組になったデータの入力>
 step1 1つの整数の組の入力
+# utf-8
+a, b = map(int, input().split())
+print(a, b)
+
 step2 N組の整数の入力
+# utf-8
+N = int(input())
+a = []
+b = []
+for i in range(N):
+    a_i, b_i = map(int, input().split())
+    a.append(a_i)
+    b.append(b_i)
+
+for i in range(N):
+    print(a[i], b[i])
+
 step3 整数の組からの選択
+# utf-8
+N = int(input())
+a = []
+b = []
+for i in range(N):
+    a_i, b_i = map(int, input().split())
+    a.append(a_i)
+    b.append(b_i)
+
+print(a[7], b[7])
+
 step4 文字列と整数の組の入力
+# utf-8
+N = int(input())
+s = []
+a = []
+for i in range(N):
+    s_i, a_i = input().split()
+    s.append(s_i)
+    a.append(int(a_i))
+
+for i in range(N):
+    print(s[i], a[i])
+    
 final 文字列と整数の組からの選択
+# utf-8
+N = int(input())
+s = []
+a = []
+for i in range(N):
+    s_i, a_i = input().split()
+    s.append(s_i)
+    a.append(int(a_i))
+
+print(s[7], a[7])
 
 <N行M列のデータの入力>
 step1 3行3列の整数の入力
-step2 N行3列の整数の入力
-step3 3行M列の整数の入力
-step4 N行M列の整数の入力
-final 行ごとに要素数の異なる整数列の入力
+# utf-8
+a = []
+for i in range(3):
+    a_i = list(map(int, input().split()))
+    a.append(a_i)
 
+for i in range(3):
+    print(*a[i])
+    
+step2 N行3列の整数の入力
+# utf-8
+N = int(input())
+a = []
+for i in range(N):
+    a_i = list(map(int, input().split()))
+    a.append(a_i)
+
+for i in range(N):
+    print(*a[i])
+    
+step3 3行M列の整数の入力
+# utf-8
+M = int(input())
+a = []
+for i in range(3):
+    a_i = list(map(int, input().split()))
+    a.append(a_i)
+
+for i in range(3):
+    print(*a[i])
+    
+step4 N行M列の整数の入力
+# utf-8
+N, M = map(int, input().split())
+a = []
+for i in range(N):
+    a_i = list(map(int, input().split()))
+    a.append(a_i)
+
+for i in range(N):
+    print(*a[i])
+    
+final 行ごとに要素数の異なる整数列の入力
+# utf-8
+N = int(input())
+a = []
+for i in range(N):
+    M_and_a_i = list(map(int, input().split()))
+    a.append(M_and_a_i[1:])
+
+for i in range(N):
+    print(*a[i])
 
