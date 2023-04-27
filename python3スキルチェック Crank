@@ -3247,46 +3247,40 @@ ans というリストは、最終的に各参加者が持つ豆の数を格納�
 ここで、タプルを year と mame に分割して、mame の値を出力しています。
 '''
 
-# C124　インターンへの応募  ※回答不十分 今のところ最高得点コード
+# C124　インターンへの応募  ※回答不十分
 # utf-8
-n = int(input())
-companies = []
-for i in range(n):
-    c = int(input())
-    company_interns = []
-    for j in range(c):
-        s, p = map(int, input().split())
-        e = s + p
-        company_interns.append((s, e))
-    companies.append(company_interns)
+N = int(input())
 
-# 各企業について、参加可能なインターンの開始日と終了日を記録するリストを作成
-possible_dates = []
-for i in range(n):
-    possible_dates_i = set()  # 集合を使って重複を省く
-    for j in range(i+1):  # i 番目の企業と、それより志望度の高い企業のみを調べる
-        for intern in companies[j]:
-            is_possible = True
-            for k in range(j+1, i+1):  # i 番目以降の企業のインターンと重複するか調べる
-                for intern2 in companies[k]:
-                    if intern[1] > intern2[0] and intern[0] < intern2[1]:
-                        is_possible = False
-                        break
-                if not is_possible:
+# 各企業のインターンシップの日程を解析し、開始日と終了日を計算する
+internships = []
+for i in range(N):
+    C_i = int(input())
+    internships_i = []
+    for j in range(C_i):
+        S_j, P_j = map(int, input().split())
+        internships_i.append((S_j, S_j+P_j-1))
+    internships.append(internships_i)
+
+# 高い志望度の企業から順番に、参加可能かどうかを判断する
+num_applications = 0
+for i in range(N):
+    for j in range(len(internships[i])):
+        # すでに参加済みの期間に被っているかどうかを確認
+        overlap = False
+        for k in range(i):
+            for l in range(len(internships[k])):
+                if internships[k][l][0] <= internships[i][j][1] and internships[i][j][0] <= internships[k][l][1]:
+                    overlap = True
                     break
-            if is_possible:
-                possible_dates_i.add(intern)  # 参加可能なインターンの開始日と終了日のタプルを追加
-    possible_dates.append(possible_dates_i)
+            if overlap:
+                break
+        # 参加可能であれば、その期間を参加済みとしてマークし、応募企業数をインクリメントする
+        if not overlap:
+            num_applications += 1
+            break
 
-# 参加可能なインターンのうち、最も志望度が高い企業のインターンのみに応募する
-applied = set()
-for dates in possible_dates:
-    if not dates:  # 参加可能なインターンがない場合はスキップ
-        continue
-    best_intern = max(dates, key=lambda x: x[1])  # 終了日が最も遅いインターンを選ぶ
-    applied.add(best_intern)
+print(num_applications)
 
-print(len(applied))
 
 # C125　カードの積　※回答不十分 今のところ最高得点コード
 # utf-8
