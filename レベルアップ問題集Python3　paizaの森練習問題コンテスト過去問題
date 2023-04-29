@@ -40,21 +40,23 @@ print(int(d)//int(v))
 
 # Q.　背番号順
 # utf-8
-players = {}
-n = int(input())
+n = int(input())  # 選手の数を入力
 
-i = 0
+# 選手の情報をリストに格納
+players = []
+for i in range(n):
+    b, p = input().rstrip().split()
+    players.append((int(b), p))
 
-while i < n:
-    s = input()
-    s = s.split()
-    no = int(s[0])
-    name = s[1]
-    players[no] = name
-    i += 1
-
-for key in sorted(players.keys()):
-    print(f"{key}{players[key]}")
+# 背番号でソートして出力
+for b, p in sorted(players):
+    print(b, p)
+'''
+まず、選手の数nを入力します。次にn回ループして、各選手の背番号と名前を取得しリストに格納します。
+rstrip()関数を使うことで、入力の各行の末尾に含まれる改行文字を取り除きます。
+最後に、背番号でソートされた選手のリストをループして、各選手の背番号と名前を出力します。
+sorted()関数を使うことで、背番号でソートされた選手のリストを簡単に作成できます。
+'''
 
 # paizaの森練習問題コンテスト過去問題2　★
 # Q.　競輪のユニフォーム
