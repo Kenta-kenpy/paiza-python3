@@ -622,3 +622,67 @@ for i in range(n):
         ans += 1
         time = d[i][0]
 print(ans)
+
+# paizaの森練習問題コンテスト過去問題9　★
+# Q.　最大値と最小値
+# utf-8
+a = list(map(int, input().split()))
+a.sort() # 昇順に並び替え
+print(a[0], a[-1]) # 3つの値の並び替えなので最小値と最大値は最初と最後の要素
+
+# Q.  卵の生産
+# utf-8
+a, n = map(int, input().split())
+print(a * n) # 1日当たりの卵を産む量と日数が与えられるのでその積で求める
+
+# Q.  卵の生産の最大量
+# utf-8
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+ans = 0
+for i in range(n - k + 1):
+    su = 0
+    for j in range(k):
+        su += a[i + j]
+    ans = max(ans, su)
+print(ans)
+
+# Q.  卵の生産の最大量 その2
+# utf-8
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+ans = 0
+su = 0
+for i in range(n - k + 1):
+    if i == 0:
+        for j in range(k):
+            su += a[i + j]
+    else:
+        su += a[i + k - 1]
+        su -= a[i - 1]
+    ans = max(ans, su)
+print(ans)
+
+# Q.  卵をぴったり生産
+# utf-8
+n, k = map(int, input().split())
+
+a = list(map(int, input().split()))
+
+ans = 0
+for bit in range(2 ** n):
+    su = 0
+    for j in range(n):
+        if bit & (1 << j):
+            su += a[j]
+    if su == k:
+        ans += 1
+print(ans)
+
+
+
+
+
+
