@@ -1,1 +1,48 @@
+# Q. 単語のカウント C
+# utf-8
+li = input().split()
 
+m = []
+k = []
+
+for i in li:
+    if i in m:
+        k[m.index(i)] += 1
+    else:
+        m.append(i)
+        k.append(1)
+
+for i in range(len(m)):
+    print(m[i], k[i])
+'''
+英単語を出現した順番で保存しておく配列と、その出現回数を記録する配列を用意し、
+英単語を順に見ていきながら処理していけばよいです。
+'''
+
+# Q. 検索履歴 C
+# utf-8
+n = int(input())
+
+re = []
+
+for i in range(n):
+    s = input()
+
+    if s in re:
+        re.pop(re.index(s))
+
+    re.append(s)
+
+for i in range(len(re)):
+    print(re[-i - 1])
+'''
+連結リスト等のデータ構造を用いて、問題文にある通りに履歴を作ってもよいのですが、以下のようにすると簡単に解くことが出来ます。
+検索ワードを W_N から W_1 まで逆順に見ていき、そのワードが既出でなければ出力する。
+'''
+
+# Q. 宝くじ C
+# Q. 野球の審判 C
+# Q. 日別訪問者数の最大平均区間 B
+# Q. みんなでしりとり B
+# Q. 神経衰弱 B
+# Q. 日別訪問者数の最大平均区間(large) A
