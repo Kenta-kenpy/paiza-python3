@@ -3287,38 +3287,27 @@ print(num_applications)
 n = int(input())
 cards = list(map(int, input().split()))
 
-max_score = -float('inf')
+max_product = -1
 
-if any(c < 0 for c in cards):
-    min_neg = min(filter(lambda x: x < 0, cards))
-    min_neg_idx = cards.index(min_neg)
-    for i in range(n):
-        if i == min_neg_idx:
+for i in range(n):
+    for j in range(n):
+        if i == j:
             continue
-        for j in range(n):
-            if i == j or j == min_neg_idx:
-                continue
-            new_cards = cards.copy()
-            new_cards[i] += 1
-            new_cards[j] -= 1
-            score = 1
-            for c in new_cards:
-                score *= c
-            max_score = max(max_score, score)
-else:
-    for i in range(n):
-        for j in range(n):
-            if i == j:
-                continue
-            new_cards = cards.copy()
-            new_cards[i] += 1
-            new_cards[j] -= 1
-            score = 1
-            for c in new_cards:
-                score *= c
-            max_score = max(max_score, score)
 
-print(max_score)
+        new_cards = cards.copy()
+        new_cards[i] += 1
+        new_cards[j] -= 1
+
+        # カードの値が -5 <= ci <= 5 の範囲に収まるようにする
+        new_cards = [min(max(c, -5), 5) for c in new_cards]
+
+        product = 1
+        for c in new_cards:
+            product *= c
+
+        max_product = max(max_product, product)
+
+print(max_product)
 
 # C126　宿泊費と交通費
 # C127　割引キャンペーン
