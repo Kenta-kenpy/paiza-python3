@@ -1,10 +1,224 @@
 # P共通テスト過去問題1　★
 D# お釣り
+# utf-8
+s = int(input())
+m = int(input())
+
+if s > m:
+    print("Tarimasen!")
+else:
+    print(m - s)
+'''
+まずは、整数型の変数を用意して入力を受け取りましょう。 変数の型や入力の受け取り方は言語ごとに異なるので、お使いの言語の仕様について調べてみましょう。
+お金が足りているかの結果に応じて出力が変化するので、値を受け取ったら、「M が S 以上であるか」を判定しましょう。 
+ある条件を満たすときのみ特定の処理をおこなうことを条件分岐といいます。 一般的に条件分岐を実装する場合は if 文などに代表される条件分岐文を利用します。
+判定した結果、M の値が S 以上であるならば M - S の値を、そうでないならば文字列 "Tarimasen!" を出力しましょう。 
+この出力する 2 つは、M - S の値は整数であり、"Tarimasen!" は文字列であるという型の違いがあります。
+'''
+
 C# rot-x
-B# リング型のトークンバッシング
+# utf-8
+from collections import defaultdict
+
+n = int(input())
+s = input()
+t = list(input())
+
+alphabet = {chr(i + 97) for i in range(26)}
+d = defaultdict(int)
+
+for c1, c2 in zip(s, t):
+    d[(ord(c2) - ord(c1)) % 26] += 1
+
+if len(d) == 1:
+    print(f'correct rot-{list(d.keys())[0]}')
+elif len(d) == 2:
+
+    wrong_num = min(list(d.values()))
+    correct_rot = ''
+
+    for k, v in d.items():
+        if v == wrong_num: continue
+        correct_rot = k
+    if wrong_num != 1:
+        print('incorrect')
+    else:
+        for i in range(n):
+            for k, v in d.items():
+                if (ord(t[i]) - ord(s[i])) % 26 == k and v == wrong_num:
+                    t[i] = chr(ord("a") + (ord(s[i]) - ord("a") + correct_rot) % 26)
+                    break
+            else:
+                continue
+            break
+        print(f"fixed {''.join(t)}")
+else:
+    print('incorrect')
+'''
+文字列 s, t の各文字について、それぞれ何文字右シフトされているかを求め、問題文の指示に従って答えを出力すればよいです。
+全文字がそれぞれ何文字右シフトされているかを集計する際は、長さ 26 の整数型配列や連想配列などを用いるとよいです。
+'''
+
+B# リング型のトークンバッシング　※解答に不備あり
+# utf-8
+
 A# データの分類
-S# ペイントソフト
-S# 画像の切り抜き
+# utf-8
+from collections import defaultdict
+
+n = int(input())
+xyc = [list(map(int, input().split())) for _ in range(n)]
+x, y = map(int, input().split())
+
+dist = [((x - i) ** 2 + (y - j) ** 2, k) for i, j, k in xyc]
+dist.sort(key=lambda t: (t[0], t[1]))
+
+ans = [0] * n
+d = defaultdict(int)
+max_class = -1 # 答えとなるクラスが存在する個数
+cnt_class = -1 # 答えとなるクラス
+for i in range(n):
+    d[dist[i][1]] += 1
+    if max_class < d[dist[i][1]]:
+        max_class = d[dist[i][1]]
+        cnt_class = dist[i][1]
+    elif max_class == d[dist[i][1]]: # クラスが複数ある場合
+        if dist[i][1] < cnt_class:
+            cnt_class = dist[i][1]
+    ans[i] = cnt_class
+
+q = int(input())
+for _ in range(q):
+    k = int(input())
+    print(ans[k - 1])
+'''
+クエリ毎に計算すると時間が間に合わないので、k 昇順で予測値を前計算しておく
+あらかじめ、n 個のデータ (x_1, y_1) ... (x_n, y_n) を、(x_0, y_0) からの距離昇順でソートしておく。
+距離が等しいデータは、クラスの値が昇順になるように並べる
+先頭 k 個のクラス値で多数決をとった結果が k 近傍法の予測値となる
+クラス値 c の範囲が [1, 1000000000] のため、愚直にやると時間が間に合わない。工夫して計算量を改善する必要がある
+優先度付きキューや、連想配列を用いるとよい
+'''
+
+S# ペイントソフト  https://paiza.jp/works/mondai/reviews/show/e06e9cfcf48a68f089a25fdcee3942f2
+# utf-8
+from typing import List
+
+def is_point_square_in(num: int, p: List[int], x: int, y: int) -> bool:
+    if num == 0:
+        if x < p[0] and y < p[1]: return True
+        else: return False
+    elif num == 1:
+        if x < p[0] and y > p[1]: return True
+        else: return False
+    elif num == 2:
+        if x > p[0] and y > p[1]: return True
+        else: return False
+    elif num == 3:
+        if x > p[0] and y < p[1]: return True
+        else: return False
+
+n, q, h, w = map(int,input().split())
+size = 0
+ll_ur_crossing = False
+ul_lr_crossing = False
+
+point = [tuple(map(int, input().split())) for _ in range(4)]
+
+if point[0][0] >= point[2][0] and point[0][1] >= point[2][1]:
+    size += 1
+    ll_ur_crossing = True
+
+if point[1][0] >= point[3][0] and point[1][1] <= point[3][1]:
+    size += 1
+    ul_lr_crossing = True
+
+color_of_area = [1] * (1 << (4 + size))
+
+for _ in range(n):
+    id, add = 0, 0
+    c, x, y = map(int,input().split())
+    
+    for j in range(4):
+        ok = is_point_square_in(j, point[j], x, y)
+        if ok: id += 1 << j
+    
+    if ll_ur_crossing:
+        if x > point[0][0] and y < point[2][1]:
+            id += 1 << (4 + add)
+        add += 1
+    
+    if ul_lr_crossing:
+        if x < point[3][0] and y < point[1][1]:
+            id += 1 << (4 + add)
+    
+    color_of_area[id] = c
+
+for i in range(q):
+    id, add = 0, 0
+    x, y = map(int,input().split())
+    for j in range(4):
+        ok = is_point_square_in(j, point[j], x, y)
+        if ok: id += 1 << j
+    
+    if ll_ur_crossing:
+        if x > point[0][0] and y < point[2][1]:
+            id += 1 << (4 + add)
+        add += 1
+    
+    if ul_lr_crossing:
+        if x < point[3][0] and y < point[1][1]:
+            id += 1 << (4 + add)
+    
+    print(color_of_area[id])
+    
+S# 画像の切り抜き https://paiza.jp/works/mondai/reviews/show/c976c3893c7a7b490f370fa3832caae6
+# utf-8
+h, w, n, m = map(int, input().split())
+a = [list(input()) for _ in range(h)]
+
+left = 0
+right = 2
+
+while right - left > 10 ** -8:
+    mid = (right + left) / 2
+    s = [[0] * (w + 1) for _ in range(h + 1)]
+
+    for i in range(h + 1):
+        for j in range(w + 1):
+            s[i][j] = 0
+            if i > 0 and j > 0:
+                if a[i - 1][j - 1] == '1':
+                    cnt = 1
+                else:
+                    cnt = 0
+                s[i][j] += cnt - mid
+                s[i][j] += s[i - 1][j] + s[i][j - 1] - s[i - 1][j - 1]
+    
+    work = [0] * (w + 1)
+    mx = [0] * (w + 1)
+    flag = False
+    for i in range(h + 1):
+        for j in range(i + n, h + 1):
+            for k in range(w + 1):
+                work[k] = s[j][k] - s[i][k]
+            
+            for k in range(w, -1, -1):
+                mx[k] = work[k]
+                if k < w:
+                    if mx[k] < mx[k + 1]:
+                        mx[k] = mx[k + 1]
+
+            for k in range(m, w + 1):
+                if -work[k - m] + mx[k] >= 0.0:
+                    flag = True
+            
+    if flag:
+        left = mid
+    else:
+        right = mid
+
+print(float(left))
 
 # P共通テスト過去問題2　★
 D# 拡散の脅威
