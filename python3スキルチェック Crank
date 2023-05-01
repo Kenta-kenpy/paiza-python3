@@ -3281,7 +3281,6 @@ for i in range(N):
 
 print(num_applications)
 
-
 # C125　カードの積　※回答不十分 今のところ最高得点コード
 # utf-8
 n = int(input())
