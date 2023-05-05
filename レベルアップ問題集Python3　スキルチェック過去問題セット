@@ -60,6 +60,30 @@ for i in range(n):
         print("blank")
 
 # Q. 野球の審判 C
+# utf-8
+n = int(input())
+
+ball = 0
+strike = 0
+
+for i in range(n):
+    s = input()
+
+    if s == "strike":
+        strike += 1
+
+        if strike == 3:
+            print("out!")
+        else:
+            print("strike!")
+    else:
+        ball += 1
+
+        if ball == 4:
+            print("fourball!")
+        else:
+            print("ball!")
+
 # Q. 日別訪問者数の最大平均区間 B
 # Q. みんなでしりとり B
 # Q. 神経衰弱 B
