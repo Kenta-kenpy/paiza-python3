@@ -85,6 +85,26 @@ for i in range(n):
             print("ball!")
 
 # Q. 日別訪問者数の最大平均区間 B
+# utf-8
+n, k = map(int, input().split())
+data = list(map(int, input().split()))
+
+ave = [None] * (n - k + 1)
+ave[0] = sum(data[:k])
+
+for i in range(1, n - k + 1):
+    ave[i] = ave[i - 1] - data[i - 1] + data[i - 1 + k]
+
+m = max(ave)
+
+print(ave.count(m), ave.index(m) + 1)
+'''
+訪問者数の累積和を取り、連続する k 日の合計訪問者数の最大値 max_visitor を求めます。
+そして、連続する k 日の期間のうち、その合計訪問者数が max_visitor に等しい期間の数を数えます。
+このとき同時にそのような期間のうち最も速い開始日を記録しておきます。
+なお、この問題の制約は非常に小さいため、連続する k 日の期間の合計訪問者数を累積和を用いずに愚直に計算しても、実行時間制限に十分な余裕を持って間に合います。
+'''
+
 # Q. みんなでしりとり B
 # Q. 神経衰弱 B
 # Q. 日別訪問者数の最大平均区間(large) A
