@@ -106,5 +106,60 @@ print(ave.count(m), ave.index(m) + 1)
 '''
 
 # Q. みんなでしりとり B
+# utf-8
+n, k, m = map(int, input().split())
+ikiteru = [1] * n
+data = set()
+jun = 0
+data2 = set()
+flag = False
+old_s = " "
+
+for i in range(k):
+    data.add(input())
+
+for i in range(m):
+    while True:
+        if ikiteru[jun % n] == 1:
+            break
+        jun += 1
+
+    new_s = input()
+
+    if new_s in data2:
+        ikiteru[jun % n] = 0
+        flag = False
+        continue
+
+    if new_s[0] != old_s[-1] and flag:
+        ikiteru[jun % n] = 0
+        flag = False
+        continue
+
+    if not (new_s in data):
+        ikiteru[jun % n] = 0
+        flag = False
+        continue
+
+    if new_s[-1] == "z":
+        ikiteru[jun % n] = 0
+        flag = False
+        continue
+
+    data2.add(new_s)
+    flag = True
+    old_s = new_s
+    jun += 1
+
+print(ikiteru.count(1))
+
+for i in range(n):
+    if ikiteru[i] == 1:
+        print(i + 1)
+'''
+ルールが多く、チェックするのが大変ですが、配列や集合などの各種データ構造を効果的に用いることにより問題を解くことが出来ます。
+単語リストは集合の形で、しりとりから脱落せずに残っているプレイヤーは配列か集合の形で持つようにすると比較的楽に実装できるでしょう。
+'''
+
 # Q. 神経衰弱 B
 # Q. 日別訪問者数の最大平均区間(large) A
