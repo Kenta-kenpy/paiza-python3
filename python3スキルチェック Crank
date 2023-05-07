@@ -3286,25 +3286,26 @@ print(num_applications)
 n = int(input())
 cards = list(map(int, input().split()))
 
-# 初期状態での積を求める
-default_product = 1
-for card in cards:
-    default_product *= card
+# カードの積を計算
+prod = 1
+for c in cards:
+    prod *= c
 
-# 2枚のカードの数字を1増減させた場合にN個の数字の積が大きくなるか小さくなるかを判定し、最大値を求める
-ans = default_product
+# 最大値を初期化
+ans = prod
+
+# 2つのカードを選んで+1と-1を行った場合の最大値を探索
 for i in range(n):
-    for j in range(i+1, n):
-        temp_product = default_product * ((cards[i]+1) * (cards[j]-1)) // (cards[i] * cards[j])
-        ans = max(ans, temp_product)
-        temp_product = default_product * ((cards[i]-1) * (cards[j]+1)) // (cards[i] * cards[j])
-        ans = max(ans, temp_product)
+    for j in range(n):
+        if i == j:
+            continue
+        temp = prod // cards[i] * (cards[i]+1) * (cards[j]-1) // cards[j]
+        ans = max(ans, temp)
 
 print(ans)
 '''
-このコードでは、まず初期状態での積を求め、そのあとに2枚のカードの数字を1増減させた場合にN個の数字の積が大きくなるか小さくなるかを判定します。
-その際、2枚のカードの数字を1ずつ変化させた場合に、その2枚以外の数字の積は不変であることに着目して、それ以外の数字の積を分けて計算しています。
-また、このコードでは整数の除算に//演算子を使用しているため、計算結果が整数になります。
+初にN枚のカードの数字すべての積を計算し、その後、2枚のカードを選び+1および-1を適用したときの変化量を計算し、
+元の積と変化量を比較して、より大きな積が得られる場合は更新する、というアプローチ。
 '''
 
 # C126　宿泊費と交通費
