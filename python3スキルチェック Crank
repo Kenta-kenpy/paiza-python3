@@ -3288,31 +3288,41 @@ print(count)
 この問題の時間計算量は O(N^2) となります。企業数が多くなると処理に時間がかかるため、より高速なアルゴリズムを考える必要があるかもしれません。
 '''
 
-# C125　カードの積　※回答不十分 今のところ最高得点コード 70点
+# C125　カードの積
 # utf-8
-n = int(input())
-cards = list(map(int, input().split()))
+import itertools
 
-# カードの積を計算
-prod = 1
-for c in cards:
-    prod *= c
+N = int(input())
+nums = list(map(int, input().split()))
 
-# 最大値を初期化
-ans = prod
+max_product = float('-inf')  # 最大値を保持する変数を初期化
 
-# 2つのカードを選んで+1と-1を行った場合の最大値を探索
-for i in range(n):
-    for j in range(n):
-        if i == j:
-            continue
-        temp = prod // cards[i] * (cards[i]+1) * (cards[j]-1) // cards[j]
-        ans = max(ans, temp)
+# 全探索で2つの数字を選び、+1または-1を行う
+for comb in itertools.combinations(nums, 2):
+    new_nums = nums.copy()  # 元の数字列をコピー
+    new_nums.remove(comb[0])
+    new_nums.remove(comb[1])
 
-print(ans)
+    # 2つの数字それぞれに+1または-1を行う
+    plus = [comb[0] + 1, comb[1] - 1]
+    minus = [comb[0] - 1, comb[1] + 1]
+    for new_comb in [plus, minus]:
+        nums_product = 1
+        for num in new_comb + new_nums:
+            nums_product *= num
+        if nums_product > max_product:
+            max_product = nums_product
+
+print(max_product)
 '''
-N枚のカードの数字すべての積を計算し、その後、2枚のカードを選び+1および-1を適用したときの変化量を計算し、
-元の積と変化量を比較して、より大きな積が得られる場合は更新する、というアプローチ。
+この問題は全探索によって解くことができます。以下、アルゴリズムの概要を説明します。
+step1　N個の整数を配列に入力する。
+step2　最大値を保存する変数を初期化する。
+step3　2つの数を選び、1つに+1、もう1つに-1を掛ける。この操作をN(N-1)/2通り行う。
+step4　step3で得られた2つの数と、元のN-2個の数を掛け算し、その積の最大値を求める。この操作をN!通り行う。
+step5　step4で求めた最大値が、現在の最大値より大きければ、最大値を更新する。
+step6　全ての組み合わせに対して上記の処理を行い、最終的な最大値を出力する。
+このアルゴリズムの時間計算量はO(N^2 * N!)になります。Nが10以下という小さな制約であるため、この計算量でも間に合います。
 '''
 
 # C126　宿泊費と交通費
