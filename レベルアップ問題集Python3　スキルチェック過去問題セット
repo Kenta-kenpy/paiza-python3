@@ -162,4 +162,34 @@ for i in range(n):
 '''
 
 # Q. 神経衰弱 B
+# utf-8
+h, w, n = map(int, input().split())
+
+cards = [None] * h
+player = [0] * n
+jun = 0
+
+for i in range(h):
+    cards[i] = list(map(int, input().split()))
+
+l = int(input())
+
+for i in range(l):
+    b, a, B, A = map(int, input().split())
+    num1 = cards[b - 1][a - 1]
+    num2 = cards[B - 1][A - 1]
+
+    if num1 == num2:
+        player[jun % n] += 2
+        cards[b - 1][a - 1] = 0
+        cards[B - 1][A - 1] = 0
+    else:
+        jun += 1
+
+for i in player:
+    print(i)
+'''
+トランプの配置を二次元配列で受け取り、問題文の通りに実装をすればよいです。
+'''
+
 # Q. 日別訪問者数の最大平均区間(large) A
