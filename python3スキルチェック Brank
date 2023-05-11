@@ -182,6 +182,62 @@ forループを使って、各発表の時間を処理します。forループ�
 '''
 
 # B010 サッカーのオフサイド判定
+# utf-8
+def team_lineup(players, reverse=False):
+    if reverse:
+        players = list(map(lambda x:-x, players))
+    return zip(range(1, 12), players)
+
+def is_offside(x_player, x_passer, x_offside_line):
+    return x_passer < x_offside_line < x_player
+
+def get_offside_players(offence_team, diffence_team, x_passer, x_offside_line):
+    offside_players = []
+    for idx, x_p in enumerate(offence_team):
+        if is_offside(x_p, x_passer, x_offside_line):
+            offside_players.append(idx+1)
+    return offside_players
+
+def get_offside_line(diffence_team):
+    return sorted(diffence_team, reverse=True)[1]
+
+def get_opponent(name):
+    return 'A' if name == 'B' else 'B'
+
+# main
+offence_name, passer = input().split()
+team = {}
+team['A'] = list(map(int, input().split()))
+team['B'] = list(map(int, input().split()))
+
+if offence_name == 'B':
+    for t in team:
+        team[t] = list(map(lambda x:-x, team[t]))
+
+diffence_name = get_opponent(offence_name)
+offence_team = team[offence_name]
+diffence_team = team[diffence_name]
+
+x_offside_line = get_offside_line(diffence_team)
+x_passer = int(offence_team[int(passer)-1])
+
+offside_players = get_offside_players(offence_team, diffence_team, x_passer, x_offside_line)
+
+if offside_players:
+    for p in offside_players:
+        print(p)
+else:
+    print('None')
+'''
+このコードは、与えられたサッカーの試合状況に対して、次のパスを受け取るとオフサイドと判定される選手の背番号を小さいものから順に出力するプログラムです。
+また、オフサイドと判定される選手がいない場合には"None"と出力します。具体的には、まず、入力からチームの情報を読み込みます。
+次に、オフェンス側のチームの選手のリスト、オフェンス側のチーム名、パスを受け取る選手の背番号、ディフェンス側のチームの選手のリスト、ディフェンス側のチーム名をそれぞれ変数に格納します。
+ここで、オフェンス側のチーム名が'B'の場合は、オフェンス側とディフェンス側の選手の位置を反転させます。
+次に、ディフェンス側の選手の中で、ゴールラインと一番近い選手を取得します。そして、パスを受け取る選手の背番号を取得し、オフサイドラインを計算します。
+最後に、オフェンス側の全選手について、オフサイドラインを越えている選手の背番号をリストに格納し、それを出力します。
+オフサイドラインを越えている選手がいない場合は、"None"を出力します。
+'''
+
 --------------------------------------------- B011　※欠番 ◆
 # B011 名刺バインダー管理
 # B012 ◆
