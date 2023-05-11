@@ -1978,7 +1978,11 @@ Y = int(input()) # A村の経過月数
 
 print(100+(X*Y))
 
-# D245
+# D245　最後の文字
+# utf-8
+S = input()
+print(S[-1])
+
 # D246
 # D247
 # D248
