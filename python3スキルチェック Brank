@@ -273,7 +273,6 @@ print(back_card_num)
 # B013 ◆
 # B014 3Dプリンタ
 # utf-8
-# utf-8
 X,Y,Z=list(map(int,input().split()))
 m=[['.' for j in range(Y)] for i in range(Z)]
 for k in range(Z):
