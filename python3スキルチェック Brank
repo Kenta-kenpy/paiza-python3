@@ -272,6 +272,29 @@ print(back_card_num)
 # B012 ◆
 # B013 ◆
 # B014 3Dプリンタ
+# utf-8
+# utf-8
+X,Y,Z=list(map(int,input().split()))
+m=[['.' for j in range(Y)] for i in range(Z)]
+for k in range(Z):
+    for i in range(X):
+        n=input()
+        for j in range(Y):
+            if n[j]=='#':
+                m[k][j]='#'
+    l=input()
+for i in reversed(range(Z)):
+    l=map(str,m[i])
+    s=''.join(l)
+    print(s)
+'''
+入力されたX,Y,Zに対して、Z枚のX行Y列のマス目を作成しています。マス目は、二次元リストで表現されています。
+そして、入力されたマス目の状態を、マス目に反映させます。
+最後に、マス目を反転させ、反転したマス目を出力します。
+ここで、マス目の反転は、reversed(range(Z))を使用して、Zから0までの範囲を逆順に取得していることで実現されています。
+また、map(str, m[i])を使用して、マス目を文字列に変換し、join()関数でつなげて、横一列の文字列として出力しています。
+'''
+
 # B015 7セグメントディスプレイ
 # B016 ここはどこ？
 # B017 手役の強さ(花札)
