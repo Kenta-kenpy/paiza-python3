@@ -16,6 +16,45 @@ else:
 '''
 
 <西暦の和暦変換>
+# utf-8
+y, m, d = map(int, input().split())
+
+if y < 1912:
+    print(f"明治年{m}月{d}日")
+elif y == 1912:
+    if (m < 7) or (m == 7 and d < 30):
+        print(f"明治年{m}月{d}日")
+    else:
+        print(f"大正年{m}月{d}日")
+elif y < 1926:
+    print(f"大正年{m}月{d}日")
+elif y == 1926:
+    if (m < 12) or (m == 12 and d < 25):
+        print(f"大正年{m}月{d}日")
+    else:
+        print(f"昭和年{m}月{d}日")
+elif y < 1989:
+    print(f"昭和年{m}月{d}日")
+elif y == 1989:
+    if m == 1 and d < 8:
+        print(f"昭和年{m}月{d}日")
+    else:
+        print(f"平成年{m}月{d}日")
+elif y < 2019:
+    print(f"平成年{m}月{d}日")
+elif y == 2019:
+    if m < 5:
+        print(f"平成年{m}月{d}日")
+    else:
+        print(f"令和年{m}月{d}日")
+else:
+    print(f"令和年{m}月{d}日")
+'''
+年月日そのままでは比較が大変なので、年月日を数値に変換して比較します。
+日付が遅いほど大きな値となるような変換を行うことで数値比較で日付の比較を行います。
+年月日を数値に変換する関数を作成して変換を楽にします。
+'''
+
 <西暦の和暦変換2>
 <月の日数>
 <次の日>
