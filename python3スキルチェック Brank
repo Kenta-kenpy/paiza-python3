@@ -295,10 +295,72 @@ for i in reversed(range(Z)):
 '''
 
 # B015 7セグメントディスプレイ（デジタル表示の数字）
-# utf-8
-
-
 # B016 ここはどこ？
+# utf-8
+class B016:
+    def __init__(self):
+        info = input().split()
+        self.board = {"W": int(info[0]), "H": int(info[1])}
+        self.move_times = int(info[2])
+        self.player = {}
+
+    def set_player_position(self):
+        position = input().split()
+        self.player["X"] = int(position[0])
+        self.player["Y"] = int(position[1])
+
+    def set_move_info(self):
+        self.move_info = []
+        for i in range(self.move_times):
+            move = input().split()
+            self.move_info.append({"dir": move[0], "step": int(move[1])})
+
+    def get_final_position(self):
+        for move in self.move_info:
+            self.move(move["dir"], move["step"])
+
+    def move(self, direction, step):
+        if direction == "U":
+            step = step % self.board["H"]
+            if self.player["Y"] + step > self.board["H"] - 1:
+                self.player["Y"] = step - (self.board["H"] - self.player["Y"])
+            else:
+                self.player["Y"] += step
+        elif direction == "D":
+            step = step % self.board["H"]
+            if self.player["Y"] - step < 0:
+                self.player["Y"] = self.board["H"] - (step - self.player["Y"])
+            else:
+                self.player["Y"] -= step
+        elif direction == "L":
+            step = step % self.board["W"]
+            if self.player["X"] - step < 0:
+                self.player["X"] = self.board["W"] - (step - self.player["X"])
+            else:
+                self.player["X"] -= step
+        elif direction == "R":
+            step = step % self.board["W"]
+            if self.player["X"] + step > self.board["W"] - 1:
+                self.player["X"] = step - (self.board["W"] - self.player["X"])
+            else:
+                self.player["X"] += step
+
+    def display(self):
+        print("{} {}".format(self.player["X"], self.player["Y"]))
+
+b016 = B016()
+b016.set_player_position()
+b016.set_move_info()
+b016.get_final_position()
+b016.display()
+'''
+このコードは、与えられた初期位置と移動ログに基づいて、移動後の位置を計算して出力するプログラムです。
+まず、1行目でマップの横幅 w、縦幅 h、移動ログの個数 nを読み取ります。2行目では初期位置 x, yを読み取り、3行目からn+2行目までの各行で移動ログを読み取ります。
+移動ログには、「dir_i」と「m_i」があり、「dir_i」は移動する方向（"U"、"D"、"R"、"L"）を、「m_i」は移動する距離を表しています。各ログに基づいて、プログラムは現在の位置から移動後の位置を計算し、最後に移動後の位置を出力します。
+「move」メソッドは、与えられた方向と距離に応じて、与えられた座標を更新する関数です。プログラムは、与えられた移動ログに基づいて、「move」メソッドを呼び出し、プレイヤーの位置を更新します。
+最後に、「display」メソッドは、プレイヤーの最終位置を出力します。
+'''
+
 # B017 手役の強さ(花札)
 # B018 ◆
 # B019 グレースケールの画像の縮小
