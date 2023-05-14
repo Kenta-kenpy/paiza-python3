@@ -56,6 +56,45 @@ else:
 '''
 
 <西暦の和暦変換2>
+# utf-8
+y, m, d = map(int, input().split())
+
+if y < 1912:
+    print(f"明治{y-1867}年{m}月{d}日")
+elif y == 1912:
+    if (m < 7) or (m == 7 and d < 30):
+        print(f"明治{y-1867}年{m}月{d}日")
+    else:
+        print(f"大正元年{m}月{d}日")
+elif y < 1926:
+    print(f"大正{y-1911}年{m}月{d}日")
+elif y == 1926:
+    if (m < 12) or (m == 12 and d < 25):
+        print(f"大正{y-1911}年{m}月{d}日")
+    else:
+        print(f"昭和元年{m}月{d}日")
+elif y < 1989:
+    print(f"昭和{y-1925}年{m}月{d}日")
+elif y == 1989:
+    if m == 1 and d < 8:
+        print(f"昭和{y-1925}年{m}月{d}日")
+    else:
+        print(f"平成元年{m}月{d}日")
+elif y < 2019:
+    print(f"平成{y-1988}年{m}月{d}日")
+elif y == 2019:
+    if m < 5:
+        print(f"平成{y-1988}年{m}月{d}日")
+    else:
+        print(f"令和元年{m}月{d}日")
+else:
+    print(f"令和{y-2018}年{m}月{d}日")
+'''
+前問 (西暦の和暦変換) のように日付の比較は数値への変換を通して行います。
+分岐の中で和暦何年かを計算します。
+和暦 1 年のときは元年と出力するようにします。
+'''
+
 <月の日数>
 <次の日>
 <曜日(large)>
