@@ -362,6 +362,72 @@ b016.display()
 '''
 
 # B017 手役の強さ(花札)
+# utf-8
+class StrongestMeans:
+    def __init__(self, cards):
+        self.cards = cards
+        self.countOfCard = {}
+
+    def getMeans(self):
+        self.countCard()
+
+        means = ""
+        max_count = max(self.countOfCard.values())
+        if max_count == 1:
+            means = "NoPair"
+        elif max_count == 2:
+            means = "TwoPair" if len(self.countOfCard) == 2 else "OnePair"
+        elif max_count == 3:
+            means = "ThreeCard"
+        elif max_count == 4:
+            means = "FourCard"
+
+        return means
+
+
+    def countCard(self):
+        for card in self.cards:
+            if card == "*":
+                self.plusAllKindCardOne()
+            else:
+                self.plusSpecifiedCardOne(card)
+
+
+    def plusAllKindCardOne(self):
+        cards = set(self.cards)
+        for card in cards:
+            if card != "*":
+                self.plusSpecifiedCardOne(card)
+
+
+    def plusSpecifiedCardOne(self, card):
+        self.countOfCard[card] = self.countOfCard.get(card, 0) + 1
+
+
+cards = input().strip()
+strongMeans = StrongestMeans(list(cards))
+print(strongMeans.getMeans())
+'''
+このコードは、入力のフォーマットに合わせてカードの入力を受け取り、StrongestMeansクラスのインスタンスを作成して、getMeansメソッドを呼び出し、結果を表示しています。
+注意点：
+カードの入力は、スペースで区切られた4つの文字列として受け取ります。
+input().strip()を使って末尾の改行文字を除去します。
+入力の最後には余分な文字や空行が含まれていないことを確認してください。
+このコードを使用して、与えられた入力に基づいて最高の手役を判定し、出力することができます。
+
+まず、StrongestMeansという名前のクラスが定義されています。このクラスは、カードの集合から手役の強さを判定するためのメソッドを提供します。
+__init__メソッドは、cardsという引数を受け取り、インスタンスの初期化を行います。cardsは入力されたカードのリストです。countOfCardはカードの出現回数を格納するための辞書です。
+getMeansメソッドは手役の強さを返します。まず、countCardメソッドを呼び出してカードの出現回数を数えます。
+次に、countOfCard辞書の値の中で最大の数を取得します。その最大数に応じて手役を判定し、meansに結果を格納します。
+
+countCardメソッドは、カードの出現回数を数えるためのメソッドです。self.cardsの各カードについて、cardとして処理します。
+もしcardがワイルドカード "*" ならば、plusAllKindCardOneメソッドを呼び出します。
+そうでない場合は、plusSpecifiedCardOneメソッドを呼び出して指定されたカードの出現回数を増やします。
+
+plusAllKindCardOneメソッドは、ワイルドカード "*" の場合に他のすべてのカードの出現回数を増やすためのメソッドです。
+self.cardsのユニークな要素を取得し、それぞれのカードについて処理します。
+'''
+
 # B018 ◆
 # B019 グレースケールの画像の縮小
 # B020 ネットサーフィン
