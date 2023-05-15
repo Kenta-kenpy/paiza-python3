@@ -96,6 +96,36 @@ else:
 '''
 
 <月の日数>
+# utf-8
+n, m = map(int, input().split())
+
+data = [4, 6, 9, 11]
+
+if m in data:
+    print(30)
+elif m == 2:
+    flag = True
+
+    if n % 4 != 0:
+        flag = False
+    elif n % 400 == 0:
+        flag = True
+    elif n % 100 == 0:
+        flag = False
+    else:
+        flag = True
+
+    if flag:
+        print(29)
+    else:
+        print(28)
+else:
+    print(31)
+'''
+表示したい月が 2 月の場合、閏年かどうかを判定します。
+高々 12 ヶ月しかないので、各月の日数を格納した配列を用意することでも十分対応できます。
+'''
+
 <次の日>
 <曜日(large)>
 <曜日(large2)>
