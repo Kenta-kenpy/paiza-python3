@@ -430,6 +430,53 @@ self.cardsのユニークな要素を取得し、それぞれのカードにつ�
 
 # B018 ◆
 # B019 グレースケールの画像の縮小
+# utf-8
+def shrink_image(N, K, pixels):
+    # N/K × N/Kの画像を作成
+    new_N = N // K
+    new_pixels = [[0] * new_N for _ in range(new_N)]
+
+    # 各ブロックの平均値を計算
+    for r in range(new_N):
+        for c in range(new_N):
+            block_sum = 0
+            for i in range(r * K, (r + 1) * K):
+                for j in range(c * K, (c + 1) * K):
+                    block_sum += pixels[i][j]
+            average = block_sum // (K * K)
+            new_pixels[r][c] = average
+
+    return new_pixels
+
+# 入力を受け取る
+N, K = map(int, input().split())
+pixels = []
+for _ in range(N):
+    row = list(map(int, input().split()))
+    pixels.append(row)
+
+# 画像を縮小
+result = shrink_image(N, K, pixels)
+
+# 結果を出力
+for row in result:
+    print(*row)
+'''
+shrink_image(N, K, pixels) 関数は、元の画像を指定されたブロックサイズで縮小するための関数です。関数は以下の手順で動作します。
+
+元の画像のサイズ N とブロックサイズ K を受け取ります。
+新しい画像のサイズ new_N を計算します。new_N は N を K で割った商です。
+新しい画像を表現するための二次元リスト new_pixels を作成します。サイズは new_N × new_N です。
+各ブロックの平均値を計算し、新しい画像のピクセル値として new_pixels に格納します。
+最終的に new_pixels を返します。
+メインのプログラムでは、以下の手順で処理が行われます。
+
+元の画像のサイズ N とブロックサイズ K を入力します。
+N 行のピクセル値を受け取り、二次元リスト pixels に格納します。
+shrink_image(N, K, pixels) 関数を呼び出して、画像を縮小します。結果は result に格納されます。
+result を出力します。
+'''
+
 # B020 ネットサーフィン
 --------------------------------------------- B021　※欠番 ◆
 # B021 ◆
