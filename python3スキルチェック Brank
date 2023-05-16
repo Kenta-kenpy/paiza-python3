@@ -521,7 +521,122 @@ print()  # 最後の改行を出力
 # B022 ◆
 # B023 マッチ棒パズル
 # utf-8
+def get_another(a, b):
+    for i in range(len(a)):
+        a[i] = b[i]
+    return a
 
+
+def set_number(number):
+    number[0][0] = "69"
+    number[0][1] = "8"
+    number[0][2] = ""
+
+    number[1][0] = ""
+    number[1][1] = "7"
+    number[1][2] = ""
+
+    number[2][0] = "3"
+    number[2][1] = ""
+    number[2][2] = ""
+
+    number[3][0] = "25"
+    number[3][1] = "9"
+    number[3][2] = ""
+
+    number[4][0] = ""
+    number[4][1] = ""
+    number[4][2] = ""
+
+    number[5][0] = "3"
+    number[5][1] = "69"
+    number[5][2] = ""
+
+    number[6][0] = "09"
+    number[6][1] = "8"
+    number[6][2] = "5"
+
+    number[7][0] = ""
+    number[7][1] = ""
+    number[7][2] = "1"
+
+    number[8][0] = ""
+    number[8][1] = ""
+    number[8][2] = "069"
+
+    number[9][0] = "06"
+    number[9][1] = "8"
+    number[9][2] = "35"
+
+    return number
+
+
+def main():
+    charS = input().strip()
+    result = []
+
+    number = [["" for _ in range(3)] for _ in range(10)]
+    number = set_number(number)
+
+    temp = list(charS)
+    temp = get_another(temp, list(charS))
+    for i in range(len(charS)):
+        for j in range(3):
+            point = int(charS[i])
+
+            for k in range(len(number[point][j])):
+                if j == 0:
+                    temp[i] = number[point][0][k]
+                    output = "".join(temp)
+                    result.append(output)
+                    temp = get_another(temp, list(charS))
+                elif j == 1:
+                    for l in range(i + 1, len(charS)):
+                        point2 = int(charS[l])
+                        for m in range(len(number[point2][2])):
+                            temp[i] = number[point][1][k]
+                            temp[l] = number[point2][2][m]
+                            output = "".join(temp)
+                            result.append(output)
+                            temp = get_another(temp, list(charS))
+                else:
+                    for l in range(i + 1, len(charS)):
+                        point2 = int(charS[l])
+                        for m in range(len(number[point2][1])):
+                            temp[i] = number[point][2][k]
+                            temp[l] = number[point2][1][m]
+                            output = "".join(temp)
+                            result.append(output)
+                            temp = get_another(temp, list(charS))
+
+    result.sort()
+
+    if len(result) == 0:
+        print("none")
+    else:
+        for i in range(len(result)):
+            print(result[i])
+main()
+'''
+get_another(a, b) 関数:
+リスト a をリスト b の要素で上書きする関数です。
+a と b の要素数は同じである必要があります。
+set_number(number) 関数:
+number という2次元リストを引数として受け取り、特定のパターンで要素を初期化します。
+この関数は number リストを返します。
+main() 関数:
+・プログラムのエントリーポイントとなる関数です。
+・入力文字列 charS を受け取り、結果のリスト result を初期化します。
+・2次元リスト number を set_number() 関数で初期化します。
+・charS の各文字を処理するループを開始します。
+・charS の各文字について、3つのパターン (j の値) に対してループを開始します。
+・パターンごとに、数字の置換を行い、結果を result リストに追加します。
+・最後に result をソートし、結果を出力します。
+
+このコードのアルゴリズムは、与えられた文字列 charS の各文字に対して、異なるパターンで数字の置換を行い、結果を生成しています。
+これにより、全ての可能な置換パターンを網羅的に生成することができます。最終的な結果は辞書順にソートされています。
+ただし、このコードでは一部の箇所で冗長な処理が行われており、効率的ではないと言えます。特に、リストのコピー (temp = get_another(temp, list(charS))) や結果のリストに要素を追加する際のループ処理が、改善の余地があります。
+'''
 
 # B024 格子を円で切り取る
 # B025 うさぎジャンプ
