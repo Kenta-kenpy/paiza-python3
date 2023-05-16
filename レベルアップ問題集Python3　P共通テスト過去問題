@@ -325,7 +325,51 @@ else:
 a が今回の最小二乗法によって求められる数値となり、タロー君が求めた a と一致します。
 '''
 
-B# パリティチェック　※解答に不備あり
+B# パリティチェック　※模範解答に不備あり
+# utf-8
+h, w = map(int, input().split())
+
+bit_array = []
+for _ in range(h):
+    row = list(map(int, input().split()))
+    bit_array.append(row)
+
+vertical_parity = list(map(int, input().split()))
+horizontal_parity = list(map(int, input().split()))
+
+error_row = -1
+error_col = -1
+
+for i in range(h):
+    bit_sum = sum(bit_array[i])
+    if (bit_sum + vertical_parity[i]) % 2 != 0:
+        error_row = i
+        break
+
+for j in range(w):
+    bit_sum = sum(bit_array[i][j] for i in range(h))
+    if (bit_sum + horizontal_parity[j]) % 2 != 0:
+        error_col = j
+        break
+
+if error_row != -1 and error_col != -1:
+    bit_array[error_row][error_col] = -1 * (bit_array[error_row][error_col] - 1)
+
+for row in bit_array:
+    print(' '.join(map(str, row)))
+'''
+最初に入力される行数と列数をhとwに格納します。
+ビットの配列を表すbit_arrayを初期化します。
+h行分の入力を受け取り、各行をリストとしてbit_arrayに追加します。
+送信元データの垂直パリティを表すリストvertical_parityを入力します。
+送信元データの水平パリティを表すリストhorizontal_parityを入力します。
+error_rowとerror_colを-1で初期化します。これらの変数は誤りが生じた行と列のインデックスを保持します。
+各行に対して、ビットの和と垂直パリティを比較し、偶奇が一致しない場合、誤りが生じた行としてerror_rowにインデックスを設定します。
+各列に対して、ビットの和と水平パリティを比較し、偶奇が一致しない場合、誤りが生じた列としてerror_colにインデックスを設定します。
+error_rowとerror_colが-1でない場合、つまり誤りが特定された場合、そのビットを反転させます。これは、bit_array[error_row][error_col]の値を-1 * (bit_array[error_row][error_col] - 1)で計算して行います。
+最終的な修正後のビット配列を出力します。
+修正後のコードでは、垂直パリティと水平パリティを使用して誤りを特定し、ビットの値を反転させることで誤りを修正します。最終的に修正後のビット配列が出力されます。
+'''
 
 A# PC重ね
 # utf-8
