@@ -760,7 +760,83 @@ grass[grass_num] != 0は、ジャンプ先のしげみが他のうさぎに占�
 最後に、うさぎの位置情報を更新するためにs[j]にgrass_num + 1を代入します。+ 1はインデックスと番号の差を調整するためです。
 '''
 
-# B026 自動販売機
+# B026 自動販売機　※テストケース通過せず
+# utf-8
+class VendingMachine:
+    def __init__(self, coin_in_machine):
+        self.coin_in_machine = coin_in_machine
+
+    def sell_result(self, customers):
+        for customer in customers:
+            arr_customer = customer.split(" ")
+            product_price = int(arr_customer[0])
+            use_coin = {
+                500: int(arr_customer[1]),
+                100: int(arr_customer[2]),
+                50: int(arr_customer[3]),
+                10: int(arr_customer[4])
+            }
+            change_coin = {
+                500: 0,
+                100: 0,
+                50: 0,
+                10: 0
+            }
+
+            change = 500 * use_coin[500] + 100 * use_coin[100] + 50 * use_coin[50] + 10 * use_coin[10] - product_price
+            tmp_change = change
+
+            for coin, coin_number in self.coin_in_machine.items():
+                self.change(coin, coin_number, change, change_coin[coin])
+
+            message = ""
+            if self.check_if_pass(change_coin, tmp_change):
+                for coin, count in change_coin.items():
+                    message += str(count)
+                    if coin != 10:
+                        message += " "
+            else:
+                message = "impossible"
+            
+            print(message)
+
+    def change(self, coin, coin_number, change, change_coin):
+        if change < coin:
+            return
+        for num in range(coin_number, -1, -1):
+            price = change - num * coin
+            if price >= 0:
+                change -= num * coin
+                change_coin = num
+                return
+
+    def check_if_pass(self, change_coin, tmp_change):
+        if change_coin[50] * 50 + change_coin[10] * 10 >= 100:
+            return False
+        for coin, coin_number in self.coin_in_machine.items():
+            if change_coin[coin] > coin_number:
+                return False
+        if sum(change_coin.values()) != tmp_change:
+            return False
+        return True
+
+
+info = input().strip().split(" ")
+coin_in_machine = {
+    500: int(info[0]),
+    100: int(info[1]),
+    50: int(info[2]),
+    10: int(info[3])
+}
+
+count_of_customer = int(input().strip())
+customers = []
+for _ in range(count_of_customer):
+    customers.append(input().strip())
+
+vending_machine = VendingMachine(coin_in_machine)
+vending_machine.sell_result(customers)
+
 # B027 ◆
 # B028 チャット記録
 # B029 地価の予想
