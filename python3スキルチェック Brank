@@ -294,7 +294,61 @@ for i in reversed(range(Z)):
 また、map(str, m[i])を使用して、マス目を文字列に変換し、join()関数でつなげて、横一列の文字列として出力しています。
 '''
 
-# B015 7セグメントディスプレイ（デジタル表示の数字）　※今は解けない
+# B015 7セグメントディスプレイ（デジタル表示の数字）　※テストケース通過せず
+# utf-8
+def check_display(a, b):
+    # 各数字に対応する7セグメントディスプレイの状態
+    digits = {
+        0: [1, 1, 1, 1, 1, 1, 0],
+        1: [0, 1, 1, 0, 0, 0, 0],
+        2: [1, 1, 0, 1, 1, 0, 1],
+        3: [1, 1, 1, 1, 0, 0, 1],
+        4: [0, 1, 1, 0, 0, 1, 1],
+        5: [1, 0, 1, 1, 0, 1, 1],
+        6: [1, 0, 1, 1, 1, 1, 1],
+        7: [1, 1, 1, 0, 0, 0, 0],
+        8: [1, 1, 1, 1, 1, 1, 1],
+        9: [1, 1, 1, 1, 0, 1, 1]
+    }
+
+    def is_valid_display(display):
+        # ディスプレイの状態が各数字のいずれかと一致するかを判定
+        for digit in digits.values():
+            if display == digit:
+                return True
+        return False
+
+    def symmetric_move(display):
+        # 対称移動を行った後のディスプレイの状態を返す
+        return display[::-1]
+
+    def rotate_move(display):
+        # 回転移動を行った後のディスプレイの状態を返す
+        return display[-1:] + display[:-1]
+
+    # 1. 装置が正しく2桁の数字を表すかを判定
+    condition1 = is_valid_display(a) and is_valid_display(b)
+
+    # 2. 装置を対称移動すると正しく2桁の数字を表すかを判定
+    a_symmetric = symmetric_move(a)
+    b_symmetric = symmetric_move(b)
+    condition2 = is_valid_display(a_symmetric) and is_valid_display(b_symmetric)
+
+    # 3. 装置を回転移動すると正しく2桁の数字を表すかを判定
+    a_rotated = rotate_move(a)
+    b_rotated = rotate_move(b)
+    condition3 = is_valid_display(a_rotated) and is_valid_display(b_rotated)
+
+    # 結果を出力
+    result = ["Yes" if condition else "No" for condition in [condition1, condition2, condition3]]
+    return "\n".join(result)
+
+
+# 入力の読み込みと結果の出力
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+print(check_display(a, b))
+
 # B016 ここはどこ？
 # utf-8
 class B016:
