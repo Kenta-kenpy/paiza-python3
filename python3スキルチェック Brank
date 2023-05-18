@@ -881,7 +881,35 @@ print('\n'.join(N[-1]))
 最後に、各社員の画面に表示されるメッセージを出力します。各社員の画面ごとに、メッセージを改行区切りで表示し、最後にハイフンで区切ります。
 '''
 
-# B029 地価の予想
+# B029 地価の予想　※テストケース通過せず
+# utf-8
+import math
+# 入力を受け取る
+x, y = map(int, input().split())
+k = int(input())
+N = int(input())
+
+# 地価データを受け取る
+data = []
+for _ in range(N):
+    xi, yi, pi = map(int, input().split())
+    data.append((xi, yi, pi))
+
+# Aからの距離を計算して地点データに追加する
+for i in range(N):
+    xi, yi, pi = data[i]
+    distance = math.sqrt((x - xi) ** 2 + (y - yi) ** 2)
+    data[i] = (xi, yi, pi, distance)
+
+# 距離で地点データをソートする
+data.sort(key=lambda d: d[3])
+
+# 上位k個の地点の地価を取得して平均を計算する
+average_price = sum(d[2] for d in data[:k]) // k  # 整数の除算に修正
+
+# 結果を出力
+print(average_price)
+
 # B030 氷のダンジョン
 --------------------------------------------- B031　※欠番 ◆
 # B031 コインのウラとオモテ
