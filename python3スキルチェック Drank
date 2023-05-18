@@ -1983,7 +1983,11 @@ print(100+(X*Y))
 S = input()
 print(S[-1])
 
-# D246
+# D246　1年後の身長
+# utf-8
+N = int(input()) # 今の身長
+print(N+10)
+
 # D247
 # D248
 # D249
