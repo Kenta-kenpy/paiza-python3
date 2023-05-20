@@ -974,9 +974,40 @@ for direction in directions:
 print(x, y)
 
 --------------------------------------------- B031　※欠番 ◆
-# B031 コインのウラとオモテ
+# B031 コインのウラとオモテ　※テストケース通過せず
 # utf-8
+N = int(input())
+s = input().strip()
 
+def flip_coins(board):
+    new_board = list(board)
+    flipped = False
+
+    for i in range(1, N - 1):
+        if board[i - 1] == 'b' and board[i + 1] == 'b' and board[i] == 'w':
+            new_board[i] = 'b'
+            flipped = True
+        elif board[i - 1] == 'w' and board[i + 1] == 'w' and board[i] == 'b':
+            new_board[i] = 'w'
+            flipped = True
+
+    return new_board, flipped
+
+board = list(s)
+flips = 0
+
+while True:
+    board, flipped = flip_coins(board)
+    if not flipped:
+        break
+    flips += 1
+
+black_coins = board.count('b')
+
+if black_coins == 0 or black_coins == N:
+    print(black_coins)
+else:
+    print(black_coins - 1)
 
 # B032 デジタル計算機
 # B033 テーブルジェネレーター
