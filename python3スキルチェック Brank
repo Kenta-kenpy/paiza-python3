@@ -916,6 +916,41 @@ print('\n'.join(N[-1]))
 '''
 
 # B029 地価の予想
+# utf-8 Pythonにすると90点
+import math
+
+# 基準点のX座標とY座標の設定
+coordinateX, coordinateY = map(int, input().split())
+
+# 近い点の個数・既知の個数の設定
+nearPointCount = int(input())
+knownPointCount = int(input())
+
+# 既知の点の座標・地価設定
+knownPoints = []
+for _ in range(knownPointCount):
+    x, y, price = map(int, input().split())
+    knownPoints.append((x, y, price))
+
+# 基準値と既知との距離計算設定
+distanceLandPrice = {}  # 基準値との距離をkeyに地価をvalueの辞書
+for point in knownPoints:
+    x, y, price = point
+    distance = math.sqrt((coordinateX - x) ** 2 + (coordinateY - y) ** 2)
+    distanceLandPrice[distance] = price
+
+# 基準点の地価計算設定
+sumLandPrice = 0
+cnt = 0
+for key in sorted(distanceLandPrice.keys()):
+    if cnt == nearPointCount:
+        break
+    sumLandPrice += distanceLandPrice[key]
+    cnt += 1
+
+# 結果出力
+print(round(sumLandPrice / nearPointCount))
+
 # utf-8　Java
 import java.util.Scanner;
 import java.util.TreeMap;
