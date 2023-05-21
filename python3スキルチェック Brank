@@ -1245,6 +1245,74 @@ print(sp_x, sp_y)
 '''
 
 # B035 ジョギングランキング
+# utf-8
+# 部員数 N、ジョギング記録数 M、上位人数 T を入力として受け取る
+N, M, T = map(int, input().split())
+
+# 前月のジョギング成績を格納するリスト
+post_mon = []
+
+# 前月のジョギング成績を受け取り、リストに追加する
+for _ in range(N):
+    post_mon.append(input().split())
+
+# 今月のジョギング記録を格納するリスト
+this_mon = []
+
+# 今月のジョギング記録を受け取り、リストに追加する
+for _ in range(M):
+    this_mon.append(input().split())
+
+# リストを距離の降順にソートする関数
+def range_sort(lst):
+    lst.sort(key=lambda x: (-int(x[1]), x[0]))
+    return lst
+
+# 前月のジョギング成績をソートする
+post_mon = range_sort(post_mon)
+
+# 上位のジョギング記録を取得する
+top_post = post_mon[:T]
+
+# 今月のジョギング記録の合計を計算し、名前と合計距離を格納するリスト
+this_mon_sum = []
+
+# 今月のジョギング記録の合計を計算する
+for name in set(record[1] for record in this_mon):
+    total_distance = sum(int(record[2]) for record in this_mon if record[1] == name)
+    this_mon_sum.append([name, str(total_distance)])
+
+# 前月のジョギング成績と今月のジョギング記録の合計を結合し、ソートする
+this_mon_sum += [[name, '0'] for name in set(record[0] for record in post_mon) - set(record[0] for record in this_mon_sum)]
+this_mon_sum = range_sort(this_mon_sum)
+
+# 上位のジョギング記録を取得する
+top_this = this_mon_sum[:T]
+
+# 変動を判定し、結果を追加する
+for i in range(T):
+    if top_this[i][0] == top_post[i][0]:
+        top_this[i].append("same")
+    elif any(top_this[i][0] == record[0] for record in top_post[i + 1:]):
+        top_this[i].append("up")
+    elif any(top_this[i][0] == record[0] for record in top_post[:i]):
+        top_this[i].append("down")
+    else:
+        top_this[i].append("new")
+
+# 結果を出力する
+for record in top_this:
+    print(" ".join(record))
+'''
+まず、与えられた入力を受け取ります。N, M, T = map(int, input().split())を使って、整数値の N, M, T を取得します。
+次に、post_monというリストに前月のジョギング成績を格納します。post_mon = [input().split() for _ in range(N)]の部分で、N 回のループを実行して、各行から名前と距離を受け取って post_mon リストに追加しています。
+同様に、this_monというリストに今月のジョギング記録を格納します。this_mon = [input().split() for _ in range(M)]の部分で、M 回のループを実行して、各行から日付、名前、距離を受け取って this_mon リストに追加しています。
+次に、range_sort関数を使って post_mon リストと this_mon_sum リストをソートします。range_sort関数は与えられたリストを距離の降順にソートし、距離が同じ場合は名前の辞書順でソートする関数です。
+その後、上位のジョギング記録を top_post リストと top_this リストに格納します。top_post リストは post_mon リストの上位 T 件の記録を格納し、top_this リストは this_mon_sum リストの上位 T 件の記録を格納します。
+top_post リストと top_this リストを比較し、各記録の変動を判定します。結果を top_this リストの各要素の3番目の要素に追加します。
+最後に、top_this リストを出力します。各要素の名前、距離、変動結果がスペース区切りで表示されます。
+'''
+
 # B036 大統領選挙
 # B037 幸運な1年
 # B038 つるかめ算
