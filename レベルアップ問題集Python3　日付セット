@@ -285,6 +285,79 @@ s += d
 print(f"{a[s%7]}曜日")
 
 <翌営業日 その1>
+# utf-8
+m, d, y = input().split()
+
+m = int(m)
+d = int(d)
+
+data_30 = [4, 6, 9, 11]
+data_y = ["SUN", "MON", "TUE", "WED", "THU"]
+
+if y in data_y:
+    if m in data_30:
+        if d == 30:
+            d = 1
+            m += 1
+        else:
+            d += 1
+    elif m == 2:
+        if d == 28:
+            d = 1
+            m += 1
+        else:
+            d += 1
+    else:
+        if d == 31:
+            d = 1
+            if m == 12:
+                m = 1
+            else:
+                m += 1
+        else:
+            d += 1
+elif y == "SAT":
+    if m in data_30:
+        d += 2
+        if d > 30:
+            d %= 30
+            m += 1
+    elif m == 2:
+        d += 2
+        if d > 28:
+            d %= 28
+            m += 1
+    else:
+        d += 2
+        if d > 31:
+            d %= 31
+            m += 1
+            if m == 13:
+                m = 1
+else:
+    if m in data_30:
+        d += 3
+        if d > 30:
+            d %= 30
+            m += 1
+    elif m == 2:
+        d += 3
+        if d > 28:
+            d %= 28
+            m += 1
+    else:
+        d += 3
+        if d > 31:
+            d %= 31
+            m += 1
+            if m == 13:
+                m = 1
+
+print(f"{m}月{d}日")
+'''
+受け取った曜日を値に変換し、平日になるまで日付を進め続けます。
+'''
+
 <翌営業日 その2>
 <最長の連休2019>
 <最長の連休paiza>
