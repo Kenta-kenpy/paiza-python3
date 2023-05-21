@@ -1106,6 +1106,55 @@ digit を 5 を引いた値に変換し、その結果を number に再代入し
 '''
 
 # B033 テーブルジェネレーター
+# utf-8
+def generate_table(headers, data):
+    # 各列の最大幅を計算
+    column_widths = [max(len(header), max(len(str(row[i])) for row in data)) for i, header in enumerate(headers)]
+
+    # ヘッダー行を生成
+    header_row = "| " + " | ".join(header.ljust(width) for header, width in zip(headers, column_widths)) + " |"
+
+    # 区切り行を生成
+    separator_row = "|-" + "-|-".join("-" * width for width in column_widths) + "-|"
+
+    # データ行を生成
+    data_rows = ""
+    for row in data:
+        data_row = "| " + " | ".join(str(cell).ljust(width) for cell, width in zip(row, column_widths)) + " |\n"
+        data_rows += data_row
+
+    # テーブルを結合して返す
+    table = header_row + "\n" + separator_row + "\n" + data_rows
+    return table
+
+def generate_output(headers, data):
+    # テーブルを生成
+    table = generate_table(headers, data)
+    # 改行と余分な空白を削除して出力用文字列を作成
+    output = ""
+    output += table.strip() + "\n"
+
+    return output
+
+# 入力の取得
+W = int(input())
+headers = input().split()
+H = int(input())
+data = [input().split() for _ in range(H)]
+
+# テーブルの生成と出力
+output = generate_output(headers, data)
+print(output)
+'''
+generate_table(headers, data)関数は、与えられた見出しとデータから表を生成するための関数です。まず、各列の最大幅を計算します。
+その後、ヘッダー行、区切り行、データ行を生成し、それらを結合してテーブルを作成します。最終的に、生成したテーブルを返します。
+generate_output(headers, data)関数は、generate_table()関数を呼び出してテーブルを生成し、出力用の文字列を作成します。
+テーブルの前後に余分な空白がないようにし、最終的な出力用文字列を返します。
+入力部分では、まず見出しの個数 W を取得し、次に見出しのリスト headers を取得します。
+続いて、データ行の行数 H を取得し、H 行分のデータをリストとして取得します。
+最後に、generate_output()関数を呼び出してテーブルを生成し、出力します。
+'''
+
 # B034 ロボットの歩行実験
 # B035 ジョギングランキング
 # B036 大統領選挙
