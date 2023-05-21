@@ -755,7 +755,7 @@ grass[grass_num] != 0は、ジャンプ先のしげみが他のうさぎに占�
 最後に、うさぎの位置情報を更新するためにs[j]にgrass_num + 1を代入します。+ 1はインデックスと番号の差を調整するためです。
 '''
 
-# B026 自動販売機　※テストケース通過せず
+# B026 自動販売機
 # utf-8
 class VendingMachine:
     def __init__(self, coin_in_machine):
@@ -764,6 +764,8 @@ class VendingMachine:
     def sell_result(self, customers):
         for customer in customers:
             arr_customer = customer.split(" ")
+
+            # お客様が購入した商品の価格及び入れた各コインの枚数
             product_price = int(arr_customer[0])
             use_coin = {
                 500: int(arr_customer[1]),
@@ -771,6 +773,7 @@ class VendingMachine:
                 50: int(arr_customer[3]),
                 10: int(arr_customer[4])
             }
+
             change_coin = {
                 500: 0,
                 100: 0,
@@ -778,50 +781,68 @@ class VendingMachine:
                 10: 0
             }
 
-            change = 500 * use_coin[500] + 100 * use_coin[100] + 50 * use_coin[50] + 10 * use_coin[10] - product_price
-            tmp_change = change
+            # お釣り
+            change = [500 * use_coin[500] + 100 * use_coin[100] + 50 * use_coin[50] + 10 * use_coin[10] - product_price]
+            tmp_change = change[0]
 
             for coin, coin_number in self.coin_in_machine.items():
-                self.change(coin, coin_number, change, change_coin[coin])
+                self.change(coin, coin_number, change, change_coin)
 
             message = ""
             if self.check_if_pass(change_coin, tmp_change):
+
+                # 自動販売機内部コインの変化
+                for coin, coin_number in self.coin_in_machine.items():
+                    self.coin_in_machine[coin] = coin_number + use_coin[coin] - change_coin[coin]
+
+                # 出力
+                k = 0
                 for coin, count in change_coin.items():
                     message += str(count)
-                    if coin != 10:
-                        message += " "
+                    if k == len(change_coin) - 1:
+                        break
+                    message += " "
+                    k += 1
+
             else:
-                message = "impossible"
-            
+                message += "impossible"
             print(message)
 
     def change(self, coin, coin_number, change, change_coin):
-        if change < coin:
+        # お釣りの残りがcoin以下の場合は計算不要なので処理を終了する
+        if change[0] < coin:
             return
         for num in range(coin_number, -1, -1):
-            price = change - num * coin
+            price = change[0] - num * coin
+            # 残りのお釣りがcoinを使ってprice円支払える場合
             if price >= 0:
-                change -= num * coin
-                change_coin = num
+                change[0] -= num * coin
+                change_coin[coin] = num
                 return
 
     def check_if_pass(self, change_coin, tmp_change):
+        # 50円玉と10円玉の合計が100円以上の場合は条件を満たさない
         if change_coin[50] * 50 + change_coin[10] * 10 >= 100:
             return False
         for coin, coin_number in self.coin_in_machine.items():
+            # 自動販売機内のコインの枚数を超える場合は条件を満たさない
             if change_coin[coin] > coin_number:
                 return False
-        if sum(change_coin.values()) != tmp_change:
+        # お釣りの合計金額がtmp_change円と一致しない場合は条件を満たさない
+        if change_coin[500] * 500 + change_coin[100] * 100 + change_coin[50] * 50 + change_coin[10] * 10 != tmp_change:
             return False
         return True
 
 
-info = input().strip().split(" ")
+# 入力値の読み込み
+info = input().strip()
+arr_info = info.split(" ")
+
 coin_in_machine = {
-    500: int(info[0]),
-    100: int(info[1]),
-    50: int(info[2]),
-    10: int(info[3])
+    500: int(arr_info[0]),
+    100: int(arr_info[1]),
+    50: int(arr_info[2]),
+    10: int(arr_info[3])
 }
 
 count_of_customer = int(input().strip())
@@ -829,124 +850,26 @@ customers = []
 for _ in range(count_of_customer):
     customers.append(input().strip())
 
+# 自動販売機オブジェクトの作成と売り上げ結果の表示
 vending_machine = VendingMachine(coin_in_machine)
 vending_machine.sell_result(customers)
+'''
+VendingMachine クラス:
+coin_in_machine インスタンス変数: 自動販売機内の各コインの枚数を格納する辞書です。
+__init__ メソッド: coin_in_machine 辞書を受け取り、インスタンス変数に設定します。
+sell_result メソッド: 複数の顧客の購入情報を受け取り、結果を表示します。
+change メソッド: お釣りの計算を行います。指定されたコインで支払い可能な最大枚数を計算し、お釣りと使用したコインの枚数を更新します。
+check_if_pass メソッド: お釣りの条件をチェックし、条件を満たすかどうかを判定します。
 
-# PHPによるコード
-<?php
-class VendingMachine
-{
-    private array $coinInMachine;
+入力の読み込み:
+最初の入力は自動販売機内のコインの枚数を表す文字列です。空白で区切られた各要素は、500円、100円、50円、10円のコインの枚数を表します。
+2番目の入力は顧客の数を表す整数です。
+続く入力は各顧客の購入情報を表す文字列です。空白で区切られた各要素は、商品の価格、500円、100円、50円、10円のコインの枚数を表します。
 
-    public function __construct($coinInMachine)
-    {
-        $this->coinInMachine = $coinInMachine;
-    }
-
-    public function sellResult(array $customers) : void
-    {
-        foreach ($customers as $customer) {
-
-            $arrCustomer = explode(" ", $customer);
-
-            //お客様が購入した商品の価格及び入れた各コインの枚数
-            $productPrice = $arrCustomer[0];
-            $useCoin[500] = $arrCustomer[1];
-            $useCoin[100] = $arrCustomer[2];
-            $useCoin[50]  = $arrCustomer[3];
-            $useCoin[10]  = $arrCustomer[4];
-
-            $changeCoin = array(
-                "500" => "0",
-                "100" => "0",
-                "50"  => "0",
-                "10"  => "0"
-            );
-
-            //お釣り
-            $change = 500 * $useCoin[500] + 100 * $useCoin[100] + 50 * $useCoin[50] + 10 * $useCoin[10] - $productPrice;
-            $tmpChange = $change;
-
-            foreach ($this->coinInMachine as $coin => $coinNumber) {
-                $this->change($coin, $coinNumber, $change, $changeCoin[$coin]);
-            }
-
-            $message = "";
-            if ($this->checkIfPass($changeCoin, $tmpChange)) {
-
-                //自動販売機内部コインの変化
-                foreach ($this->coinInMachine as $coin => $coinNumber) {
-                    $this->coinInMachine[$coin] = $coinNumber + $useCoin[$coin] - $changeCoin[$coin];
-                }
-
-                //出力
-                $k = 0;
-                foreach ($changeCoin as $coin => $count) {
-                    $message .= $count;
-                    if ($k == count($changeCoin) - 1) {
-                        break;
-                    }
-                    $message .= " ";
-                    $k++;
-                }
-
-            } else {
-                $message .= "impossible";
-            }
-            echo $message;
-            echo PHP_EOL;
-        }
-    }
-
-    private function change(int $coin, int $coinNumber, int & $change, int & $changeCoin) : void
-    {
-        if ($change < $coin) {
-            return;
-        }
-        for ($num = $coinNumber; $num >= 0; $num--) {
-            $price = $change - $num * $coin;
-            if ($price >= 0) {
-                $change = $change - $num * $coin;
-                $changeCoin = $num;
-                return;
-            }
-        }
-    }
-
-    private function checkIfPass(array $changeCoin, int $tmpChange) : bool
-    {
-        if ($changeCoin[50] * 50 + $changeCoin[10] * 10 >= 100) {
-            return false;
-        }
-        foreach ($this->coinInMachine as $coin => $coinNumber) {
-            if ($changeCoin[$coin] > $coinNumber) {
-                return false;
-            }
-        }
-        if (($changeCoin[500] * 500 + $changeCoin[100] * 100 + $changeCoin[50] * 50 + $changeCoin[10] * 10 != $tmpChange)) {
-            return false;
-        }
-        return true;
-    }
-}
-
-
-$info = str_replace(array("\r\n","\r","\n"), '', trim(fgets(STDIN)));
-$arrInfo = explode(" ", $info);
-
-$coinInMachine[500] = $arrInfo[0];
-$coinInMachine[100] = $arrInfo[1];
-$coinInMachine[50]  = $arrInfo[2];
-$coinInMachine[10]  = $arrInfo[3];
-
-$countOfCustomer = str_replace(array("\r\n","\r","\n"), '', trim(fgets(STDIN)));
-$customers = array();
-for ($num = 1; $num <= $countOfCustomer; $num++) {
-    $customers[] = str_replace(array("\r\n","\r","\n"), '', trim(fgets(STDIN)));
-}
-
-$vendingMachine = new VendingMachine($coinInMachine);
-$vendingMachine->sellResult($customers);
+自動販売機オブジェクトの作成と売り上げ結果の出力:
+入力から得られた情報をもとに、VendingMachine オブジェクトを作成します。
+sell_result メソッドを呼び出し、顧客ごとの売り上げ結果を出力します。
+'''
 
 # B027 ◆
 # B028 チャット記録
