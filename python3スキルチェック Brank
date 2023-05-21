@@ -1013,7 +1013,97 @@ else:
 
 # B032 デジタル計算機
 # utf-8
+class Abacus:
+    def __init__(self, width):
+        self.width = width
 
+    def get_number(self):
+        numbers = []
+        # そろばんの状態を入力
+        for _ in range(8):
+            pearls = input().strip()
+            numbers.append(list(pearls))
+        
+        result = ''
+        # 列ごとに珠の移動をシミュレーション
+        for pearls in zip(*numbers):
+            tmp = 0
+            for position, pearl in enumerate(pearls):
+                if position < 2:
+                    if position == 1 and pearl == '*':
+                        tmp += 5  # 上の桁で2つ目の珠が存在し、'*' の場合は5を加算
+                    continue
+                if position == 2:
+                    continue # 3つ目の位置は無視して次の位置へ進む
+                if position > 2:
+                    if pearl == '|':
+                        break   # '|' が現れた場合は珠の移動が終了し、ループから抜ける
+                    tmp += 1    # '|' が出現するまで、珠の移動回数をカウント
+            result += str(tmp)  # 珠の移動回数を結果に追加
+
+        return int(result.rjust(self.width, '0')) # 結果を指定の桁数に合わせてゼロで左詰めし、整数として返す
+
+    def get_result(self, number):
+        result = [['*' if i != 2 else '=' for _ in range(self.width)] for i in range(8)]
+        # そろばんの初期状態を生成
+        number = str(number).rjust(self.width, '0')
+ 
+        # 数字をそろばんの状態に変換
+        for i, digit in enumerate(number):
+            digit = int(digit)
+            if digit < 5:
+                result[0][i] = '*'  # 上の桁の珠
+                result[1][i] = '|'  # 下の桁の珠
+            else:
+                result[0][i] = '|'  # 上の桁の珠
+
+            number = str(digit - 5) if digit >= 5 else str(digit)
+            # 数字が5以上の場合は珠を1つ上に移動させた後の数字
+            # 数字が5未満の場合は珠を移動させずそのままの数字
+            # 条件が真の場合、珠を1つ上に移動させた後の数字を表す文字列に変換しています。
+            # 条件が偽の場合、珠を移動させず、元の数字のままとなります。
+            # 下の桁の珠を配置
+            for j in range(3, 8):
+                if j - 3 == int(number):
+                    result[j][i] = '|'  # 下の桁の珠
+
+        # 結果を表示
+        for row in result:
+            print(''.join(row))
+
+
+W = int(input())  # そろばんの長さを入力
+abacus = Abacus(W)
+A = abacus.get_number()  # 数字 A のそろばんを取得
+B = abacus.get_number()  # 数字 B のそろばんを取得
+abacus.get_result(A + B)  # A + B のそろばんを表示
+'''
+Abacus クラスのコンストラクタで、そろばんの幅（桁数）を受け取り、インスタンス変数 width に設定します。
+get_number メソッドは、そろばんの状態を入力として受け取り、その状態に対応する数値を返します。
+入力されたそろばんの状態は、8行分の文字列として受け取ります。各行は桁ごとの珠の状態を表しています。それぞれの珠は '*' または '|' のいずれかです。
+列ごとに珠の移動をシミュレーションし、数値に変換しています。具体的な処理は以下の通りです。
+
+position と pearl には珠の位置と状態が順番に渡されます。
+position が 0 または 1 の場合、2つ目の珠の位置であることを判定しています。
+もし pearl が '*' の場合、上の桁で2つ目の珠が存在することを意味し、結果に 5 を加算します。
+position が 2 の場合、3つ目の位置であることを判定して無視します。
+position が 2 より大きい場合、下の桁の位置であることを意味します。
+もし pearl が '|' の場合、珠の移動が終了し、ループから抜けます。
+それ以外の場合、珠の移動回数を 1 加算します。
+最終的に、結果を文字列 result に追加し、指定の桁数に合わせて左詰めし、整数として返します。
+
+get_result メソッドは、数値をそろばんの状態に変換して表示します。
+まず、数値 number を文字列に変換し、指定の桁数に合わせて左詰めします。
+それぞれの桁の数字をそろばんの状態に変換して result に格納します。具体的な処理は以下の通りです。
+
+i と digit には桁のインデックスと数字が順番に渡されます。
+digit を整数に変換し、その値に応じて上の桁と下の桁の珠の状態を設定します。
+もし digit が 5 未満の場合、上の桁の珠に '*' を、下の桁の珠に '|' を設定します。
+もし digit が 5 以上の場合、上の桁の珠に '|' を設定します。
+digit を 5 を引いた値に変換し、その結果を number に再代入します。これにより、次の桁の珠の配置に移ります。
+下の桁の珠の位置 j が、j - 3 と number の値が一致する場合、下の桁の珠に '|' を設定します。
+最終的に、結果のそろばんの状態を表示します。
+'''
 
 # B033 テーブルジェネレーター
 # B034 ロボットの歩行実験
