@@ -343,7 +343,6 @@ def check_display(a, b):
     result = ["Yes" if condition else "No" for condition in [condition1, condition2, condition3]]
     return "\n".join(result)
 
-
 # 入力の読み込みと結果の出力
 a = list(map(int, input().split()))
 b = list(map(int, input().split()))
@@ -438,7 +437,6 @@ class StrongestMeans:
 
         return means
 
-
     def countCard(self):
         for card in self.cards:
             if card == "*":
@@ -446,17 +444,14 @@ class StrongestMeans:
             else:
                 self.plusSpecifiedCardOne(card)
 
-
     def plusAllKindCardOne(self):
         cards = set(self.cards)
         for card in cards:
             if card != "*":
                 self.plusSpecifiedCardOne(card)
 
-
     def plusSpecifiedCardOne(self, card):
         self.countOfCard[card] = self.countOfCard.get(card, 0) + 1
-
 
 cards = input().strip()
 strongMeans = StrongestMeans(list(cards))
