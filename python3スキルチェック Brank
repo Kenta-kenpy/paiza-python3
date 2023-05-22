@@ -1082,42 +1082,71 @@ for direction in directions:
 print(x, y)
 
 --------------------------------------------- B031　※欠番 ◆
-# B031 コインのウラとオモテ　※テストケース通過せず
+# B031 コインのウラとオモテ
 # utf-8
-N = int(input())  # ボードの横の長さNを入力
-s = input().strip()  # ゲーム開始時のコインの並びsを入力
+def count_black_coins(N, s):
+    board = list(s)  # 入力文字列をリストに変換してボードとして扱う
+    black_count = board.count('b')  # 最初の黒コインの数を数える
 
-def flip_coins(board):
-    new_board = list(board)  # ボードをリストに変換
-    flipped = False  # 反転が行われたかを示すフラグ
+    flipped = True  # 反転が行われたかどうかを表すフラグ
+    while flipped:
+        flipped = False  # 初期値は反転が行われなかったとする
+        i = 0
+        while i < N:
+            if board[i] == 'b':  # 黒コインの場合
+                j = i
+                while j < N and board[j] == 'b':
+                    j += 1
+                if i > 0 and j < N and 'w' not in board[i:j]:
+                    # 黒コインが白コインを挟めない場合、反転させる
+                    for k in range(i, j):
+                        board[k] = 'w'
+                    flipped = True  # 反転が行われたのでフラグを立てる
+            elif board[i] == 'w':  # 白コインの場合
+                j = i
+                while j < N and board[j] == 'w':
+                    j += 1
+                if i > 0 and j < N and 'b' not in board[i:j]:
+                    # 白コインが黒コインを挟めない場合、反転させる
+                    for k in range(i, j):
+                        board[k] = 'b'
+                    flipped = True  # 反転が行われたのでフラグを立てる
+            i = j
 
-    for i in range(1, N - 1):
-        # 黒コインで挟まれた白コインを黒に反転
-        if board[i - 1] == 'b' and board[i + 1] == 'b' and board[i] == 'w':
-            new_board[i] = 'b'
-            flipped = True
-        # 白コインで挟まれた黒コインを白に反転
-        elif board[i - 1] == 'w' and board[i + 1] == 'w' and board[i] == 'b':
-            new_board[i] = 'w'
-            flipped = True
+    black_count = board.count('b')  # 最終的な黒コインの数を数える
+    return black_count
 
-    return new_board, flipped
+# 入力の読み込み
+N = int(input())
+s = input().rstrip()
 
-board = list(s)  # コインの並びをリストに変換
-flips = 0  # 反転回数のカウンタ
+# 黒コインの個数の計算
+result = count_black_coins(N, s)
 
-while True:
-    board, flipped = flip_coins(board)  # 反転操作を実行
-    if not flipped:
-        break  # 反転が行われなかった場合、ループを終了
-    flips += 1  # 反転回数をインクリメント
+# 結果の出力
+print(result)
+'''
+まず、count_black_coinsという関数が定義されています。この関数は、引数としてボードの横の長さを表すNとゲーム開始時のコインの並びを表す文字列sを受け取り、最終的な黒コインの数を返します。
+関数内では、boardというリストを作成し、sを文字ごとに分割して格納します。また、最初の黒コインの数を数えるための変数black_countを用意します。
+flippedというフラグ変数をTrueで初期化します。この変数は、反転が行われたかどうかを示す役割を果たします。
+次に、whileループが開始されます。ループ内では、まずflippedをFalseに設定します。これは、反転が行われなかった場合のデフォルトの状態です。
+次に、インデックスiを初期化し、iがNより小さい間ループを繰り返します。ループ内では、以下の処理が行われます。
 
-black_coins = board.count('b')  # 黒コインの数を数える
+board[i]が黒コインの場合：
+jをiとし、jがN以下かつboard[j]が黒コインである間ループを繰り返します。つまり、連続する黒コインの範囲を見つけます。
+もしiより前に白コインがなく、jより後に白コインがない場合、つまり黒コインが白コインを挟めない状態であれば、その範囲のコインを反転させます。具体的には、board[i:j]の要素をすべて白コインに置き換えます。
+反転が行われた場合、flippedをTrueに設定します。
 
-if black_coins == 0 or black_coins == N:
-    print(black_coins)  # 黒コインが0またはN枚の場合、そのまま出力
-else:
-    print(black_coins - 1)  # それ以外の場合、黒コインの数から1を引いて出力
+board[i]が白コインの場合：
+jをiとし、jがN以下かつboard[j]が白コインである間ループを繰り返します。つまり、連続する白コインの範囲を見つけます。
+もしiより前に黒コインがなく、jより後に黒コインがない場合、つまり白コインが黒コインを挟めない状態であれば、その範囲のコインを反転させます。具体的には、board[i:j]の要素をすべて黒コインに置き換えます。
+反転が行われた場合、flippedをTrueに設定します。
+iをjの値に更新します。
+
+ループの最後で、もしflippedがTrueのままであれば、まだ反転が行われる可能性があるため、再度の反転処理を行います。これは、連続するコインの範囲に対しての反転を繰り返し行うためです。
+最後に、最終的なボードの状態で黒コインの数を数え、その結果をblack_countとして返します。
+メインの処理では、入力を受け取り、count_black_coins関数を呼び出して最終的な黒コインの数を計算し、結果を出力します。
+'''
 
 # B032 デジタル計算機
 # utf-8
