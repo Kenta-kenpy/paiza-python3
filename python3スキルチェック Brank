@@ -919,37 +919,55 @@ print('\n'.join(N[-1]))
 # utf-8 Pythonにすると90点
 import math
 
-# 基準点のX座標とY座標の設定
-coordinateX, coordinateY = map(int, input().split())
+def predict_land_price(x, y, k, known_points):
+    # 地点A（x, y）から既知の地点までの距離と価格を計算して保持する
+    distances = [(math.sqrt((x - xi) ** 2 + (y - yi) ** 2), pi) for xi, yi, pi in known_points]
+    distances.sort(key=lambda d: (d[0], d[1]))  # 距離を昇順にソート
 
-# 近い点の個数・既知の個数の設定
-nearPointCount = int(input())
-knownPointCount = int(input())
+    # k個の最も近い地点の価格の合計を計算し、平均を求めて予測価格とする
+    total_price = sum(p for _, p in distances[:k])
+    predicted_price = round(total_price / k)
 
-# 既知の点の座標・地価設定
-knownPoints = []
-for _ in range(knownPointCount):
-    x, y, price = map(int, input().split())
-    knownPoints.append((x, y, price))
+    return predicted_price
 
-# 基準値と既知との距離計算設定
-distanceLandPrice = {}  # 基準値との距離をkeyに地価をvalueの辞書
-for point in knownPoints:
-    x, y, price = point
-    distance = math.sqrt((coordinateX - x) ** 2 + (coordinateY - y) ** 2)
-    distanceLandPrice[distance] = price
+def main():
+    # 入力値の読み込み
+    x, y = map(int, input().split())
+    k = int(input())
+    N = int(input())
 
-# 基準点の地価計算設定
-sumLandPrice = 0
-cnt = 0
-for key in sorted(distanceLandPrice.keys()):
-    if cnt == nearPointCount:
-        break
-    sumLandPrice += distanceLandPrice[key]
-    cnt += 1
+    # 入力条件の検証
+    if not (2 <= N <= 100):
+        raise ValueError("Nは2から100の範囲内である必要があります")
+    if not (1 <= k <= N):
+        raise ValueError("kは1からNの範囲内である必要があります")
+    if not (0 <= x <= 1000) or not (0 <= y <= 1000):
+        raise ValueError("xとyは0から1000の範囲内である必要があります")
 
-# 結果出力
-print(round(sumLandPrice / nearPointCount))
+    known_points = []
+    for _ in range(N):
+        # 既知の地点の座標と価格を読み込む
+        xi, yi, pi = map(int, input().split())
+
+        # 既知の地点の条件の検証
+        if not (0 <= xi <= 1000) or not (0 <= yi <= 1000):
+            raise ValueError("xiとyiは0から1000の範囲内である必要があります")
+        if not (1 <= pi <= 100):
+            raise ValueError("piは1から100の範囲内である必要があります")
+
+        known_points.append((xi, yi, pi))
+
+    # k-近傍法を使用して地点A（x, y）における地価を予測する
+    predicted_price = predict_land_price(x, y, k, known_points)
+
+    # 予測した地価を出力する
+    print(predicted_price)
+
+if __name__ == "__main__":
+    try:
+        main()
+    except ValueError as e:
+        print("入力が無効です:", str(e))
 
 # utf-8　Java
 import java.util.Scanner;
