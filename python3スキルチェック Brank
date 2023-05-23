@@ -1470,7 +1470,65 @@ top_post リストと top_this リストを比較し、各記録の変動を判�
 
 # B036 大統領選挙
 # utf-8
+def calculate_winner(candidate_num, candidates, voter_num, voter_preferences):
+    voted_candidates = [0] * (candidate_num + 1)  # 候補者ごとの得票数を保持するリスト
+    repub_vote = 0  # 共和党候補の得票数
+    demo_vote = 0  # 民主党候補の得票数
 
+    # 最初の投票
+    for preferences in voter_preferences:
+        for check in range(2):
+            for candidate in preferences:
+                if candidates[candidate] == check:
+                    voted_candidates[candidate] += 1  # 候補者の得票数をインクリメント
+                    break
+
+    # 最初の投票結果
+    repub = max((c for c in range(1, candidate_num + 1) if candidates[c] == 0), key=lambda x: voted_candidates[x])
+    demo = max((c for c in range(1, candidate_num + 1) if candidates[c] == 1), key=lambda x: voted_candidates[x])
+
+    # 最後の投票
+    for preferences in voter_preferences:
+        for candidate in preferences:
+            if candidate == repub:
+                repub_vote += 1
+                break
+            elif candidate == demo:
+                demo_vote += 1
+                break
+
+    # 結果の出力
+    if repub_vote > demo_vote:
+        return repub
+    else:
+        return demo
+
+# 入力
+candidate_num = int(input())  # 候補者数の入力
+candidates = [0] * (candidate_num + 1)  # 候補者の所属パーティーを保持するリスト
+for i in range(1, candidate_num + 1):
+    if input() == "Republican":
+        candidates[i] = 0
+    else:
+        candidates[i] = 1
+
+voter_num = int(input())  # 投票者数の入力
+voter_preferences = []  # 投票者の選好順位を保持するリスト
+for _ in range(voter_num):
+    preferences = list(map(int, input().split()))  # 投票者の選好順位をリストとして入力
+    voter_preferences.append(preferences)
+
+# 勝者の計算
+winner = calculate_winner(candidate_num, candidates, voter_num, voter_preferences)
+
+# 結果の出力
+print(winner)
+'''
+calculate_winner 関数は、候補者数、候補者の所属パーティー、投票者数、投票者の選好順位を受け取り、最終的な勝者を計算する関数です。共和党候補と民主党候補の得票数を数えて、最終的な勝者を決定します。
+入力値を受け取ります。まず、候補者数と候補者の所属パーティーを入力し、その後、投票者数と各投票者の選好順位を入力します。
+calculate_winner 関数を使用して最終的な勝者を計算し、結果を出力します。
+このコードでは、最初の投票で各候補者の得票数をカウントし、その結果から共和党候補と民主党候補を決定します。その後、最後の投票で選好順位に基づいて得票数をカウントし、最終的な勝者を決定します。最終的な勝者の候補者番号が返され、結果が出力されます。
+'''
 
 # B037 幸運な1年
 # B038 つるかめ算
