@@ -1531,7 +1531,64 @@ calculate_winner 関数を使用して最終的な勝者を計算し、結果を
 '''
 
 # B037 幸運な1年
+# utf-8
+def get_lucky_day(M, D, a, b, m):
+    w, x, y, z = 0, 0, 0, 0
+    d = {}
+    date = '{:0=2}'.format(M) + '{:0=2}'.format(D)
+    datenum = set(date)
+    
+    # 日付の桁数と出現回数をカウント
+    for i in datenum:
+        d[i] = date.count(i)
+    
+    for i in range(10000):
+        flag = True
+        w = (a[0] * w + b[0]) % m[0]
+        x = (a[1] * x + b[1]) % m[1]
+        y = (a[2] * y + b[2]) % m[2]
+        z = (a[3] * z + b[3]) % m[3]
+        date2 = str(w % 10) + str(x % 10) + str(y % 10) + str(z % 10)
+        
+        # カードの数字と日付を比較
+        for key in d:
+            if key not in date2:
+                flag = False
+                break
+            if date2.count(key) != d[key]:
+                flag = False
+                break
+        
+        if flag:
+            return i + 1
+    
+    return -1
+
+# 入力値の取得
+M, D = map(int, input().split())
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+m = list(map(int, input().split()))
+
+# 幸運な日を取得
+result = get_lucky_day(M, D, a, b, m)
+print(result)
+'''
+get_lucky_day 関数は、引数として今日の日付 (M, D)、カードのパラメータ (a, b, m) を受け取り、幸運な日になるために必要なカードの引き直し回数を計算します。
+変数 w, x, y, z はカードの擬似乱数を表すための変数で、初期値は 0 です。
+辞書 d は日付の桁数と出現回数を保持します。桁数と出現回数の対応は、日付を文字列に変換してカウントします。
+次に、10,000 回までのループを実行します。
+フラグ flag は幸運な日になるかどうかを示す変数で、初期値は True です。
+カードの擬似乱数を生成し、それぞれのカードの数字を 10 で割った余りを取得して date2 に格納します。
+date2 と辞書 d を比較して、カードの数字が日付を作るために必要な条件を満たしているかどうかを判定します。条件を満たさない場合、flag を False に設定します。
+もし flag が True のままであれば、ループ回数に 1 を加えた値を返します。これが幸運になるために必要なカードの引き直し回数です。
+もしループが終了しても幸運な日になる条件を満たすカードの引き直し回数が見つからない場合、-1 を返します。
+最後に、入力値を受け取り、get_lucky_day 関数を呼び出して結果を出力します。
+'''
+
 # B038 つるかめ算
+# utf-8
+
 # B039 雨上がりの道
 # B040 たのしい暗号解読
 --------------------------------------------- B041　※欠番 ◆
