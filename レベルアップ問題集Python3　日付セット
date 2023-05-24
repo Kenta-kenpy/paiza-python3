@@ -518,12 +518,275 @@ print(ans)
 '''
 
 <最長の連休paiza>
+# utf-8
+n = int(input())
+data = [input() for i in range(n)]
+
+m = 1
+d = 1
+ans = 2
+count = 0
+
+youbi = ["火", "水", "木", "金", "土", "日", "月"]
+donichi = ["土", "日"]
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+for i in range(365):
+    if youbi[i % 7] in donichi:
+        count += 1
+    elif f"{m} {d}" in data:
+        count += 1
+    else:
+        ans = max(count, ans)
+        count = 0
+
+    if n[m - 1] == d:
+        d = 1
+        m += 1
+    else:
+        d += 1
+
+ans = max(count, ans)
+
+print(ans)
+
 <連休を伸ばす1>
+# utf-8
+n, l = map(int, input().split())
+b = list(map(int, input().split()))
+
+s = 0
+one = 0
+zero = 0
+ans = 0
+
+for i in range(n):
+    if b[i] == 1:
+        one += 1
+    else:
+        zero += 1
+        while zero > l:
+            if b[s] == 1:
+                one -= 1
+            else:
+                zero -= 1
+
+            s += 1
+
+    if ans < one + zero:
+        ans = one + zero
+
+print(ans)
+'''
+各日から休めるだけ休んだ際に何連休となるかを計算し、最大何連休となるのかを計算します。
+'''
+
 <連休を伸ばす2>
+# utf-8
+n, l = map(int, input().split())
+b = list(map(int, input().split()))
+
+s = 0
+one = 0
+zero = 0
+ans = 0
+
+for i in range(n):
+    if b[i] == 1:
+        one += 1
+    else:
+        zero += 1
+        while zero > l:
+            if b[s] == 1:
+                one -= 1
+            else:
+                zero -= 1
+
+            s += 1
+
+    if ans < one + zero:
+        ans = one + zero
+
+print(ans)
+'''
+前問と同じ方法で解くと計算時間がかかりすぎてしまうため、別のアルゴリズムを考える必要があります。
+尺取法と呼ばれるアルゴリズムを用いて、計算時間を抑えることができます。
+'''
+
 <日付のフォーマット>
+# utf-8
+data0 = input().split("/")
+
+flag = False
+flag2 = False
+
+if len(data0[0]) == 4:
+    data0[0] = "YYYY"
+
+    if (int(data0[1]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[1]) in range(1, 13) and int(data0[2]) in range(1, 32):
+        data0[1] = "MM"
+        data0[2] = "DD"
+    elif int(data0[2]) in range(1, 13) and int(data0[1]) in range(1, 32):
+        data0[2] = "MM"
+        data0[1] = "DD"
+    else:
+        flag = True
+elif len(data0[1]) == 4:
+    data0[1] = "YYYY"
+
+    if (int(data0[0]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[0]) in range(1, 13) and int(data0[2]) in range(1, 32):
+        data0[0] = "MM"
+        data0[2] = "DD"
+    elif int(data0[2]) in range(1, 13) and int(data0[0]) in range(1, 32):
+        data0[2] = "MM"
+        data0[0] = "DD"
+    else:
+        flag = True
+else:
+    data0[2] = "YYYY"
+
+    if (int(data0[1]) in range(1, 13)) and (int(data0[0]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[1]) in range(1, 13) and int(data0[0]) in range(1, 32):
+        data0[1] = "MM"
+        data0[0] = "DD"
+    elif int(data0[0]) in range(1, 13) and int(data0[1]) in range(1, 32):
+        data0[0] = "MM"
+        data0[1] = "DD"
+    else:
+        flag = True
+
+if flag2:
+    print("many answers")
+elif flag:
+    print("no answer")
+else:
+    print(f"{data0[0]}/{data0[1]}/{data0[2]}")
+'''
+文字列長が 4 なら YYYY に対応し、文字列長が 2 かつ 12 以下なら MM と DD のどちらに対応する可能性もあり、文字列長が 2 かつ 13 以上 31 以下なら DD に対応します。
+YYYY に対応するものが 1 つ、DD に対応するものが 1 つ、MM と DD のどちらにも対応するものが 1 つ存在するとき、並び順は確定します。
+YYYY に対応するものが 1 つでかつ MM と DD のどちらにも対応するものが 2 つ存在するとき、many answers です。
+上記のどちらでもない場合は no answer です。
+'''
+
 <年月日の順序>
+# utf-8
+data0 = input().split("/")
+
+flag = False
+flag2 = False
+
+if len(data0[0]) == 4:
+    data0[0] = "YYYY"
+
+    if (int(data0[1]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[1]) in range(1, 13) and int(data0[2]) in range(1, 32):
+        data0[1] = "MM"
+        data0[2] = "DD"
+    elif int(data0[2]) in range(1, 13) and int(data0[1]) in range(1, 32):
+        data0[2] = "MM"
+        data0[1] = "DD"
+    else:
+        flag = True
+elif len(data0[1]) == 4:
+    data0[1] = "YYYY"
+
+    if (int(data0[0]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[0]) in range(1, 13) and int(data0[2]) in range(1, 32):
+        data0[0] = "MM"
+        data0[2] = "DD"
+    elif int(data0[2]) in range(1, 13) and int(data0[0]) in range(1, 32):
+        data0[2] = "MM"
+        data0[0] = "DD"
+    else:
+        flag = True
+else:
+    data0[2] = "YYYY"
+
+    if (int(data0[1]) in range(1, 13)) and (int(data0[0]) in range(1, 13)):
+        flag2 = True
+    elif int(data0[1]) in range(1, 13) and int(data0[0]) in range(1, 32):
+        data0[1] = "MM"
+        data0[0] = "DD"
+    elif int(data0[0]) in range(1, 13) and int(data0[1]) in range(1, 32):
+        data0[0] = "MM"
+        data0[1] = "DD"
+    else:
+        flag = True
+
+if flag2:
+    print("many answers")
+elif flag:
+    print("no answer")
+else:
+    print(f"{data0[0]}/{data0[1]}/{data0[2]}")
+'''
+文字列長が 4 なら YYYY に対応し、文字列長が 2 かつ 12 以下なら MM と DD のどちらに対応する可能性もあり、文字列長が 2 かつ 13 以上 31 以下なら DD に対応します。
+YYYY に対応するものが 1 つ、DD に対応するものが 1 つ、MM と DD のどちらにも対応するものが 1 つ存在するとき、並び順は確定します。
+YYYY に対応するものが 1 つでかつ MM と DD のどちらにも対応するものが 2 つ存在するとき、many answers です。
+上記のどちらでもない場合は no answer です。
+'''
+
 <カレンダーの表示>
+# utf-8
+y, m = map(int, input().split())
+
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+data = list(range(1, n[m - 1] + 1))
+dy = y - 1800
+uy = dy // 4 - dy // 100 + (dy - 200) // 400
+s = -3
+s += dy * 365 + uy
+s += sum(n[0 : m - 1])
+flag = True
+
+if y % 4 != 0:
+    flag = False
+elif y % 400 == 0:
+    flag = True
+elif y % 100 == 0:
+    flag = False
+else:
+    flag = True
+
+if flag:
+    s -= 1
+
+if m > 2 and flag:
+    s += 1
+
+if m == 2 and flag:
+    data.append(29)
+
+data = ["  "] * (s % 7) + data
+
+for i in range(6 * 7):
+    if i < 9 + (s % 7) and i > (s % 7) - 1:
+        print(" ", end="")
+
+    if i < len(data):
+        print(data[i], end="")
+    else:
+        print("  ", end="")
+
+    if i % 7 == 6:
+        print("")
+    elif i != 53:
+        print(" ", end="")
+'''
+y 年 m 月 1 日の曜日を求めます。
+その後、求められているフォーマットに従ってカレンダーを出力します。
+'''
+
 <13日の金曜日(2桁)>
+
 <13日の金曜日(3桁)>
 <13日の金曜日(4桁)>
 <月末最後の営業日の曜日>
