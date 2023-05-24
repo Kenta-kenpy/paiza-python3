@@ -185,10 +185,6 @@ print(n, m, d)
 '''
 
 <曜日>
-'''
-1799 年 12 月 31 日から何日たったかを計算します。
-各曜日 (日, 月, 火…) と数字 (0, 1, 2…) を対応させて曜日を扱います。
-'''
 # utf-8
 y, m, d = map(int, input().split())
 
@@ -219,6 +215,10 @@ if m > 2 and flag:
 s += d
 
 print(f"{a[s%7]}曜日")
+'''
+1799 年 12 月 31 日から何日たったかを計算します。
+各曜日 (日, 月, 火…) と数字 (0, 1, 2…) を対応させて曜日を扱います。
+'''
 
 <曜日(large)>
 # utf-8
@@ -617,60 +617,28 @@ print(ans)
 # utf-8
 data0 = input().split("/")
 
-flag = False
-flag2 = False
-
-if len(data0[0]) == 4:
-    data0[0] = "YYYY"
-
-    if (int(data0[1]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
-        flag2 = True
-    elif int(data0[1]) in range(1, 13) and int(data0[2]) in range(1, 32):
-        data0[1] = "MM"
-        data0[2] = "DD"
-    elif int(data0[2]) in range(1, 13) and int(data0[1]) in range(1, 32):
-        data0[2] = "MM"
-        data0[1] = "DD"
+try:
+    flag = False
+    if len(data0) != 3:
+        print("No")
+    elif len(data0[0]) != 4:
+        print("No")
+    elif not (int(data0[1]) in range(1, 13)):
+        print("No")
+    elif not (int(data0[2]) in range(1, 32)):
+        print("No")
     else:
         flag = True
-elif len(data0[1]) == 4:
-    data0[1] = "YYYY"
-
-    if (int(data0[0]) in range(1, 13)) and (int(data0[2]) in range(1, 13)):
-        flag2 = True
-    elif int(data0[0]) in range(1, 13) and int(data0[2]) in range(1, 32):
-        data0[0] = "MM"
-        data0[2] = "DD"
-    elif int(data0[2]) in range(1, 13) and int(data0[0]) in range(1, 32):
-        data0[2] = "MM"
-        data0[0] = "DD"
-    else:
-        flag = True
+except:
+    print("No")
 else:
-    data0[2] = "YYYY"
-
-    if (int(data0[1]) in range(1, 13)) and (int(data0[0]) in range(1, 13)):
-        flag2 = True
-    elif int(data0[1]) in range(1, 13) and int(data0[0]) in range(1, 32):
-        data0[1] = "MM"
-        data0[0] = "DD"
-    elif int(data0[0]) in range(1, 13) and int(data0[1]) in range(1, 32):
-        data0[0] = "MM"
-        data0[1] = "DD"
-    else:
-        flag = True
-
-if flag2:
-    print("many answers")
-elif flag:
-    print("no answer")
-else:
-    print(f"{data0[0]}/{data0[1]}/{data0[2]}")
+    if flag:
+        print("Yes")
 '''
-文字列長が 4 なら YYYY に対応し、文字列長が 2 かつ 12 以下なら MM と DD のどちらに対応する可能性もあり、文字列長が 2 かつ 13 以上 31 以下なら DD に対応します。
-YYYY に対応するものが 1 つ、DD に対応するものが 1 つ、MM と DD のどちらにも対応するものが 1 つ存在するとき、並び順は確定します。
-YYYY に対応するものが 1 つでかつ MM と DD のどちらにも対応するものが 2 つ存在するとき、many answers です。
-上記のどちらでもない場合は no answer です。
+YYYY/MM/DD のフォーマットに従っているか以下の 3 点を順にみて確認します。
+文字列長が 10 か確認します。
+5, 8 文字目が / になっているかを確認します。
+YYYY, MM, DD の箇所が数字列になっていてかつ、MM, DD の値が適切な範囲に収まっているかを確認します。
 '''
 
 <年月日の順序>
@@ -786,9 +754,117 @@ y 年 m 月 1 日の曜日を求めます。
 '''
 
 <13日の金曜日(2桁)>
+# utf-8
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+week = [0] * 7
+s = 2
+
+for y in range(1800, 2200):
+    flag = True
+
+    if y % 4 != 0:
+        flag = False
+    elif y % 400 == 0:
+        flag = True
+    elif y % 100 == 0:
+        flag = False
+
+    for j in range(0, 12):
+        week[s % 7] += 1
+        s += n[j]
+
+        if flag and j == 1:
+            s += 1
+
+ans = week[6] / 4800
+
+print("{:.2f}".format(ans))
+'''
+1800 年 1 月 1 日 (水) かつ 2200 年 1 月 1 日 (水) となるように、400 年ちょうどで曜日の周期と閏年の周期が合うので、この期間を元に計算すれば良いです。
+'''
 
 <13日の金曜日(3桁)>
+模範解答コードミス
+
 <13日の金曜日(4桁)>
+模範解答コードミス
+
 <月末最後の営業日の曜日>
+# utf-8
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+week = [0] * 7
+s = 1
+
+for y in range(1800, 2200):
+    flag = True
+
+    if y % 4 != 0:
+        flag = False
+    elif y % 400 == 0:
+        flag = True
+    elif y % 100 == 0:
+        flag = False
+
+    for j in range(0, 12):
+        s += n[j]
+
+        if flag and j == 1:
+            s += 1
+
+        if s % 7 in [5, 6]:
+            week[4] += 1
+        else:
+            week[s % 7] += 1
+
+
+ans = week[int(input()) - 1] / 4800
+
+print("{:.6f}".format(ans))
+'''
+1800 年 1 月 1 日 (水) かつ 2200 年 1 月 1 日 (水) となるように、400 年ちょうどで曜日の周期と閏年の周期が合うので、この期間を元に計算すれば良いです。
+'''
+
 <令和を作る>
+# utf-8
+n = int(input())
+
+k = []
+flag = False
+c = 1
+
+for i in range(n):
+    k.append(input())
+
+for i in range(n):
+    for j in range(n):
+        if c <= 1000:
+            c += 1
+            print(f"{k[i]}{k[j]}")
+
+        if f"{k[i]}{k[j]}" == "令和":
+            flag = True
+
+if flag:
+    print("Nice")
+else:
+    print("Bad")
+'''
+問題の通りに 2 文字を組み合わせることを繰り返します。
+そして、組み合わせた結果できた文字列に"令和"が含まれるかどうかを確かめます。
+作った文字列が1000個以下ならそのすべてを、1001個以上なら最初の1000個のみを出力します。
+'''
+
 <令和を数える>
+# utf-8
+a = input()
+
+count = 0
+
+for i in range(len(a) - 1):
+    if a[i : i + 2] == "令和":
+        count += 1
+
+print(count)
+'''
+文字列から 2 文字ずつ取り出して "令和" と合致するか確認します。
+'''
