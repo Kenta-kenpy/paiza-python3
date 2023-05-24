@@ -784,10 +784,64 @@ print("{:.2f}".format(ans))
 '''
 
 <13日の金曜日(3桁)>
-模範解答コードミス
+# utf-8
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+week = [0] * 7
+s = 2
+
+for y in range(1800, 2200):
+    flag = True
+
+    if y % 4 != 0:
+        flag = False
+    elif y % 400 == 0:
+        flag = True
+    elif y % 100 == 0:
+        flag = False
+
+    for j in range(0, 12):
+        week[s % 7] += 1
+        s += n[j]
+
+        if flag and j == 1:
+            s += 1
+
+ans = week[6] / 4800
+
+print("{:.3f}".format(ans))
+'''
+1800 年 1 月 1 日 (水) かつ 2200 年 1 月 1 日 (水) となるように、400 年ちょうどで曜日の周期と閏年の周期が合うので、この期間を元に計算すれば良いです。
+'''
 
 <13日の金曜日(4桁)>
-模範解答コードミス
+# utf-8
+n = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+week = [0] * 7
+s = 2
+
+for y in range(1800, 2200):
+    flag = True
+
+    if y % 4 != 0:
+        flag = False
+    elif y % 400 == 0:
+        flag = True
+    elif y % 100 == 0:
+        flag = False
+
+    for j in range(0, 12):
+        week[s % 7] += 1
+        s += n[j]
+
+        if flag and j == 1:
+            s += 1
+
+ans = week[6] / 4800
+
+print("{:.4f}".format(ans))
+'''
+1800 年 1 月 1 日 (水) かつ 2200 年 1 月 1 日 (水) となるように、400 年ちょうどで曜日の周期と閏年の周期が合うので、この期間を元に計算すれば良いです。
+'''
 
 <月末最後の営業日の曜日>
 # utf-8
