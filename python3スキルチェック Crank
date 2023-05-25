@@ -3417,7 +3417,42 @@ sort()メソッドを使ってsampleとcomeを昇順にソートし、==演算�
 最後に、if __name__ == '__main__': で、このスクリプトが直接実行された場合に main() 関数を呼び出して処理を開始します。
 '''
 
-# C130
+# C130 繰り返し学習
+# utf-8
+def find_unsolved_problems(N, problem_status):
+    solved_problems = []  # 解かれた問題の番号を格納するリスト
+
+    for problem_num in range(N):
+        first_round = problem_status[problem_num][0]  # 1周目の正誤状況を取得
+        second_round = problem_status[problem_num][1]  # 2周目の正誤状況を取得
+
+        if first_round == 'n' or second_round == 'n':  # どちらかが不正解の場合
+            solved_problems.append(problem_num + 1)  # 解かなければならない問題としてリストに追加
+
+    return solved_problems
+
+# 入力の受け取り
+N = int(input())  # 問題数を受け取る
+problem_status = []
+
+# 各問題の正誤状況を受け取る
+for _ in range(N):
+    status = input().split()  # 1周目と2周目の正誤状況をスペース区切りで受け取る
+    problem_status.append(status)
+
+# 3周目で解かなければならない問題の番号を求める
+unsolved = find_unsolved_problems(N, problem_status)
+
+# 結果を出力
+M = len(unsolved)  # 解かなければならない問題の数
+print(M)  # 解かなければならない問題の数を出力
+for problem_num in unsolved:
+    print(problem_num)  # 解かなければならない問題の番号を順に出力
+'''
+returnまでの部分は関数 find_unsolved_problems を定義しています。この関数は、問題数と問題の正誤状況を受け取り、3周目で解かなければならない問題の番号のリストを返します。問題数を表す N と正誤状況のリスト problem_status を引数として受け取ります。solved_problems は解かれた問題の番号を格納するための空のリストです。
+次に、入力の受け取り部分です。最初に問題数 N を整数として受け取ります。その後、N 行の入力が行われます。各行では、問題ごとの正誤状況をスペース区切りで受け取り、problem_status リストに追加しています。
+最後に、find_unsolved_problems 関数を呼び出し、解かなければならない問題の番号を取得します。その後、取得した問題数を変数 M に格納し、解かなければならない問題の数を出力します。さらに、解かなければならない問題の番号を順に出力します。
+'''
 --------------------------------------------- C131　※欠番 ◆
 # C131　
 # C132　
