@@ -1652,7 +1652,37 @@ elif res_kame < 1:
 else:
 	print(int(res_kame), int(res_tsuru))
 	
-# B039 雨上がりの道
+# B039 雨上がりの道　※間違った出力になる
+# utf-8
+def check_overlap(x1, y1, a1, b1, x2, y2, a2, b2):
+    if a1 <= x2 or a2 <= x1 or b1 <= y2 or b2 <= y1:
+        return False
+    return True
+
+n = int(input())
+s = int(input())
+ponds = []
+
+for _ in range(n):
+    x, y, a, b = map(int, input().split())
+    ponds.append((x, y, a, b))
+
+result = []
+
+for i in range(n):
+    if i + 1 == s:
+        result.append(str(i + 1))
+    else:
+        can_enter = True
+        for j in range(n):
+            if i != j and check_overlap(*ponds[i], *ponds[j]):
+                can_enter = False
+                break
+        if can_enter:
+            result.append(str(i + 1))
+
+print("\n".join(result))
+
 # B040 たのしい暗号解読
 --------------------------------------------- B041　※欠番 ◆
 # B041 繰り返し模様
