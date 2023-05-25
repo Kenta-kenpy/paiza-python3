@@ -1684,6 +1684,49 @@ for i in range(n):
 print("\n".join(result))
 
 # B040 たのしい暗号解読
+# 入力値の取得
+lines = []
+while True:
+    try:
+        line = input()
+        lines.append(line)
+    except EOFError:
+        break
+
+# 回答方針
+# [1] 必要な値を変数/配列化する。置換回数(count), 暗号文(codeText), 暗号ルール(codeRule), アルファベット(alphabet)
+# [2] 暗号文を一文字ずつ置換ルールと比較。暗号文文字 = 暗号ルールとなる時の、置換ルールの文字列順を取得
+# [3] [2]で取得した番号のアルファベット文字列を取得する。
+# [4] [2][3]を暗号文の文字列回数分繰り返す
+# [5] [2][3][4]の処理を置換回数(count)回、繰り返す。
+# [5]で得られた文字列を表示する
+
+alphabet = "abcdefghijklmnopqrstuvwxyz"
+count, codeRule = lines[0].split()
+count = int(count)
+codeText = lines[1].strip()
+decryption = ''
+
+for c in range(count):
+    for char in codeText:
+        if char == ' ':
+            decryption += ' '
+            continue
+        for n in range(len(codeRule)):
+            if char == codeRule[n]:
+                decryption += alphabet[n]
+    codeText = decryption
+    decryption = ''
+
+print(codeText)
+'''
+最初に、入力を受け取るための処理が行われています。input()関数を使って一行ずつ入力を読み込み、linesリストに格納しています。EOFError例外が発生するまで繰り返します。
+次に、アルファベットの文字列や復号に必要な変数を初期化しています。alphabet変数にはアルファベットの文字列が格納されています。count変数には置換回数が、codeRule変数には置換のルールが格納されます。countは整数に変換しています。また、codeText変数には暗号文が格納されます。strip()関数を使って行末の改行文字を削除しています。decryption変数は復号結果を格納するための空の文字列です。
+指定された回数だけ復号処理を繰り返します。外側のループはcount回繰り返されます。内側のループでは、暗号文の各文字を一つずつ処理します。文字がスペースの場合は、スペースを復号結果に追加し、次の文字の処理へ進みます。それ以外の場合は、暗号ルールを順番に比較し、一致するルールの位置に対応するアルファベットを復号結果に追加します。
+内側のループが終わった後、codeTextを更新して復号結果を反映します。そして、decryptionを空の文字列にリセットします。
+最後に、復号された結果を出力します。
+このコードでは、与えられた置換回数と置換ルールを使って暗号文を復号する処理が行われます。指定された回数だけ復号処理が繰り返され、最終的な復号結果が出力されます。
+'''
 --------------------------------------------- B041　※欠番 ◆
 # B041 繰り返し模様
 # B042 横入りするネコ
