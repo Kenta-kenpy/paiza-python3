@@ -1988,7 +1988,11 @@ print(S[-1])
 N = int(input()) # 今の身長
 print(N+10)
 
-# D247
+# D247　顧客ID
+# utf-8
+S = input()
+print(S[0]+S[-1])
+
 # D248
 # D249
 # D250
