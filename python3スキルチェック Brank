@@ -1789,6 +1789,110 @@ for row in s1: print("".join(row)): 生成された最終的な模様を出力�
 '''
 
 # B042 横入りするネコ
+# utf-8
+def check_cat(cat_num, M, cat_info, eat_time_info, cat_line):
+    # 猫の順番を組み合わせて全パターンを調べる再帰関数
+    if len(cat_line) == cat_num:
+        cat_M = check_M(cat_num, cat_info, cat_line)
+        if cat_M <= M:
+            eat_time = check_eat_time(cat_num, cat_info, cat_line)
+            eat_time_info.add(eat_time)
+    else:
+        for i in range(cat_num):
+            if i + 1 not in cat_line:
+                new_cat_line = cat_line.copy()
+                new_cat_line.append(i + 1)
+                check_cat(cat_num, M, cat_info, eat_time_info, new_cat_line)
+
+
+def check_M(cat_num, cat_info, cat_line):
+    # 各猫の不満度の合計を計算する関数
+    cat_M = [0] * cat_num
+    cat_line_info = [0] * cat_num
+    sum_cat_M = 0
+
+    for index, value in enumerate(cat_line):
+        cat_line_info[index] = value
+
+    for i in range(1, cat_num):
+        for j in range(i):
+            if cat_line_info[i] < cat_line_info[j]:
+                cat_M[cat_line_info[i] - 1] += 1
+
+    for i in range(cat_num):
+        sum_cat_M += cat_M[i] * cat_info[i][1]
+
+    return sum_cat_M
+
+
+def check_eat_time(cat_num, cat_info, cat_line):
+    # 各猫の食事時間の合計を計算する関数
+    eat_time = 0
+    eat_time_sum = 0
+    cat_line_info = [0] * cat_num
+
+    for index, value in enumerate(cat_line):
+        cat_line_info[index] = value
+
+    for i in range(cat_num):
+        eat_time += eat_time_sum + cat_info[cat_line_info[i] - 1][0]
+        eat_time_sum += cat_info[cat_line_info[i] - 1][0]
+
+    return eat_time
+
+
+cat_num, M = map(int, input().split())
+
+cat_info = []
+for _ in range(cat_num):
+    cat_info.append(list(map(int, input().split())))
+
+eat_time_info = set()
+cat_line = []
+
+check_cat(cat_num, M, cat_info, eat_time_info, cat_line)
+
+min_eat_time = min(eat_time_info)
+
+print(min_eat_time)
+'''
+check_cat関数:
+引数:
+cat_num: 猫の数
+M: 許容される不満度の合計
+cat_info: 猫の情報を格納した2次元リスト
+eat_time_info: 結果として得られる食事時間の集合
+cat_line: 現在の猫の順番のリスト
+再帰的に全ての猫の順番の組み合わせをチェックし、条件を満たす場合に食事時間を計算して集合に追加します。
+まだ順番が割り当てられていない猫に対して順番を割り当てて再帰呼び出しを行います。
+
+check_M関数:
+引数:
+cat_num: 猫の数
+cat_info: 猫の情報を格納した2次元リスト
+cat_line: 現在の猫の順番のリスト
+各猫の不満度の合計を計算して返します。
+猫の順番が入れ替わった場合、その猫より前にいる猫の不満度を増やします。
+
+check_eat_time関数:
+引数:
+cat_num: 猫の数
+cat_info: 猫の情報を格納した2次元リスト
+cat_line: 現在の猫の順番のリスト
+各猫の食事時間の合計を計算して返します。
+猫の順番に従って、各猫の食事時間を計算し合計します。
+
+メイン部分:
+ユーザーからの入力を受け取り、cat_numとMに代入します。
+cat_infoリストを作成し、猫の情報を格納します。
+結果の食事時間を格納するための集合eat_time_infoと、現在の猫の順番を格納するためのリストcat_lineを初期化します。
+check_cat関数を呼び出して、全ての猫の順番の組み合わせをチェックします。
+得られた食事時間の集合eat_time_infoから最小値を取得し、結果を出力します。
+このコードは、猫の順番の組み合わせを全て試す方法を用いて最適解を求める力まで持っています。
+ただし、猫の数が増えると組み合わせの数が爆発的に増えるため、実行時間が長くなる可能性があります。
+より効率的なアルゴリズムを検討する必要があるかもしれません。
+'''
+
 # B043 ねずみ小僧
 # B044 爆弾ゲーム
 # B045 計算ドリル
