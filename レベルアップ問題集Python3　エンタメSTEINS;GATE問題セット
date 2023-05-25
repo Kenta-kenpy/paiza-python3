@@ -83,6 +83,10 @@ C ≠ 0 のとき: A + 1
 
 <例外処理のタブーサーチ>
 step1 整数値の差 D
+# utf-8
+a, b = map(int, input().split())
+print(b - a)
+
 step2 数列の差 D
 step3 整数値の検索 C
 step4 数列の検索 C
