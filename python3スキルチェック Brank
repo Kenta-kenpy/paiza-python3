@@ -2021,6 +2021,46 @@ if __name__ == "__main__":
     main()
 
 # B045 計算ドリル
+# utf-8
+import random
+
+# 入力を取得し、足し算の問題数と引き算の問題数を設定する
+setting = input()
+set_data = setting.split()
+plus = int(set_data[0])
+minus = int(set_data[1])
+
+problems = []  # 問題を格納するリスト
+
+# 足し算の問題を生成
+while len(problems) < plus:
+    left = random.randint(0, 99)  # 0から99までのランダムな左辺を生成
+    right = random.randint(0, 99 - left)  # 左辺以下の範囲でランダムな右辺を生成
+    problem = f"{left} + {right} ="  # 問題文を作成
+    if problem not in problems:  # 重複しない問題文の場合にリストに追加
+        problems.append(problem)
+
+# 引き算の問題を生成
+while len(problems) < plus + minus:
+    left = random.randint(0, 99)  # 0から99までのランダムな被減数を生成
+    right = random.randint(0, left)  # 被減数以下の範囲でランダムな減数を生成
+    problem = f"{left} - {right} ="  # 問題文を作成
+    if problem not in problems:  # 重複しない問題文の場合にリストに追加
+        problems.append(problem)
+
+random.shuffle(problems)  # 問題の順序をランダムにシャッフル
+
+# 問題を出力
+for problem in problems:
+    print(problem)
+'''
+このコードでは、random モジュールを使用してランダムな数値を生成しています。足し算の問題を生成する際には、0から99までのランダムな左辺と、左辺以下の範囲でランダムな右辺を生成し、問題文を作成しています。
+同様に、引き算の問題を生成する際には、0から99までのランダムな被減数と、被減数以下の範囲でランダムな減数を生成して問題文を作成しています。
+問題文の重複を防ぐため、生成した問題文が既にリストに存在するかをチェックしています。存在しない場合にのみリストに追加されます。
+最後に、random.shuffle() 関数を使用して問題の順序をランダムにシャッフルしています。最終的に生成された問題は、for ループを使用して一つずつ出力されます。
+このコードによって、与えられた条件を満たし、効率的かつランダムな問題のドリルが生成されます。
+'''
+
 # B046 街の距離
 # B047 ホームポジション
 # B048 理想のビンゴ
