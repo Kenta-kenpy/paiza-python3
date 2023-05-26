@@ -2061,7 +2061,34 @@ for problem in problems:
 このコードによって、与えられた条件を満たし、効率的かつランダムな問題のドリルが生成されます。
 '''
 
-# B046 街の距離
+# B046 街の距離　※入力例1,3はOK 入力例2はNG
+# utf-8
+import math
+
+def calculate_shortest_distance(N, current_coordinate, destination_coordinate):
+    # 目的地の同心円上の道路を取得
+    destination_road = int(destination_coordinate.split()[0])
+    
+    # 現在地の同心円上の道路を取得
+    current_road = int(current_coordinate.split()[0])
+    
+    # 目的地の同心円上の道路までの距離を計算
+    distance_to_destination_road = 100 * (abs(destination_road - current_road))
+    
+    # 現在地から目的地までの最短距離を計算
+    shortest_distance = min(distance_to_destination_road, 100 * N - distance_to_destination_road)
+    
+    return round(shortest_distance + 100 * math.pi / 2, 9)
+
+# 入力を受け取る
+N = int(input())
+current_coordinate = input()
+destination_coordinate = input()
+
+# 最短距離を計算して出力
+shortest_distance = calculate_shortest_distance(N, current_coordinate, destination_coordinate)
+print(shortest_distance)
+
 # B047 ホームポジション
 # B048 理想のビンゴ
 # B049 ◆
