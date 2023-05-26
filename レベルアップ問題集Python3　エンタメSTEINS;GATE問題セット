@@ -88,6 +88,20 @@ a, b = map(int, input().split())
 print(b - a)
 
 step2 数列の差 D
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+b = [int(x) for x in input().split()]
+
+for i in range(n):
+    if i < n - 1:
+        print(b[i] - a[i], end=" ")
+    else:
+        print(b[i] - a[i])
+'''
+for ループなどを用いて、数列の各要素の差 b_i-a_i を計算しながら出力すればよいです。
+'''
+
 step3 整数値の検索 C
 step4 数列の検索 C
 final 例外処理のタブーサーチ B
