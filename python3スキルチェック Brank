@@ -1654,10 +1654,8 @@ else:
 	
 # B039 雨上がりの道　※間違った出力になる
 # utf-8
-def check_overlap(x1, y1, a1, b1, x2, y2, a2, b2):
-    if a1 <= x2 or a2 <= x1 or b1 <= y2 or b2 <= y1:
-        return False
-    return True
+def check_inside(x1, y1, a1, b1, x2, y2, a2, b2):
+    return x1 >= x2 and y1 >= y2 and x1 + a1 <= x2 + a2 and y1 + b1 <= y2 + b2
 
 n = int(input())
 s = int(input())
@@ -1675,7 +1673,7 @@ for i in range(n):
     else:
         can_enter = True
         for j in range(n):
-            if i != j and check_overlap(*ponds[i], *ponds[j]):
+            if i != j and check_inside(*ponds[i], *ponds[j]):
                 can_enter = False
                 break
         if can_enter:
