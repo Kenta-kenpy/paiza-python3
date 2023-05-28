@@ -2071,7 +2071,56 @@ destination_coordinate = input()
 shortest_distance = calculate_shortest_distance(N, current_coordinate, destination_coordinate)
 print(shortest_distance)
 
-# B047 ホームポジション
+# B047 ホームポジション　※境界値のみ通過　サンプルケースすら通過しない
+# utf-8
+def count_mistyped_keys(S):
+    if not (1 <= len(S) <= 10000):
+        return -1  # 条件を満たさない場合はエラーコードとして -1 を返す
+
+    left_hand_keys = set("qwertasdfgzxcvb")
+    right_hand_keys = set("yuiophjklnm")
+    count = 0
+    prev_char = ""
+    prev_hand = ""
+
+    for char in S:
+        if char == prev_char or (prev_char and (
+            (char in left_hand_keys and prev_char in left_hand_keys) or
+            (char in right_hand_keys and prev_char in right_hand_keys)
+        )):
+            count += 1
+        else:
+            if char in left_hand_keys:
+                if prev_hand == "left":
+                    count += 1
+                prev_hand = "left"
+            elif char in right_hand_keys:
+                if prev_hand == "right":
+                    count += 1
+                prev_hand = "right"
+            else:
+                prev_hand = ""  # ホームポジション以外のキーの場合、直前の手をリセット
+        prev_char = char
+
+    return count
+
+# 入力の読み込み
+S = input().strip()
+
+# 入力のチェック
+if not all(ch.islower() for ch in S):
+    print("入力は半角英小文字である必要があります。")
+    exit()
+
+# S の長さのチェック
+if len(S) < 1 or len(S) > 10000:
+    print("S の長さは 1 以上 10,000 以下である必要があります。")
+    exit()
+
+# 結果の出力
+result = count_mistyped_keys(S)
+print(result)
+
 # B048 理想のビンゴ
 # B049 ◆
 # B050 有効なチケット
