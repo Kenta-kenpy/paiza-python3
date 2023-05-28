@@ -1036,68 +1036,55 @@ public class Main {
 	}
 }
 
-# B030 氷のダンジョン　※手順は間違っていないはずだが間違った出力になる
+# B030 氷のダンジョン　※入力例1のみOK
 # utf-8
-# ダンジョンの情報を受け取る
+def explore_dungeon(H, W, dungeon, s_x, s_y, N, directions):
+    # 方向ごとの座標の変化量
+    dx = {'U': 0, 'R': 1, 'D': 0, 'L': -1}
+    dy = {'U': -1, 'R': 0, 'D': 1, 'L': 0}
+
+    # 初期座標
+    x = s_x
+    y = s_y
+
+    # 移動を実行
+    for direction in directions:
+        while True:
+            # 移動先の座標を計算
+            nx = x + dx[direction]
+            ny = y + dy[direction]
+
+            # 移動先がダンジョン内かどうかをチェック
+            if nx < 1 or nx > W or ny < 1 or ny > H:
+                break  # 移動先がダンジョン外なら終了
+
+            # 移動先が壁なら終了
+            if dungeon[ny][nx] == '#':
+                break
+
+            # 移動先が土の床なら移動
+            x = nx
+            y = ny
+
+    return x, y
+
+
+# 入力の読み込み
 H, W = map(int, input().split())
 dungeon = []
 for _ in range(H):
-    row = input()
-    dungeon.append(row)
-
-# スタート地点の座標を受け取る
+    dungeon.append(input().strip())
 s_x, s_y = map(int, input().split())
-
-# 移動回数を受け取る
 N = int(input())
-
-# 各移動方向を受け取る
 directions = []
 for _ in range(N):
-    direction = input()
-    directions.append(direction)
+    directions.append(input().strip())
 
-# 各添字の範囲をチェック
-assert 3 <= H <= 100, "Hは3以上100以下の整数である必要があります"
-assert 3 <= W <= 100, "Wは3以上100以下の整数である必要があります"
-assert 1 <= s_x <= W, "s_xは1以上W以下の整数である必要があります"
-assert 1 <= s_y <= H, "s_yは1以上H以下の整数である必要があります"
-assert 1 <= N <= 100, "Nは1以上100以下の整数である必要があります"
+# ダンジョンの探索
+final_x, final_y = explore_dungeon(H, W, dungeon, s_x, s_y, N, directions)
 
-for i in range(H):
-    assert len(dungeon[i]) == W, f"g_{i+1}の長さはWと等しくなる必要があります"
-    assert all(c in "#." for c in dungeon[i]), f"g_{i+1}は'#'と'.'で構成されている必要があります"
-
-assert dungeon[s_y-1][s_x-1] == ".", "最初のマスは土の床である必要があります"
-
-for k in range(N):
-    assert directions[k] in ["U", "R", "D", "L"], f"d_{k+1}は'U', 'R', 'D', 'L'のいずれかである必要があります"
-
-# 座標値の y が小さくなる方向を上、x が大きくなる方向を右とする
-# 移動方向を辞書で表現
-direction_dict = {
-    "U": (-1, 0),  # 上に移動
-    "R": (0, 1),   # 右に移動
-    "D": (1, 0),   # 下に移動
-    "L": (0, -1)   # 左に移動
-}
-
-# 初期位置の設定
-x, y = s_x, s_y
-
-# 移動を行う
-for direction in directions:
-    dx, dy = direction_dict[direction]
-    nx, ny = x + dx, y + dy
-    # 移動先が氷の床である場合、土の床または壁にぶつかるまで進む
-    while dungeon[ny-1][nx-1] == ".":
-        nx, ny = x + dx, y + dy
-        if dungeon[ny-1][nx-1] == "#":
-            break
-        x, y = nx, ny
-
-# 結果を出力
-print(x, y)
+# 結果の出力
+print(final_x, final_y)
 
 --------------------------------------------- B031　※欠番 ◆
 # B031 コインのウラとオモテ
@@ -1652,34 +1639,31 @@ elif res_kame < 1:
 else:
 	print(int(res_kame), int(res_tsuru))
 	
-# B039 雨上がりの道　※間違った出力になる
+# B039 雨上がりの道　※テストケース通過せず
 # utf-8
-def check_inside(x1, y1, a1, b1, x2, y2, a2, b2):
-    return x1 >= x2 and y1 >= y2 and x1 + a1 <= x2 + a2 and y1 + b1 <= y2 + b2
+def find_accessible_ponds(n, s, ponds):
+    amembo_pond = ponds[s-1]  # アメンボがいる水たまりの座標
+    accessible_ponds = []
 
+    for i, pond in enumerate(ponds):
+        if (amembo_pond[0] <= pond[2] and amembo_pond[2] >= pond[0] and
+            amembo_pond[1] <= pond[3] and amembo_pond[3] >= pond[1]):
+            accessible_ponds.append(i+1)
+
+    return accessible_ponds
+
+# 入力の解析と処理
 n = int(input())
 s = int(input())
 ponds = []
-
 for _ in range(n):
     x, y, a, b = map(int, input().split())
     ponds.append((x, y, a, b))
 
-result = []
+accessible_ponds = find_accessible_ponds(n, s, ponds)
 
-for i in range(n):
-    if i + 1 == s:
-        result.append(str(i + 1))
-    else:
-        can_enter = True
-        for j in range(n):
-            if i != j and check_inside(*ponds[i], *ponds[j]):
-                can_enter = False
-                break
-        if can_enter:
-            result.append(str(i + 1))
-
-print("\n".join(result))
+# 結果の出力
+print('\n'.join(map(str, accessible_ponds)))
 
 # B040 たのしい暗号解読
 # 入力値の取得
