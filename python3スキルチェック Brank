@@ -2016,51 +2016,70 @@ s[x][y]が'*'（富豪の家）の場合、その家を'.'（庶民の家）に�
 最後の部分では、町の状態を出力しています。二次元リストsの各行を文字列に変換し、改行なしで出力します。
 '''
 
-# B044 爆弾ゲーム　※入力例1,3はOK 入力例2はNG
+# B044 爆弾ゲーム　※テストケース通過せず
 # utf-8
+def is_enemy_defeated(board):
+    H, W = len(board), len(board[0])
+
+    # 盤面を拡張して周囲を壁で囲む
+    extended_board = ['#' * (W + 2)]
+    for row in board:
+        extended_board.append('#' + row + '#')
+    extended_board.append('#' * (W + 2))
+
+    bombs = []  # 爆弾の位置と火力を格納するリスト
+
+    # 爆弾の位置と火力を取得
+    for i in range(1, H + 1):
+        for j in range(1, W + 1):
+            if extended_board[i][j].isdigit():
+                bombs.append((i, j, int(extended_board[i][j])))
+
+    # 爆弾を順に試し、爆風の範囲にいる敵を倒せるか判定
+    for bomb in bombs:
+        i, j, power = bomb
+        # 上方向の爆風
+        for k in range(1, power + 1):
+            if extended_board[i - k][j] == '#':
+                break
+            if extended_board[i - k][j] == 'X':
+                extended_board[i - k] = extended_board[i - k][:j] + '.' + extended_board[i - k][j+1:]
+
+        # 下方向の爆風
+        for k in range(1, power + 1):
+            if extended_board[i + k][j] == '#':
+                break
+            if extended_board[i + k][j] == 'X':
+                extended_board[i + k] = extended_board[i + k][:j] + '.' + extended_board[i + k][j+1:]
+
+        # 左方向の爆風
+        for k in range(1, power + 1):
+            if extended_board[i][j - k] == '#':
+                break
+            if extended_board[i][j - k] == 'X':
+                extended_board[i] = extended_board[i][:j - k] + '.' + extended_board[i][j - k + 1:j] + 'X' + extended_board[i][j + 1:]
+
+        # 右方向の爆風
+        for k in range(1, power + 1):
+            if extended_board[i][j + k] == '#':
+                break
+            if extended_board[i][j + k] == 'X':
+                extended_board[i] = extended_board[i][:j] + 'X' + extended_board[i][j + 1:j + k] + '.' + extended_board[i][j + k + 1:]
+
+    # 盤面上に敵(X)が残っているか判定
+    for i in range(1, H + 1):
+        if 'X' in extended_board[i]:
+            return "NO"
+
+    return "YES"
+
+
 def main():
     H, W = map(int, input().split())
-    game_map = [input() for _ in range(H)]
-
-    result = "NO"
-
-    for i in range(1, H - 1):
-        for j in range(1, W - 1):
-            if game_map[i][j] == 'X':
-                if game_map[i][j + 1].isdigit():
-                    power = int(game_map[i][j + 1])  # 爆弾の火力
-                else:
-                    continue
-
-                # 爆弾の影響範囲を確認
-                for k in range(1, power + 1):
-                    if game_map[i - k][j] == '#' or game_map[i - k][j] == 'X':
-                        break
-                else:
-                    continue
-
-                for k in range(1, power + 1):
-                    if game_map[i + k][j] == '#' or game_map[i + k][j] == 'X':
-                        break
-                else:
-                    continue
-
-                for k in range(1, power + 1):
-                    if game_map[i][j - k] == '#' or game_map[i][j - k] == 'X':
-                        break
-                else:
-                    continue
-
-                for k in range(1, power + 1):
-                    if game_map[i][j + k] == '#' or game_map[i][j + k] == 'X':
-                        break
-                else:
-                    continue
-
-                result = "YES"  # 敵を倒すことができる
-                break  # 敵を倒せる場合はそれ以上の探索は不要
-
+    board = [input() for _ in range(H)]
+    result = is_enemy_defeated(board)
     print(result)
+
 
 if __name__ == "__main__":
     main()
