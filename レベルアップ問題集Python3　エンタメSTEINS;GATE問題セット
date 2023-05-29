@@ -144,6 +144,29 @@ print(pos_of_x)
 '''
 
 final 例外処理のタブーサーチ B
+# utf-8
+n, m, l = map(int, input().split())
+d = [[int(x) for x in input().split()] for i in range(n)]
+p = [[int(x) for x in input().split()] for i in range(l)]
+
+for i in range(1, l):
+    diff = [p[i][j] - p[i - 1][j] for j in range(m)]
+
+    order = -1
+    for j in range(n):
+        same = True
+        for k in range(m):
+            if diff[k] != d[j][k]:
+                same = False
+        if same:
+            order = j + 1
+            break
+
+    print(order)
+'''
+各時刻 i について時刻 i -> i+1 のパラメータ変化量を計算し、該当するコマンドを探索します。
+'''
+
 <進化戦略のプロシージャ>
 step1 ダンジョンのデッドロック1 C
 step2 ダンジョンのデッドロック2 C
