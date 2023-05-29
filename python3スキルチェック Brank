@@ -326,26 +326,32 @@ def check_display(a, b):
         # 回転移動を行った後のディスプレイの状態を返す
         return display[-1:] + display[:-1]
 
+    # 入力をリストに変換
+    a_list = list(map(int, a.split()))
+    b_list = list(map(int, b.split()))
+
     # 1. 装置が正しく2桁の数字を表すかを判定
-    condition1 = is_valid_display(a) and is_valid_display(b)
+    condition1 = is_valid_display(a_list) and is_valid_display(b_list)
 
     # 2. 装置を対称移動すると正しく2桁の数字を表すかを判定
-    a_symmetric = symmetric_move(a)
-    b_symmetric = symmetric_move(b)
+    a_symmetric = symmetric_move(a_list)
+    b_symmetric = symmetric_move(b_list)
     condition2 = is_valid_display(a_symmetric) and is_valid_display(b_symmetric)
 
     # 3. 装置を回転移動すると正しく2桁の数字を表すかを判定
-    a_rotated = rotate_move(a)
-    b_rotated = rotate_move(b)
+    a_rotated = rotate_move(a_list)
+    b_rotated = rotate_move(b_list)
     condition3 = is_valid_display(a_rotated) and is_valid_display(b_rotated)
 
     # 結果を出力
     result = ["Yes" if condition else "No" for condition in [condition1, condition2, condition3]]
     return "\n".join(result)
 
-# 入力の読み込みと結果の出力
-a = list(map(int, input().split()))
-b = list(map(int, input().split()))
+# 入力の受け取り
+a = input()
+b = input()
+
+# 出力結果の表示
 print(check_display(a, b))
 
 # B016 ここはどこ？
