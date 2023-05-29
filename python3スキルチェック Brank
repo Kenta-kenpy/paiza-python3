@@ -2185,6 +2185,109 @@ result = count_mistyped_keys(S)
 print(result)
 
 # B048 理想のビンゴ
+# utf-8
+N, M = map(int, input().split())
+bingo_card = []  # ビンゴカードの盤面を格納するリスト
+bingo_count = 0  # ビンゴ数をカウントする変数
+
+# ビンゴカードの盤面を入力として受け取り、リストに格納する
+for _ in range(N):
+    row = list(map(int, input().split()))
+    bingo_card.append(row)
+
+# M-1回の数字の呼び出しを処理する
+for _ in range(M - 1):
+    called_number = int(input())
+    for i in range(N):
+        for j in range(N):
+            if called_number == bingo_card[i][j]:
+                bingo_card[i][j] = 0  # 呼び出された数字を0に置き換える
+
+# 行のビンゴをチェック
+for i in range(N):
+    if bingo_card[i].count(0) == N:
+        bingo_count += 1
+
+columns = []  # 列ごとの数字を格納するリスト
+for i in range(N):
+    column = []
+    for j in range(N):
+        column.append(bingo_card[j][i])
+    columns.append(column)
+    if column.count(0) == N:
+        bingo_count += 1
+
+diagonal = []  # 対角線の数字を格納するリスト
+for i in range(N):
+    diagonal.append(bingo_card[i][i])
+
+reverse_diagonal = []  # 逆対角線の数字を格納するリスト
+for i in range(1, N + 1):
+    reverse_diagonal.append(bingo_card[-i][i - 1])
+
+lines = [diagonal, reverse_diagonal]  # 対角線と逆対角線をまとめたリスト
+
+# 対角線と逆対角線のビンゴをチェック
+for line in lines:
+    if line.count(0) == N:
+        bingo_count += 1
+
+extra_numbers = []  # ビンゴの候補となる数字を格納するリスト
+
+# ビンゴの候補となる数字を抽出
+for i in range(N):
+    if bingo_card[i].count(0) == N - 1:
+        for j in range(N):
+            if bingo_card[i][j] != 0:
+                extra_numbers.append(bingo_card[i][j])
+
+for i in range(N):
+    if columns[i].count(0) == N - 1:
+        for j in range(N):
+            if columns[i][j] != 0:
+                extra_numbers.append(columns[i][j])
+
+for line in lines:
+    if line.count(0) == N - 1:
+        for j in range(N):
+            if line[j] != 0:
+                extra_numbers.append(line[j])
+
+frequency = []  # ビンゴの候補数字の出現回数を格納するリスト
+
+# ビンゴの候補数字の出現回数を計算し、最大のビンゴ数を更新
+if len(extra_numbers) > 0:
+    for i in range(len(extra_numbers)):
+        frequency.append(extra_numbers.count(extra_numbers[i]))
+    bingo_count += max(frequency)
+
+print(bingo_count)  # 最大のビンゴ数を出力
+'''
+入力の受け取りと初期化:
+N, M = map(int, input().split()): ビンゴカードのサイズと呼び出し回数を受け取ります。
+bingo_card = []: ビンゴカードの盤面を格納するための空のリストを作成します。
+bingo_count = 0: ビンゴ数をカウントする変数を初期化します。
+
+ビンゴカードの入力と数字の呼び出し処理:
+for _ in range(N): ...: ビンゴカードの盤面を入力として受け取り、リスト bingo_card に格納します。
+for _ in range(M - 1): ...: 呼び出された数字を処理し、ビンゴカード上の該当する数字を0に置き換えます。
+
+行・列・対角線のビンゴをチェック:
+行のビンゴをチェックし、ビンゴ数をカウントします。
+列ごとの数字を格納するリスト columns を作成し、列のビンゴをチェックし、ビンゴ数をカウントします。
+対角線と逆対角線の数字を格納するリスト diagonal と reverse_diagonal を作成し、対角線と逆対角線のビンゴをチェックし、ビンゴ数をカウントします。
+
+追加のビンゴの候補数字を抽出:
+ビンゴの候補となる数字を格納するリスト extra_numbers を作成し、行・列・対角線・逆対角線のビンゴの候補数字を抽出します。
+
+追加のビンゴ数の計算:
+ビンゴの候補数字が存在する場合、その出現回数を計算し、最大のビンゴ数を更新します。
+
+結果の出力:
+最大のビンゴ数を出力します。
+このコードでは、ビンゴカードの盤面と呼び出された数字を処理し、行・列・対角線・逆対角線のビンゴをチェックして最大のビンゴ数を求めるアルゴリズムが実装されています。ビンゴ数の計算は、ビンゴの候補数字が存在する場合にのみ行われます。最終的な結果は、最大のビンゴ数が出力されます。
+'''
+
 # B049 ◆
 # B050 有効なチケット
 --------------------------------------------- B051　※欠番 ◆
