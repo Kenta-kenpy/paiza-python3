@@ -2309,6 +2309,51 @@ for _ in range(M - 1): ...: 呼び出された数字を処理し、ビンゴカ�
 
 # B049 ◆
 # B050 有効なチケット
+# utf-8
+# 入力の受け取りと制約のチェック
+N = int(input())  # チケットの枚数
+if not 1 <= N <= 100:
+    raise ValueError("Nの値が制約を満たしていません")
+
+S = input()  # 暗号チケットの指定された文字列
+if not 1 <= len(S) <= 10 or not S.islower():
+    raise ValueError("Sの値が制約を満たしていません")
+
+valid_tickets = []
+for _ in range(N):
+    T = input()  # チケットに書かれた文字列
+    if not 1 <= len(T) <= 20 or not T.islower():
+        raise ValueError("Tの値が制約を満たしていません")
+    
+    if S in T:  # SがTに含まれる場合は有効
+        valid_tickets.append("valid")
+    elif any(S in T[:i] + T[i+1:] for i in range(len(T))):  # Tから1文字を削除してSが含まれる場合は有効
+        valid_tickets.append("valid")
+    else:  # 上記の条件に該当しない場合は無効
+        valid_tickets.append("invalid")
+
+# 有効/無効なチケットを出力
+for ticket in valid_tickets:
+    print(ticket)
+'''
+入力の受け取りと制約のチェック
+
+N = int(input()): チケットの枚数を整数として受け取ります。
+S = input(): 暗号チケットの指定された文字列を受け取ります。
+制約を満たしていない場合は、ValueErrorを発生させます。
+有効なチケットの判定
+
+valid_tickets = []: 有効なチケットを格納するリストを初期化します。
+for _ in range(N):: チケットの枚数分だけループを行います。
+T = input(): チケットに書かれた文字列を受け取ります。
+if S in T:: もし指定された文字列 S がチケット文字列 T に含まれる場合は、有効なチケットとして判定します。
+elif any(S in T[:i] + T[i+1:] for i in range(len(T))):: それ以外の場合、チケット文字列 T から1文字ずつ削除した文字列に指定された文字列 S が含まれるかどうかを判定します。任意のインデックス i に対して、T[:i] + T[i+1:] で T の i 番目の文字を削除した文字列が得られます。
+valid_tickets.append("valid"): 上記のいずれかの条件に該当する場合は、有効なチケットとしてリストに追加します。
+else: valid_tickets.append("invalid"): 上記の条件に該当しない場合は、無効なチケットとしてリストに追加します。
+有効/無効なチケットの出力
+
+for ticket in valid_tickets: print(ticket): 有効/無効なチケットのリストを出力します。
+'''
 --------------------------------------------- B051　※欠番 ◆
 # B051 ◆
 # B052 積もる粒子
