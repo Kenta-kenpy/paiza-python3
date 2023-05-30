@@ -2125,33 +2125,72 @@ for problem in problems:
 このコードによって、与えられた条件を満たし、効率的かつランダムな問題のドリルが生成されます。
 '''
 
-# B046 街の距離　※入力例1,3はOK 入力例2はNG
+# B046 街の距離
 # utf-8
 import math
 
-def calculate_shortest_distance(N, current_coordinate, destination_coordinate):
-    # 目的地の同心円上の道路を取得
-    destination_road = int(destination_coordinate.split()[0])
-    
-    # 現在地の同心円上の道路を取得
-    current_road = int(current_coordinate.split()[0])
-    
-    # 目的地の同心円上の道路までの距離を計算
-    distance_to_destination_road = 100 * (abs(destination_road - current_road))
-    
-    # 現在地から目的地までの最短距離を計算
-    shortest_distance = min(distance_to_destination_road, 100 * N - distance_to_destination_road)
-    
-    return round(shortest_distance + 100 * math.pi / 2, 9)
+class B046:
+    def __init__(self, rounds):
+        # 同心円の数
+        self.rounds = int(rounds)
+        # 現在位置の同心円番号
+        self.now_around = None
+        # 現在位置の方角
+        self.now_direction = None
+        # 目的地の同心円番号
+        self.purpose_around = None
+        # 目的地の方角
+        self.purpose_direction = None
+        # 最短距離
+        self.distance = None
 
-# 入力を受け取る
-N = int(input())
-current_coordinate = input()
-destination_coordinate = input()
+    def set_now_position_info(self, info):
+        # 現在位置の同心円番号と方角を設定
+        self.now_around, self.now_direction = info.split()
 
-# 最短距離を計算して出力
-shortest_distance = calculate_shortest_distance(N, current_coordinate, destination_coordinate)
-print(shortest_distance)
+    def set_purpose_position_info(self, info):
+        # 目的地の同心円番号と方角を設定
+        self.purpose_around, self.purpose_direction = info.split()
+
+    def calculation_shortest_distance(self):
+        # 方向の組み合わせパターン
+        check_direction = self.now_direction + self.purpose_direction
+        one_line_direction = ["NS", "SN", "WE", "EW", "NN", "SS", "WW", "EE"]
+
+        if check_direction in one_line_direction:
+            if self.now_direction == self.purpose_direction:
+                # 同じ直線上にいる場合は、直線距離のみ
+                self.distance = abs(int(self.now_around) - int(self.purpose_around)) * 100
+            else:
+                # 直線上にいる場合は、同心円同士の距離を加算
+                self.distance = (int(self.now_around) + int(self.purpose_around)) * 100
+        else:
+            if int(self.now_around) < int(self.purpose_around):
+                # 短い方向に半周し、直線距離を加算
+                self.distance = abs(int(self.now_around) - int(self.purpose_around)) * 100 + math.pi * 100 * int(self.now_around) / 2
+            elif int(self.now_around) > int(self.purpose_around):
+                # 短い方向に半周し、直線距離を加算
+                self.distance = abs(int(self.now_around) - int(self.purpose_around)) * 100 + math.pi * 100 * int(self.purpose_around) / 2
+            else:
+                # 同心円上の同じ位置にいる場合は、半周距離のみ
+                self.distance = math.pi * 100 * int(self.purpose_around) / 2
+
+        return self.distance
+
+N = input().strip()  # 同心円の数を入力
+B046 = B046(N)  # B046クラスのインスタンスを生成
+B046.set_now_position_info(input().strip())  # 現在位置情報を入力
+B046.set_purpose_position_info(input().strip())  # 目的地情報を入力
+B046.calculation_shortest_distance()  # 最短距離を計算
+print("{:.9f}".format(B046.distance))  # 最短距離を表示
+'''
+このコードは、同心円状の道路が配置された環境で、現在位置と目的地の情報から最短距離を計算しています。
+B046 クラスは、最短距離の計算と情報の設定を行うためのメソッドを提供します。インスタンス化された B046 オブジェクトを使用して、現在位置情報と目的地情報を設定し、最短距離を計算します。
+set_now_position_info メソッドは、現在位置情報を設定します。文字列として渡された情報を分割して、現在の同心円位置と方角を設定します。
+set_purpose_position_info メソッドは、目的地情報を設定します。文字列として渡された情報を分割して、目的地の同心円位置と方角を設定します。
+calculation_shortest_distance メソッドは、現在位置と目的地から最短距離を計算します。まず、現在位置と目的地の方角の組み合わせをチェックし、直線上に位置する場合と曲線上に位置する場合で処理を分岐します。最短距離を計算して distance 属性に代入します。
+メインの処理部分では、入力から同心円の数、現在位置情報、目的地情報を受け取り、B046 クラスのインスタンスを生成し、必要な情報を設定します。最後に最短距離を計算して表示します。
+'''
 
 # B047 ホームポジション　※境界値のみ通過　サンプルケースすら通過しない
 # utf-8
