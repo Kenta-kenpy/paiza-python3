@@ -2408,6 +2408,61 @@ for ticket in valid_tickets: print(ticket): 有効/無効なチケットのリ�
 --------------------------------------------- B051　※欠番 ◆
 # B051 ◆
 # B052 積もる粒子
+# utf-8
+def location_selector(x, y, field, H, W):
+    # 現在の地点の高さ
+    location_num = field[y][x]
+    
+    # 隣接地点の高さの初期値を無限大で設定
+    kita = float("inf")
+    higashi = float("inf")
+    minami = float("inf")
+    nishi = float("inf")
+    
+    # 移動先の選択
+    for _ in range(max(max(field))):
+        if y >= 1:
+            kita = field[y - 1][x]  # 北の地点の高さ
+        if x < int(W) - 1:
+            higashi = field[y][x + 1]  # 東の地点の高さ
+        if y < int(H) - 1:
+            minami = field[y + 1][x]  # 南の地点の高さ
+        if x >= 1:
+            nishi = field[y][x - 1]  # 西の地点の高さ
+            
+        # 高さの比較を行い、移動先を決定
+        if kita < location_num:
+            y -= 1  # 北に移動
+        elif higashi < location_num:
+            x += 1  # 東に移動
+        elif minami < location_num:
+            y += 1  # 南に移動
+        elif nishi < location_num:
+            x -= 1  # 西に移動
+        else:
+            break  # 移動できる場所がない場合、ループを終了
+    
+    return x, y
+    
+# 入力の受け取り
+H, W, N = map(int, input().split())
+particle = []
+field = [[0 for _ in range(W)] for _ in range(H)]
+for _ in range(N):
+    x, y = map(int, input().split())
+    particle.append([x, y])
+
+# 粒子を順番に落として地形を形成する
+for i in range(N):
+    x = particle[i][0] - 1
+    y = particle[i][1] - 1
+    x, y = location_selector(x, y, field, H, W)
+    field[y][x] += 1
+
+# 地形の高さを出力
+for i in range(H):
+    print(' '.join(map(str, field[i])))
+
 # B053 表の自動作成
 # B054 不思議な足し算
 # B055 ◆
