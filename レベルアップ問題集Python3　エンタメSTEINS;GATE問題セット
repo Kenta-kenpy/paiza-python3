@@ -169,6 +169,32 @@ for i in range(1, l):
 
 <進化戦略のプロシージャ>
 step1 ダンジョンのデッドロック1 C
+# utf-8
+n, m, q = map(int, input().split())
+s = [int(input()) for _ in range(m)]
+
+s.insert(0, -1)
+for _ in range(q):
+    e, t = map(int, input().split())
+    if s[e] == t:
+        print("Yes")
+        continue
+
+    for i in range(1, m + 1):
+        if i != e and s[i] == t:
+            print("No")
+            break
+
+        if i == m:
+            print("Yes")
+'''
+それぞれ E_i 番目のプレイヤー (1 ≦ i ≦ Q) について、部屋を移動できるかの判定を以下のようにします。
+S_{E_i} == T_i なら、部屋を移動しないので "Yes" を出力します。
+S_j == T_i を満たす j (1 ≦ j ≦ M, j ≠ E_i) が存在するなら、部屋を移動できないので "No" を出力します。
+上のどれにも当てはまらないなら、部屋を移動できるので "Yes" を出力します。
+
+'''
+
 step2 ダンジョンのデッドロック2 C
 step3 ダンジョンのデッドロック3 B
 step4 ダンジョンのデッドロック4 B
