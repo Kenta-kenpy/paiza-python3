@@ -2464,6 +2464,55 @@ for i in range(H):
     print(' '.join(map(str, field[i])))
 
 # B053 表の自動作成
+# utf-8
+import numpy as np
+
+# 行数と列数を入力から取得
+H, W = input().rstrip().split(' ')
+
+# 表を格納するためのnumpy配列を作成し、初期値を0で初期化
+table = np.zeros((2, int(W)))
+
+# オートフィルを適用する必要がある残りの行数と列数を計算
+row_left = int(H) - 2
+col_left = int(W) - 2
+
+# 2行目から始まる各行について、入力を受け取り、オートフィルを適用して行を完成させる
+for h in range(2):
+    retu = input().rstrip().split(' ')
+    retu = np.array(retu)
+    retu = retu.astype(np.int64)
+    
+    # 行の初項と公差を計算
+    sa = retu[1] - retu[0]
+    
+    # オートフィルを適用して行を完成させる
+    for i in range(int(W) - col_left, int(W)):
+        retu = np.append(retu, retu[i - 1] + sa)
+    
+    # 行を表に格納
+    table[h, :] = retu
+
+# 2行目以降の行について、前の行との差からオートフィルを適用して行を完成させる
+div = table[1] - table[0]
+for j in range(int(H) - row_left, int(H)):
+    table = np.vstack([table, table[j - 1] + div])
+
+# 最終的な表をリスト形式に変換し、各要素をスペース区切りで出力
+table = list(table)
+for i in range(int(H)):
+    for j in range(int(W)):
+        if j == int(W) - 1:
+            print(int(table[i][j]), end='')
+        else:
+            print(int(table[i][j]), end=' ')
+    print()
+'''
+最初に、入力から表のサイズである行数と列数を取得します。表を格納するためのnumpy配列を作成し、初期値として全ての要素を0で初期化します。
+行数と列数から、オートフィルを適用する必要がある残りの行数と列数を計算します。2行目から始まる各行について、入力を受け取り、その数列の初項と公差を計算します。そして、オートフィルを適用して行を完成させます。
+2行目以降の行について、前の行との差からオートフィルを適用して行を完成させます。最終的な表をリスト形式に変換し、各要素をスペース区切りで出力します。
+'''
+
 # B054 不思議な足し算
 # B055 ◆
 # B056 リズムゲームの分析
