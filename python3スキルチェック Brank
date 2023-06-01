@@ -2514,6 +2514,77 @@ for i in range(int(H)):
 '''
 
 # B054 不思議な足し算
+# utf-8
+# 入力の読み込み
+s1, s2 = input().split()
+s1 = list(s1)
+s2 = list(s2)
+
+# 文字列を数値に変換
+for i in range(len(s1)):
+    if s1[i] == "A":
+        s1[i] = '0'
+    elif s1[i] == "B":
+        s1[i] = '1'
+    elif s1[i] == "C":
+        s1[i] = "2"
+    elif s1[i] == "D":
+        s1[i] = "3"
+    else:
+        s1[i] = "4"
+
+for i in range(len(s2)):
+    if s2[i] == "A":
+        s2[i] = '0'
+    elif s2[i] == "B":
+        s2[i] = '1'
+    elif s2[i] == "C":
+        s2[i] = "2"
+    elif s2[i] == "D":
+        s2[i] = "3"
+    else:
+        s2[i] = "4"
+
+# 数値に変換
+s1 = int(''.join(map(str, s1)))
+s2 = int(''.join(map(str, s2)))
+
+# 5進数から10進数への変換と足し算
+ss1 = int(str(s1), 5)
+ss2 = int(str(s2), 5)
+b = ss1 + ss2
+
+# 10進数から5進数への変換
+def base5int(value):
+    if int(value / 5):
+        return base5int(int(value / 5)) + str(value % 5)
+    return str(value % 5)
+
+d = base5int(b)
+d = list(d)
+
+# 数値を文字列に変換
+for i in range(len(d)):
+    if d[i] == "0":
+        d[i] = 'A'
+    elif d[i] == "1":
+        d[i] = 'B'
+    elif d[i] == "2":
+        d[i] = "C"
+    elif d[i] == "3":
+        d[i] = "D"
+    else:
+        d[i] = "E"
+
+# 結果の出力
+print(''.join(map(str, d)))
+'''
+入力文字列 s1 と s2 をスペースで分割して読み込みます。その後、文字列をリストに変換します。
+文字列リスト内の各文字を適切な数値に変換します。"A" から "E" までの文字はそれぞれ "0" から "4" の数値に対応しています。
+文字列リストを結合し、int() を使用して整数に変換します。それぞれの数値を 5 進数から 10 進数に変換し、足し合わせます。
+base5int() 関数を使用して、10 進数の数値 b を 5 進数に逆変換します。変換後の数値をリストに変換し、最後に文字列リストを結合して PAIZA 表記の数値を得ます。最終結果を出力します。
+'''
+
 # B055 ◆
 # B056 リズムゲームの分析
 # B057 回転寿司
