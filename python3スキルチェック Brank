@@ -2587,6 +2587,100 @@ base5int() 関数を使用して、10 進数の数値 b を 5 進数に逆変換
 
 # B055 ◆
 # B056 リズムゲームの分析
+# utf-8
+def check_sharp_pattern(N, sharp, v):
+    # "#" のパターンが正しいかをチェックする関数
+    # sharp 列目が "+" であり、他の列が "-" であるかを確認する
+    for j in range(N):
+        if v[j] != ('+' if sharp == j else '-'):
+            return False
+    return True
+
+def calculate_max_combo(N, M, data):
+    max_combo = 0
+    prev = False
+    prev_sharp = False
+    combo = 0
+    for i in range(M):
+        d = list(data[i][0])  # 譜面データ
+        p = list(data[i][1])  # プレイデータ
+
+        sharp = -1
+        for j in range(N):
+            if d[j] == '#':
+                sharp = j
+                break
+
+        if sharp >= 0:
+            # "#" のパターンの場合
+            if check_sharp_pattern(N, sharp, p):
+                if prev:
+                    combo += 1
+                elif not prev_sharp:
+                    combo = 1
+                    prev = True
+                if max_combo < combo:
+                    max_combo = combo
+            else:
+                prev = False
+            prev_sharp = True
+        else:
+            # "#" のパターンでない場合
+            if d == p:
+                if prev:
+                    combo += 1
+                else:
+                    combo = 1
+                    prev = True
+                if max_combo < combo:
+                    max_combo = combo
+            else:
+                prev = False
+            prev_sharp = False
+
+    return max_combo
+
+# 入力の読み込み
+N, M = map(int, input().split())
+data = []
+for _ in range(M):
+    line = input().split()
+    data.append((line[0], line[1]))
+
+# 最大コンボ数の計算
+max_combo = calculate_max_combo(N, M, data)
+
+# 結果の出力
+print(max_combo)
+'''
+check_sharp_pattern 関数
+sharp 列目が "+" であり、他の列が "-" であるかを確認する関数です。
+引数としてボタンの数 N、sharp 列目のインデックス、譜面データのリスト v を受け取ります。
+v の各要素をチェックし、sharp 列目の要素が "+" であり、他の列の要素が "-" であるかを確認します。
+正しいパターンであれば True を、そうでなければ False を返します。
+
+calculate_max_combo 関数
+最大コンボ数を計算する関数です。
+引数としてボタンの数 N、タイミングの数 M、ログデータのリスト data を受け取ります。
+変数 max_combo に最大コンボ数を格納するための初期値 0 を設定します。
+変数 prev は直前のタイミングでコンボが続いているかを示すフラグで、初期値は False です。
+変数 prev_sharp は直前のタイミングで "#" のパターンが出現したかを示すフラグで、初期値も False です。
+ループを通じて各タイミングを処理し、最大コンボ数を更新していきます。
+data の各要素に対して、譜面データとプレイデータを取得します。
+譜面データに "#" が含まれるかを確認し、含まれる場合と含まれない場合で処理を分岐します。
+"#" のパターンの場合は、check_sharp_pattern 関数を用いて正しいパターンであるかをチェックします。
+正しいパターンであればコンボ数を更新し、最大コンボ数を更新します。
+"#" のパターンでない場合は、譜面データとプレイデータを比較し、一致していればコンボ数を更新し、最大コンボ数を更新します。
+各タイミングの処理が終わったら最大コンボ数を返します。
+
+入力の読み込み
+最初にボタンの数 N とタイミングの数 M を入力から読み込みます。
+その後、M 行分のループを行い、ログデータを読み込みます。
+calculate_max_combo 関数の呼び出しと結果の出力
+calculate_max_combo 関数を呼び出し、ボタンの数 N、タイミングの数 M、ログデータのリストを渡します。
+返された最大コンボ数を出力します。
+'''
+
 # B057 回転寿司
 # B058 ◆
 # B059 占領区域
