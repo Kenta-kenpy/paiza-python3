@@ -2851,6 +2851,61 @@ Rollクラスのインスタンスdiceが作成され、初期位置であるsy�
 '''
 --------------------------------------------- B061　※欠番 ◆
 # B061 福袋詰め
+# utf-8
+import itertools
+
+def count_lucky_bags(S, N, values):
+    '''
+    福袋に詰める商品の組み合わせの数を計算する関数
+
+    Parameters:
+        S (int): 福袋に詰める商品の価値の合計の最小値
+        N (int): 福袋に詰める候補となる商品の数
+        values (list): 商品の価値を表す整数のリスト
+
+    Returns:
+        int: 福袋に詰める商品の組み合わせの数
+    '''
+    count = 0
+    # 商品の個数で組み合わせを生成
+    for i in range(1, N+1):
+        for combination in itertools.combinations(values, i):
+            # 組み合わせの値の合計がS以上であるかを確認
+            if sum(combination) >= S:
+                valid = True
+                for j in combination:
+                    # 商品を1つ取り除いた場合の値の合計がS未満であるかを確認
+                    if sum(combination) - j >= S:
+                        valid = False
+                        break
+                if valid:
+                    count += 1
+
+    return count
+
+# 入力の受け取り
+S = int(input())
+N = int(input())
+values = [int(input()) for _ in range(N)]
+
+# 福袋の詰め方の組み合わせの数を計算
+result = count_lucky_bags(S, N, values)
+
+# 結果の出力
+print(result)
+'''
+福袋に詰める商品の組み合わせの数を計算するための関数 count_lucky_bags が定義されています。
+この関数は、以下の手順で組み合わせの数を計算します。
+count_lucky_bags 関数の引数として、福袋に詰める商品の価値の合計の最小値 S、福袋に詰める候補となる商品の数 N、および商品の価値を表す整数のリスト values が与えられます。
+初期化: 組み合わせの数をカウントするための変数 count を0で初期化します。
+商品の個数ごとの組み合わせ生成: for ループを使用して、商品の個数ごとに組み合わせを生成します。range(1, N+1) の範囲でループし、1つからN個の商品を含む組み合わせを生成します。
+組み合わせの条件判定: itertools.combinations を使用して、与えられた商品リスト values から i 個の商品を選んだ組み合わせを生成します。生成された組み合わせの値の合計が S 以上であるかを確認します。
+条件を満たす組み合わせの特定: 組み合わせの値の合計が S 以上の場合、さらに個別の商品を1つずつ取り除いた場合の組み合わせの値の合計が S 未満であるかを確認します。この確認を行い、条件を満たす組み合わせを特定します。
+条件を満たす組み合わせのカウント: 条件を満たす組み合わせが特定された場合、カウンター変数 count をインクリメントします。
+結果の返却: ループが終了したら、最終的な count の値を返します。
+コードの最後では、入力の受け取り、count_lucky_bags 関数の呼び出し、結果の出力が行われています。
+'''
+
 # B062 部屋掃除ロボット
 # B063 支払う枚数とお釣りの枚数
 # B064 うずを探せ
