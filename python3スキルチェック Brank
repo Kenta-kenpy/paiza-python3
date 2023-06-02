@@ -2681,7 +2681,7 @@ calculate_max_combo 関数を呼び出し、ボタンの数 N、タイミング�
 返された最大コンボ数を出力します。
 '''
 
-# B057 回転寿司　※入力例1でNG
+# B057 回転寿司　※入力例2,3でNG
 # utf-8
 def simulate_sushi_eating(L, sushi_positions, seat_positions):
     sushi_positions.sort()
@@ -2977,7 +2977,35 @@ print(d)  # 掃除したマスの数を出力
 最後に、掃除したマスの数 d を出力します。
 '''
 
-# B063 支払う枚数とお釣りの枚数
+# B063 支払う枚数とお釣りの枚数　※入力例全てでNG
+# utf-8
+def minimize_coins(X):
+    coins = [500, 100, 50, 10, 5, 1]
+    num_coins = 0
+
+    for coin in coins:
+        num_coins += X // coin
+        X %= coin
+
+    return num_coins
+
+
+# 入力値を受け取る
+X = int(input().rstrip())
+
+# バリデーションチェック
+if X < 1 or X > 999:
+    print("入力値は1以上999以下の範囲で指定してください。")
+else:
+    # 最小の支払いとお釣りの硬貨枚数を計算
+    min_coins = float('inf')
+    for i in range(X + 1):
+        coins_used = minimize_coins(i) + minimize_coins(X - i)
+        min_coins = min(min_coins, coins_used)
+    
+    # 結果を出力
+    print(min_coins)
+
 # B064 うずを探せ
 # B065 小さなライフゲーム
 # B066 色のパズル
