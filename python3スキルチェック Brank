@@ -3006,7 +3006,60 @@ else:
     # 結果を出力
     print(min_coins)
 
-# B064 うずを探せ
+# B064 うずを探せ　※テストケース70点　ランタイムエラー
+# utf-8
+import copy
+H,W=map(int,input().split())
+s1=[list(input()) for _ in range(H)]
+# print(s1)
+x,y,ans=0,0,0
+s=copy.deepcopy(s1)
+for h in range(H):
+    for w in range(W):
+        # print(s[h][w])
+        # s=copy.deepcopy(s1)
+        # 今いるマス目に書かれた方向
+        ss=s[h][w]
+        # 最初のスタート位置を決める処理
+        # マス目が*だったら次のマス目にスキップする
+        if ss=='*':
+            continue
+        # 今いるマス目を*にしている
+        s[h][w]='*'
+        # 表よりはみ出てたら抜ける
+        if (h==0 and ss=='U') or (w==0 and ss=='L') or (h==H-1 and ss=='D') or (w==W-1 and ss=='R'):
+            continue
+        # スタート地点を決めている
+        x=h
+        y=w
+        # 全マス目文回している。渦があるかどうか探している
+        for i in range(H*W):
+            # 渦を辿っている
+            if ss=='U':
+                x-=1
+            elif ss=='L':
+                y-=1
+            elif ss=='D':
+                x+=1
+            elif ss=='R':
+                y+=1
+            # １マス先の文字を代入している
+            ss=s[x][y]
+            # 辿ったマス目を*にしている
+            s[x][y]='*'
+            # 一周したかどうか確認している
+            if x==h and y==w:
+                ans+=1
+                s1=copy.deepcopy(s)
+                # print(s)
+                break
+            # 一周していないけど*があったら抜ける
+            if ss=='*':
+                s=copy.deepcopy(s1)
+                break
+# print(s)
+print(ans)
+
 # B065 小さなライフゲーム
 # B066 色のパズル
 # B067 タスクの管理
