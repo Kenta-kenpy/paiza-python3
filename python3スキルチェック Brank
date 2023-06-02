@@ -3060,7 +3060,48 @@ for h in range(H):
 # print(s)
 print(ans)
 
-# B065 小さなライフゲーム
+# B065 小さなライフゲーム　※テストケース80点
+# utf-8
+def is_reversible(initial_board, update_rules):
+    current_board = initial_board
+    board_states = set()  # 盤面の状態を保存するセット
+    board_states.add(current_board)
+
+    for _ in range(10):  # 最大で10回の更新を試行する
+        new_board = ""
+
+        for i in range(len(current_board)):
+            left_neighbor = current_board[i - 1]
+            right_neighbor = current_board[(i + 1) % len(current_board)]
+            update_index = (left_neighbor == "-") * 2 + (right_neighbor == "-")
+            new_symbol = update_rules[update_index]
+            new_board += new_symbol
+
+        if new_board == initial_board:
+            return True
+
+        if new_board in board_states:
+            return False
+
+        board_states.add(new_board)
+        current_board = new_board
+
+    return False
+
+
+# 入力の読み込み
+initial_board, update_rules = input().split()
+
+# 制約条件のチェック
+if len(initial_board) != 10 or len(update_rules) != 4 or not all(symbol in "+-" for symbol in initial_board + update_rules):
+    print("NO")
+else:
+    # 判定結果の出力
+    if is_reversible(initial_board, update_rules):
+        print("YES")
+    else:
+        print("NO")
+
 # B066 色のパズル
 # B067 タスクの管理
 # B068 チョコの分割
