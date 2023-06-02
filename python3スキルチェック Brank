@@ -2766,6 +2766,89 @@ calculate_occupation 関数を定義します。この関数は、マップの�
 '''
 
 # B060 サイコロころがし
+# utf-8
+N, H, W = list(map(int, input().split()))  # 入力値を取得
+sy, sx = list(map(int, input().split()))  # 初期位置を取得
+s = input()  # 移動方法を取得
+ij = [[0 for i in range(W)] for j in range(H)]  # 旗のマス目の初期化
+
+class Roll:
+    def __init__(self, sx, sy):
+        self.sx, self.sy, self.stamp, self.u, self.d, self.l, self.r, self.t = sx, sy, 6, 2, 5, 3, 4, 1
+    '''
+        # サイコロの初期位置と面の初期値を設定する
+    self.sx, self.sy = sx, sy  # サイコロの現在位置のx座標とy座標
+    self.stamp = 6  # サイコロの現在の面の値
+    self.u = 2  # サイコロの上面の値
+    self.d = 5  # サイコロの下面の値
+    self.l = 3  # サイコロの左面の値
+    self.r = 4  # サイコロの右面の値
+    self.t = 1  # サイコロの手前面の値
+    '''
+
+    def up(self):
+        self.sy -= 1
+        tmp = self.t
+        self.t = self.d
+        self.d = self.stamp
+        self.stamp = self.u
+        self.u = tmp
+        return self.stamp
+
+    def down(self):
+        self.sy += 1
+        tmp = self.t
+        self.t = self.u
+        self.u = self.stamp
+        self.stamp = self.d
+        self.d = tmp
+        return self.stamp
+
+    def left(self):
+        self.sx -= 1
+        tmp = self.t
+        self.t = self.r
+        self.r = self.stamp
+        self.stamp = self.l
+        self.l = tmp
+        return self.stamp
+
+    def right(self):
+        self.sx += 1
+        tmp = self.t
+        self.t = self.l
+        self.l = self.stamp
+        self.stamp = self.r
+        self.r = tmp
+        return self.stamp
+
+dice = Roll(sx, sy)  # サイコロを作成し初期位置を設定
+ij[sy - 1][sx - 1] = dice.stamp  # 初期位置のマスにサイコロの目の値を設定
+for i in s:
+    if i == 'U':
+        ij[dice.sy - 1][dice.sx - 1] = dice.up()  # 上方向に移動し、そのマスにサイコロの目の値を設定
+    if i == 'D':
+        ij[dice.sy - 1][dice.sx - 1] = dice.down()  # 下方向に移動し、そのマスにサイコロの目の値を設定
+    if i == 'L':
+        ij[dice.sy - 1][dice.sx - 1] = dice.left()  # 左方向に移動し、そのマスにサイコロの目の値を設定
+    if i == 'R':
+        ij[dice.sy - 1][dice.sx - 1] = dice.right()  # 右方向に移動し、そのマスにサイコロの目の値を設定
+
+# 旗のマス目を出力
+for i in ij:
+    rs = [str(n) for n in i]
+    print(" ".join(rs))
+'''
+まず、入力から回転する回数N、旗のマス目の縦の大きさH、旗のマス目の横の大きさWが取得されます。また、最初にサイコロを置く位置の行syと列sxも取得されます。
+その後、文字列sが取得され、これはサイコロの移動方法を表しています。具体的には、"U"は上方向、"D"は下方向、"L"は左方向、"R"は右方向の移動を示します。
+次に、H行W列の二次元リストijが作成されます。このリストは、旗の各マスの色を表します。初期状態ではすべてのマスが0（白色）で初期化されます。
+そして、Rollクラスが定義されます。このクラスはサイコロの動作を管理します。サイコロの現在位置と各面の値を保持します。
+クラスには、上方向への移動を表すupメソッド、下方向への移動を表すdownメソッド、左方向への移動を表すleftメソッド、右方向への移動を表すrightメソッドが定義されています。
+これらのメソッドは、サイコロの位置と面の値を適切に変更し、移動後の面の値を返します。
+Rollクラスのインスタンスdiceが作成され、初期位置であるsy行sx列のマスにサイコロの面の値（stamp）が設定されます。
+その後、文字列sを順に処理し、各移動に応じてサイコロを移動させます。移動方法に従ってサイコロの位置と面の値が変更され、ijリストの対応するマスに面の値が記録されます。
+最後に、ijリストの各行を順に出力します。各行はスペースで区切られた数字のシーケンスとなり、それぞれの数字は旗の各マスの色を表します。この出力によって、シミュレーション後の旗のデザインが表示されます。
+'''
 --------------------------------------------- B061　※欠番 ◆
 # B061 福袋詰め
 # B062 部屋掃除ロボット
