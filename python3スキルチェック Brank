@@ -2710,6 +2710,61 @@ print(result)
 
 # B058 ◆
 # B059 占領区域
+# utf-8
+def calculate_occupation(H, W, N, countries):
+    # マップの初期化
+    map = [['?' for _ in range(W)] for _ in range(H)]
+
+    # 各国の占領区域を計算
+    for i in range(N):
+        a, x, y = countries[i]
+        x, y = x - 1, y - 1  # 座標を0-indexedに変換
+        map[y][x] = a
+
+    # 各土地からの最短距離を計算し、占領国を更新
+    for y in range(H):
+        for x in range(W):
+            if map[y][x] != '?':
+                continue
+            min_distance = float('inf')
+            occupying_country = ''
+            for i in range(N):
+                a, cx, cy = countries[i]
+                cx, cy = cx - 1, cy - 1  # 座標を0-indexedに変換
+                distance = abs(cx - x) + abs(cy - y)
+                if distance < min_distance:
+                    min_distance = distance
+                    occupying_country = a
+                elif distance == min_distance:
+                    occupying_country = '?'  # 距離が同じ場合は境界上の土地
+            map[y][x] = occupying_country
+
+    # 結果の出力
+    for row in map:
+        print(''.join(row))
+
+
+# 入力の読み込み
+H, W, N = map(int, input().split())
+countries = []
+for _ in range(N):
+    # 各国の情報を読み込む
+    a, x, y = input().split()
+    countries.append((a, int(x), int(y)))
+
+# 占領区域の計算と出力
+calculate_occupation(H, W, N, countries)
+'''
+このプログラムは、ストラテジーゲームのマップ上で各国の占領している区域を計算し、表示するためのものです。
+calculate_occupation 関数を定義します。この関数は、マップの高さ H、幅 W、国の数 N、各国の情報 countries を受け取り、占領区域を計算します。
+マップの初期化を行います。map という二次元リストを作成し、マップの全ての要素を '?' で初期化します。
+各国の占領区域を計算します。countries リストに格納された各国の情報を取り出し、座標を0-indexedに変換してマップ上の対応する位置に占領国の頭文字をセットします。
+各土地からの最短距離を計算し、占領国を更新します。マップ上の各土地について、まだ占領国がセットされていない土地に対して、各国の首都との距離を計算します。
+最も距離が近い国を占領国として設定し、距離が同じ場合は境界上の土地として '?' をセットします。
+最終的な占領区域を出力します。マップの各行を連結して表示し、各土地がどの国に占領されているかを表示します。
+メインの処理として、入力を読み込んでマップの情報を取得し、calculate_occupation 関数を呼び出して占領区域の計算と表示を行います。
+'''
+
 # B060 サイコロころがし
 --------------------------------------------- B061　※欠番 ◆
 # B061 福袋詰め
