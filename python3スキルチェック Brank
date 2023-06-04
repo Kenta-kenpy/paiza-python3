@@ -3102,7 +3102,62 @@ else:
     else:
         print("NO")
 
-# B066 色のパズル
+# B066 色のパズル　※入力例のみ通過
+# utf-8
+import itertools
+import copy
+X,N,M = list(map(int,input().split()))
+c,cc=[],[]
+p=[[] for i in range(X)]
+for i in range(N):
+    c.append(list(input()))
+for i in range(X):
+    for j in range(M):
+        p[i].append(list(input()))
+    p[i]=sum(p[i],[])
+# ピースの個数を表す整数 X、パズルの大きさを表す整数 N、ピースの大きさを表す整数 M 
+# cの整形 
+nm=N//M # パズルの一辺がピース何個分か
+for i in range(nm**2): # 0,1,2,3
+    ccc=[]
+    for j in range(M): # 0,1,2
+        ccc.append(c[i//nm*M+j][i%nm*M:i%nm*M+M])
+    cc.append(ccc)
+pp=[[] for i in range(X)]
+for i in range(X):
+    for j in range(M):
+        pp[i].append(p[i][j*M:j*M+M])
+for i in range(X):
+    flag=False
+    # ピースと完成図の合うものを探す
+    for j in range(nm**2):
+        if pp[i]==cc[j]:
+            print(j//2*2+1,j%2*2+1,0)
+            flag=True
+            break
+    # もし見つかったら、次のピースに移る
+    if flag:
+        continue
+    # ピースの回転
+    ppp=[[' ' for i in range(M)] for j in range(M)]
+    p4=pp[i]
+    # ピースを最大3回転させる
+    for n in range(3):
+        for k in range(M):
+            for m in range(M):
+                ppp[m][M-1-k]=p4[k][m]
+        # ピースを回転させた後、合うものを探している。
+        for j in range(nm**2):
+            if ppp==cc[j]:
+                print(j//nm*M+1,j%nm*M+1,n+1)
+                flag=True
+                break
+        if flag:
+            break
+        p4=copy.deepcopy(ppp)
+    if flag==False:
+        print(-1)
+
 # B067 タスクの管理
 # B068 チョコの分割
 # B069 蟻の餌探し
