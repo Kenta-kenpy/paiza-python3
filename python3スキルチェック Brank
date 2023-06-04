@@ -3277,16 +3277,16 @@ try:
 except ValueError as e:
     print(f"入力エラー: {str(e)}")
     
-# B069 蟻の餌探し　※テストケース40点
+# B069 蟻の餌探し　※テストケース通過せず　50点
 # utf-8
 def check_ant_reachability(H, W, cage, food_positions):
     # 蟻の巣の位置
     nest = (1, 1)
     # フェロモンの状態を管理する配列
-    pheromones = [[False] * (W + 1) for _ in range(H + 1)]
+    pheromones = [[False] * W for _ in range(H)]
 
     # 蟻の巣にフェロモンを付ける
-    pheromones[nest[0]][nest[1]] = True
+    pheromones[nest[0] - 1][nest[1] - 1] = True
 
     # フェロモンをたどって餌にたどり着けるかを判定
     def dfs(y, x):
@@ -3299,7 +3299,7 @@ def check_ant_reachability(H, W, cage, food_positions):
         for dy, dx in directions:
             ny, nx = y + dy, x + dx
             # ケージの範囲内でフェロモンがあり、未探索の場合
-            if 1 <= ny <= H and 1 <= nx <= W and cage[ny-1][nx-1] == "#" and not pheromones[ny][nx]:
+            if 0 <= ny < H and 0 <= nx < W and cage[ny][nx] == "#" and not pheromones[ny][nx]:
                 pheromones[ny][nx] = True  # フェロモンを付ける
                 if dfs(ny, nx):  # 再帰的に探索
                     return True
@@ -3307,10 +3307,10 @@ def check_ant_reachability(H, W, cage, food_positions):
         return False
 
     # 蟻の巣から探索を開始
-    if dfs(nest[0], nest[1]):
-        return "YES"
-    else:
+    if dfs(nest[0] - 1, nest[1] - 1):
         return "NO"
+    else:
+        return "YES"
 
 # 入力を受け取る
 H, W = map(int, input().split())
