@@ -3104,7 +3104,6 @@ else:
 
 # B066 色のパズル　※入力例のみ通過
 # utf-8
-import itertools
 import copy
 X,N,M = list(map(int,input().split()))
 c,cc=[],[]
