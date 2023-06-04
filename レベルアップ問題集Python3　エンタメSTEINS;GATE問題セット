@@ -436,6 +436,46 @@ for i in range(4):
 '''
 
 step2 塊を作ろう A
+# utf-8
+import queue
+
+di = [-1, 1, 0, 0]
+dj = [0, 0, 1, -1]
+
+h, w = map(int, input().split())
+g = [[int(x) for x in input().split()] for _ in range(h)]
+
+visit = [[False for _ in range(w)] for _ in range(h)]
+
+answer = 0
+for i in range(h):
+    for j in range(w):
+        if g[i][j] < 0 or visit[i][j]:
+            continue
+
+        answer += 1
+
+        q = queue.Queue()
+        visit[i][j] = True
+        q.put([i, j])
+        while not q.empty():
+            pi, pj = q.get()
+            for k in range(4):
+                ni, nj = pi + di[k], pj + dj[k]
+                if (
+                    ni in range(h)
+                    and nj in range(w)
+                    and not visit[ni][nj]
+                    and g[ni][nj] >= 0
+                ):
+                    visit[ni][nj] = True
+                    q.put([ni, nj])
+
+print(answer)
+'''
+幅優先探索や深さ優先探索を用いて、0 以上の整数が書かれたセルのみからなる連結成分の数を数えます。
+'''
+
 step3 セルとセルを繋ごう A
 step4 塊と塊を繋ごう A
 step5 ネット・ガーディアンの奮闘(易) A
