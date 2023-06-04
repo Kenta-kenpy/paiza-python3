@@ -386,6 +386,55 @@ else:
 
 <ネット・ガーディアンの奮闘>
 step1 最大連結成分(4×4) A
+# utf-8
+import queue
+
+di = [-1, 1, 0, 0]
+dj = [0, 0, 1, -1]
+
+g = [[int(x) for x in input().split()] for _ in range(4)]
+
+max_score = 0
+max_bit = 0
+
+for bit in range(1, 2 ** 16):
+    choice = [[False for _ in range(4)] for _ in range(4)]
+    cell_num = 0
+    score = 0
+    for k in range(16):
+        if ((bit >> k) & 1) == 1:
+            cell_num += 1
+            si, sj = divmod(k, 4)
+            choice[si][sj] = True
+            score += g[si][sj]
+    if score < max_score:
+        continue
+
+    q = queue.Queue()
+    choice[si][sj] = False
+    q.put([si, sj])
+    while not q.empty():
+        i, j = q.get()
+        cell_num -= 1
+        for k in range(4):
+            ni, nj = i + di[k], j + dj[k]
+            if ni in range(4) and nj in range(4) and choice[ni][nj] == True:
+                choice[ni][nj] = False
+                q.put([ni, nj])
+
+    if cell_num == 0:
+        max_bit = bit
+        max_score = score
+
+for i in range(4):
+    for j in range(4):
+        print(max_bit >> (i * 4 + j) & 1, end="")
+    print()
+'''
+再帰やビット全探索を用いて、集合の選び方を全探索します。
+各集合に対して、連結かどうかを判定し、連結であれば暫定解の更新をおこないます。
+'''
+
 step2 塊を作ろう A
 step3 セルとセルを繋ごう A
 step4 塊と塊を繋ごう A
