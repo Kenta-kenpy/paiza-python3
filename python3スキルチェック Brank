@@ -3277,9 +3277,52 @@ try:
 except ValueError as e:
     print(f"入力エラー: {str(e)}")
     
-# B069 蟻の餌探し
+# B069 蟻の餌探し　※テストケース40点
 # utf-8
+def check_ant_reachability(H, W, cage, food_positions):
+    # 蟻の巣の位置
+    nest = (1, 1)
+    # フェロモンの状態を管理する配列
+    pheromones = [[False] * (W + 1) for _ in range(H + 1)]
 
+    # 蟻の巣にフェロモンを付ける
+    pheromones[nest[0]][nest[1]] = True
+
+    # フェロモンをたどって餌にたどり着けるかを判定
+    def dfs(y, x):
+        # ゴールに到達した場合
+        if (y, x) in food_positions:
+            return True
+
+        # 上下左右の座標を探索
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+        for dy, dx in directions:
+            ny, nx = y + dy, x + dx
+            # ケージの範囲内でフェロモンがあり、未探索の場合
+            if 1 <= ny <= H and 1 <= nx <= W and cage[ny-1][nx-1] == "#" and not pheromones[ny][nx]:
+                pheromones[ny][nx] = True  # フェロモンを付ける
+                if dfs(ny, nx):  # 再帰的に探索
+                    return True
+
+        return False
+
+    # 蟻の巣から探索を開始
+    if dfs(nest[0], nest[1]):
+        return "YES"
+    else:
+        return "NO"
+
+# 入力を受け取る
+H, W = map(int, input().split())
+cage = [input() for _ in range(H)]
+N = int(input())
+food_positions = [tuple(map(int, input().split())) for _ in range(N)]
+
+# 蟻がすべての餌にたどり着けるかを判定
+result = check_ant_reachability(H, W, cage, food_positions)
+
+# 結果を出力
+print(result)
 
 # B070 駒の到達範囲
 --------------------------------------------- B071　※欠番 ◆
