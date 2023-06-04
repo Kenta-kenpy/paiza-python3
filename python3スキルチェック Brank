@@ -3161,39 +3161,54 @@ for i in range(X):
 # utf-8
 schelde_input = []
 N = 0
-while (1 >= N or 100 >= N):
-    N = int(input())
-    break
+while not (1 <= N <= 100):
+    N = int(input())  # タスクの数を入力
 
-for i in range(0, N):
+condition_ness_day = []  # タスクの必要日数を格納するリスト
+condition_start_day = []  # タスクの開始日を格納するリスト
+condition_end_day = []  # タスクの終了日を格納するリスト
+
+# タスクの入力を受け取り、条件を満たすものをリストに追加する
+for _ in range(N):
     i_n = input().split(' ')
-    if (int(i_n[2]) - int(i_n[1]) >= 0 and (int(i_n[2]) - int(i_n[1]) <= 1000)):
-        if (int(i_n[1]) <= int(i_n[2])) and (int(i_n[0]) <= (int(i_n[2]) - int(i_n[1]) + 1)):
-            schelde_input.append(i_n)
+    i_n = list(map(int, i_n))
+    if (i_n[2] >= i_n[1]) and (i_n[0] <= (i_n[2] - i_n[1] + 1)):
+        schelde_input.append(i_n)
 
 is_check = True
 
-condition_ness_day = []
-condition_start_day = []
-condition_end_day = []
-
+# 各タスクの必要日数、開始日、終了日をリストに分割して格納する
 for n in schelde_input:
-    condition_ness_day.append(int(n[0]))
-    condition_start_day.append(int(n[1]))
-    condition_end_day.append(int(n[-1]))
+    condition_ness_day.append(n[0])
+    condition_start_day.append(n[1])
+    condition_end_day.append(n[2])
 
+# タスクを終了日までに完了できるか判定する
 if sum(condition_ness_day) <= (max(condition_end_day) - min(condition_start_day) + 1):
-    if ((condition_start_day[-1] + condition_start_day[-1]) <= condition_end_day[-1]):
+    if (condition_start_day[-1] + sum(condition_ness_day) <= condition_end_day[-1]):
         is_check = True
     else:
         is_check = False
 else:
     is_check = False
 
-if is_check == True:
+# 結果を出力する
+if is_check:
     print("YES")
 else:
     print("NO")
+'''
+タスクの数と各タスクの情報を入力として受け取り、それらの条件を満たすかどうかを判定します。
+最初に、タスクの数を入力します。この値は1以上100以下でなければなりません。
+次に、タスクの数だけタスクの情報を入力します。各タスクの情報は必要日数、開始日、終了日の順で半角スペース区切りで与えられます。
+入力されたタスクの情報が条件を満たすかどうかを判定します。条件は以下の通りです。
+タスクの開始日が終了日以下であること
+タスクの必要日数が終了日 - 開始日 + 1以下であること
+全てのタスクの情報が条件を満たす場合、タスクを終了日までに完了できるかどうかを判定します。
+タスクの必要日数の合計が、最後のタスクの終了日 - 最初のタスクの開始日 + 1以下であること
+タスクの開始日と必要日数の合計が最後のタスクの終了日以下であること
+最終的な結果を出力します。タスクを終了日までに完了できる場合は「YES」を、できない場合は「NO」を出力します。
+'''
 
 # B068 チョコの分割
 # B069 蟻の餌探し
