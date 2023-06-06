@@ -477,6 +477,42 @@ print(answer)
 '''
 
 step3 セルとセルを繋ごう A
+# utf-8
+import queue
+
+di = [-1, 1, 0, 0]
+dj = [0, 0, 1, -1]
+
+h, w = map(int, input().split())
+si, sj, gi, gj = map(lambda x: int(x) - 1, input().split())
+g = [[-int(x) for x in input().split()] for _ in range(h)]
+
+dist = [[2 ** 30 for _ in range(w)] for _ in range(h)]
+dist[si][sj] = g[si][sj]
+
+pq = queue.PriorityQueue()
+pq.put((g[si][sj], si, sj))
+
+while not pq.empty():
+    d, i, j = pq.get()
+
+    if dist[i][j] != d:
+        continue
+
+    for k in range(4):
+        ni = i + di[k]
+        nj = j + dj[k]
+        if ni in range(h) and nj in range(w) and d + g[ni][nj] < dist[ni][nj]:
+            dist[ni][nj] = d + g[ni][nj]
+            pq.put((dist[ni][nj], ni, nj))
+
+print(-dist[gi][gj])
+'''
+セルに書かれた整数を正負反転させると、グリッドグラフ上の最短経路問題として解くことができるようになります。
+距離の初期値として、非常に大きな値 2^30 を設定しています。
+優先度つきキュー queue.PriorityQueue を用いて、ダイクストラ法によって最短経路問題を解いています。
+'''
+
 step4 塊と塊を繋ごう A
 step5 ネット・ガーディアンの奮闘(易) A
 final ネット・ガーディアンの奮闘 A
