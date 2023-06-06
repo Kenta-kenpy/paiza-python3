@@ -3477,7 +3477,51 @@ toggle_screen 関数を呼び出し、最終的な画面の状態を result に�
 これにより、与えられた入力に基づいてスイッチの押し操作をシミュレートし、最終的な画面の状態を出力するプログラムが実行されます。
 '''
 
-# B073 イルミネーションの調査
+# B073 イルミネーションの調査　※入力例1で通過せず
+# utf-8　
+def add_light_bulbs(tree_count, light_bulbs, intervals, safety_standard):
+    for interval in intervals:
+        start = interval[0]
+        end = interval[1]
+
+        # 区間内の木の電球の合計を計算
+        total_bulbs = sum(light_bulbs[start-1:end])
+
+        # 区間内の木の個数を計算
+        tree_count_in_interval = end - start + 1
+
+        # 区間内の電球の平均個数を計算
+        average_bulbs = total_bulbs / tree_count_in_interval
+
+        # 平均個数が安全基準を満たしていない場合、電球を追加
+        if average_bulbs < safety_standard:
+            additional_bulbs = safety_standard * tree_count_in_interval - total_bulbs
+
+            # 各木に追加する電球の個数を計算し、追加する
+            for i in range(start-1, end):
+                required_bulbs = safety_standard * tree_count_in_interval - total_bulbs
+                additional_bulbs_per_tree = min(required_bulbs, safety_standard - light_bulbs[i], 100 - light_bulbs[i])
+                light_bulbs[i] += additional_bulbs_per_tree
+                additional_bulbs -= additional_bulbs_per_tree
+
+    return light_bulbs
+
+
+# 入力の読み込み
+N, M = map(int, input().split())
+A = list(map(int, input().split()))
+Q = int(input())
+intervals = []
+for _ in range(Q):
+    S, E = map(int, input().split())
+    intervals.append((S, E))
+
+# 電球の追加
+result = add_light_bulbs(N, A.copy(), intervals, M)
+
+# 結果の出力
+print(*result)
+
 # B074 コメントの順序
 # B075 商品の表示
 # B076 パン屋さん
