@@ -3324,7 +3324,48 @@ result = check_ant_reachability(H, W, cage, food_positions)
 # 結果を出力
 print(result)
 
-# B070 駒の到達範囲
+# B070 駒の到達範囲 ※0点
+def count_reachable_cells(N, H, W, K):
+    # バリデーションチェック
+    if not (1 <= N <= 10):
+        return 0
+    if not (1 <= H <= N):
+        return 0
+    if not (1 <= W <= N):
+        return 0
+    if not (1 <= K <= 10):
+        return 0
+
+    # 駒の初期位置
+    start_row = H - 1
+    start_col = W - 1
+
+    # 駒が到達可能なマスの数をカウント
+    count = 0
+
+    # 上下左右および斜めの移動方向を定義
+    directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1), (0, 0)]
+
+    # 駒の移動回数に応じて探索
+    for k in range(K + 1):
+        # 上下左右および斜め方向に移動
+        for d in directions:
+            row = start_row + k * d[0]
+            col = start_col + k * d[1]
+
+            # 移動後の位置がチェスボード上にある場合、到達可能なマスとしてカウント
+            if 0 <= row < N and 0 <= col < N:
+                count += 1
+
+    return count
+
+
+# 入力を受け取る
+N, H, W, K = map(int, input().split())
+
+reachable_cells = count_reachable_cells(N, H, W, K)
+print(reachable_cells)
+
 --------------------------------------------- B071　※欠番 ◆
 # B071 ダンベルトレーニング
 # B072 反転スイッチ
