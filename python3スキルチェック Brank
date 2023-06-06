@@ -3413,6 +3413,70 @@ nearest = find_nearest_weight(N, weights, M)
 print(nearest)
 
 # B072 反転スイッチ
+# utf-8
+def toggle_screen(screen_size, pattern_size, pattern, num_switches, switches):
+    # 画面の初期化
+    screen = [['_' for _ in range(screen_size[1])] for _ in range(screen_size[0])]
+
+    # スイッチを押す回数だけ繰り返す
+    for _ in range(num_switches):
+        # パターンの行ごとに繰り返す
+        for i in range(pattern_size[0]):
+            # パターンの列ごとに繰り返す
+            for j in range(pattern_size[1]):
+                # 画面の範囲内かをチェック
+                if 0 <= i < screen_size[0] and 0 <= j < screen_size[1]:
+                    # パターンが '#' の場合は反転させる
+                    if pattern[i][j] == '#':
+                        # スイッチの座標を基準にして画面の状態を反転させる
+                        screen[i + switches[_][1] - 1][j + switches[_][0] - 1] = '#' if screen[i + switches[_][1] - 1][j + switches[_][0] - 1] == '_' else '_'
+
+    return screen
+
+# 入力の読み込み
+# 画面の縦の大きさ H、横の大きさ W
+H, W = map(int, input().split())
+# パターンの縦の大きさ N、横の大きさ M
+N, M = map(int, input().split())
+
+pattern = []
+for _ in range(N):
+    pattern.append(list(input()))
+    
+# スイッチを押す回数 Q
+Q = int(input())
+switches = []
+# スイッチを押す回数だけ繰り返す
+for _ in range(Q):
+    # スイッチの対応するパターンの左上の x 座標 x_k、y 座標 y_k 
+    switches.append(list(map(int, input().split())))
+
+# 画面の状態を計算
+result = toggle_screen((H, W), (N, M), pattern, Q, switches)
+
+# 結果の出力
+for row in result:
+    print(''.join(row))
+'''
+toggle_screen 関数は、画面の状態を反転させる処理を行います。引数として、画面のサイズ screen_size、パターンのサイズ pattern_size、パターンの反転模様 pattern、スイッチの回数 num_switches、スイッチの座標情報 switches を受け取ります。
+screen は二次元リストとして初期化され、画面のサイズに応じて全ての要素が '_'（白色）で埋められます。
+スイッチを押す回数だけ繰り返すループがあります。各スイッチの回数に対して、以下の処理が行われます。
+パターンの行ごとに繰り返すループがあります。
+パターンの列ごとに繰り返すループがあります。
+画面の範囲内かをチェックします。行番号 i と列番号 j が画面の範囲内にあるかを確認します。
+パターンが '#' の場合は、スイッチの座標情報を基準にして画面の状態を反転させます。スイッチの座標情報 switches[_] の x 座標 switches[_][0] と y 座標 switches[_][1] を使用して、対応する画面上の座標を計算し、その位置の要素を反転させます。
+toggle_screen 関数は最終的に、スイッチを押した後の画面の状態 screen を返します。
+入力の読み込みが行われます。まず、画面の縦と横のサイズを H と W に読み込みます。
+パターンの縦と横のサイズを N と M に読み込みます。
+パターンの反転模様を読み込み、二次元リストとして pattern に格納します。
+スイッチの回数を Q に読み込みます。
+スイッチの座標情報を読み込み、リストとして switches に格納します。
+toggle_screen 関数を呼び出し、最終的な画面の状態を result に格納します。
+最終的な画面の状態を出力します。各行を結合して一つの文字列にし、それを行ごとに出力します。
+
+これにより、与えられた入力に基づいてスイッチの押し操作をシミュレートし、最終的な画面の状態を出力するプログラムが実行されます。
+'''
+
 # B073 イルミネーションの調査
 # B074 コメントの順序
 # B075 商品の表示
