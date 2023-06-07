@@ -3523,6 +3523,78 @@ result = add_light_bulbs(N, A.copy(), intervals, M)
 print(*result)
 
 # B074 コメントの順序
+# utf-8
+def calculate_comment_popularity(comment_id, comments):
+    """
+    特定のコメントの注目度を計算する関数
+    """
+    comment = comments[comment_id]
+    likes = comment["likes"]
+    replies = comment["replies"]
+
+    popularity = likes
+    for reply_id in replies:
+        popularity += calculate_comment_popularity(reply_id, comments)
+
+    return popularity
+
+
+def find_most_popular_comment(comments):
+    """
+    最も注目度の高いコメントのIDを見つける関数
+    """
+    max_popularity = -1
+    most_popular_comment_id = None
+
+    for comment_id in comments:
+        popularity = calculate_comment_popularity(comment_id, comments)
+        if popularity > max_popularity or (popularity == max_popularity and comment_id < most_popular_comment_id):
+            max_popularity = popularity
+            most_popular_comment_id = comment_id
+
+    return most_popular_comment_id
+
+
+# 入力の読み込み
+N = int(input())
+comments = {}
+
+for _ in range(N):
+    comment_info = input().split()
+    comment_id = int(comment_info[0])
+    parent_id = comment_info[1]
+    likes = int(comment_info[2])
+
+    if parent_id == "None":
+        parent_id = None
+    else:
+        parent_id = int(parent_id)
+
+    comments[comment_id] = {
+        "parent_id": parent_id,
+        "likes": likes,
+        "replies": []
+    }
+
+# 子コメントのリストを親コメントに追加する
+for comment_id, comment in comments.items():
+    parent_id = comment["parent_id"]
+    if parent_id is not None:
+        parent_comment = comments[parent_id]
+        parent_comment["replies"].append(comment_id)
+
+# 注目度の一番高いコメントのIDを求める
+most_popular_comment_id = find_most_popular_comment(comments)
+
+# 結果の出力
+print(most_popular_comment_id)
+'''
+calculate_comment_popularity 関数は、特定のコメントの注目度を再帰的に計算するための関数です。与えられたコメントIDに対応するコメントの「いいね」数を取得し、それに対して返信コメントの注目度の合計を再帰的に計算して注目度を求めます。
+find_most_popular_comment 関数は、与えられたコメントリストから最も注目度の高いコメントのIDを見つけるための関数です。各コメントの注目度を計算し、最大の注目度を持つコメントのIDを返します。注目度が同じ場合は、IDが最小のコメントを選択します。
+入力を読み込み、コメント情報を辞書形式で保持します。コメントID、親コメントID、いいね数を取得し、コメント辞書に追加します。親コメントがある場合は、子コメントのリストを親コメントの辞書に追加します。
+最も注目度の高いコメントのIDを求め、結果を出力します。
+'''
+
 # B075 商品の表示
 # B076 パン屋さん
 # B077 チケットの売り場
