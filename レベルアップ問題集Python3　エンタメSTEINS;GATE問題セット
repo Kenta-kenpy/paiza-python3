@@ -561,4 +561,60 @@ pqから最短距離が最小の要素を取り出します。
 '''
 
 step5 ネット・ガーディアンの奮闘(易) A
+# utf-8
+import queue
+
+di = [-1, 1, 0, 0]
+dj = [0, 0, 1, -1]
+
+h, w = map(int, input().split())
+g = [[int(x) for x in input().split()] for _ in range(h)]
+
+group = [[0 for _ in range(w)] for _ in range(h)]
+group_num = 1
+max_group_num = -1
+max_score = 0
+
+for i in range(h):
+    for j in range(w):
+        if group[i][j] != 0 or g[i][j] < 0:
+            continue
+
+        q = queue.Queue()
+        group[i][j] = group_num
+        q.put([i, j])
+        score = g[i][j]
+
+        while not q.empty():
+            pi, pj = q.get()
+            for k in range(4):
+                ni, nj = pi + di[k], pj + dj[k]
+                if (
+                    ni in range(h)
+                    and nj in range(w)
+                    and group[ni][nj] == 0
+                    and g[ni][nj] >= 0
+                ):
+                    group[ni][nj] = group_num
+                    score += g[ni][nj]
+                    q.put([ni, nj])
+
+        if score > max_score:
+            max_group_num = group_num
+            max_score = score
+
+        group_num += 1
+
+for i in range(h):
+    for j in range(w):
+        if group[i][j] == max_group_num:
+            print(1, end="")
+        else:
+            print(0, end="")
+    print()
+'''
+前問までの内容を踏まえて、なるべくスコアが大きくなるように工夫してセルを選びましょう。
+正誤判定に用いるスコアが低く設定されているため、例えば 0 以上の値が書かれたセルのみを選択したときにできる連結成分のスコアの最大値 以上のスコアを持つ連結成分を出力すれば、正解することができます。
+'''
+
 final ネット・ガーディアンの奮闘 A
