@@ -618,3 +618,130 @@ for i in range(h):
 '''
 
 final ネット・ガーディアンの奮闘 A
+# utf-8
+'''
+この解答例の方針は以下の通りです。
+0 以上の値を持つセルを選択したときにできる連結成分を用意する
+負の値を持つセルについてのみ値の正負を反転させたグリッドグラフ上で、各連結成分 A から他の連結成分への最短経路問題を解く
+最短で到達できる連結成分 B について、セルの集合 (A + B + 最短経路に含まれるセル) を求める
+3 で求めた集合のうち、スコア最大のものを出力する
+この解答例で出力される集合はグリッド全体に対して非常に小さいものとなっており、改善の余地がまだまだあります。
+'''
+import queue
+
+di = [-1, 1, 0, 0]
+dj = [0, 0, 1, -1]
+
+h, w = map(int, input().split())
+g = [[int(x) for x in input().split()] for _ in range(h)]
+
+group = [[0 for _ in range(w)] for _ in range(h)]
+group_num = 1
+group_score = [-1]
+
+for i in range(h):
+    for j in range(w):
+        if group[i][j] != 0 or g[i][j] < 0:
+            continue
+
+        q = queue.Queue()
+        group[i][j] = group_num
+        q.put([i, j])
+        score = g[i][j]
+
+        while not q.empty():
+            pi, pj = q.get()
+            for k in range(4):
+                ni, nj = pi + di[k], pj + dj[k]
+                if (
+                    ni in range(h)
+                    and nj in range(w)
+                    and group[ni][nj] == 0
+                    and g[ni][nj] >= 0
+                ):
+                    group[ni][nj] = group_num
+                    score += g[ni][nj]
+                    q.put([ni, nj])
+
+        group_score.append(score)
+        group_num += 1
+
+# 連結成分が 1 つだった場合はそれをそのまま出力
+if group_num == 2:
+    for i in range(h):
+        for j in range(w):
+            print(group[i][j], end="")
+        print()
+    exit(0)
+
+# 暫定解のスコア
+max_score = -1000000
+
+group_done = set()
+for i in range(h):
+    for j in range(w):
+        if group[i][j] == 0 or group[i][j] in group_done:
+            continue
+
+        group_done.add(group[i][j])
+
+        dist = [[2 ** 30 for _ in range(w)] for _ in range(h)]
+        dist[i][j] = 0
+
+        prev = [[None for _ in range(w)] for _ in range(h)]
+
+        bef = (i, j)
+        now = (i, j)
+        si, sj = now
+
+        pq = queue.PriorityQueue()
+        pq.put((dist[i][j], bef, now))
+
+        while not pq.empty():
+            d, bef, now = pq.get()
+            si, sj = now
+
+            if dist[si][sj] != d:
+                continue
+
+            prev[si][sj] = bef
+
+            if group[si][sj] != 0 and group[si][sj] != group[i][j]:
+                break
+
+            for k in range(4):
+                ni = si + di[k]
+                nj = sj + dj[k]
+
+                if ni not in range(h) or nj not in range(w):
+                    continue
+
+                ndist = d - min(0, g[ni][nj])
+
+                if ndist < dist[ni][nj]:
+                    dist[ni][nj] = ndist
+                    pq.put((dist[ni][nj], now, (ni, nj)))
+
+        score = group_score[group[i][j]] - dist[si][sj] + group_score[group[si][sj]]
+
+        if score <= max_score:
+            continue
+
+        # つなぐ 2 つの連結成分
+        group1, group2 = group[i][j], group[now[0]][now[1]]
+        # 暫定解の更新
+        max_score = score
+        # 最短路の復元
+        shortest_path = [[False for _ in range(w)] for _ in range(h)]
+        while prev[now[0]][now[1]] != now:
+            now = prev[now[0]][now[1]]
+            shortest_path[now[0]][now[1]] = True
+
+# 答えを出力
+for i in range(h):
+    for j in range(w):
+        if shortest_path[i][j] or group[i][j] in [group1, group2]:
+            print(1, end="")
+        else:
+            print(0, end="")
+    print()
