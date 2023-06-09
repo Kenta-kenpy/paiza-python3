@@ -3597,10 +3597,144 @@ find_most_popular_comment 関数は、与えられたコメントリストから
 
 # B075 商品の表示
 # utf-8
+def calculate_score(N, M, products):
+    scores = []  # スコアを保持するリスト
 
+    # スコア計算
+    for i in range(N):
+        score = 0
+        ranks = []  # 各指標の順位を保持するリスト
+        for j in range(M):
+            rank = 1
+            for k in range(N):
+                if products[k][j] > products[i][j]:
+                    rank += 1
+            ranks.append(rank)
+        for j in range(M):
+            score += N - ranks[j] + 1
+        scores.append((i + 1, score))  # 商品番号とスコアの組を追加
+
+    # スコアの高い順にソート
+    scores.sort(key=lambda x: x[1], reverse=True)
+
+    # 結果の出力
+    for score in scores:
+        print(score[0])
+
+# 入力の読み込み
+N, M = map(int, input().split())  # 表示する商品の数を表す整数 N、商品の指標の数を表す整数 M
+products = []
+for _ in range(N):
+    product = list(map(int, input().split()))  # i番目の商品の j 番目の指標の値
+    products.append(product)
+
+# スコア計算と結果の出力
+calculate_score(N, M, products)
+'''
+calculate_scoreという関数を定義します。この関数は、商品のスコアを計算するための処理を行います。scoresという空のリストを用意して、スコアを保持します。
+指定されたルールに基づいて、商品のスコアを計算します。まず、商品の数だけループします。内部のループでは、各指標ごとに順位を計算し、ranksリストに順位を追加します。次に、各指標の順位を使用してスコアを計算し、scoresリストに商品番号とスコアの組を追加します。
+計算されたスコアを高い順にソートします。sortメソッドを使用して、スコアを基準にリストを降順に並び替えます。
+ソートされたスコアを順番に取り出し、商品番号を出力します。入力値を読み込みます。
+まず、map関数とsplitメソッドを使用して、商品の数を表す整数Nと商品の指標の数を表す整数Mを取得します。次に、商品の指標の値を入力として受け取り、それを二重リストとしてproductsリストに追加します。
+calculate_score関数を呼び出して、スコアの計算と結果の出力を行います。
+'''
 
 # B076 パン屋さん
+# utf-8
+# N（パンの種類数）とQ（クエリの数）を読み込む
+N, Q = map(int, input().split())
+
+# NとQのバリデーションチェック
+assert 1 <= N <= 30, "Nが無効です"
+assert 1 <= Q <= 50, "Qが無効です"
+
+# パンの価格と在庫数のリストを初期化する
+prices = []  # パンの価格リスト
+stock = []  # パンの在庫数リスト
+
+# パンの価格と在庫数を読み込む
+for _ in range(N):
+    # 各パンの種類ごとに価格と在庫数を読み込む
+    price, quantity = map(int, input().split())
+
+    # 価格と在庫数のバリデーションチェック
+    assert 1 <= price <= 500, "価格が無効です"
+    assert 0 <= quantity <= 20, "在庫数が無効です"
+
+    # 価格と在庫数をそれぞれのリストに追加する
+    prices.append(price)
+    stock.append(quantity)
+
+# 結果のリストを初期化する
+results = []
+
+# クエリを処理する
+for _ in range(Q):
+    # クエリの種類とパンの個数を読み込む
+    query, *quantities = input().split()
+
+    # クエリの種類のバリデーションチェック
+    assert query in ["bake", "buy"], "クエリの種類が無効です"
+
+    # パンの個数を整数に変換する
+    quantities = list(map(int, quantities))
+
+    # パンの個数のバリデーションチェック
+    assert all(0 <= q <= 1000 for q in quantities), "パンの個数が無効です"
+
+    # "bake" クエリの処理
+    if query == "bake":
+        # 各パンの種類ごとに在庫数を増やす
+        for i in range(N):
+            stock[i] += quantities[i]
+
+    # "buy" クエリの処理
+    elif query == "buy":
+        # 合計金額を初期化する
+        total_cost = 0
+
+        # 全てのパンを購入できるかを示すフラグを初期化する
+        can_buy = True
+
+        # 在庫の確認と合計金額の計算を行う
+        for i in range(N):
+            # 現在のパンの種類の在庫が購入個数に対して十分かチェックする
+            if stock[i] >= quantities[i]:
+                # 在庫数を減らし、金額を計算する
+                stock[i] -= quantities[i]
+                total_cost += prices[i] * quantities[i]
+            else:
+                # 在庫が不足している場合はフラグをFalseにする
+                can_buy = False
+                break
+
+        # 結果を結果のリストに追加する
+        if can_buy:
+            results.append(total_cost)
+        else:
+            results.append(-1)
+
+# 結果を出力する
+for result in results:
+    print(result)
+'''
+最初に、パンの種類数を表す整数 N とクエリの個数を表す整数 Q を入力します。このとき、N の値が 1 以上 30 以下であり、Q の値が 1 以上 50 以下であることをバリデーションチェックします。
+パンの値段と在庫数を表す整数 a_i, b_i を N 回繰り返し入力します。各パラメータの値が以下の条件を満たしていることをバリデーションチェックします:
+a_i の値が 1 以上 500 以下であること
+b_i の値が 0 以上 20 以下であること
+結果を格納するリスト results を初期化します。
+クエリを Q 回繰り返し入力します。各クエリは以下の形式で与えられます:
+"bake" クエリの場合: bake 0 c_{i, 1} c_{i, 2} ... c_{i, N}
+"buy" クエリの場合: buy c_{i, 1} c_{i, 2} ... c_{i, N}
+このとき、クエリの種類が "bake" または "buy" のいずれかであることをバリデーションチェックし、各パンの個数 c_{i, j} の値が 0 以上 1000 以下であることをバリデーションチェックします。
+クエリの種類に応じて処理を行います:
+"bake" クエリの場合: 各パンの在庫数を c_{i, j} だけ増やします。
+"buy" クエリの場合: 各パンの在庫数と購入可能性をチェックし、在庫が足りる場合は購入に必要な合計金額を計算し、在庫数を減らします。在庫が足りない場合はエラーとして -1 を結果リストに追加します。
+結果リストの値を順に出力します。
+'''
+
 # B077 チケットの売り場
+
 # B078 動画視聴スケジュール
 # B079 相性チェック
 # B080 みんなでスゴロク
