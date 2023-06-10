@@ -3791,7 +3791,34 @@ M回のループで、順番に人がカウンターに並びます。
 計算された時間を出力します。
 '''
 
-# B078 動画視聴スケジュール
+# B078 動画視聴スケジュール　※入力例2でNG
+# utf-8
+def maximum_videos(N, schedule):
+    videos = []
+    for i in range(N):
+        start_time, duration = map(int, schedule[i].split())
+        videos.append((start_time, duration))
+
+    videos = sorted(videos)  # 開始時間でソート
+    count = 0
+    end_time = 0
+
+    for start_time, duration in videos:
+        if start_time >= end_time:
+            count += 1
+            end_time = start_time + duration
+
+    return count
+
+
+N = int(input())
+schedule = []
+for _ in range(N):
+    schedule.append(input())
+
+result = maximum_videos(N, schedule)
+print(result)
+
 # B079 相性チェック
 # B080 みんなでスゴロク
 --------------------------------------------- B081　※欠番 ◆
