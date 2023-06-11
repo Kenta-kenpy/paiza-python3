@@ -3060,47 +3060,73 @@ for h in range(H):
 # print(s)
 print(ans)
 
-# B065 小さなライフゲーム　※テストケース80点
+# B065 小さなライフゲーム
 # utf-8
-def is_reversible(initial_board, update_rules):
-    current_board = initial_board
-    board_states = set()  # 盤面の状態を保存するセット
-    board_states.add(current_board)
+def mass_change(left, right):
+    # マスの左右の組み合わせに応じてキーを返す
+    left_right = left + right
+    if left_right == "--":
+        return 0  # 左右が "-" の場合、キーは0
+    elif left_right == "-+":
+        return 1  # 左が "-" で右が "+" の場合、キーは1
+    elif left_right == "+-":
+        return 2  # 左が "+" で右が "-" の場合、キーは2
+    elif left_right == "++":
+        return 3  # 左右が "+" の場合、キーは3
 
-    for _ in range(10):  # 最大で10回の更新を試行する
-        new_board = ""
+def mass_game(mass_arr, rule_arr):
+    # マスゲームの実行
+    result_arr = []
+    for i in range(10):
+        if i == 0:
+            left = mass_arr[9]  # 左隣のマスの値
+            right = mass_arr[i + 1]  # 右隣のマスの値
+        elif i == 9:
+            left = mass_arr[i - 1]  # 左隣のマスの値
+            right = mass_arr[0]  # 右隣のマスの値
+        else:
+            left = mass_arr[i - 1]  # 左隣のマスの値
+            right = mass_arr[i + 1]  # 右隣のマスの値
 
-        for i in range(len(current_board)):
-            left_neighbor = current_board[i - 1]
-            right_neighbor = current_board[(i + 1) % len(current_board)]
-            update_index = (left_neighbor == "-") * 2 + (right_neighbor == "-")
-            new_symbol = update_rules[update_index]
-            new_board += new_symbol
+        key = mass_change(left, right)  # マスの左右の組み合わせに応じてキーを取得
+        ans = rule_arr[key]  # キーに対応するルールを取得
+        result_arr.append(ans)  # 結果を配列に追加
 
-        if new_board == initial_board:
-            return True
-
-        if new_board in board_states:
-            return False
-
-        board_states.add(new_board)
-        current_board = new_board
-
-    return False
-
+    return result_arr
 
 # 入力の読み込み
-initial_board, update_rules = input().split()
+S, T = input().split()
+mass_arr = list(S)  # 初期盤面のマス配列
+rule_arr = list(T)  # 更新ルールの配列
+result_arr = mass_arr  # マスゲームの結果の配列
+ans = "NO"  # 初期値はNO
 
-# 制約条件のチェック
-if len(initial_board) != 10 or len(update_rules) != 4 or not all(symbol in "+-" for symbol in initial_board + update_rules):
-    print("NO")
-else:
-    # 判定結果の出力
-    if is_reversible(initial_board, update_rules):
-        print("YES")
-    else:
-        print("NO")
+# マス配列、ルール配列を1024回ループしてゲームを実行
+for _ in range(1024):
+    result_arr = mass_game(result_arr, rule_arr)
+    if result_arr == mass_arr:
+        ans = "YES"  # 初期盤面に戻った場合はYESとする
+        break
+
+# 結果の出力
+print(ans)
+'''
+与えられた初期盤面と更新ルールに基づいてミニライフゲームを実行し、初期盤面に戻るかどうかを判定するプログラムです。
+まず、入力から初期盤面の文字列 S と更新ルールの文字列 T を読み込みます。それぞれをマス配列 mass_arr とルール配列 rule_arr に変換します。
+また、マスゲームの結果を保持するための配列 result_arr を初期盤面と同じに設定します。そして、初期値として判定結果の文字列 ans を "NO" とします。
+次に、1024回のループを実行します。ループ内では、mass_game 関数を使用してマスゲームの結果を計算し、結果を result_arr に更新します。その後、result_arr が初期盤面と一致するかを確認します。
+一致した場合は、ans を "YES" に変更し、ループを抜けます。
+最後に、最終的な判定結果を出力します。
+
+関数 mass_change は、与えられた左隣と右隣のマスの値に応じて、適切なキーを返します。
+キーは以下のように対応しています：
+左右が "-" の場合はキーが0
+左が "-" で右が "+" の場合はキーが1
+左が "+" で右が "-" の場合はキーが2
+左右が "+" の場合はキーが3
+関数 mass_game は、与えられたマス配列とルール配列に基づいてマスゲームの結果を計算します。
+各マスに対して、左隣と右隣のマスの値を取得し、mass_change 関数でキーを求めます。キーに対応するルールをルール配列から取得し、結果配列に追加します。最終的に結果配列を返します。
+'''
 
 # B066 色のパズル　※入力例のみ通過
 # utf-8
@@ -3477,50 +3503,76 @@ toggle_screen 関数を呼び出し、最終的な画面の状態を result に�
 これにより、与えられた入力に基づいてスイッチの押し操作をシミュレートし、最終的な画面の状態を出力するプログラムが実行されます。
 '''
 
-# B073 イルミネーションの調査　※入力例1で通過せず
+# B073 イルミネーションの調査
 # utf-8　
-def add_light_bulbs(tree_count, light_bulbs, intervals, safety_standard):
-    for interval in intervals:
-        start = interval[0]
-        end = interval[1]
+"""
+回答方針
+(1) 各木に備えつけられた電球の数のリストを用意
+(2) 調査区間毎の辞書を用意
+(3) (2)を一つずつ取り出して、電球追加後の値に(1)を更新
+(4) (3)を出力
+"""
 
-        # 区間内の木の電球の合計を計算
-        total_bulbs = sum(light_bulbs[start-1:end])
+def is_valid_integer(value, lower, upper):
+    return lower <= value <= upper
 
-        # 区間内の木の個数を計算
-        tree_count_in_interval = end - start + 1
+# NとMの入力チェック
+N, average = map(int, input().split())
+if not is_valid_integer(N, 1, 1000) or not is_valid_integer(average, 1, 100):
+    print("Invalid input for N or M.")
+    exit(1)
 
-        # 区間内の電球の平均個数を計算
-        average_bulbs = total_bulbs / tree_count_in_interval
+# 木の数と電球の数の入力チェック
+areaArray = list(map(int, input().split()))
+if len(areaArray) != N or not all(is_valid_integer(A, 1, 100) for A in areaArray):
+    print("Invalid input for A_i.")
+    exit(1)
 
-        # 平均個数が安全基準を満たしていない場合、電球を追加
-        if average_bulbs < safety_standard:
-            additional_bulbs = safety_standard * tree_count_in_interval - total_bulbs
-
-            # 各木に追加する電球の個数を計算し、追加する
-            for i in range(start-1, end):
-                required_bulbs = safety_standard * tree_count_in_interval - total_bulbs
-                additional_bulbs_per_tree = min(required_bulbs, safety_standard - light_bulbs[i], 100 - light_bulbs[i])
-                light_bulbs[i] += additional_bulbs_per_tree
-                additional_bulbs -= additional_bulbs_per_tree
-
-    return light_bulbs
-
-
-# 入力の読み込み
-N, M = map(int, input().split())
-A = list(map(int, input().split()))
+# Qの入力チェック
 Q = int(input())
-intervals = []
+if not is_valid_integer(Q, 1, 1000):
+    print("Invalid input for Q.")
+    exit(1)
+
+researchArea = []
+# 各調査区間の入力チェック
 for _ in range(Q):
-    S, E = map(int, input().split())
-    intervals.append((S, E))
+    S_i, E_i = map(int, input().split())
+    if not (is_valid_integer(S_i, 1, N) and is_valid_integer(E_i, S_i, N)):
+        print("Invalid input for S_i or E_i.")
+        exit(1)
+    research = {"start": S_i-1, "end": E_i-1, "range": (E_i - S_i) + 1}
+    researchArea.append(research)
 
-# 電球の追加
-result = add_light_bulbs(N, A.copy(), intervals, M)
+# (3) (2)を一つずつ取り出して、電球追加後の値に(1)を更新
+# 手順
+# 1. researchAreaのstart,endのリストを取り出して平均の電球の数の平均値を取得
+# 2. average-1 をする。
+# 3. 2.がマイナス値でない場合、区間の電球の数を追加
+for research in researchArea:
+    areas = areaArray[research["start"]: research["start"] + research["range"]]
+    score = sum(areas) // research["range"]
+    diff = average - score
+    if diff > 0:
+        for i in range(research["start"], research["end"] + 1):
+            areaArray[i] += diff
 
-# 結果の出力
-print(*result)
+# 回答結果を出力
+print(" ".join(map(str, areaArray)))
+'''
+このコードは、与えられた並木道の情報と調査区間の情報に基づいて、電球の数を更新するプログラムです。以下でコードの概要を説明します。
+まず、is_valid_integerという関数が定義されています。この関数は、ある値が指定された範囲内にあるかどうかを確認するために使用されます。
+次に、NとMを入力として受け取ります。Nは並木道に並ぶ木の本数を表し、Mは区間の電球の平均個数が上回らなければならない数です。
+これらの値が正しい範囲内にあるかどうかをチェックし、無効な入力の場合はエラーメッセージを表示してプログラムを終了します。
+その後、並木道の情報を表す整数のリストareaArrayを入力として受け取ります。このリストは、各木にいくつの電球が装飾されているかを表します。
+リストの長さがNであり、各要素が1から100の範囲内にあるかどうかを確認します。無効な入力の場合はエラーメッセージを表示してプログラムを終了します。
+次に、電球の数を調べたい区間の数を表す整数Qを入力として受け取ります。Qは後続のQ行の入力を読み取るために使用されます。Qが1から1000の範囲内にあるかどうかを確認し、無効な入力の場合はエラーメッセージを表示してプログラムを終了します。
+続いて、Q行の入力を処理します。各行には、電球の数を調べたい区間の始点と終点が半角スペースで区切られています。始点と終点が1からNの範囲内にあり、始点が終点以下であることを確認します。
+無効な入力の場合はエラーメッセージを表示してプログラムを終了します。有効な入力の場合は、調査区間を表す辞書を作成し、リストresearchAreaに追加します。
+これで入力処理が完了し、調査区間の情報を元に電球の数を更新します。各調査区間について、区間の木の数を取得し、その平均値を計算します。
+平均値と指定された平均個数(M)との差分を計算し、正の値であれば区間の電球の数を更新します。
+最後に、更新された電球の数をスペース区切りの文字列として出力します。
+'''
 
 # B074 コメントの順序
 # utf-8
@@ -3917,7 +3969,66 @@ if __name__ == "__main__":
     main()
 --------------------------------------------- B081　※欠番 ◆
 # B081 花壇のロープ
+# utf-8
+def count_ropes(H, W, field):
+    """
+    花壇を過不足なく囲うために必要なロープの本数を数える関数
+
+    Args:
+        H (int): 地図の縦幅
+        W (int): 地図の横幅
+        field (List[List[str]]): 地図の情報を格納した2次元リスト
+
+    Returns:
+        int: ロープの本数
+    """
+    total_ropes = 0
+
+    for i in range(H):
+        for j in range(W):
+            if field[i][j] == '#':
+                if i == 0 or field[i - 1][j] == '.':
+                    total_ropes += 1
+                if i == H - 1 or field[i + 1][j] == '.':
+                    total_ropes += 1
+                if j == 0 or field[i][j - 1] == '.':
+                    total_ropes += 1
+                if j == W - 1 or field[i][j + 1] == '.':
+                    total_ropes += 1
+
+    return total_ropes
+
+# 入力の読み込み
+H, W = map(int, input().split())
+
+# 地図の初期化
+field = []
+for _ in range(H):
+    row = input()
+    field.append(row)
+
+# ロープの本数を数える
+ropes = count_ropes(H, W, field)
+
+# 結果を出力
+print(ropes)
+'''
+まず count_ropes 関数が定義されています。この関数は、花壇を過不足なく囲うために必要なロープの本数を数えるために使用されます。
+count_ropes 関数は、以下の引数を受け取ります：
+
+H：地図の縦幅を表す整数
+W：地図の横幅を表す整数
+field：地図の情報を格納した2次元リスト
+関数内部では、2重のループを使用して地図を走査します。各地点の文字が花壇を表す # であれば、その周囲をチェックします。
+花壇の上側が存在しない場合や、上側が花壇ではない場合、現在の地点にロープが必要です。同様に、下側、左側、右側についても同様のチェックを行い、ロープの本数を適切にカウントします。
+全ての地点をチェックし終えた後、合計のロープの本数を返します。
+プログラムの残りの部分では、入力を受け取り、地図の情報を適切なデータ構造で格納します。そして、count_ropes 関数を呼び出し、結果を出力します。
+'''
+
 # B082 休暇の取り方
+# utf-8
+
+
 # B083 宝の地図
 # B084 オススメのお店
 # B085 宝探しの手順
