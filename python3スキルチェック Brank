@@ -1099,7 +1099,8 @@ public class Main {
 	}
 }
 
-# B030 氷のダンジョン　※入力例1のみOK
+# B030 氷のダンジョン
+※入力例1のみOK
 # utf-8
 def explore_dungeon(H, W, dungeon, s_x, s_y, N, directions):
     # 方向ごとの座標の変化量
@@ -1148,6 +1149,64 @@ final_x, final_y = explore_dungeon(H, W, dungeon, s_x, s_y, N, directions)
 
 # 結果の出力
 print(final_x, final_y)
+
+※入力例2のみOK
+# utf-8
+def explore_dungeon():
+    # 入力読み取り
+    H, W = map(int, input().split())
+
+    # 制約条件のバリデーションチェック
+    if not (1 <= H <= 100) or not (1 <= W <= 100):
+        raise ValueError("Invalid dungeon size")
+
+    dungeon = [input() for _ in range(H)]
+    s_x, s_y = map(int, input().split())
+
+    # 制約条件のバリデーションチェック
+    if not (1 <= s_x <= W) or not (1 <= s_y <= H):
+        raise ValueError("Invalid starting position")
+
+    # 初期位置の土のマスチェック
+    if dungeon[s_y - 1][s_x - 1] != '.':
+        raise ValueError("Invalid starting position")
+
+    N = int(input())
+
+    # 制約条件のバリデーションチェック
+    if not (1 <= N <= 100):
+        raise ValueError("Invalid number of movements")
+
+    directions = [input().strip() for _ in range(N)]
+
+    # 移動関数
+    def move(x, y, direction):
+        if direction == 'U':
+            return x, y - 1
+        elif direction == 'R':
+            return x + 1, y
+        elif direction == 'D':
+            return x, y + 1
+        elif direction == 'L':
+            return x - 1, y
+
+    # 初期位置
+    current_x, current_y = s_x - 1, s_y - 1  # 0-indexed に変換
+
+    # 移動
+    for direction in directions:
+        next_x, next_y = move(current_x, current_y, direction)
+
+        # 次のマスが氷のマスならば進む
+        while dungeon[next_y][next_x] == '#':
+            next_x, next_y = move(next_x, next_y, direction)
+
+        current_x, current_y = next_x, next_y
+
+    # 結果出力
+    print(f"{current_x + 1} {current_y + 1}")  # 1-indexed に戻す
+
+explore_dungeon()
 
 --------------------------------------------- B031　※欠番 ◆
 # B031 コインのウラとオモテ
