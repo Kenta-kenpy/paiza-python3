@@ -3856,7 +3856,65 @@ calculate_compatibility関数は、2つの名前を受け取り、相性を計�
 数列を作成します。隣り合う2つの数を足し合わせて新しい数列を作成します。ただし、要素の値が101を超えた場合は101を引きます。この手順を繰り返し、数列の要素数が1になるまで行います。
 2通りの相性を計算し、大きい方を返します。1つ目の名前を前にして計算する場合と、2つ目の名前を前にして計算する場合の2通りの相性を求め、大きい方の結果を採用します。
 '''
-# B080 みんなでスゴロク
+# B080 みんなでスゴロク　※入力例全てでNG
+# utf-8
+class SugorokuGame:
+    def __init__(self, N, M, K, move_effects, coin_effects, dice_results):
+        self.N = N
+        self.M = M
+        self.K = K
+        self.move_effects = move_effects
+        self.coin_effects = coin_effects
+        self.dice_results = dice_results
+        self.players = [0] * M
+
+    def simulate_sugoroku(self):
+        for i in range(self.K):
+            for j in range(self.M):
+                dice_result = self.dice_results[i][j]
+                self.players[j] += dice_result
+
+                if self.players[j] >= self.N - 1:
+                    self.players[j] = self.N - 1
+
+                new_position = self.players[j]
+                move_effect = 0
+
+                if new_position > 0 and new_position < self.N - 1:
+                    move_effect = self.move_effects[new_position - 1]
+
+                if move_effect > 0:
+                    self.players[j] += move_effect
+                elif move_effect < 0:
+                    self.players[j] = max(0, self.players[j] + move_effect)
+
+        max_coins = max(self.players)
+        winner = self.players.index(max_coins) + 1
+
+        return winner, max_coins
+
+
+def main():
+    N, M, K = map(int, input().split())
+    move_effects = []
+    coin_effects = []
+    dice_results = []
+
+    for _ in range(N - 2):
+        b, c = map(int, input().split())
+        move_effects.append(b)
+        coin_effects.append(c)
+
+    for _ in range(K):
+        dice_results.append(list(map(int, input().split())))
+
+    game = SugorokuGame(N, M, K, move_effects, coin_effects, dice_results)
+    winner, max_coins = game.simulate_sugoroku()
+    print(winner, max_coins)
+
+
+if __name__ == "__main__":
+    main()
 --------------------------------------------- B081　※欠番 ◆
 # B081 花壇のロープ
 # B082 休暇の取り方
