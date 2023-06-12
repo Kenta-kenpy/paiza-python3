@@ -3075,59 +3075,76 @@ else:
     # 結果を出力
     print(min_coins)
 
-# B064 うずを探せ　※テストケース70点　ランタイムエラー
+# B064 うずを探せ
 # utf-8
 import copy
-H,W=map(int,input().split())
-s1=[list(input()) for _ in range(H)]
-# print(s1)
-x,y,ans=0,0,0
-s=copy.deepcopy(s1)
+
+H, W = map(int, input().split())
+s = [list(input()) for _ in range(H)]
+
+# 入力値のバリデーションチェック
+if not (1 <= H <= 10) or not (1 <= W <= 10):
+    print("縦と横のサイズは1以上10以下である必要があります。")
+    exit()
+
+for row in s:
+    if len(row) != W or any(direction not in "RLUD" for direction in row):
+        print("入力が正しくありません。各行は長さWの文字列で、R, L, U, Dのみが使用できます。")
+        exit()
+
+x, y, ans = 0, 0, 0
+s1 = copy.deepcopy(s)
+
 for h in range(H):
     for w in range(W):
-        # print(s[h][w])
-        # s=copy.deepcopy(s1)
-        # 今いるマス目に書かれた方向
-        ss=s[h][w]
-        # 最初のスタート位置を決める処理
-        # マス目が*だったら次のマス目にスキップする
-        if ss=='*':
+        ss = s[h][w]
+        if ss == '*':
             continue
-        # 今いるマス目を*にしている
-        s[h][w]='*'
-        # 表よりはみ出てたら抜ける
-        if (h==0 and ss=='U') or (w==0 and ss=='L') or (h==H-1 and ss=='D') or (w==W-1 and ss=='R'):
+        s[h][w] = '*'
+        # スタート地点の範囲チェック
+        if (h == 0 and ss == 'U') or (w == 0 and ss == 'L') or (h == H-1 and ss == 'D') or (w == W-1 and ss == 'R'):
             continue
-        # スタート地点を決めている
-        x=h
-        y=w
-        # 全マス目文回している。渦があるかどうか探している
-        for i in range(H*W):
-            # 渦を辿っている
-            if ss=='U':
-                x-=1
-            elif ss=='L':
-                y-=1
-            elif ss=='D':
-                x+=1
-            elif ss=='R':
-                y+=1
-            # １マス先の文字を代入している
-            ss=s[x][y]
-            # 辿ったマス目を*にしている
-            s[x][y]='*'
-            # 一周したかどうか確認している
-            if x==h and y==w:
-                ans+=1
-                s1=copy.deepcopy(s)
-                # print(s)
+        x = h
+        y = w
+        for i in range(H * W):
+            # 移動先の座標の範囲チェック
+            if not (0 <= x < H) or not (0 <= y < W):
                 break
-            # 一周していないけど*があったら抜ける
-            if ss=='*':
-                s=copy.deepcopy(s1)
+            if ss == 'U':
+                x -= 1
+            elif ss == 'L':
+                y -= 1
+            elif ss == 'D':
+                x += 1
+            elif ss == 'R':
+                y += 1
+            ss = s[x][y]
+            s[x][y] = '*'
+            if x == h and y == w:
+                ans += 1
+                s1 = copy.deepcopy(s)
                 break
-# print(s)
+            if ss == '*':
+                s = copy.deepcopy(s1)
+                break
+
 print(ans)
+'''
+与えられた天気図のグリッド上で渦の個数を求める
+最初に、入力された縦幅と横幅を取得します。また、天気図の状態を表す文字列のリスト s を作成します。
+入力値のバリデーションチェックを行います。縦幅と横幅が1以上10以下であること、および各行が長さWの文字列であり、文字は'R', 'L', 'U', 'D'のいずれかであることを確認します。
+変数 x, y, ans を初期化します。x, y は現在の位置を表す変数で、ans は渦の個数を数えるための変数です。
+天気図の状態を保持するリスト s1 を作成します。このリストは、渦の探索中に一時的な変更を保持するために使用されます。
+全てのマスを順番に探索します。二重のループを使用し、各マスについて以下の処理を行います。
+マスの風向きを取得し、変数 ss に代入します。
+もしマスがすでに探索済みであればスキップし、探索を続けます。
+マスを探索済みとしてマークします。
+スタート地点の範囲チェックを行い、範囲外であればスキップし、次のマスへ移動します。
+スタート地点を設定し、渦の探索を開始します。
+一周するまで渦を辿り、マスを探索済みとしてマークします。一周した場合は、渦の個数 ans をインクリメントし、s1 を現在の天気図の状態に更新します。
+一周せずにすでに探索済みのマスに到達した場合、探索を終了します。
+最終的な渦の個数 ans を出力します。
+'''
 
 # B065 小さなライフゲーム
 # utf-8
