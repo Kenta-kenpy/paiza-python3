@@ -2750,7 +2750,7 @@ calculate_max_combo 関数を呼び出し、ボタンの数 N、タイミング�
 返された最大コンボ数を出力します。
 '''
 
-# B057 回転寿司　※入力例2,3でNG
+# B057 回転寿司　※入力例1でNG
 # utf-8
 def simulate_sushi_eating(L, sushi_positions, seat_positions):
     sushi_positions.sort()
