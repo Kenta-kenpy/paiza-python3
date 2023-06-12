@@ -1617,7 +1617,7 @@ date2 と辞書 d を比較して、カードの数字が日付を作るため�
 最後に、入力値を受け取り、get_lucky_day 関数を呼び出して結果を出力します。
 '''
 
-# B038 つるかめ算　※テストケース90点　条件内の特殊ケースで不一致
+# B038 つるかめ算　※入力例5でNG
 # utf-8
 def estimate_animals(a, b, c, d):
     # パイザ鶴とパイザ亀の匹数を推定する関数
@@ -1645,43 +1645,6 @@ if result == "miss":
     print("miss")
 else:
     print(result[0], result[1])
-
-# utf-8　※入力例ではOK　テストケース通過せず
-dat = input().split()
-
-foot_all = int(dat[0])
-head_all = int(dat[1])
-tsuru = int(dat[2])
-kame = int(dat[3])
-
-tsuru_search = foot_all - head_all * tsuru
-kame_search = head_all * kame - foot_all
-
-res_tsuru = 0
-res_kame = 0
-
-if tsuru_search > 0:
-	res_tsuru = tsuru_search/2
-elif tsuru_search == 0:
-	if tsuru == 1:
-		res_tsuru = 1
-	else:
-		res_tsuru = -1
-
-if kame_search > 0:
-	res_kame = kame_search/2
-elif kame_search == 0:
-	if kame == 1:
-		res_kame = 1
-	else:
-		res_kame = -1
-	
-if res_tsuru < 1:
-	print("miss")
-elif res_kame < 1:
-	print("miss")
-else:
-	print(int(res_kame), int(res_tsuru))
 	
 # B039 雨上がりの道　※テストケース通過せず
 # utf-8
