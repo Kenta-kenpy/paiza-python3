@@ -102,6 +102,84 @@ self は簡単に言えば、「どのインスタンスの属性か」を特定
 '''
 
 step3　構造体の整列
+# utf-8
+class Student:
+    def __init__(self, name, old, birth, state):
+        self.name = name
+        self.old = old
+        self.birth = birth
+        self.state = state
+
+
+n = int(input())
+
+roster = [None] * n
+for i in range(n):
+    name, old, birth, state = input().split()
+    roster[i] = Student(name, old, birth, state)
+
+for i in range(n):
+    for j in range(i+1, n):
+        if roster[i].old > roster[j].old:
+            roster[i], roster[j] = roster[j], roster[i]
+
+for student in roster:
+    print(student.name, student.old, student.birth, student.state)
+    
+'''
+問題文の指示通り生徒のデータを構造体でまとめて管理しましょう。構造体に関する文法は言語によって異なるので、自分の使っている言語の構造体に関する文法を参考にしましょう。
+1 人の生徒に関する情報をまとめた構造体 student をクラス全員分作成し、管理する必要があるため、構造体の配列を用いてクラス全員のデータを管理しましょう。
+作成した構造体は変数ではなく型として扱われます。イメージとしては整数型・文字列型...といったものと同じです。
+全ての生徒の情報を受け取ったのち、各生徒を表す構造体の年齢を参照して昇順に並び替えるような処理を実装すれば良いです。
+
+
+※ソートを自分で行う
+クラスで生徒の情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+ここでは、ソートの仕方を説明します。
+今回はある範囲内での最小値を見つけ、ソート済みのリストの末尾に追加するソート方法を取っています。
+【 ソートの説明 】
+まず、n 回繰り返す for 文(0 ≦ i < n)を記述します。
+上記の for 文 内で新たに for 文(i < j < n) を書き、2 重ループにします。
+i < j < n の範囲で最小値を見つけ出して、インデックス i の要素とすることを繰り返してソートを完了させます。
+-- イメージ --
+[(ソート済み) (インデックス i) | (ここから最小値を見つけて (インデックス i) の要素とする)]
+| が、だんだん右に進む
+
+<別解>
+class Student:
+    def __init__(self, name, old, birth, state):
+        self.name = name
+        self.old = old
+        self.birth = birth
+        self.state = state
+
+
+n = int(input())
+
+roster = [None] * n
+for i in range(n):
+    name, old, birth, state = input().split()
+    roster[i] = Student(name, int(old), birth, state)
+
+sorted_by_old = sorted(roster, key=lambda x: x.old)
+
+for student in sorted_by_old:
+    print(student.name, student.old, student.birth, student.state)
+    
+ラムダ式を用いる方法です。
+ソート自体は sorted 関数を使います。
+sorted 関数は、引数で key= を指定することで、「なにを基準に並べ替えるか」を決めることができます。
+key=lambda x: x.old とすることで、「roster が保持している Student クラスの old 」を基準に並べ替えるように指定できます。
+【 lambda とはなにか 】
+lambda は名前をつけないで関数を生成するために使われます。
+書き方は lambda 引数: 返り値 になります。
+今回の lambda x: x.old は以下の関数を利用することと同等です。
+def func(x):
+    return x.old
+x.old で Student クラスのインスタンスの年齢を取得できるので、key で年齢を指定することができます。
+'''
+
 final　構造体の更新
 
 <静的メンバ>
