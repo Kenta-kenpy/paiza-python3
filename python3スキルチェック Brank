@@ -2466,61 +2466,74 @@ for ticket in valid_tickets: print(ticket): 有効/無効なチケットのリ�
 '''
 --------------------------------------------- B051　※欠番 ◆
 # B051 ◆
-# B052 積もる粒子　※テストケース通過せず
+# B052 積もる粒子
 # utf-8
-def location_selector(x, y, field, H, W):
-    # 現在の地点の高さ
-    location_num = field[y][x]
+def simulate_landscape(H, W, N, particles):
+    landscape = [[0] * W for _ in range(H)]
     
-    # 隣接地点の高さの初期値を無限大で設定
-    kita = float("inf")
-    higashi = float("inf")
-    minami = float("inf")
-    nishi = float("inf")
+    def is_valid_position(x, y):
+        return 0 <= x < W and 0 <= y < H
     
-    # 移動先の選択
-    for _ in range(max(max(field))):
-        if y >= 1:
-            kita = field[y - 1][x]  # 北の地点の高さ
-        if x < int(W) - 1:
-            higashi = field[y][x + 1]  # 東の地点の高さ
-        if y < int(H) - 1:
-            minami = field[y + 1][x]  # 南の地点の高さ
-        if x >= 1:
-            nishi = field[y][x - 1]  # 西の地点の高さ
-            
-        # 高さの比較を行い、移動先を決定
-        if kita < location_num:
-            y -= 1  # 北に移動
-        elif higashi < location_num:
-            x += 1  # 東に移動
-        elif minami < location_num:
-            y += 1  # 南に移動
-        elif nishi < location_num:
-            x -= 1  # 西に移動
-        else:
-            break  # 移動できる場所がない場合、ループを終了
+    def get_lowest_neighbor(x, y):
+        lowest_height = landscape[y][x]
+        lowest_position = (x, y)
+        
+        # Check north neighbor
+        if is_valid_position(x, y - 1) and landscape[y - 1][x] < lowest_height:
+            lowest_height = landscape[y - 1][x]
+            lowest_position = (x, y - 1)
+        
+        # Check east neighbor
+        if is_valid_position(x + 1, y) and landscape[y][x + 1] < lowest_height:
+            lowest_height = landscape[y][x + 1]
+            lowest_position = (x + 1, y)
+        
+        # Check south neighbor
+        if is_valid_position(x, y + 1) and landscape[y + 1][x] < lowest_height:
+            lowest_height = landscape[y + 1][x]
+            lowest_position = (x, y + 1)
+        
+        # Check west neighbor
+        if is_valid_position(x - 1, y) and landscape[y][x - 1] < lowest_height:
+            lowest_height = landscape[y][x - 1]
+            lowest_position = (x - 1, y)
+        
+        return lowest_position
     
-    return x, y
+    for x, y in particles:
+        while True:
+            lowest_neighbor = get_lowest_neighbor(x, y)
+            if lowest_neighbor == (x, y):
+                landscape[y][x] += 1
+                break
+            else:
+                x, y = lowest_neighbor
     
-# 入力の受け取り
+    return landscape
+
+# 入力を受け取る
 H, W, N = map(int, input().split())
-particle = []
-field = [[0 for _ in range(W)] for _ in range(H)]
+particles = []
 for _ in range(N):
     x, y = map(int, input().split())
-    particle.append([x, y])
+    particles.append((x - 1, y - 1))  # 座標を0-indexedに変換
 
-# 粒子を順番に落として地形を形成する
-for i in range(N):
-    x = particle[i][0] - 1
-    y = particle[i][1] - 1
-    x, y = location_selector(x, y, field, H, W)
-    field[y][x] += 1
+# 地形をシミュレーションして結果を出力
+result = simulate_landscape(H, W, N, particles)
+for row in result:
+    print(" ".join(map(str, row)))
+'''
+simulate_landscape 関数は、地形をシミュレーションし、最終的な地形を表す二次元リスト landscape を作成します。初期状態では全ての要素が 0 で初期化されます。
+is_valid_position 関数は、指定された座標がマップ内に存在するかどうかを判定します。x が 0 以上 W 未満であり、y が 0 以上 H 未満であれば有効な座標と判定します。
+get_lowest_neighbor 関数は、指定された座標 (x, y) の隣接地点のうち、最も低い高さを持つ地点を求めます。まず、(x, y) の高さを lowest_height として初期化し、(x, y) 自体を lowest_position に設定します。その後、順番に北、東、南、西の順で隣接地点をチェックし、最も低い高さを持つ地点が見つかれば lowest_height と lowest_position を更新します。
+メインの処理部分では、各粒子に対してシミュレーションを行います。粒子の座標 (x, y) を受け取り、隣接地点のうち最も低い地点を lowest_neighbor として取得します。もし lowest_neighbor が (x, y) 自体であれば、その地点に粒子が固定されるため、landscape[y][x] の高さを 1 増やしてループを抜けます。そうでなければ、lowest_neighbor の座標を新たな (x, y) として更新し、再度隣接地点をチェックします。
 
-# 地形の高さを出力
-for i in range(H):
-    print(' '.join(map(str, field[i])))
+最後に、関数から最終的な地形の状態を表す二次元リスト landscape を返します。
+
+メイン部分では、入力を受け取り、粒子の座標をリスト particles に格納しています。その後、simulate_landscape 関数を呼び出し、結果を出力します。
+
+このコードは、指定された条件に基づいて地形をシミュレーションするためのものです。入力例に対して実行すると、最終的な地形の状態が出力されます。
+'''
 
 # B053 表の自動作成
 # utf-8
