@@ -1617,7 +1617,8 @@ date2 と辞書 d を比較して、カードの数字が日付を作るため�
 最後に、入力値を受け取り、get_lucky_day 関数を呼び出して結果を出力します。
 '''
 
-# B038 つるかめ算　※入力例5でNG
+# B038 つるかめ算　
+入力例5でNG
 # utf-8
 def estimate_animals(a, b, c, d):
     # パイザ鶴とパイザ亀の匹数を推定する関数
@@ -1645,7 +1646,33 @@ if result == "miss":
     print("miss")
 else:
     print(result[0], result[1])
-	
+
+# 入力例1でNG
+def estimate_animal_count(a, b, c, d):
+    # 推定されるパイザ鶴とパイザ亀の数を初期化
+    estimated_crane_count = 0
+    estimated_turtle_count = 0
+
+    # パイザ鶴とパイザ亀の数を推定
+    for i in range(1, a + 1):
+        j = a - i  # パイザ亀の数
+        if (i * c + j * d == b):  # 足の数が合致する場合
+            estimated_crane_count = i
+            estimated_turtle_count = j
+            break
+
+    # 推定結果を出力
+    if estimated_crane_count > 0 and estimated_turtle_count > 0:
+        return f"{estimated_crane_count} {estimated_turtle_count}"
+    else:
+        return "miss"
+
+# 入力を受け取る
+a, b, c, d = map(int, input().split())
+
+# 推定結果を出力
+print(estimate_animal_count(a, b, c, d))
+
 # B039 雨上がりの道　※テストケース通過せず
 # utf-8
 def find_accessible_ponds(n, s, ponds):
