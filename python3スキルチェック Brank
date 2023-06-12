@@ -978,126 +978,48 @@ print('\n'.join(N[-1]))
 最後に、各社員の画面に表示されるメッセージを出力します。各社員の画面ごとに、メッセージを改行区切りで表示し、最後にハイフンで区切ります。
 '''
 
-# B029 地価の予想　※テストケース90点　条件内の境界値で不一致
+# B029 地価の予想
 # utf-8
 import math
 
-def predict_land_price(x, y, k, known_points):
-    # 地点A（x, y）から既知の地点までの距離と価格を計算して保持する
-    distances = [(math.sqrt((x - xi) ** 2 + (y - yi) ** 2), pi) for xi, yi, pi in known_points]
-    distances.sort(key=lambda d: (d[0], d[1]))  # 距離を昇順にソート
-
-    # k個の最も近い地点の価格の合計を計算し、平均を求めて予測価格とする
-    total_price = sum(p for _, p in distances[:k])
-    predicted_price = round(total_price / k)
-
-    return predicted_price
-
 def main():
-    # 入力値の読み込み
+    # 地点Aの座標を入力
     x, y = map(int, input().split())
+    # k-近傍法のパラメータkを入力
     k = int(input())
+    # 既知の地点の総数Nを入力
     N = int(input())
 
-    # 入力条件の検証
-    if not (2 <= N <= 100):
-        raise ValueError("Nは2から100の範囲内である必要があります")
-    if not (1 <= k <= N):
-        raise ValueError("kは1からNの範囲内である必要があります")
-    if not (0 <= x <= 1000) or not (0 <= y <= 1000):
-        raise ValueError("xとyは0から1000の範囲内である必要があります")
-
-    known_points = []
+    info = []
+    # 既知の地点の座標と価格を入力し、距離を計算してinfoリストに追加
     for _ in range(N):
-        # 既知の地点の座標と価格を読み込む
         xi, yi, pi = map(int, input().split())
+        distance = math.sqrt((x - xi) ** 2 + (y - yi) ** 2)
+        info.append([xi, yi, pi, distance])
 
-        # 既知の地点の条件の検証
-        if not (0 <= xi <= 1000) or not (0 <= yi <= 1000):
-            raise ValueError("xiとyiは0から1000の範囲内である必要があります")
-        if not (1 <= pi <= 100):
-            raise ValueError("piは1から100の範囲内である必要があります")
+    # 距離を基準にinfoリストをソート
+    info.sort(key=lambda x: x[3])
 
-        known_points.append((xi, yi, pi))
+    # k個の地点の価格の合計を計算
+    sum_price = sum(info[i][2] for i in range(int(k)))
+    # 平均地価を求め、四捨五入して結果とする
+    result = int(sum_price / k) + int((sum_price / k * 10) % 10) // 5
 
-    # k-近傍法を使用して地点A（x, y）における地価を予測する
-    predicted_price = predict_land_price(x, y, k, known_points)
-
-    # 予測した地価を出力する
-    print(predicted_price)
+    # 結果を出力
+    print(result)
 
 if __name__ == "__main__":
-    try:
-        main()
-    except ValueError as e:
-        print("入力が無効です:", str(e))
-
-# utf-8　Java
-import java.util.Scanner;
-import java.util.TreeMap;
-
-public class Main {
-
-	public static void main(String[] args) {
-
-		Scanner in = new Scanner(System.in);
-
-		// 基準点のX座標,Y座標の設定
-
-		int coordinateX = in.nextInt();// 基準点X座標入力
-		int coordinateY = in.nextInt();// 基準点Y座標入力
-
-		// 近い点の個数・既知の個数の設定
-
-		int nearPointCount = in.nextInt();// 基準値からいくつ既知の点を使うか入力
-		int knownPointCount = in.nextInt();// 既知の点はいくつあるか入力
-
-		// 既知の点の座標・地価設定
-
-		int[] knownPointCoordinateX = new int[knownPointCount];// 既知の点のX座標格納
-		int[] knownPointCoordinateY = new int[knownPointCount];// 既知の点のY座標格納
-		int[] landPrice = new int[knownPointCount];// 既知の点の地価格納
-
-		for (int i = 0; i < knownPointCount; i++) {
-			knownPointCoordinateX[i] = in.nextInt();// X座標入力
-			knownPointCoordinateY[i] = in.nextInt();// Ｙ座標入力
-			landPrice[i] = in.nextInt();// 地価入力
-		}
-
-		// 基準値と既知との距離計算設定
-
-		TreeMap<Double, Integer> distanceLandPrice = new TreeMap<>(); // 基準値との距離ををkeyに地価をvalueのTreeMap
-		double tmp = 0;// 基準値との距離の一時変数
-
-		for (int i = 0; i < knownPointCount; i++) {
-
-			// 距離計算
-			tmp = Math.sqrt(Math.pow(coordinateX - knownPointCoordinateX[i], 2)
-					+ Math.pow(coordinateY - knownPointCoordinateY[i], 2));
-
-			distanceLandPrice.put(tmp, landPrice[i]);
-		}
-
-		// 基準点の地価計算設定
-
-		double sumLandPrice = 0;// 地価合計 四捨五入するためdouble型で扱う
-		int cnt = 0;// 既知の点をいくつ使ったかカウント
-
-		for (double key : distanceLandPrice.keySet()) {// 昇順にソートされたkeyから取り出す = 基準値との距離が短いものから
-
-			if (cnt == nearPointCount) {
-				break;
-			}
-			sumLandPrice += distanceLandPrice.get(key);// 地価の合計更新
-			cnt++;
-		}
-
-		// 結果出力
-
-		System.out.println(Math.round(sumLandPrice / nearPointCount));
-
-	}
-}
+    main()
+'''
+このコードは、与えられた地点Aと既知の地点の座標と価格を利用して、k-近傍法に基づいた地価の予測を行います。
+main関数では、まず地点Aの座標を入力します。x, y = map(int, input().split())の部分で、空白区切りの入力を整数として受け取っています。
+次に、k-近傍法のパラメータkと既知の地点の総数Nを入力します。k = int(input())とN = int(input())の部分で、整数の入力を受け取ります。
+その後、infoリストを用意し、N回のループで既知の地点の座標と価格を入力し、距離を計算してinfoリストに追加しています。
+xi, yi, pi = map(int, input().split())の部分で、空白区切りの入力を整数として受け取り、distance = math.sqrt((x - xi) ** 2 + (y - yi) ** 2)の部分で地点Aからの距離を計算しています。
+その後、infoリストを距離を基準にソートします。info.sort(key=lambda x: x[3])の部分で、lambda関数を用いて要素の3番目（距離）を基準にソートしています。
+次に、k個の地点の価格の合計を計算します。sum_price = sum(info[i][2] for i in range(int(k)))の部分で、リスト内包表記を用いてk個の地点の価格を合計しています。
+最後に、平均地価を求めて四捨五入し、結果を出力します。result = int(sum_price / k) + int((sum_price / k * 10) % 10) // 5の部分で、合計をkで割った商と剰余を用いて四捨五入を行っています。
+'''
 
 # B030 氷のダンジョン
 ※入力例1のみOK
