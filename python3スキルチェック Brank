@@ -3287,20 +3287,41 @@ else:
 最終的な結果を出力します。タスクを終了日までに完了できる場合は「YES」を、できない場合は「NO」を出力します。
 '''
 
-# B068 チョコの分割　※テストケース90点　条件内の境界値で不一致
+# B068 チョコの分割
 # utf-8
 def check(allSugarList):
-    # 各行の糖度の合計が偶数であるかを判定する関数
+    """
+    与えられたチョコレートの糖度リストが条件1を満たすかをチェックする関数
+
+    Parameters:
+        allSugarList (list): チョコレートの糖度リスト
+
+    Returns:
+        bool: 条件1を満たす場合はTrue、そうでない場合はFalse
+    """
     result = []
     for i in allSugarList:
         if sum(i) % 2 == 0:
             result.append(True)
         else:
             result.append(False)
-    return all(result)
+
+    if False in result:
+        return False
+    else:
+        return True
+
 
 def check2(allSugarList):
-    # 各行の糖度をアリスとボブで分割できるかを判定する関数
+    """
+    与えられたチョコレートの糖度リストが条件2を満たすかをチェックする関数
+
+    Parameters:
+        allSugarList (list): チョコレートの糖度リスト
+
+    Returns:
+        bool: 条件2を満たす場合はTrue、そうでない場合はFalse
+    """
     result = []
     for i in allSugarList:
         if sum(i) % 2 == 0:
@@ -3309,50 +3330,49 @@ def check2(allSugarList):
                 wa += j
                 if wa == sum(i) // 2:
                     result.append(True)
-                    break
-            else:
-                result.append(False)
-    return True in result
-
-# 入力のバリデーションチェックとエラーハンドリング
-try:
-    # 入力の受け取り
-    H, W = map(int, input().split())
-
-    # 入力値のバリデーションチェック
-    if not (1 <= H <= 100):
-        raise ValueError("Hは1から100の範囲内である必要があります。")
-    if not (2 <= W <= 100):
-        raise ValueError("Wは2から100の範囲内である必要があります。")
-
-    # チョコレートの糖度リストの初期化
-    allSugarList = []
-
-    # チョコレートの糖度の入力
-    for _ in range(H):
-        sugarList = list(map(int, input().split()))
-        if not all(1 <= a <= 1000 for a in sugarList):
-            raise ValueError("チョコレートの要素は1から1000の範囲内である必要があります。")
-        allSugarList.append(sugarList)
-
-    # チョコレートの分割と出力
-    if check(allSugarList) and check2(allSugarList):
-        print("Yes")
-        for row in allSugarList:
-            result = []
-            wa = sum(row) // 2
-            for j in range(W):
-                if wa != 0:
-                    wa -= row[j]
-                    result.append("A")
-                else:
-                    result.append("B")
-            print("".join(result))
+        if True not in result:
+            result.append(False)
+    if False in result:
+        return False
     else:
-        print("No")
+        return True
 
-except ValueError as e:
-    print(f"入力エラー: {str(e)}")
+
+# チョコレートの行数と列数を取得
+h, w = map(int, input().split())
+allSugarList = []
+
+# チョコレートのかけらの糖度を入力し、リストに追加
+for i in range(h):
+    result = []
+    sugarList = list(map(int, input().split()))
+    allSugarList.append(sugarList)
+
+# 2つの条件を満たすかをチェックし、結果に応じて出力
+if check(allSugarList) and check2(allSugarList):
+    print("Yes")
+    for i in allSugarList:
+        result = []
+        wa = sum(i) // 2
+        for j in range(w):
+            if wa != 0:
+                wa -= i[j]
+                result.append("A")
+            else:
+                result.append("B")
+        print("".join(result))
+else:
+    print("No")
+'''
+まず、check関数は、与えられたチョコレートの糖度リストが条件1を満たすかどうかをチェックする関数です。
+条件1は、「それぞれの行ごとに、アリスとボブが得る糖度の和が等しくなるようにチョコを分ける」というものです。check関数は、糖度リストの各行の糖度の和が偶数であればTrueを、奇数であればFalseを返します。
+次に、check2関数は、与えられたチョコレートの糖度リストが条件2を満たすかどうかをチェックする関数です。条件2は、「それぞれの行ごとに、左端から連続したかけらをアリスがもらい、残りはボブがもらう」というものです。
+check2関数は、糖度リストの各行に対して、左端から順にかけらの糖度を足していき、アリスがもらうかけらの糖度の和がその行の糖度の和の半分になるかどうかをチェックします。
+条件を満たす場合はTrueを、満たさない場合はFalseを返します。
+メインの処理部分では、まずチョコレートの行数と列数を入力として受け取ります。その後、糖度リストを入力として受け取り、allSugarListに格納します。
+次に、check関数とcheck2関数を使って、与えられたチョコレートが2つの条件を満たすかどうかを判定します。条件を満たす場合は"Yes"を出力し、各行に対してアリスとボブがもらうかけらを割り当てます。
+アリスがもらうかけらは左端から連続していき、残りはボブがもらうようにします。条件を満たさない場合は"No"を出力します。
+'''
     
 # B069 蟻の餌探し　※テストケース通過せず　50点
 # utf-8
