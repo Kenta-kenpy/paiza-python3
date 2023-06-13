@@ -2982,34 +2982,40 @@ print(d)  # 掃除したマスの数を出力
 最後に、掃除したマスの数 d を出力します。
 '''
 
-# B063 支払う枚数とお釣りの枚数　※入力例全てでNG
+# B063 支払う枚数とお釣りの枚数　※入力例2でNG　テストケース20点
 # utf-8
-def minimize_coins(X):
+import math
+
+def minimize_coin_count(X):
     coins = [500, 100, 50, 10, 5, 1]
-    num_coins = 0
+    count = 0
 
     for coin in coins:
-        num_coins += X // coin
+        count += X // coin
         X %= coin
 
-    return num_coins
+    return count
 
+def calculate_minimum_coins(X):
+    min_count = float('inf')  # 初期値を無限大に設定
 
-# 入力値を受け取る
-X = int(input().rstrip())
+    # 支払い金額とお釣りを考慮して枚数を計算
+    for i in range(X, X + 3):
+        payment_count = minimize_coin_count(i)
+        change_count = minimize_coin_count(i - X)
+        count = payment_count + change_count
 
-# バリデーションチェック
-if X < 1 or X > 999:
-    print("入力値は1以上999以下の範囲で指定してください。")
+        if count < min_count:
+            min_count = count
+
+    return min_count
+
+X = int(input().strip())
+if 1 <= X <= 999:
+    result = calculate_minimum_coins(X)
+    print(result)
 else:
-    # 最小の支払いとお釣りの硬貨枚数を計算
-    min_coins = float('inf')
-    for i in range(X + 1):
-        coins_used = minimize_coins(i) + minimize_coins(X - i)
-        min_coins = min(min_coins, coins_used)
-    
-    # 結果を出力
-    print(min_coins)
+    print("入力された金額が範囲外です。1から999までの金額を入力してください。")
 
 # B064 うずを探せ
 # utf-8
