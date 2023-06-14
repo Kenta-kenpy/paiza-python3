@@ -3374,52 +3374,57 @@ check2関数は、糖度リストの各行に対して、左端から順にか�
 アリスがもらうかけらは左端から連続していき、残りはボブがもらうようにします。条件を満たさない場合は"No"を出力します。
 '''
     
-# B069 蟻の餌探し　※テストケース通過せず　50点
+# B069 蟻の餌探し　※テストケース境界値を満たさず　90点
 # utf-8
-def check_ant_reachability(H, W, cage, food_positions):
-    # 蟻の巣の位置
-    nest = (1, 1)
-    # フェロモンの状態を管理する配列
-    pheromones = [[False] * W for _ in range(H)]
+import numpy as np
 
-    # 蟻の巣にフェロモンを付ける
-    pheromones[nest[0] - 1][nest[1] - 1] = True
-
-    # フェロモンをたどって餌にたどり着けるかを判定
-    def dfs(y, x):
-        # ゴールに到達した場合
-        if (y, x) in food_positions:
-            return True
-
-        # 上下左右の座標を探索
-        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
-        for dy, dx in directions:
-            ny, nx = y + dy, x + dx
-            # ケージの範囲内でフェロモンがあり、未探索の場合
-            if 0 <= ny < H and 0 <= nx < W and cage[ny][nx] == "#" and not pheromones[ny][nx]:
-                pheromones[ny][nx] = True  # フェロモンを付ける
-                if dfs(ny, nx):  # 再帰的に探索
-                    return True
-
+def isPheromone(ant_map, y, x):
+    if ant_map[y, x] != '#':
         return False
-
-    # 蟻の巣から探索を開始
-    if dfs(nest[0] - 1, nest[1] - 1):
-        return "NO"
     else:
-        return "YES"
+        return True
 
-# 入力を受け取る
-H, W = map(int, input().split())
-cage = [input() for _ in range(H)]
-N = int(input())
-food_positions = [tuple(map(int, input().split())) for _ in range(N)]
+"""
+深さ優先探索
+"""
+def isreachable(ant_map, search_map, feed_y, feed_x, H, W):
+    if (feed_y == 0) and (feed_x == 0):
+        return True
+    search_map[feed_y, feed_x] = True
+    directions = [(feed_y - 1, feed_x), (feed_y, feed_x - 1), (feed_y + 1, feed_x), (feed_y, feed_x + 1)]
+    for next_y, next_x in directions:
+        if (next_y < 0) or (next_x < 0) or (next_y >= H) or (next_x >= W):
+            continue
+        if search_map[next_y, next_x]:
+            continue
+        if isPheromone(ant_map, next_y, next_x):
+            if isreachable(ant_map, search_map, next_y, next_x, H, W):
+                return True
+    return False
 
-# 蟻がすべての餌にたどり着けるかを判定
-result = check_ant_reachability(H, W, cage, food_positions)
+if __name__ == '__main__':
+    H, W = map(int, input().rstrip().split())
+    ant_map = []
+    for _ in range(H):
+        ant_map.append(list(input().rstrip()))
+    ant_map = np.array(ant_map)
+    N = int(input())
 
-# 結果を出力
-print(result)
+    feed_list = [list(map(int, input().split())) for _ in range(N)]
+    cannot = False
+    for i in range(N):
+        if ant_map[feed_list[i][0] - 1, feed_list[i][1] - 1] != '#':
+            cannot = True
+            print('NO')
+            break
+        search_map = np.array([[False for _ in range(W)] for _ in range(H)])
+        if not isreachable(ant_map, search_map, feed_list[i][0] - 1, feed_list[i][1] - 1, H, W):
+            cannot = True
+            print('NO')
+            break
+
+    if not cannot:
+        print('YES')
 
 # B070 駒の到達範囲 ※0点
 def count_reachable_cells(N, H, W, K):
