@@ -3426,47 +3426,46 @@ if __name__ == '__main__':
     if not cannot:
         print('YES')
 
-# B070 駒の到達範囲 ※0点
+# B070 駒の到達範囲 ※入力例2でNG
 def count_reachable_cells(N, H, W, K):
-    # バリデーションチェック
-    if not (1 <= N <= 10):
-        return 0
-    if not (1 <= H <= N):
-        return 0
-    if not (1 <= W <= N):
-        return 0
-    if not (1 <= K <= 10):
-        return 0
+    # dpテーブルの初期化
+    dp = [[[0] * (K + 1) for _ in range(N)] for _ in range(N)]
+    dp[H-1][W-1][0] = 1
 
-    # 駒の初期位置
-    start_row = H - 1
-    start_col = W - 1
+    # 上下左右および斜め方向への移動量
+    dx = [0, 0, 1, -1]
+    dy = [1, -1, 0, 0]
 
-    # 駒が到達可能なマスの数をカウント
-    count = 0
+    # マスの移動をK回まで繰り返す
+    for k in range(1, K + 1):
+        for i in range(N):
+            for j in range(N):
+                for d in range(4):
+                    nx, ny = i + dx[d], j + dy[d]
+                    if 0 <= nx < N and 0 <= ny < N:
+                        dp[i][j][k] += dp[nx][ny][k-1]
+                
+                # 斜め方向への移動
+                for d in range(4):
+                    nx, ny = i + dx[d], j + dy[d]
+                    while 0 <= nx < N and 0 <= ny < N:
+                        dp[i][j][k] += dp[nx][ny][k-1]
+                        nx += dx[d]
+                        ny += dy[d]
 
-    # 上下左右および斜めの移動方向を定義
-    directions = [(1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1), (0, 0)]
+    # 到達可能なマスの数の合計を計算
+    total = sum(dp[i][j][K] for i in range(N) for j in range(N))
 
-    # 駒の移動回数に応じて探索
-    for k in range(K + 1):
-        # 上下左右および斜め方向に移動
-        for d in directions:
-            row = start_row + k * d[0]
-            col = start_col + k * d[1]
-
-            # 移動後の位置がチェスボード上にある場合、到達可能なマスとしてカウント
-            if 0 <= row < N and 0 <= col < N:
-                count += 1
-
-    return count
-
+    return total
 
 # 入力を受け取る
 N, H, W, K = map(int, input().split())
 
-reachable_cells = count_reachable_cells(N, H, W, K)
-print(reachable_cells)
+# 相異なるマスの数を計算
+result = count_reachable_cells(N, H, W, K)
+
+# 結果を出力
+print(result)
 
 --------------------------------------------- B071　※欠番 ◆
 # B071 ダンベルトレーニング　※テストケース通過せず　80点　境界値で不一致
