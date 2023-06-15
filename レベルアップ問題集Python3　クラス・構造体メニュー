@@ -181,6 +181,42 @@ x.old で Student クラスのインスタンスの年齢を取得できるの�
 '''
 
 final　構造体の更新
+# utf-8
+# utf-8
+class Student:
+    def __init__(self, name, old, birth, state):
+        self.name = name
+        self.old = old
+        self.birth = birth
+        self.state = state
+
+    def change_name(self, name):
+        self.name = name
+
+
+n, k = [int(x) for x in input().split()]
+
+roster = [None] * n
+for i in range(n):
+    name, old, birth, state = input().split()
+    roster[i] = Student(name, old, birth, state)
+
+for i in range(k):
+    index, new_name = input().split()
+    roster[int(index) - 1].change_name(new_name)
+
+for student in roster:
+    print(student.name, student.old, student.birth, student.state)
+'''
+全生徒の情報をまとめた構造体 student の配列を作成し、 changeName に引数として更新後の名前と更新する生徒の構造体を渡して、対象の生徒の名前 = 更新後の名前といった具合に更新を行えば良いです。
+これらの処理を行う上で注意しなければならないのが、「値渡し」と「参照渡し」です。宣言した変数がローカルなものである（グローバル変数でない）場合、関数に変数を渡すと、それは値渡しとなります。構造体の宣言はグローバルなものですが、構造体を元として宣言した変数はローカルなものとなります。
+値渡しの場合、引数として受け取った変数を更新しても、引数として渡した元の変数は変化しません。そのため、 changeName に構造体を参照渡しする必要があります。参照渡しの使用は言語によって異なるので、自分の使っている言語の文法に従ってください。
+
+クラスを定義して、生徒の情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+クラス内でメソッドを定義する方法は、普段、関数を定義する方法と変わりません。
+リストのインデックスは 0 から始まることに注意してください。
+'''
 
 <静的メンバ>
 step1　クラスの作成
