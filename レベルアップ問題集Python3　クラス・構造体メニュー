@@ -281,6 +281,53 @@ name = roster[index].getname() に関しても同様にできるので、やっ�
 '''
 
 step2　コンストラクタ
+# utf-8
+# utf-8
+class Employee:
+    def __init__(self, number, name):
+        self.number = number
+        self.name = name
+
+    def getnum(self):
+        return self.number
+
+    def getname(self):
+        return self.name
+
+
+n = int(input())
+
+roster = []
+for _ in range(n):
+    values = input().split()
+
+    query = values[0]
+    if query == "make":
+        number = int(values[1])
+        name = values[2]
+        roster.append(Employee(number, name))
+    elif query == "getnum":
+        index = int(values[1]) - 1
+        number = roster[index].getnum()
+        print(number)
+    else:
+        index = int(values[1]) - 1
+        name = roster[index].getname()
+        print(name)
+'''
+問題の指示通りクラスを作成します。クラスにはコンストラクタというものが存在します。コンストラクタとは、クラスの実体（オブジェクト）を作成するときに行われる処理をクラス内で宣言できる機能のことです。
+コンストラクタの設定方法も言語間で差があるので、お使いの言語の仕様に従ってください。
+今回は、「クラスのメンバ変数の値を設定する」という操作をオブジェクト作成時に行いたいので、クラスの各メンバ変数に設定したい値を引数として、代入を行うコンストラクタを実装すれば良いです。
+クラスを用いて従業員の情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+入力に対する応答の箇所は文字列の分割を利用するなどして、必要な情報を抽出する必要があります。
+以下の 2 点に注意が必要です。
+n は与えられる社員の情報の数ではない
+つまり、インスタンスを格納するリストを [None] * n のように初期化することができないので、append メソッドを利用して要素を追加する必要がある
+リストのインデックスは 0 から始まる
+つまり、i 番目の要素のインデックスは i-1 になる
+'''
+
 step3　クラスのメンバの更新
 step4　クラスの継承
 step5　デフォルト引数
