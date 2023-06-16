@@ -4178,7 +4178,56 @@ count_arr関数では、編集されたスケジュールを受け取り、最�
 
 # B083 宝の地図
 # utf-8
+N = int(input())  # 線分の本数を取得
+s = []  # 線分の情報を格納するリスト
+yoko = []  # 横方向の線分を格納するリスト
+tate = []  # 縦方向の線分を格納するリスト
+ans = float('inf')  # 面積の最小値を初期化
 
+# 線分の情報を入力
+for _ in range(N):
+    a, b, c, d = map(int, input().split())
+    s.append([a, b, c, d])
+
+# 横方向と縦方向に線分を分類
+for senn in s:
+    if senn[1] == senn[3]:
+        yoko.append(senn)
+    else:
+        tate.append(senn)
+
+# 最小面積の長方形を探索
+for i in range(len(yoko) - 1):
+    tate_temp = []  # 縦方向の線分の一時的な格納リスト
+    for tate_seg in tate:
+        if yoko[i][0] <= tate_seg[0] <= yoko[i][2] and tate_seg[1] <= yoko[i][1] <= tate_seg[3]:
+            tate_temp.append(tate_seg)
+
+    if len(tate_temp) < 2:
+        continue
+
+    for j in range(len(yoko)):
+        if j == i:
+            continue
+
+        for k in range(len(tate_temp) - 1):
+            if yoko[j][0] <= tate_temp[k][0] <= yoko[j][2] and tate_temp[k][1] <= yoko[j][1] <= tate_temp[k][3]:
+                for l in range(len(tate_temp)):
+                    if l == k:
+                        continue
+
+                    if yoko[j][0] <= tate_temp[l][0] <= yoko[j][2] and tate_temp[l][1] <= yoko[j][1] <= tate_temp[l][3]:
+                        a = max(tate_temp[l][0], tate_temp[k][0]) - min(tate_temp[l][0], tate_temp[k][0])
+                        b = max(yoko[j][1], yoko[i][1]) - min(yoko[j][1], yoko[i][1])
+                        area = a * b
+
+                        if area < ans:
+                            ans = area
+
+print(ans)  # 最小面積を出力
+'''
+
+'''
 
 # B084 オススメのお店
 # B085 宝探しの手順
