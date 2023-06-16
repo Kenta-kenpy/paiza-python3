@@ -4102,9 +4102,84 @@ field：地図の情報を格納した2次元リスト
 
 # B082 休暇の取り方
 # utf-8
+def calculate_longest_continuous_days(schedule, M):
+    # スケジュール内の「出勤」日数をカウントする
+    w_M = schedule.count("work")
+    index = 0
+    count = w_M - M + 1
+    ansArr = []
 
+    # スケジュールを繰り返し処理し、最長の連続休暇日数を見つける
+    for _ in range(count):
+        editArr, index = edit_arr(schedule.copy(), M, w_M, index)
+        ans = count_arr(editArr)
+        ansArr.append(ans)
+
+    return max(ansArr)
+
+
+def edit_arr(schedule, M, w_M, index):
+    # スケジュール内の「出勤」日のインデックスを見つける
+    workDays = [i for i, day in enumerate(schedule) if day == "work"]
+
+    # スケジュールを編集し、「出勤」日を「休み」日に変更する
+    for i in range(M):
+        if i + index < len(workDays):
+            schedule[workDays[i + index]] = "off"
+
+    index += 1
+    return schedule, index
+
+
+def count_arr(editArr):
+    ans = 0
+    count = 0
+    arr_last_index = len(editArr) - 1
+
+    # 編集されたスケジュールで最も長い連続休暇日数をカウントする
+    for i, shift in enumerate(editArr):
+        if shift == "off":
+            count += 1
+            if i == arr_last_index and ans <= count:
+                ans = count
+        else:
+            ans = max(ans, count)
+            count = 0
+
+    return ans
+
+
+N, M = map(int, input().split())
+schedule = []
+
+# 入力からスケジュールを読み取る
+for _ in range(N):
+    schedule.append(input().strip())
+
+result = calculate_longest_continuous_days(schedule, M)
+print(result)
+'''
+このコードは、与えられたスケジュールと有給休暇の日数を利用して、最も長い連続休暇日数を計算するものです。
+まず、calculate_longest_continuous_days関数は、スケジュールと有給休暇の日数を引数として受け取ります。この関数では、以下の処理が行われます。
+スケジュール内の「出勤」日数をカウントします。これは、schedule.count("work")によって行われます。
+indexを初期化し、有給休暇を利用して作成できる連続休暇日数の回数を計算します。具体的には、w_M - M + 1となります。
+連続休暇日数の結果を保持するためのリストansArrを初期化します。
+次に、連続休暇日数を計算するためのループが行われます。ループは、先ほど計算した回数分だけ繰り返されます。
+edit_arr関数を呼び出し、スケジュールを編集します。この関数では、スケジュールのコピー、有給休暇の日数、出勤日数、および現在のindexを引数として受け取ります。
+edit_arr関数では、まずスケジュール内の「出勤」日のインデックスを見つけます。これはリスト内包表記を使用して行われます。
+スケジュールを編集し、「出勤」日を「休み」日に変更します。これはforループを使用して行われます。ただし、インデックスが範囲外にならないようにチェックしてから変更します。
+indexをインクリメントして次の連続休暇日数の作成に備えます。
+スケジュールの編集が完了したら、count_arr関数を呼び出して連続休暇日数をカウントします。
+count_arr関数では、編集されたスケジュールを受け取り、最も長い連続休暇日数を計算します。具体的には、連続している「休み」日のカウントを行い、最大の連続休暇日数を保持します。
+ループが終了したら、ansArrに計算結果を追加します。
+最終的に、ansArrの中から最大の値を取得し、それが最も長い連続休暇日数となります。
+最後に、メインの処理が行われます。入力からスケジュールを読み取り、calculate_longest_continuous_days関数を呼び出して最長の連続休暇日数を計算し、結果を出力します。
+'''
 
 # B083 宝の地図
+# utf-8
+
+
 # B084 オススメのお店
 # B085 宝探しの手順
 # B086 公平な分割
