@@ -220,6 +220,66 @@ for student in roster:
 
 <静的メンバ>
 step1　クラスの作成
+# utf-8
+class Employee:
+    def __init__(self, number, name):
+        self.number = number
+        self.name = name
+
+    def getnum(self):
+        return self.number
+
+    def getname(self):
+        return self.name
+
+
+n = int(input())
+
+roster = []
+for _ in range(n):
+    values = input().split()
+
+    query = values[0]
+    if query == "make":
+        number = int(values[1])
+        name = values[2]
+        roster.append(Employee(number, name))
+    elif query == "getnum":
+        index = int(values[1]) - 1
+        number = roster[index].getnum()
+        print(number)
+    else:
+        index = int(values[1]) - 1
+        name = roster[index].getname()
+        print(name)
+'''
+今回の問題で挙げたクラスとは、構造体にその構造体内の変数を扱う関数を付属したものです。これを用いることで、構造体よりもより大きなものをひとまとめにすることができるようになります。
+今回の問題を構造体で解こうとした場合、社員の構造体 employee と、関数 getnum , getname を作成する必要があり、構造体と関数の間の値のやり取りが多くなってしまいます。
+クラス内では関数と値の複雑なやり取りをする必要がないため、社員クラスの中に getnum と getname を実装することで、構造体と関数を別に作るよりも簡潔なコードになります。
+クラスの作成や宣言の文法は言語によって異なるので、お使いの言語の文法に従ってください。
+入力に応じてクラスの関数を呼び出したり、クラスの実体（オブジェクト）を作成することでこの問題を解くことができます。
+
+【 解答の流れ・考え方 】
+クラスを用いて従業員の情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+入力に対する応答の箇所は文字列の分割を利用するなどして、必要な情報を抽出する必要があります。
+以下の 2 点に注意が必要です。
+n は与えられる社員の情報の数ではない
+つまり、インスタンスを格納するリストは [None] * n のように初期化することができないので、append メソッドを利用して要素を追加する必要がある
+リストのインデックスは 0 から始まる
+つまり、i 番目の要素のインデックスは i-1 になる
+【 ゲッターを定義せずにプロパティを取得する getattr 】
+getnum のようなメソッドをゲッターと呼ぶことがあります。
+Python3 では、getattr 関数を用いると、このゲッターを定義せずにプロパティを取得することができます。
+使い方は getattr(インスタンス, プロパティ名) です。
+具体例として number = roster[index].getnum() を getattr を用いて書き換えることを考えます。
+まず、インスタンス は roster[index] です。
+次に、プロパティ名 は number です。プロパティ名は文字列で指定することに注意してください。
+以上のことに注意して、getattr メソッドを用いて number = roster[index].getnum() の右辺を書き換えると getattr(roster[index], "number") となります。
+これで、getnum メソッドを定義しなくてもプロパティ number を取得できます。
+name = roster[index].getname() に関しても同様にできるので、やってみてください。
+'''
+
 step2　コンストラクタ
 step3　クラスのメンバの更新
 step4　クラスの継承
