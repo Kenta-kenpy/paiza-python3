@@ -4437,6 +4437,44 @@ y 座標を 1 から H-1 まで、x 座標を 1 から W-1 まで順に試しま
 '''
 
 # B087 隠された数
+# utf-8
+def find_max_number(h, w, k, grid):
+    max_number = -1
+
+    # 上から下に連続する数字を並べた場合の最大値を探す
+    for i in range(h):
+        for j in range(w - k + 1):
+            number = int(grid[i][j:j+k])
+            max_number = max(max_number, number)
+
+    # 左から右に連続する数字を並べた場合の最大値を探す
+    for i in range(w):
+        for j in range(h - k + 1):
+            number = int(''.join(grid[x][i] for x in range(j, j+k)))
+            max_number = max(max_number, number)
+
+    return max_number
+
+# 入力を受け取る
+h, w, k = map(int, input().split())
+grid = [input() for _ in range(h)]
+
+# 最大値を求める
+result = find_max_number(h, w, k, grid)
+
+# 結果を出力
+print(result)
+'''
+このプログラムは、与えられたマス目の情報を解析して条件に当てはまる数の最大値を見つけるためのものです。
+最初に、与えられたマス目の情報を受け取ります。h, w, k = map(int, input().split())の部分では、1行目から高さを表すh、幅を表すw、そして探す数の桁数を表すkを取得しています。マス目の情報は、次の行でgridというリストに格納されます。gridはh行の文字列からなるリストです。
+次に、find_max_numberという関数を定義します。この関数は、与えられたマス目の情報と条件の桁数kに基づいて、最大値を探します。
+関数内部では、max_numberという変数を初期化し、-1で設定します。これは探索中に見つかる数の最大値を保持するための変数です。
+最初のループでは、上から下に連続する数字を並べた場合の最大値を探します。for i in range(h)とfor j in range(w - k + 1)の2つのループを使用して、マス目を走査します。grid[i][j:j+k]は、i行目のj番目からk桁分の部分文字列を取得する操作です。これを整数に変換し、numberという変数に代入します。そして、max_numberとnumberを比較して、より大きい方をmax_numberに更新します。
+2番目のループでは、左から右に連続する数字を並べた場合の最大値を探します。for i in range(w)とfor j in range(h - k + 1)の2つのループを使用して、マス目を走査します。内側のループでは、指定された桁数kに対して、各行の対応する位置からの文字を取得し、それらを連結して整数に変換します。同様に、max_numberとnumberを比較して、より大きい方をmax_numberに更新します。
+最後に、find_max_number関数の結果をresultに代入し、結果を出力します。出力されるのは条件に当てはまる数の最大値です。
+このプログラムを使えば、与えられたマス目の情報から条件に当てはまる数の最大値を見つけることができます。
+'''
+
 # B088 ロボットのデバッグ
 # B089 秘密の言葉
 # B090 選挙の議席
