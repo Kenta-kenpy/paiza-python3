@@ -329,6 +329,77 @@ n は与えられる社員の情報の数ではない
 '''
 
 step3　クラスのメンバの更新
+# utf-8
+class Employee:
+    def __init__(self, number, name):
+        self.number = number
+        self.name = name
+
+    def getnum(self):
+        return self.number
+
+    def getname(self):
+        return self.name
+
+    def change_num(self, number):
+        self.number = number
+
+    def change_name(self, name):
+        self.name = name
+
+n = int(input())
+
+roster = []
+for _ in range(n):
+    values = input().split()
+
+    query = values[0]
+    if query == "make":
+        number = int(values[1])
+        name = values[2]
+        roster.append(Employee(number, name))
+    else:
+        index = int(values[1]) - 1
+        if query == "getnum":
+            number = roster[index].getnum()
+            print(number)
+        elif query == "getname":
+            name = roster[index].getname()
+            print(name)
+        elif query == "change_num":
+            new_num = int(values[2])
+            roster[index].change_num(new_num)
+        else:
+            new_name = values[2]
+            roster[index].change_name(new_name)
+'''
+クラス内の変数を操作するような関数を宣言する場合は、同じクラスの中に関数を作成することで、余計な値の受け渡しの手間を省くことができます。
+今回の問題の場合、change_num と change_name を class employee の外で関数として定義した場合は、クラス内の変数 number , name をクラスの外に渡し、更新した値をクラスに返すといった処理を行う必要がありますが、
+class employee の中で定義した場合は、 number , name を普通の変数として用いることができるので、変数に値を代入するだけで更新をおこなうことができるため、コードが簡潔になります。
+
+【 解答の流れ・考え方 】
+クラスを用いて従業員の情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+入力に対する応答の箇所は文字列の分割を利用するなどして、必要な情報を抽出する必要があります。
+以下の 2 点に注意が必要です。
+n は与えられる社員の情報の数ではない
+つまり、インスタンスを格納するリストを [None] * n のように初期化することができないので、append メソッドを利用して要素を追加する必要がある
+リストのインデックスは 0 から始まる
+つまり、i 番目の要素のインデックスは i-1 になる
+プロパティを変更するための構文は、変数への代入とよく似ており、self.プロパティ名 = 新しい値 のように書きます。
+【 セッターを定義せずにプロパティを更新する setattr 】
+change_num のようなメソッドをセッターと呼ぶことがあります。
+Python3 では、setattr 関数を用いると、このセッターを定義せずにプロパティを更新することができます。
+使い方は setattr(インスタンス, プロパティ名, 新しい値) です。
+具体例として roster[index].change_num(new_num) を setattr を用いて書き換えることを考えます。
+まず、インスタンス は roster[index] です。
+次に、プロパティ名 は number です。プロパティ名は文字列で指定することに注意してください。
+さらに、新しい値 は new_num です。
+以上のことに注意して、setattr メソッドを用いて roster[index].change_num(new_num) を書き換えると setattr(roster[index], "number", new_num) となります。
+これで、setnum メソッドを定義しなくてもプロパティ number を更新できます。
+roster[index].change_name(new_name) に関しても同様にできるので、やってみてください。
+'''
+
 step4　クラスの継承
 step5　デフォルト引数
 final　静的メンバ
