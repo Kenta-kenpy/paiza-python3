@@ -4378,6 +4378,64 @@ iを2倍にします。
 '''
 
 # B086 公平な分割
+# utf-8
+# ケーキのサイズを入力
+H, W = map(int, input().split())
+# ケーキの状態を入力
+cake = [input() for _ in range(H)]
+
+# スコアを計算する関数
+def calculate_score(c):
+    # イチゴの数を数える
+    strawberries = sum(row.count('@') for row in c)
+    # スコアを計算して返す
+    return len(c) * len(c[0]) + strawberries ** 2
+
+# 最小の不公平度と座標を保持する変数を初期化
+min_unfairness = float('inf')
+best_coordinates = []
+
+# 全ての可能な座標の組み合わせを試す
+for y in range(1, H):
+    for x in range(1, W):
+        # ケーキを4つの領域に分割
+        upper_left = [row[:x] for row in cake[:y]]
+        upper_right = [row[x:] for row in cake[:y]]
+        lower_left = [row[:x] for row in cake[y:]]
+        lower_right = [row[x:] for row in cake[y:]]
+
+        # 分割したケーキごとにスコアを計算
+        cakes = [upper_left, upper_right, lower_left, lower_right]
+        scores = [calculate_score(c) for c in cakes]
+
+        # 最大スコアと最小スコアの差が最小の不公平度を更新
+        unfairness = max(scores) - min(scores)
+        if unfairness < min_unfairness:
+            min_unfairness = unfairness
+            best_coordinates = [y, x]
+        elif unfairness == min_unfairness:
+            # 不公平度が同じ場合は座標の比較で最適な座標を更新
+            if y < best_coordinates[0] or (y == best_coordinates[0] and x < best_coordinates[1]):
+                best_coordinates = [y, x]
+
+# 結果を出力
+print(best_coordinates[0], best_coordinates[1])
+'''
+以下の手順でケーキを分割し、最も不公平度が低い切り分け方を求めるものです。
+
+最初に、ケーキの高さ H と幅 W を入力します。
+次に、H 行のケーキの状態を入力します。各行は W 文字の文字列で、'#' は生クリームを表し、'@' はイチゴを表します。
+不公平度を計算するための関数 calculate_score を定義します。この関数では、ケーキの面積にイチゴの個数の二乗を加えた値を返します。
+不公平度と座標を保持するための変数 min_unfairness と best_coordinates を初期化します。min_unfairness は最小の不公平度を表し、初期値として無限大を設定します。
+全ての可能な座標の組み合わせについて、以下の手順を実行します。
+y 座標を 1 から H-1 まで、x 座標を 1 から W-1 まで順に試します。
+ケーキを上左、上右、下左、下右の 4 つの領域に分割します。これにより、4 つのケーキが得られます。
+分割したケーキごとにスコアを計算します。スコアは関数 calculate_score を使用して、ケーキの面積にイチゴの個数の二乗を加えた値です。
+4 つのケーキのスコアの最大値と最小値の差を不公平度とします。
+不公平度が min_unfairness よりも小さい場合、不公平度を更新し、その座標を best_coordinates とします。不公平度が同じ場合は、より小さい座標が選択されるようにします。
+最も不公平度が低い切り分け方として選ばれた座標を出力します。
+'''
+
 # B087 隠された数
 # B088 ロボットのデバッグ
 # B089 秘密の言葉
