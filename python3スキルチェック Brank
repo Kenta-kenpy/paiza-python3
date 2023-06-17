@@ -1964,73 +1964,73 @@ s[x][y]が'*'（富豪の家）の場合、その家を'.'（庶民の家）に�
 最後の部分では、町の状態を出力しています。二次元リストsの各行を文字列に変換し、改行なしで出力します。
 '''
 
-# B044 爆弾ゲーム　※テストケース通過せず
+# B044 爆弾ゲーム
 # utf-8
-def is_enemy_defeated(board):
-    H, W = len(board), len(board[0])
-
-    # 盤面を拡張して周囲を壁で囲む
-    extended_board = ['#' * (W + 2)]
+def is_enemy_defeated(H, W, board):
+    # 盤面の初期化と敵の数のカウント
+    num_enemies = 0
     for row in board:
-        extended_board.append('#' + row + '#')
-    extended_board.append('#' * (W + 2))
+        num_enemies += row.count('X')
 
-    bombs = []  # 爆弾の位置と火力を格納するリスト
+    # 爆弾が爆発した際の敵の倒れる範囲を計算する関数
+    def explode_bomb(r, c, power):
+        nonlocal num_enemies
+        if power == 0:
+            return
+        for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            for i in range(1, power + 1):
+                nr, nc = r + i * dr, c + i * dc
+                if 0 <= nr < H and 0 <= nc < W:
+                    if board[nr][nc] == 'X':
+                        num_enemies -= 1
+                        board[nr][nc] = '.'
+                    elif board[nr][nc] == '#':
+                        break
+                else:
+                    break
 
-    # 爆弾の位置と火力を取得
-    for i in range(1, H + 1):
-        for j in range(1, W + 1):
-            if extended_board[i][j].isdigit():
-                bombs.append((i, j, int(extended_board[i][j])))
+    # 盤面の爆弾を探索し、爆発させる
+    for r in range(H):
+        for c in range(W):
+            if board[r][c].isnumeric():
+                power = int(board[r][c])
+                explode_bomb(r, c, power)
 
-    # 爆弾を順に試し、爆風の範囲にいる敵を倒せるか判定
-    for bomb in bombs:
-        i, j, power = bomb
-        # 上方向の爆風
-        for k in range(1, power + 1):
-            if extended_board[i - k][j] == '#':
-                break
-            if extended_board[i - k][j] == 'X':
-                extended_board[i - k] = extended_board[i - k][:j] + '.' + extended_board[i - k][j+1:]
-
-        # 下方向の爆風
-        for k in range(1, power + 1):
-            if extended_board[i + k][j] == '#':
-                break
-            if extended_board[i + k][j] == 'X':
-                extended_board[i + k] = extended_board[i + k][:j] + '.' + extended_board[i + k][j+1:]
-
-        # 左方向の爆風
-        for k in range(1, power + 1):
-            if extended_board[i][j - k] == '#':
-                break
-            if extended_board[i][j - k] == 'X':
-                extended_board[i] = extended_board[i][:j - k] + '.' + extended_board[i][j - k + 1:j] + 'X' + extended_board[i][j + 1:]
-
-        # 右方向の爆風
-        for k in range(1, power + 1):
-            if extended_board[i][j + k] == '#':
-                break
-            if extended_board[i][j + k] == 'X':
-                extended_board[i] = extended_board[i][:j] + 'X' + extended_board[i][j + 1:j + k] + '.' + extended_board[i][j + k + 1:]
-
-    # 盤面上に敵(X)が残っているか判定
-    for i in range(1, H + 1):
-        if 'X' in extended_board[i]:
-            return "NO"
-
-    return "YES"
+    # 全ての爆弾が爆発した後に敵が残っているか判定
+    if num_enemies == 0:
+        return "YES"
+    else:
+        return "NO"
 
 
-def main():
-    H, W = map(int, input().split())
-    board = [input() for _ in range(H)]
-    result = is_enemy_defeated(board)
-    print(result)
+# 入力の読み込み
+H, W = map(int, input().split())
+board = []
 
+# 盤面の読み込みと周囲を壁で囲む
+board.append(['#'] * (W + 2))
+for _ in range(H):
+    row = list(input().strip())
+    row.insert(0, '#')
+    row.append('#')
+    board.append(row)
+board.append(['#'] * (W + 2))
 
-if __name__ == "__main__":
-    main()
+# 判定結果の出力
+result = is_enemy_defeated(H, W, board)
+print(result)
+'''
+まず、is_enemy_defeated 関数を定義します。この関数は盤面の縦幅 H、横幅 W、および盤面の情報 board を受け取ります。
+関数内部では、敵の数をカウントするための変数 num_enemies を初期化します。そして、board 内の各行を走査し、'X' の出現回数を数えて num_enemies に加算します。
+次に、explode_bomb 関数を定義します。この関数は爆弾の位置と火力を受け取り、爆発した際の敵の倒れる範囲を計算します。
+関数内部では、爆発の方向を表すベクトル (dr, dc) を定義し、それを用いて爆発範囲を走査します。具体的には、爆発の中心から 1 から power までの距離を順に増やしながら、範囲内にあるマスをチェックします。
+マスが範囲内にあり、敵 'X' であれば num_enemies を減算し、そのマスを '.' (空マス) に変更します。マスが壁 '#' であれば、それ以上の範囲へは進めず、ループを抜けます。
+最後に、全ての爆弾が爆発した後に敵が残っているかを判定します。num_enemies の値が 0 であれば、全ての敵が倒されたことを意味し、"YES" を返します。そうでなければ、残っている敵がいることを意味し、"NO" を返します。
+メインの処理の後、盤面の情報を受け取ります。入力の読み込み部分では、最初に盤面の縦幅 H と横幅 W を読み込みます。そして、次に盤面の情報を board に格納していきます。
+board の各行を読み込む際に、行の前後に壁 '#' を追加して、盤面の周囲を壁で囲むようにします。
+最後に、is_enemy_defeated 関数を呼び出して判定結果を得て、それを出力します。
+以上が修正版のプログラムの解説です。このプログラムは、与えられた盤面の全ての爆弾を同時に爆発させた際に敵が全滅するかどうかを判定します。
+'''
 
 # B045 計算ドリル
 # utf-8
