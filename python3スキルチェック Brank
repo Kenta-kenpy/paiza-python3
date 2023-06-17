@@ -4240,6 +4240,70 @@ print(ans)  # 最小面積を出力
 '''
 
 # B084 オススメのお店
+# utf-8
+def recommend_restaurants(N, M, K, my_ratings, user_ratings):
+    similar_users = []
+
+    # 類似したユーザーを見つける
+    for i in range(M):
+        count = 0
+        for j in range(N):
+            # 自分の評価が3であり、ユーザーの評価も3の場合、好みが似ていると判断
+            if my_ratings[j] == 3 and user_ratings[i][j] == 3:
+                count += 1
+        if count >= K:
+            # 好みが似ているユーザーのインデックスを保存
+            similar_users.append(i + 1)
+
+    recommended_restaurants = []
+
+    # 推薦されたお店を見つける
+    for j in range(N):
+        if my_ratings[j] == 0:
+            for user in similar_users:
+                # 好みが似ているユーザーが評価したお店が3の場合、お店を推薦
+                if user_ratings[user - 1][j] == 3:
+                    recommended_restaurants.append(j + 1)
+                    break
+
+    return recommended_restaurants
+
+
+# 入力値の取得
+N, M, K = map(int, input().split())
+my_ratings = list(map(int, input().split()))
+user_ratings = []
+for _ in range(M):
+    user_ratings.append(list(map(int, input().split())))
+
+# お店の推薦
+recommendations = recommend_restaurants(N, M, K, my_ratings, user_ratings)
+
+# 推薦されたお店の出力
+if recommendations:
+    print(" ".join(map(str, recommendations)))
+else:
+    print("no")
+'''
+このコードは、与えられた評価データを解析し、好みが似ているユーザーが評価したお店を推薦するシンプルなアルゴリズムを実装しています。
+
+まず、recommend_restaurants 関数は、お店の推薦を行うための主要なロジックが含まれています。
+similar_users という空のリストを作成します。このリストは、好みが似ていると判断されたユーザーのインデックスを保持します。
+入力データのユーザーごとにループします。
+内側のループでは、自分の評価とユーザーの評価を比較し、好みが似ていると判断される基準数 K を満たすかどうかをカウントします。
+基準数 K を満たす場合は、そのユーザーを similar_users に追加します。
+recommended_restaurants という空のリストを作成します。このリストは、推薦されたお店のインデックスを保持します。
+自分が評価していないお店でループします。
+好みが似ていると判断されたユーザーごとにループします。
+ユーザーが評価したお店の評価が高い（3）場合、そのお店を recommended_restaurants に追加します。
+メインのプログラム部分では、入力値を受け取ります。
+N、M、K は、それぞれお店の数、ユーザーの数、好みが似ていると言える基準の数を表します。
+my_ratings は、自分のお店の評価リストを表します。
+user_ratings は、各ユーザーのお店の評価リストを2次元配列として表します。
+その後、recommend_restaurants 関数を呼び出し、お店の推薦を行います。推薦されたお店のリストを recommendations に保存します。
+最後に、推薦されたお店の出力を行います。推薦されたお店がある場合は、リストの要素を文字列に変換してスペース区切りで出力します。推薦されたお店がない場合は、"no" を出力します。
+'''
+
 # B085 宝探しの手順
 # B086 公平な分割
 # B087 隠された数
