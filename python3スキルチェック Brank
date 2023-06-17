@@ -1650,31 +1650,81 @@ if result == "miss":
 else:
     print(result[0], result[1])
 
-# B039 雨上がりの道　※テストケース通過せず
+# B039 雨上がりの道
 # utf-8
-def find_accessible_ponds(n, s, ponds):
-    amembo_pond = ponds[s-1]  # アメンボがいる水たまりの座標
-    accessible_ponds = []
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]  # 各要素の親を格納するリスト
+        self.rank = [0] * n  # 各要素のランク（深さ）を格納するリスト
 
-    for i, pond in enumerate(ponds):
-        if (amembo_pond[0] <= pond[2] and amembo_pond[2] >= pond[0] and
-            amembo_pond[1] <= pond[3] and amembo_pond[3] >= pond[1]):
-            accessible_ponds.append(i+1)
+    def find(self, x):
+        if self.parent[x] != x:  # 親が自身でない場合、再帰的に親をたどる
+            self.parent[x] = self.find(self.parent[x])  # 親を根に直接設定し、経路圧縮を行う
+        return self.parent[x]  # 根を返す
 
-    return accessible_ponds
+    def union(self, x, y):
+        root_x = self.find(x)  # xの根を取得
+        root_y = self.find(y)  # yの根を取得
 
-# 入力の解析と処理
-n = int(input())
-s = int(input())
-ponds = []
+        if root_x != root_y:  # 異なる根を持つ場合のみ結合処理を行う
+            if self.rank[root_x] < self.rank[root_y]:  # root_xのランクが小さい場合
+                self.parent[root_x] = root_y  # root_xの親をroot_yに設定
+            elif self.rank[root_x] > self.rank[root_y]:  # root_yのランクが小さい場合
+                self.parent[root_y] = root_x  # root_yの親をroot_xに設定
+            else:
+                self.parent[root_y] = root_x  # root_yの親をroot_xに設定
+                self.rank[root_x] += 1  # root_xのランクを増加させる
+
+
+def check_overlap(rect1, rect2):
+    # 2つの長方形が重なっているかを判定する関数
+    x_overlap = (rect1[0][0] <= rect2[1][0]) and (rect1[1][0] >= rect2[0][0])
+    y_overlap = (rect1[0][1] <= rect2[1][1]) and (rect1[1][1] >= rect2[0][1])
+    return x_overlap and y_overlap
+
+
+def find_accessible_puddles(n, s, puddles):
+    uf = UnionFind(n)  # UnionFindオブジェクトを初期化
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            if check_overlap(puddles[i], puddles[j]):  # 水たまりが重なっている場合
+                uf.union(i, j)  # 水たまりを結合
+
+    accessible_puddles = []  # アメンボが入ることのできる水たまりのリスト
+    root = uf.find(s - 1)  # アメンボがいる水たまりの根を取得
+
+    for i in range(n):
+        if uf.find(i) == root:  # 同じ根に属する水たまりはアメンボが入れる
+            accessible_puddles.append(i + 1)  # 水たまりの番号をリストに追加
+
+    return accessible_puddles
+
+
+# 入力値の読み込み
+n = int(input())  # 水たまりの個数
+s = int(input())  # アメンボがいる水たまりの番号
+
+puddles = []
 for _ in range(n):
     x, y, a, b = map(int, input().split())
-    ponds.append((x, y, a, b))
+    puddles.append(((x, y), (a, b)))  # 水たまりの座標をタプルとしてリストに追加
 
-accessible_ponds = find_accessible_ponds(n, s, ponds)
+accessible_puddles = find_accessible_puddles(n, s, puddles)  # アメンボが入れる水たまりを求める
 
-# 結果の出力
-print('\n'.join(map(str, accessible_ponds)))
+for puddle in accessible_puddles:
+    print(puddle)  # 結果を出力
+'''
+ここでは、Union-Find法による解法のコード例の解説を行います。
+まず、UnionFindクラスを定義しています。このクラスは、Union-Findデータ構造を表現するためのものです。
+__init__メソッドでは、要素の数を指定してUnionFindオブジェクトを初期化します。parentリストは各要素の親を表し、最初は自身を親として初期化します。rankリストは各要素のランク（深さ）を表し、最初はすべて0で初期化します。
+findメソッドは、指定された要素の親を再帰的に辿り、根（ルート）の要素を返します。また、途中で辿った要素の親を根に直接設定することで経路圧縮を行っています。これにより、次回以降のfind操作の際に効率的に根を特定することができます。
+unionメソッドは、2つの要素を結合します。まず、それぞれの要素の根（ルート）を取得し、異なる根を持つ場合にのみ結合処理を行います。結合時には、ランク（深さ）を考慮して低いランクの木を高いランクの木に結合し、木のバランスを保ちます。
+次に、find_accessible_puddles関数では、与えられた水たまりの情報を基にアメンボが入ることのできる水たまりを特定します。
+まず、UnionFindオブジェクトを初期化します。その後、2重ループを使ってすべての水たまりの組み合わせをチェックします。check_overlap関数を利用して重なっているかを判定し、重なっている場合はそれらの水たまりを結合します。
+結合処理が終わった後、アメンボがいる水たまりのルートを取得します（s - 1で指定）。そのルートに属する水たまりがアメンボが入ることのできる水たまりとなります。最後に、結果を出力します。
+この解法では、Union-Findデータ構造を使って水たまりの重なりを効率的に判定し、アメンボが入ることのできる水たまりを特定しています。Union-Find法は連結性の管理に優れたデータ構造であり、効率的なグループ化が可能です。これにより、問題の制約条件に合わせた高速な解法を実現しています。
+'''
 
 # B040 たのしい暗号解読
 # 入力値の取得
