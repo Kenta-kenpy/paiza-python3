@@ -4586,6 +4586,43 @@ mukiが0の場合（上を向いている場合）：
 '''
 
 # B089 秘密の言葉
+# utf-8
+# NとMの値を取得
+N, M = map(int, input().split())
+
+# 文字盤の入力を受け取る
+board = []
+for _ in range(N):
+    row = list(input().rstrip())
+    board.append(row)
+
+# 単語リストの入力を受け取る
+words = []
+for _ in range(M):
+    word = input().rstrip()
+    words.append(word)
+
+# 各単語の先頭文字の位置を探索して出力
+for word in words:
+    for i in range(N):
+        for j in range(N):
+            if board[i][j] == word[0]:  # 先頭文字が一致する場所を探す
+                flag = True
+                for k in range(1, len(word)):
+                    if i + k >= N or j + k >= N or board[i + k][j + k] != word[k]:
+                        flag = False
+                        break
+                if flag:
+                    # 単語の先頭文字の位置を出力
+                    print(j + 1, i + 1)
+                    break  # 単語が見つかったら探索を終了する
+'''
+最初に、入力から文字盤のサイズNと単語の個数Mを取得します。次に、N行の文字盤を入力します。文字盤は2次元リストとして表現されます。
+続いて、M個の単語を入力します。単語はリストに格納されます。単語リストの各単語について、文字盤上での先頭文字の位置を探索します。
+先頭文字が一致する場所を見つけたら、その位置を出力します。単語が見つかったら、それ以上の探索は行わずに次の単語に進みます。
+このコードは、文字盤と単語のリストを受け取り、単語の先頭文字の位置を特定するものです。
+'''
+
 # B090 選挙の議席
 --------------------------------------------- B091　※欠番 ◆
 # B091 山頂を探せ
