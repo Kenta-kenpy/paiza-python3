@@ -4101,33 +4101,46 @@ M回のループで、順番に人がカウンターに並びます。
 計算された時間を出力します。
 '''
 
-# B078 動画視聴スケジュール　※入力例2でNG
+# B078 動画視聴スケジュール　※テストケース通過せず
 # utf-8
-def maximum_videos(N, schedule):
-    videos = []
-    for i in range(N):
-        start_time, duration = map(int, schedule[i].split())
-        videos.append((start_time, duration))
+import sys
 
-    videos = sorted(videos)  # 開始時間でソート
-    count = 0
-    end_time = 0
+def calculate_max_videos(vacation_end, broadcast_schedule):
+    total_time = vacation_end
+    max_videos = 0
 
-    for start_time, duration in videos:
-        if start_time >= end_time:
-            count += 1
-            end_time = start_time + duration
+    for start, duration in broadcast_schedule:
+        total_time -= duration
 
-    return count
+        if total_time >= 0:
+            max_videos += 1
+        else:
+            break
 
+    return max_videos
 
-N = int(input())
-schedule = []
-for _ in range(N):
-    schedule.append(input())
+# 標準入力から入力を読み込む
+def read_input():
+    lines = sys.stdin.readlines()
+    N = int(lines[0])
+    broadcast_schedule = []
 
-result = maximum_videos(N, schedule)
-print(result)
+    for line in lines[1:]:
+        start, duration = map(int, line.split())
+        broadcast_schedule.append((start, duration))
+
+    vacation_end = broadcast_schedule[-1][0] + broadcast_schedule[-1][1]
+
+    return vacation_end, broadcast_schedule
+
+# 入力の読み込みと結果の出力
+def main():
+    vacation_end, broadcast_schedule = read_input()
+    max_videos = calculate_max_videos(vacation_end, broadcast_schedule)
+    print(max_videos)
+
+if __name__ == '__main__':
+    main()
 
 # B079 相性チェック
 # utf-8
