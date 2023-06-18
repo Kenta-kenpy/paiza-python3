@@ -2770,20 +2770,24 @@ calculate_max_combo 関数を呼び出し、ボタンの数 N、タイミング�
 返された最大コンボ数を出力します。
 '''
 
-# B057 回転寿司　※入力例1でNG
+# B057 回転寿司　※入力例3でNG
 # utf-8
-def simulate_sushi_eating(L, sushi_positions, seat_positions):
+def calculate_completion_time(L, sushi_positions, seat_positions):
     sushi_positions.sort()
     seat_positions.sort()
 
     max_time = 0
-    for seat in seat_positions:
-        min_distance = L
-        for sushi in sushi_positions:
-            distance = (sushi - seat) % L
-            min_distance = min(min_distance, distance)
+    sushi_count = len(sushi_positions)
+    seat_count = len(seat_positions)
 
-        eating_time = min_distance + 10
+    for i in range(sushi_count):
+        eating_time = 0
+
+        for j in range(seat_count):
+            distance = (sushi_positions[i] - seat_positions[j] + L) % L
+            time_to_eat = distance + 10
+            eating_time = max(eating_time, time_to_eat)
+
         max_time = max(max_time, eating_time)
 
     return max_time
@@ -2793,9 +2797,9 @@ L, N, M = map(int, input().split())
 sushi_positions = list(map(int, input().split()))
 seat_positions = list(map(int, input().split()))
 
-result = simulate_sushi_eating(L, sushi_positions, seat_positions)
+completion_time = calculate_completion_time(L, sushi_positions, seat_positions)
 
-print(result)
+print(completion_time)
 
 別解 # utf-8　※入力例1でNG
 def calculate_completion_time(sushi_positions, seat_positions, L):
