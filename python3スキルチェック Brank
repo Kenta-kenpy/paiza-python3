@@ -3488,50 +3488,88 @@ check2関数は、糖度リストの各行に対して、左端から順にか�
 アリスがもらうかけらは左端から連続していき、残りはボブがもらうようにします。条件を満たさない場合は"No"を出力します。
 '''
     
-# B069 蟻の餌探し　※テストケース境界値を満たさず　90点
+# B069 蟻の餌探し
 # utf-8
 import numpy as np
+import sys
+
+sys.setrecursionlimit(10**6)
 
 def isPheromone(ant_map, y, x):
+    # 指定された座標がフェロモンのある座標かどうかを判定
     if ant_map[y, x] != '#':
         return False
     else:
         return True
 
-"""
-深さ優先探索
-"""
 def isreachable(ant_map, search_map, feed_y, feed_x, H, W):
+    # 目的地に到達可能かどうかを判定する再帰関数
     if (feed_y == 0) and (feed_x == 0):
         return True
+
     search_map[feed_y, feed_x] = True
+
     directions = [(feed_y - 1, feed_x), (feed_y, feed_x - 1), (feed_y + 1, feed_x), (feed_y, feed_x + 1)]
     for next_y, next_x in directions:
+        # 次の座標が範囲外の場合はスキップ
         if (next_y < 0) or (next_x < 0) or (next_y >= H) or (next_x >= W):
             continue
+        # すでに探索済みの場合はスキップ
         if search_map[next_y, next_x]:
             continue
+        # フェロモンのある座標の場合、再帰的に探索を行う
         if isPheromone(ant_map, next_y, next_x):
             if isreachable(ant_map, search_map, next_y, next_x, H, W):
                 return True
+
     return False
 
 if __name__ == '__main__':
     H, W = map(int, input().rstrip().split())
+
+    # 入力の制約条件のバリデーションチェック
+    if H < 3 or H > 100 or W < 3 or W > 100:
+        print('Invalid input: H and W should be between 3 and 100.')
+        exit()
+
     ant_map = []
     for _ in range(H):
-        ant_map.append(list(input().rstrip()))
+        s = input().rstrip()
+
+        # 入力の制約条件のバリデーションチェック
+        if len(s) != W or not all(ch == '.' or ch == '#' for ch in s):
+            print('Invalid input: Each S_i should be a string of length W containing only "." or "#".')
+            exit()
+
+        ant_map.append(list(s))
     ant_map = np.array(ant_map)
+
     N = int(input())
 
+    # 入力の制約条件のバリデーションチェック
+    if N < 1 or N > 10:
+        print('Invalid input: N should be between 1 and 10.')
+        exit()
+
     feed_list = [list(map(int, input().split())) for _ in range(N)]
+
+    # feed_list の各要素の範囲チェック
+    for i in range(N):
+        y, x = feed_list[i]
+        if y < 1 or y > H or x < 1 or x > W:
+            print('Invalid input: y_k and x_k should be between 1 and H, 1 and W respectively.')
+            exit()
+
     cannot = False
     for i in range(N):
+        # 餌の座標がフェロモンのある座標でない場合は到達不可能と判定
         if ant_map[feed_list[i][0] - 1, feed_list[i][1] - 1] != '#':
             cannot = True
             print('NO')
             break
+
         search_map = np.array([[False for _ in range(W)] for _ in range(H)])
+        # 到達可能かどうかを判定
         if not isreachable(ant_map, search_map, feed_list[i][0] - 1, feed_list[i][1] - 1, H, W):
             cannot = True
             print('NO')
@@ -3539,6 +3577,15 @@ if __name__ == '__main__':
 
     if not cannot:
         print('YES')
+'''
+まず、isPheromone関数は、指定された座標がフェロモンのある座標かどうかを判定します。ant_mapという2次元配列でアリの巣と餌の情報を保持しており、座標の値が'#'ならフェロモンがあることを意味し、それ以外ならフェロモンがないことを示します。
+次に、isreachable関数は、再帰的な探索を行い、目的地までの到達可能性を判定します。feed_yとfeed_xは現在の座標を表します。関数内では、現在の座標が目的地に到達しているかを確認し、到達していればTrueを返します。
+そうでなければ、現在の座標から上下左右の座標に移動し、再帰的に探索を行います。探索済みの座標はsearch_mapという2次元配列で管理され、Trueがセットされている座標は再度探索しないようになっています。
+メインの処理部分では、まず入力からアリの巣と餌の情報を受け取り、制約条件のバリデーションチェックを行います。アリの巣と餌の情報はant_mapという2次元配列に格納されます。
+次に、餌の数と座標のリストを受け取り、それぞれの座標が制約条件に適合しているかをチェックします。
+その後、餌の座標がフェロモンのある座標でない場合や、餌からアリの巣まで到達できない場合にはNOを出力し、それ以外の場合はYESを出力します。
+このように、制約条件のチェックや再帰的な探索を行いながら、アリが餌まで移動できるかどうかを判定するプログラムとなっています。
+'''
 
 # B070 駒の到達範囲 ※入力例2でNG
 def count_reachable_cells(N, H, W, K):
