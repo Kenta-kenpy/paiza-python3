@@ -4806,8 +4806,30 @@ for word in words:
 このコードは、文字盤と単語のリストを受け取り、単語の先頭文字の位置を特定するものです。
 '''
 
-# B090 選挙の議席
+# B090 選挙の議席　※入力例1,2でNG
 # utf-8
+def distribute_seats(N, K, votes):
+    seats = [0] * N  # 各政党の議席数を初期化
+
+    # ドント式による議席の割り振り
+    for i in range(1, K + 1):
+        max_votes_index = max(range(N), key=lambda j: votes[j] // i)  # 得票数を割ることで小さくなった値の最大の政党を選択
+        seats[max_votes_index] += 1  # 選ばれた政党に議席を割り振る
+
+    return seats
+
+# 入力を受け取る
+N, K = map(int, input().split())
+votes = []
+for _ in range(N):
+    votes.append(int(input()))
+
+# 議席の配分を計算
+seats = distribute_seats(N, K, votes)
+
+# 結果を出力
+for seat in seats:
+    print(seat)
 
 --------------------------------------------- B091　※欠番 ◆
 # B091 山頂を探せ
