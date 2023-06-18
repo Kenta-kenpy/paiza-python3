@@ -332,68 +332,40 @@ print(result)
 
 # B016 ここはどこ？
 # utf-8
-class B016:
-    def __init__(self):
-        info = input().split()
-        self.board = {"W": int(info[0]), "H": int(info[1])}
-        self.move_times = int(info[2])
-        self.player = {}
-
-    def set_player_position(self):
-        position = input().split()
-        self.player["X"] = int(position[0])
-        self.player["Y"] = int(position[1])
-
-    def set_move_info(self):
-        self.move_info = []
-        for i in range(self.move_times):
-            move = input().split()
-            self.move_info.append({"dir": move[0], "step": int(move[1])})
-
-    def get_final_position(self):
-        for move in self.move_info:
-            self.move(move["dir"], move["step"])
-
-    def move(self, direction, step):
+def get_final_position(w, h, x, y, moves):
+    for move in moves:
+        direction, steps = move
         if direction == "U":
-            step = step % self.board["H"]
-            if self.player["Y"] + step > self.board["H"] - 1:
-                self.player["Y"] = step - (self.board["H"] - self.player["Y"])
-            else:
-                self.player["Y"] += step
+            y = (y + steps) % h  # 上への移動
         elif direction == "D":
-            step = step % self.board["H"]
-            if self.player["Y"] - step < 0:
-                self.player["Y"] = self.board["H"] - (step - self.player["Y"])
-            else:
-                self.player["Y"] -= step
+            y = (y - steps) % h  # 下への移動
         elif direction == "L":
-            step = step % self.board["W"]
-            if self.player["X"] - step < 0:
-                self.player["X"] = self.board["W"] - (step - self.player["X"])
-            else:
-                self.player["X"] -= step
+            x = (x - steps) % w  # 左への移動
         elif direction == "R":
-            step = step % self.board["W"]
-            if self.player["X"] + step > self.board["W"] - 1:
-                self.player["X"] = step - (self.board["W"] - self.player["X"])
-            else:
-                self.player["X"] += step
+            x = (x + steps) % w  # 右への移動
 
-    def display(self):
-        print("{} {}".format(self.player["X"], self.player["Y"]))
+    return x, y
 
-b016 = B016()
-b016.set_player_position()
-b016.set_move_info()
-b016.get_final_position()
-b016.display()
+# 入力を受け取る
+w, h, n = map(int, input().split())  # マップの横幅 w、縦幅 h、移動ログの個数 n を受け取る
+x, y = map(int, input().split())  # 初期位置 x, y を受け取る
+move_logs = []
+for _ in range(n):
+    direction, steps = input().split()  # 移動ログの情報を受け取る
+    move_logs.append((direction, int(steps)))  # 移動ログをリストに追加
+
+# 最終位置を計算
+final_position = get_final_position(w, h, x, y, move_logs)
+
+# 結果を出力
+print(final_position[0], final_position[1])  # 最終位置を出力
 '''
-このコードは、与えられた初期位置と移動ログに基づいて、移動後の位置を計算して出力するプログラムです。
-まず、1行目でマップの横幅 w、縦幅 h、移動ログの個数 nを読み取ります。2行目では初期位置 x, yを読み取り、3行目からn+2行目までの各行で移動ログを読み取ります。
-移動ログには、「dir_i」と「m_i」があり、「dir_i」は移動する方向（"U"、"D"、"R"、"L"）を、「m_i」は移動する距離を表しています。各ログに基づいて、プログラムは現在の位置から移動後の位置を計算し、最後に移動後の位置を出力します。
-「move」メソッドは、与えられた方向と距離に応じて、与えられた座標を更新する関数です。プログラムは、与えられた移動ログに基づいて、「move」メソッドを呼び出し、プレイヤーの位置を更新します。
-最後に、「display」メソッドは、プレイヤーの最終位置を出力します。
+与えられたマップの情報と移動ログを処理し、キャラクターの最終位置を計算して表示するものです。
+まず、get_final_position 関数は、マップの情報と移動ログを受け取り、キャラクターの最終位置を計算する役割を担っています。
+移動ログの情報を1つずつ取り出し、指定された方向とステップ数に基づいてキャラクターの位置を更新します。また、マップの端に達した場合は巡回するように設定されています。最終的な位置は (x, y) の形式で返されます。
+次に、入力を受け取ります。input().split() を使用して、マップの横幅 w、縦幅 h、移動ログの個数 n、初期位置 x、y を入力から読み取ります。
+移動ログはループを使用して、n 回分だけ読み取り、方向とステップ数の情報をタプルとして move_logs リストに追加します。
+最後に、get_final_position 関数を呼び出し、計算された最終位置を final_position に代入します。最終位置の横座標と縦座標を final_position[0] と final_position[1] から取り出し、表示します。
 '''
 
 # B017 手役の強さ(花札)
