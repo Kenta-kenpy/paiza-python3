@@ -541,7 +541,203 @@ class サブクラス名(スーパークラス名):
 '''
 
 step5　デフォルト引数
+# utf-8
+class Customer:
+    def __init__(self):
+        self.sum = 0
+
+    def take_food(self, price):
+        self.sum += price
+
+    def take_softdrink(self, price):
+        self.sum += price
+
+    def take_alcohol(self, price=500):
+        # 何もしない (却下)
+        pass
+
+    def get_sum(self):
+        return self.sum
+
+
+class Adult(Customer):
+    def __init__(self):
+        super().__init__()
+        self.alcohol = False
+
+    def take_food(self, price):
+        if self.alcohol:
+            self.sum += price - 200
+        else:
+            self.sum += price
+
+    def take_alcohol(self, price=500):
+        self.sum += price
+        self.alcohol = True
+
+
+n, k = [int(x) for x in input().split()]
+
+customers = [None] * n
+for i in range(n):
+    age = int(input())
+
+    if age >= 20:
+        customers[i] = Adult()
+    else:
+        customers[i] = Customer()
+
+for _ in range(k):
+    values = input().split()
+
+    index = int(values[0]) - 1
+    order = values[1]
+
+    if order == "0":
+        customers[index].take_alcohol()
+    else:
+        price = int(values[2])
+
+        if order == "food":
+            customers[index].take_food(price)
+        elif order == "softdrink":
+            customers[index].take_softdrink(price)
+        else:
+            customers[index].take_alcohol(price)
+
+for customer in customers:
+    print(customer.get_sum())
+'''
+未成年のお客さんを表すクラスを宣言したのち、そのクラスを継承して成年済のお客さんのクラスを宣言します。
+クラス内の関数の引数にはデフォルト値が設定できます。デフォルト値を設定する変数を先に記述する必要があるので気をつけてください。
+
+クラスを用いてお客さんの情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+継承については前問の「クラスの継承」で詳しく説明しているので、興味のある方はご覧ください。
+【 流れ・考え方 】
+今回は、ビールの値段の 500 円を take_alcohol メソッドの仮引数 price のデフォルト値に設定します。
+また、Python では、入力を行単位で受け取るので、前問と同様に注文の入力値を処理しようとするとエラーが発生します。
+なぜかというと、ビールの注文は お客さんの番号 0 で入力されますが、それ以外の注文は お客さんの番号 注文の種類 値段 と入力されるため、input().split() で生成されるリストの要素数が常に一定ではないからです。
+そこで、注文がビールだったときの処理をしてから、他の注文の処理をすることで、エラーの発生を回避します。
+【 デフォルト引数について 】
+デフォルト引数について少し説明します。
+【 関数定義のモデル 】
+下記のモデルを前提として説明します。
+def func(仮引数_1, ... , 仮引数_n):
+【 デフォルト引数とは 】
+関数は仮引数にデフォルト値を設定しておくことができます。
+関数呼び出し時に特に指定がないと、仮引数にはデフォルト値が設定されます。
+指定があれば、デフォルト値ではなく、その値が設定されます。
+【 デフォルト値の設定の方法 】
+仮引数_d_i=デフォルト値 のようにします。
+関数定義のモデルは以下のようになります。
+def func(仮引数_1, ... , 仮引数_n, 仮引数_d_1=デフォルト値, ... , 仮引数_d_m=デフォルト値):
+注意点
+デフォルト値が設定されていない仮引数の前に、デフォルト値が設定された仮引数を置くことはできません。
+たとえば、以下の場合はエラーが発生します。
+def func(仮引数_d_m_1=デフォルト値, 仮引数_1, ... , 仮引数_n):
+'''
+
 final　静的メンバ
+# utf-8
+# utf-8
+class Customer:
+    n = 0
+
+    def __init__(self):
+        self.sum = 0
+
+    def take_food(self, price):
+        self.sum += price
+
+    def take_softdrink(self, price):
+        self.sum += price
+
+    def take_alcohol(self, price=500):
+        # 何もしない (却下)
+        pass
+
+    def accounting(self):
+        Customer.n += 1
+        print(self.sum)
+
+
+class Adult(Customer):
+    def __init__(self):
+        super().__init__()
+        self.alcohol = False
+
+    def take_food(self, price):
+        if self.alcohol:
+            self.sum += price - 200
+        else:
+            self.sum += price
+
+    def take_alcohol(self, price=500):
+        self.sum += price
+        self.alcohol = True
+
+
+n, k = [int(x) for x in input().split()]
+
+customers = [None] * n
+for i in range(n):
+    age = int(input())
+
+    if age >= 20:
+        customers[i] = Adult()
+    else:
+        customers[i] = Customer()
+
+for _ in range(k):
+    values = input().split()
+
+    index = int(values[0]) - 1
+    order = values[1]
+
+    if order == "0":
+        customers[index].take_alcohol()
+    elif order == "A":
+        customers[index].accounting()
+    else:
+        price = int(values[2])
+
+        if order == "food":
+            customers[index].take_food(price)
+        elif order == "softdrink":
+            customers[index].take_softdrink(price)
+        else:
+            customers[index].take_alcohol(price)
+
+print(Customer.n)
+'''
+未成年のお客さんのクラス・成年済のお客さんのクラスに会計をする関数を追加し、会計ごとに金額を出力し、退店者数を +1 する必要があります。
+退店者数はグローバル変数で管理することもできますが、お客さんに関する情報なので、クラスの中で管理するのが望ましいです。そこでクラスの静的メンバを用いることができます。
+静的メンバとは、オブジェクト間を超えて共有される変数や関数のことです。これを用いることで、お客さん一人一人が退店した人数を覚えておくよりも、効率的に退店した人数を記憶しておくことができます。
+
+クラスを用いてお客さんの情報を管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+【 流れ・考え方 】
+今回やることは大きく以下の 2 点です。
+退店者を管理する
+会計を処理するメソッドを定義する
+【 退店者管理 】
+方針に書いてあるように、退店したお客さんの数をインスタンス間を超えて管理できると便利です。
+Python では、クラス変数を用いて解決します。
+【 会計を処理するメソッド 】
+このメソッドの役割は主に以下の 2 点です。
+退店を管理する変数の値を更新する
+退店するお客さんが支払う料金を出力する
+更新については、クラス変数の値を更新することで解決できます。
+出力はお客さんが注文した商品の値段の合計値を保持する変数の値を出力すればよいです。
+【 クラス変数について 】
+クラス変数について少し説明します。
+【 定義の仕方 】
+クラス変数はメソッド定義と同じインデントレベルで変数定義することで、使うことができます。
+【 アクセスの仕方 】
+アクセスの仕方はいくつかありますが、一般的な方法を紹介します。
+クラス名.クラス変数名 とすると、アクセスできます。
+'''
 
 <ロボットの暴走>
 step1　出口のない迷路
