@@ -2797,6 +2797,32 @@ result = simulate_sushi_eating(L, sushi_positions, seat_positions)
 
 print(result)
 
+別解 # utf-8　※入力例1でNG
+def calculate_completion_time(sushi_positions, seat_positions, L):
+    sushi_positions.sort()
+    seat_positions.sort()
+
+    max_time = 0
+    for seat in seat_positions:
+        min_distance = L
+        for sushi in sushi_positions:
+            distance = (sushi - seat) % L
+            min_distance = min(min_distance, distance)
+
+        eating_time = (min_distance + L) % L + 10
+        max_time = max(max_time, eating_time)
+
+    return max_time
+
+
+L, N, M = map(int, input().split())
+sushi_positions = list(map(int, input().split()))
+seat_positions = list(map(int, input().split()))
+
+completion_time = calculate_completion_time(sushi_positions, seat_positions, L)
+
+print(completion_time)
+
 # B058 ◆
 # B059 占領区域
 # utf-8
