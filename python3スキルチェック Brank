@@ -3096,40 +3096,62 @@ print(d)  # 掃除したマスの数を出力
 最後に、掃除したマスの数 d を出力します。
 '''
 
-# B063 支払う枚数とお釣りの枚数　※入力例2でNG　テストケース20点
+# B063 支払う枚数とお釣りの枚数　※テストケース60点
 # utf-8
-import math
-
-def minimize_coin_count(X):
+def count(x):
     coins = [500, 100, 50, 10, 5, 1]
-    count = 0
+    c = 0
 
     for coin in coins:
-        count += X // coin
-        X %= coin
+        while x >= coin:
+            c += 1
+            x -= coin
 
-    return count
+    return c
 
-def calculate_minimum_coins(X):
-    min_count = float('inf')  # 初期値を無限大に設定
+def total_count(x, y):
+    return count(y) + count(y - x)
 
-    # 支払い金額とお釣りを考慮して枚数を計算
-    for i in range(X, X + 3):
-        payment_count = minimize_coin_count(i)
-        change_count = minimize_coin_count(i - X)
-        count = payment_count + change_count
+x = int(input())
+minc = count(x)
+y = x
 
-        if count < min_count:
-            min_count = count
+if y % 10 > 0 and y % 10 < 5:
+    y = (y // 10) * 10 + 5
+    c = total_count(x, y)
+    if minc > c:
+        minc = c
 
-    return min_count
+if y % 10 > 0:
+    y = (y // 10) * 10 + 10
+    c = total_count(x, y)
+    if minc > c:
+        minc = c
 
-X = int(input().strip())
-if 1 <= X <= 999:
-    result = calculate_minimum_coins(X)
-    print(result)
-else:
-    print("入力された金額が範囲外です。1から999までの金額を入力してください。")
+if y % 100 > 0 and y % 100 < 50:
+    y = (y // 100) * 100 + 50
+    c = total_count(x, y)
+    if minc > c:
+        minc = c
+
+if y % 100 > 0:
+    y = (y // 100) * 100 + 100
+    c = total_count(x, y)
+    if minc > c:
+        minc = c
+
+if y < 500:
+    y = 500
+    c = total_count(x, y)
+    if minc > c:
+        minc = c
+
+y = 1000
+c = total_count(x, y)
+if minc > c:
+    minc = c
+
+print(minc)
 
 # B064 うずを探せ
 # utf-8
