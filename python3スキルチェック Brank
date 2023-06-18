@@ -1650,7 +1650,7 @@ if result == "miss":
 else:
     print(result[0], result[1])
 
-<別解># utf-8 入力例5つの場合分けはできているがテストケースを満たさない
+<別解># utf-8 入力例5つの場合分けはできているが条件内の特殊なテストケースを満たさない　90点
 def estimate_pyzas(a, b, c, d):
     estimated_pyzas = []
 
