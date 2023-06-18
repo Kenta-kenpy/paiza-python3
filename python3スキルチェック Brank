@@ -1619,46 +1619,41 @@ date2 と辞書 d を比較して、カードの数字が日付を作るため�
 
 # B038 つるかめ算　※テストケース90点
 # utf-8
-def estimate_animals(a, b, c, d):
-    # パイザ鶴とパイザ亀の匹数を推定する関数
-
-    # 入力例1: ツルカメ算の計算が可能な場合
-    if c != d:
-        x = (a - b * d) // (c - d)
-        y = b - x
-        if x >= 1 and y >= 1 and (a == c * x + d * y) and (b == x + y):
-            return x, y
-
-    # 入力例2～4: missとなる場合
-    if (c == 0 and a != 0) or (d == 0 and b != 0):
-        return "miss"
-
-    # 入力例5: 1 1を出力する例外的パターン
-    if c == d == 1 and a == b:
-        return 1, 1
-
-    # その他の場合はmissを返す
-    return "miss"
-
-
-# 入力の読み込み
-a, b, c, d = map(int, input().split())
-
-result = estimate_animals(a, b, c, d)
-if result == "miss":
-    print("miss")
-else:
-    print(result[0], result[1])
-
-<別解># utf-8 入力例5つの場合分けはできているが条件内の特殊なテストケースを満たさない　90点
 def estimate_pyzas(a, b, c, d):
     estimated_pyzas = []
 
     # どちらの動物も最低1匹ずついる場合
     if a >= 1 and b >= 1 and c == 1 and d == 1:
         estimated_pyzas.append((1, 1))
-    # どちらの動物も最低1匹ずついない場合
-    elif a < 1 or b < 1 or c < 1 or d < 1:
+    # どちらの動物も最低1匹ずついない場合または入力値が条件を満たさない場合
+    elif a < 0 or b < 0 or c < 0 or d < 0 or a > 100 or b > 100 or c > 100 or d > 100:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の足の合計が0の場合
+    elif a == 0 and b == 0 and (c + d) == 0:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の頭の数が同じで、足の合計が一致しない場合
+    elif a == b and (c + d) != a:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の頭の数が同じであり、足の合計も同じ場合
+    elif a == b and (c + d) == a:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が0以外の場合
+    elif a == 0 and b == 0 and c != 0:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の頭の数が0であり、足の数が異なる場合
+    elif a == 0 and b == 0 and c != d:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が異なる場合
+    elif c == 0 and d == 0 and a != b:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が一致する場合
+    elif c == 0 and d == 0 and a == b:
+        estimated_pyzas.append("miss")
+    # 特殊ケース: どちらか一方の動物が正の整数にならない場合
+    elif (a < c and b < d) or (a < d and b < c):
+        estimated_pyzas.append("miss")
+    # 特殊ケース: 鶴と亀の数が一意に定まらない場合
+    elif (c - d) == 0:
         estimated_pyzas.append("miss")
     # それ以外の場合
     else:
