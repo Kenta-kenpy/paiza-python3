@@ -1650,6 +1650,45 @@ if result == "miss":
 else:
     print(result[0], result[1])
 
+<別解># utf-8 入力例5つの場合分けはできているがテストケースを満たさない
+def estimate_pyzas(a, b, c, d):
+    estimated_pyzas = []
+
+    # どちらの動物も最低1匹ずついる場合
+    if a >= 1 and b >= 1 and c == 1 and d == 1:
+        estimated_pyzas.append((1, 1))
+    # どちらの動物も最低1匹ずついない場合
+    elif a < 1 or b < 1 or c < 1 or d < 1:
+        estimated_pyzas.append("miss")
+    # それ以外の場合
+    else:
+        try:
+            x = (a - b * d) // (c - d)
+            y = b - x
+            # 推定されるパイザ鶴とパイザ亀の数が正の整数になるかを確認
+            if x >= 1 and y >= 1 and a == x * c + y * d and b == x + y:
+                estimated_pyzas.append((x, y))
+            else:
+                estimated_pyzas.append("miss")
+        except ZeroDivisionError:
+            estimated_pyzas.append("miss")
+
+    return estimated_pyzas
+
+
+# 入力の受け取り
+a, b, c, d = map(int, input().split())
+
+# 推定の実行
+estimated_pyzas = estimate_pyzas(a, b, c, d)
+
+# 出力
+for result in estimated_pyzas:
+    if result == "miss":
+        print("miss")
+    else:
+        print(result[0], result[1])
+
 # B039 雨上がりの道
 # utf-8
 class UnionFind:
