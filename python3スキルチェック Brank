@@ -4854,7 +4854,86 @@ for save_point in result:
 '''
 
 # B093 SNSの検索機能
+# utf-8
+# 投稿クラスの定義
+class Post:
+    def __init__(self, id, length, content, year, month, day):
+        self.id = id  # 投稿ID
+        self.length = length  # つぶやきの長さ
+        self.content = content  # つぶやきの内容
+        self.year = year  # 投稿の年
+        self.month = month  # 投稿の月
+        self.day = day  # 投稿の日
+
+    def contains_keyword(self, keywords):
+        # キーワードがつぶやきに含まれているかをチェックするメソッド
+        for keyword in keywords:
+            if keyword in self.content:
+                return True
+        return False
+
+    def __lt__(self, other):
+        # ソートのために比較演算子 __lt__ をオーバーライド
+        # 投稿日時が早い順にソートする
+        if self.year != other.year:
+            return self.year < other.year
+        if self.month != other.month:
+            return self.month < other.month
+        if self.day != other.day:
+            return self.day < other.day
+
+        # 投稿日時が同じ場合は投稿IDの小さい順にソートする
+        return self.id < other.id
+
+
+# N, Mを入力
+N, M = map(int, input().split())
+
+# 投稿情報を格納するリスト
+posts = []
+for i in range(N):
+    # 投稿の長さと内容を入力
+    c, s = input().split()
+    # 投稿日時を入力
+    year, month, day = map(int, input().split())
+    # 投稿オブジェクトを作成し、リストに追加
+    post = Post(i + 1, int(c), s, year, month, day)
+    posts.append(post)
+
+# キーワードを格納するリスト
+keywords = []
+for _ in range(M):
+    # キーワードの長さとキーワードを入力
+    e, k = input().split()
+    keywords.append(k)
+
+# キーワードを含む投稿を抽出する
+filtered_posts = []
+for post in posts:
+    if post.contains_keyword(keywords):
+        filtered_posts.append(post)
+
+# 投稿をソートする
+filtered_posts.sort()
+
+# 結果を出力
+if not filtered_posts:
+    print("None")
+else:
+    for post in filtered_posts:
+        print(post.id)
+'''
+Post クラスの定義：投稿情報を格納するためのクラスです。投稿ID、つぶやきの長さ、内容、投稿日時を保持し、キーワードの有無をチェックするメソッドも提供しています。
+NとMの入力：投稿の数Nとキーワードの数Mを入力します。
+投稿情報の入力：N回のループで、投稿の長さと内容、投稿日時を入力し、Post オブジェクトを作成してリストに追加します。
+キーワードの入力：M回のループで、キーワードを入力し、キーワードを格納するリストに追加します。
+キーワードを含む投稿の抽出：投稿リストを走査し、キーワードを含む投稿を抽出し、別のリストに格納します。
+投稿のソート：抽出された投稿を投稿日時の昇順と投稿IDの昇順でソートします。
+結果の出力：ソートされた投稿リストが空の場合は"None"を出力し、そうでない場合は各投稿のIDを出力します。
+'''
+
 # B094 ◆
+
 # B095 カラオケ大会
 # B096 ビンゴゲーム
 # B096(2) 爆弾の大爆発
