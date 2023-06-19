@@ -3500,46 +3500,62 @@ if __name__ == '__main__':
 このように、制約条件のチェックや再帰的な探索を行いながら、アリが餌まで移動できるかどうかを判定するプログラムとなっています。
 '''
 
-# B070 駒の到達範囲 ※入力例2でNG
-def count_reachable_cells(N, H, W, K):
-    # dpテーブルの初期化
-    dp = [[[0] * (K + 1) for _ in range(N)] for _ in range(N)]
-    dp[H-1][W-1][0] = 1
-
-    # 上下左右および斜め方向への移動量
-    dx = [0, 0, 1, -1]
-    dy = [1, -1, 0, 0]
-
-    # マスの移動をK回まで繰り返す
-    for k in range(1, K + 1):
-        for i in range(N):
-            for j in range(N):
-                for d in range(4):
-                    nx, ny = i + dx[d], j + dy[d]
-                    if 0 <= nx < N and 0 <= ny < N:
-                        dp[i][j][k] += dp[nx][ny][k-1]
-                
-                # 斜め方向への移動
-                for d in range(4):
-                    nx, ny = i + dx[d], j + dy[d]
-                    while 0 <= nx < N and 0 <= ny < N:
-                        dp[i][j][k] += dp[nx][ny][k-1]
-                        nx += dx[d]
-                        ny += dy[d]
-
-    # 到達可能なマスの数の合計を計算
-    total = sum(dp[i][j][K] for i in range(N) for j in range(N))
-
-    return total
-
-# 入力を受け取る
+# B070 駒の到達範囲 ※テストケース実行時間超過
 N, H, W, K = map(int, input().split())
+plot = [[0 for i in range(N)] for j in range(N)]
 
-# 相異なるマスの数を計算
-result = count_reachable_cells(N, H, W, K)
+# 王を配置する関数
+def King(h, w, k):
+    plot[h - 1][w - 1] = 1  # 現在の位置に王を配置
+    if h > 1:
+        plot[h - 2][w - 1] = 1  # 現在の位置の上にクイーンを配置
+        queen(h - 1, w, k - 1)  # 残りのクイーンを再帰的に配置
+    if w > 1:
+        plot[h - 1][w - 2] = 1  # 現在の位置の左にクイーンを配置
+        queen(h, w - 1, k - 1)  # 残りのクイーンを再帰的に配置
+    if w < N:
+        plot[h - 1][w] = 1  # 現在の位置の右にクイーンを配置
+        queen(h, w + 1, k - 1)  # 残りのクイーンを再帰的に配置
+    if h < N:
+        plot[h][w - 1] = 1  # 現在の位置の下にクイーンを配置
+        queen(h + 1, w, k - 1)  # 残りのクイーンを再帰的に配置
 
-# 結果を出力
-print(result)
+# ビショップを配置する関数
+def Bishop(h, w, k):
+    num = 1
+    while h - num >= 1 and w - num >= 1:
+        plot[h - 1 - num][w - 1 - num] = 1  # 左上の斜めの位置にクイーンを配置
+        queen(h - num, w - num, k - 1)  # 残りのクイーンを再帰的に配置
+        num += 1
+    num = 1
+    while h - num >= 1 and w + num <= N:
+        plot[h - 1 - num][w - 1 + num] = 1  # 右上の斜めの位置にクイーンを配置
+        queen(h - num, w + num, k - 1)  # 残りのクイーンを再帰的に配置
+        num += 1
+    num = 1
+    while h + num <= N and w - num >= 1:
+        plot[h - 1 + num][w - 1 - num] = 1  # 左下の斜めの位置にクイーンを配置
+        queen(h + num, w - num, k - 1)  # 残りのクイーンを再帰的に配置
+        num += 1
+    num = 1
+    while h + num <= N and w + num <= N:
+        plot[h - 1 + num][w - 1 + num] = 1  # 右下の斜めの位置にクイーンを配置
+        queen(h + num, w + num, k - 1)  # 残りのクイーンを再帰的に配置
+        num += 1
+
+# クイーンを配置する関数
+def queen(h, w, k):
+    if k <= 0:
+        return
+    King(h, w, k)  # 指定された位置に王を配置
+    Bishop(h, w, k)  # 指定された位置にビショップを配置
+
+queen(H, W, K)  # 指定された位置からクイーンの配置を開始
+
+ans = 0
+for i in plot:
+    ans += sum(i)
+print(ans)
 
 --------------------------------------------- B071　※欠番 ◆
 # B071 ダンベルトレーニング　※テストケース通過せず　80点　境界値で不一致
