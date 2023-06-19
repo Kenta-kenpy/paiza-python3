@@ -4802,6 +4802,57 @@ y リスト内の各標高を順に出力します。与えられた地図の中
 '''
 
 # B092 セーブポイント
+# utf-8
+def find_nearest_save_point(map):
+    rows = len(map)  # マップの行数を取得
+    cols = len(map[0])  # マップの列数を取得
+    current_position = None  # 現在地の座標を初期化
+    save_points = []  # セーブポイントの座標と番号を保存するリスト
+
+    # マップ上の現在地とセーブポイントを探す
+    for i in range(rows):
+        for j in range(cols):
+            if map[i][j] == 'N':
+                current_position = (i, j)  # 現在地の座標を保存
+            elif map[i][j].isdigit():
+                save_points.append((int(map[i][j]), i, j))  # セーブポイントの座標と番号を保存
+
+    # 現在地からの距離を計算し、最も近いセーブポイントを求める
+    distances = []
+    for save_point in save_points:
+        distance = abs(save_point[1] - current_position[0]) + abs(save_point[2] - current_position[1])
+        distances.append((save_point[0], distance))  # セーブポイントの番号と距離を保存
+
+    # 距離が最小のセーブポイントを求める
+    min_distance = min(distances, key=lambda x: x[1])
+    nearest_save_points = [save_point[0] for save_point in distances if save_point[1] == min_distance[1]]
+    nearest_save_points.sort()  # セーブポイント番号を昇順にソート
+
+    return nearest_save_points
+
+# マップの入力
+H, W, K = map(int, input().split())  # マップの高さ、幅、セーブポイントの数を取得
+map = []
+for _ in range(H):
+    row = input()  # マップの各行を入力
+    map.append(row)  # マップをリストに追加
+
+# 結果の出力
+result = find_nearest_save_point(map)  # 最も近いセーブポイントを求める
+print(len(result))  # 最も近いセーブポイントの数を出力
+for save_point in result:
+    print(save_point)  # 各セーブポイントの番号を出力
+'''
+与えられたマップ上で現在地から最も近いセーブポイントを見つけるためのプログラムです。
+まず、find_nearest_save_point関数では、マップの情報を受け取ります。マップは二次元リストとして表現され、各要素は文字列で構成されています。関数内では、マップの行数と列数を取得し、現在地とセーブポイントの座標を保存するための変数を初期化します。
+次に、二重ループを使用してマップを走査します。マップ上で現在地を示す"N"の位置を見つけると、その座標をcurrent_position変数に保存します。また、数字のセーブポイントの位置を見つけると、その座標と番号をsave_pointsリストに保存します。
+現在地から各セーブポイントまでの距離を計算するため、distancesリストを作成します。セーブポイントごとに、現在地とのマンハッタン距離を計算し、セーブポイントの番号と距離の組をdistancesリストに追加します。
+距離が最小のセーブポイントを見つけるため、min関数を使用してdistancesリストを距離の要素で比較します。最小距離を持つ要素を取得し、その距離をmin_distance変数に保存します。
+最後に、最も近いセーブポイントの番号を昇順にソートし、nearest_save_pointsリストに保存します。
+メインの処理では、マップの情報を入力し、find_nearest_save_point関数を呼び出して最も近いセーブポイントを求めます。結果を出力する際は、最も近いセーブポイントの数を先に出力し、その後に各セーブポイントの番号を表示します。
+このように、コード全体ではマップの情報を解析し、現在地から最も近いセーブポイントを見つけるための処理が行われます。
+'''
+
 # B093 SNSの検索機能
 # B094 ◆
 # B095 カラオケ大会
