@@ -741,6 +741,65 @@ Python では、クラス変数を用いて解決します。
 
 <ロボットの暴走>
 step1　出口のない迷路
+# utf-8
+class Point:
+    def __init__(self, keyword, path_a, path_b):
+        self.keyword = keyword
+        self.path_a = path_a
+        self.path_b = path_b
+
+    def get_keyword(self):
+        return self.keyword
+
+    def get_path(self, direction):
+        if direction == 1:
+            return self.path_a
+        else:
+            return self.path_b
+
+
+n, k, s = [int(x) for x in input().split()]
+
+maze = [None] * n
+for i in range(n):
+    values = input().split()
+
+    keyword = values[0]
+    path_a = int(values[1]) - 1
+    path_b = int(values[2]) - 1
+
+    maze[i] = Point(keyword, path_a, path_b)
+
+now_point = maze[s-1]
+ans = now_point.get_keyword()
+for _ in range(k):
+    direction = int(input())
+
+    to = now_point.get_path(direction)
+    now_point = maze[to]
+    ans += now_point.get_keyword()
+
+print(ans)
+'''
+複雑な問題を解く際には、できるだけ情報を整理することが大切となります。
+今回の問題では、移動や情報の起点は迷路の中の地点となっており、情報がまとめられそうです。 また、特に各地点が変化を起こすことは無いので、クラスと構造体のうち、地点を表すには構造体が適していると考えられます。
+入力と各地点の情報を参考にしながら、指示通り文字を集めていくことでこの問題を解くことができます。
+
+クラスを用いて、ポイントを管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+クラス Point は以下の要素を持ちます。
+キーワード
+道_1 の行き先
+道_2 の行き先
+k 行にわたってどの道を選択するか与えられるので、クラス Point を利用して、次の行き先を決定します。
+現在地は常に変数 now_point が持っているので、呪文は now_point.get_keyword() を用いて作成します。
+上記の内容を流れでまとめると、以下のようになります。
+どちらの道を選択するか (m_i)、が入力によって与えられる
+ポイントnow_point の 道_m_i の行き先の番号 (p_i) を get_pathメソッド で確認する
+移動する (now_point に maze[p_i] を代入する)
+now_point のキーワードを呪文に追加する
+'''
+
 step2　RPG
 step3　格闘ゲーム
 step4  スーパースーパースーパーカー
