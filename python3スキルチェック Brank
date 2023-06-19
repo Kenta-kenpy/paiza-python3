@@ -3502,7 +3502,12 @@ if __name__ == '__main__':
 
 # B070 駒の到達範囲 ※テストケース実行時間超過
 N, H, W, K = map(int, input().split())
-plot = [[0 for i in range(N)] for j in range(N)]
+
+# プロットの初期化
+plot = [[0 for _ in range(N)] for _ in range(N)]
+
+# 計算済みの結果を保持するための辞書
+memo = {}
 
 # 王を配置する関数
 def King(h, w, k):
@@ -3550,11 +3555,14 @@ def queen(h, w, k):
     King(h, w, k)  # 指定された位置に王を配置
     Bishop(h, w, k)  # 指定された位置にビショップを配置
 
-queen(H, W, K)  # 指定された位置からクイーンの配置を開始
+# クイーンの配置を開始
+queen(H, W, K)
 
+# クイーンの数をカウント
 ans = 0
 for i in plot:
     ans += sum(i)
+
 print(ans)
 
 --------------------------------------------- B071　※欠番 ◆
