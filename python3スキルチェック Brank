@@ -4996,7 +4996,49 @@ print(highest_score)
 得点リスト result から最高得点を求め、最終的な結果を出力します。
 '''
 
-# B096 ビンゴゲーム
+# B096 ビンゴゲーム　※入力例1,3でNG
+# utf-8
+def check_bingo(card):
+    for row in card:
+        if all(cell == 'X' for cell in row):
+            return True
+
+    for col in zip(*card):
+        if all(cell == 'X' for cell in col):
+            return True
+
+    diagonal1 = [card[i][i] for i in range(4)]
+    diagonal2 = [card[i][3 - i] for i in range(4)]
+    if all(cell == 'X' for cell in diagonal1) or all(cell == 'X' for cell in diagonal2):
+        return True
+
+    return False
+
+
+# 入力の読み込み
+N = int(input())
+card = [input().split() for _ in range(4)]
+numbers = [input() for _ in range(N)]
+
+# ビンゴの判定
+bingo = False
+for num in numbers:
+    for i in range(4):
+        for j in range(4):
+            if card[i][j] == num:
+                card[i][j] = 'X'
+                if check_bingo(card):
+                    bingo = True
+                    break
+        if bingo:
+            break
+    if bingo:
+        print(num)
+        break
+
+if not bingo:
+    print("no")
+
 # B096(2) 爆弾の大爆発
 # B097 カウンター席
 # B098 バズの検出
