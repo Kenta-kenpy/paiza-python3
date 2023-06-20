@@ -5095,7 +5095,64 @@ print(result)
 このコードを実行すると、与えられたフィールドの中で爆風が広がるマスの数が計算され、出力されます。
 '''
 
-# B097 カウンター席
+# B097 カウンター席　※入力例2でNG
+# utf-8
+def calculate_total_time(N, M, groups):
+    total_time = 0
+    seats = [0] * N  # 初期状態では席は空
+
+    for group_info in groups:
+        group_size, *group_eating_times = map(int, group_info)
+
+        # グループの人数と時間のバリデーションチェック
+        if not (1 <= group_size <= min(N, 10)):
+            raise ValueError("Invalid group size")
+        if not all(1 <= t <= 10 for t in group_eating_times):
+            raise ValueError("Invalid eating time")
+
+        # グループが座れる場所を探す
+        available_seats = []
+        for i in range(N - group_size + 1):
+            if all(seats[i + j] == 0 for j in range(group_size)):
+                available_seats.append(i)
+
+        if available_seats:
+            # グループを座らせる
+            seat_index = available_seats[0]
+            for j in range(group_size):
+                seats[seat_index + j] = 1
+            if group_eating_times:
+                total_time += max(group_eating_times)
+        else:
+            # 座らせる場所がない場合、左端から順番に座らせる
+            for i in range(N):
+                if seats[i] == 0:
+                    seats[i] = 1
+                    if group_eating_times:
+                        total_time += max(group_eating_times)
+                    break
+
+    return total_time
+
+
+# 入力の読み込み
+N = int(input())
+M = int(input())
+
+# NとMのバリデーションチェック
+if not (1 <= N <= 10):
+    raise ValueError("Invalid counter seats")
+if not (1 <= M <= 10):
+    raise ValueError("Invalid number of groups")
+
+groups = []
+for _ in range(M):
+    group_info = input().split()
+    groups.append(list(map(int, group_info[1:])))
+
+total_time = calculate_total_time(N, M, groups)
+print(total_time)
+
 # B098 バズの検出
 # B099 台風の接近
 # B100 計算の遅延
