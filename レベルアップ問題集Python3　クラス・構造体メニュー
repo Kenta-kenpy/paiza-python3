@@ -881,5 +881,128 @@ for hero in heroes:
 '''
 
 step3　格闘ゲーム
+# utf-8
+class Player:
+    def __init__(self, hp, f_1, a_1, f_2, a_2, f_3, a_3):
+        self.hp = hp
+        self.f = [f_1, f_2, f_3]
+        self.a = [a_1, a_2, a_3]
+        self.alive = True
+
+    def enhance(self):
+        for i in range(3):
+            if self.f[i] == 0 and self.a[i] == 0:
+                continue
+
+            self.f[i] = max(self.f[i] - 3, 1)
+            self.a[i] += 5
+
+    def calc_hp(self, damage):
+        self.hp -= damage
+
+        if self.hp <= 0:
+            self.alive = False
+
+    def get_status(self, i):
+        return (self.f[i], self.a[i])
+
+    def get_alive(self):
+        return self.alive
+
+
+n, k = [int(x) for x in input().split()]
+
+players = [None] * n
+for i in range(n):
+    hp, f_1, a_1, f_2, a_2, f_3, a_3 = [int(x) for x in input().split()]
+    players[i] = Player(hp, f_1, a_1, f_2, a_2, f_3, a_3)
+
+for _ in range(k):
+    values = [int(x) for x in input().split()]
+
+    p_1 = values[0] - 1
+    t_1 = values[1] - 1
+
+    p_2 = values[2] - 1
+    t_2 = values[3] - 1
+
+    f_1, a_1 = players[p_1].get_status(t_1)
+    f_2, a_2 = players[p_2].get_status(t_2)
+
+    if not players[p_1].get_alive() or not players[p_2].get_alive():
+        continue
+
+    if f_1 == 0 and a_1 == 0 and f_2 == 0 and a_2 == 0:
+        players[p_1].enhance()
+        players[p_2].enhance()
+    elif f_1 == 0 and a_1 == 0:
+        players[p_1].enhance()
+        players[p_1].calc_hp(a_2)
+    elif f_2 == 0 and a_2 == 0:
+        players[p_2].enhance()
+        players[p_2].calc_hp(a_1)
+    else:
+        if f_1 > f_2:
+            players[p_1].calc_hp(a_2)
+        elif f_1 < f_2:
+            players[p_2].calc_hp(a_1)
+        else:
+            pass
+
+ans = 0
+for player in players:
+    if player.get_alive():
+        ans += 1
+
+print(ans)
+'''
+今回の問題では攻撃時の条件分岐が多く、どこからとっつけば良いかわからなくなってしまいます。そういったときは、情報を整理することが大切です。
+今回の問題では、各プレイヤーは独立した情報を持ち、それらを操作する共通の強化技を持つので、クラスで管理することができます。
+各攻撃については、クラスで整理した情報を用いて地道に条件分岐を行いましょう。強化技はクラス内の関数とすることで処理の流れをわかりやすくすることができます。
+
+クラスを用いて、プレイヤーを管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+【 今回実装したクラスに関して 】
+今回は以下の 4 つのプロパティを持つと扱いやすいです。
+体力を表す整数
+3 つの攻撃フレームをまとめるリスト
+3 つの攻撃力をまとめるリスト
+生きているかを表すブール値 (True か False)
+メソッドは以下の 5 つのメソッドを実装しました。
+初期値を設定するコンストラクタ
+強化系の技を実現するメソッド
+体力を計算するメソッド
+指定されたインデックスの攻撃に関する情報を (攻撃フレーム, 攻撃力) のタプルの形式で返すメソッド
+生きているかを返すメソッド
+強化系の技を使ったとき、強化系の技の情報は変更されない点に注意が必要です。
+【 入力を受け取って処理を実行する部分について 】
+入力値を受け取って Player クラスのインスタンスを生成してリストで管理する箇所は前問などと同じ構造です。
+実際に攻撃し合う入力に関する処理を以下でまとめます。
+まずは、Player クラスに用意したメソッドなどを用いて、入力値から必要な情報を用意します。
+上で言う必要な情報とは以下の通りです。
+プレイヤー_i VS プレイヤー_j の p_i と p_j
+何の技を使うかの f_x, a_x と f_y, a_y
+上の情報が出揃ったら、両者が生き残っているか確認します。どちらも生き残っている場合、攻撃のターンを以下のように場合分けします。
+両者ともに強化系の技を使うか
+True だったら、両者ダメージ計算をせずに、ただ強化するメソッドを呼び出す
+p_i だけ強化系の技を使うか
+True だったら、p_i は強化系の技をし、p_j から攻撃力 a_y の技を受ける
+p_j だけ強化系の技を使うか
+True だったら、p_j は強化系の技をし、p_i から攻撃力 a_x の技を受ける
+両方とも攻撃技を使うか
+入力値の条件から、強化系の技に関する判定がすべて偽だった場合、ここで絶対に処理されなくてはなりません。
+ここでは以下のようにさらに場合分けされます。
+f_x > f_y の場合、p_i が 攻撃力a_y の技を受ける
+f_x < f_y の場合、p_j が 攻撃力a_x の技を受ける
+f_x == f_y の場合、何もしない
+補足
+48 行目の条件式は
+　if not (players[p_1].get_alive() and players[p_2].get_alive()):
+としても良いですし、
+　if players[p_1].get_alive() and players[p_2].get_alive():
+として True のとき、下の条件判定に進むという構造にしても良いです。
+65, 66 行目は書かなくても問題なく動きます
+'''
+
 step4  スーパースーパースーパーカー
 final　ロボットの暴走
