@@ -5040,6 +5040,61 @@ if not bingo:
     print("no")
 
 # B096(2) 爆弾の大爆発
+# utf-8
+def count_explosion_cells(field):
+    H = len(field)
+    W = len(field[0])
+
+    # 爆風が広がるマスの数をカウントする変数
+    count = 0
+
+    # 各行の爆弾の位置を記録するリスト
+    row_bombs = [False] * H
+
+    # 各列の爆弾の位置を記録するリスト
+    col_bombs = [False] * W
+
+    # 爆弾の位置を調べて記録する
+    for i in range(H):
+        for j in range(W):
+            if field[i][j] == '#':
+                row_bombs[i] = True
+                col_bombs[j] = True
+
+    # 爆風が広がるマスの数を計算する
+    for i in range(H):
+        for j in range(W):
+            if row_bombs[i] or col_bombs[j]:
+                count += 1
+
+    return count
+
+
+# 入力を受け取る
+H, W = map(int, input().split())
+field = [input() for _ in range(H)]
+
+# 爆風が広がるマスの数を計算する
+result = count_explosion_cells(field)
+
+# 結果を出力する
+print(result)
+'''
+与えられたフィールドの情報を解析し、爆風が広がるマスの数を計算するためのものです。
+まず、count_explosion_cellsという関数を定義します。この関数は、フィールドの情報を受け取り、爆風が広がるマスの数を返します。
+関数内で、まず与えられたフィールドの行数をH、列数をWとして取得します。
+次に、countという変数を初期化し、爆風が広がるマスの数をカウントするための準備をします。
+さらに、row_bombsとcol_bombsというリストを初期化します。これらのリストは、各行と各列に爆弾が存在するかどうかを記録します。初期値はすべてFalseです。
+次に、二重のループを使ってフィールド上の各マスを調べ、爆弾の位置をrow_bombsとcol_bombsに記録します。もし爆弾がある場合、対応する行と列のフラグをTrueにします。
+その後、再び二重のループを使って各マスを調べ、その行または列に爆弾がある場合には爆風が広がるため、countをインクリメントします。
+最後に、countを返します。
+メインの処理では、まず入力として与えられるフィールドの行数と列数を受け取ります。
+次に、fieldというリストにフィールドの情報を行ごとに格納します。
+そして、先ほど定義したcount_explosion_cells関数を呼び出し、結果をresultという変数に格納します。
+最後に、resultを出力します。
+このコードを実行すると、与えられたフィールドの中で爆風が広がるマスの数が計算され、出力されます。
+'''
+
 # B097 カウンター席
 # B098 バズの検出
 # B099 台風の接近
