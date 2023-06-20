@@ -5153,8 +5153,46 @@ for _ in range(M):
 total_time = calculate_total_time(N, M, groups)
 print(total_time)
 
-# B098 バズの検出
+# B098 バズの検出　※入力例全てでNG
+# utf-8
+def detect_buzz():
+    N, M, T, K = map(int, input().split())  # N, M, T, Kを取得
+
+    actions = []
+    for _ in range(M):
+        actions.append(list(map(int, input().split())))  # M行のアクションデータを取得
+
+    buzz_results = []
+    
+    for j in range(N):
+        buzz_time = 0
+        
+        for i in range(M - T + 1):
+            total_actions = sum(actions[i:i+T][j])  # j番目の発言のi時間後からT時間後までのアクション数の合計を計算
+            
+            if total_actions >= K:
+                buzz_time = i + T  # バズっていると判定された時間を記録
+                break
+        
+        if buzz_time > 0:
+            buzz_results.append(("yes", buzz_time))
+        else:
+            buzz_results.append(("no", 0))
+    
+    return buzz_results
+
+
+# 入力を受け取りバズ判定を実行
+results = detect_buzz()
+
+# 結果の出力
+for result in results:
+    print(result[0], result[1])
+
 # B099 台風の接近
+# utf-8
+
+
 # B100 計算の遅延
 --------------------------------------------- B101　※欠番 ◆
 # B101 ◆
