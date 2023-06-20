@@ -801,6 +801,85 @@ now_point のキーワードを呪文に追加する
 '''
 
 step2　RPG
+# utf-8
+# utf-8
+class Hero:
+    def __init__(self, lv, hp, at, df, sp, cl, ft):
+        self.lv = lv
+        self.hp = hp
+        self.at = at
+        self.df = df
+        self.sp = sp
+        self.cl = cl
+        self.ft = ft
+
+    def levelup(self, hp, at, df, sp, cl, ft):
+        self.lv += 1
+        self.hp += hp
+        self.at += at
+        self.df += df
+        self.sp += sp
+        self.cl += cl
+        self.ft += ft
+
+    def muscle_training(self, hp, at):
+        self.hp += hp
+        self.at += at
+
+    def running(self, df, sp):
+        self.df += df
+        self.sp += sp
+
+    def study(self, cl):
+        self.cl += cl
+
+    def pray(self, ft):
+        self.ft += ft
+
+    def print(self):
+        print(self.lv, self.hp, self.at, self.df, self.sp, self.cl, self.ft)
+
+
+n, k = [int(x) for x in input().split()]
+
+heroes = [None] * n
+for i in range(n):
+    lv, hp, at, df, sp, cl, ft = [int(x) for x in input().split()]
+    heroes[i] = Hero(lv, hp, at, df, sp, cl, ft)
+
+for _ in range(k):
+    values = input().split()
+
+    index = int(values.pop(0)) - 1
+    event = values.pop(0)
+
+    if event == "levelup":
+        hp, at, df, sp, cl, ft = [int(x) for x in values]
+        heroes[index].levelup(hp, at, df, sp, cl, ft)
+    elif event == "muscle_training":
+        hp, at = [int(x) for x in values]
+        heroes[index].muscle_training(hp, at)
+    elif event == "running":
+        df, sp = [int(x) for x in values]
+        heroes[index].running(df, sp)
+    elif event == "study":
+        cl = int(values[0])
+        heroes[index].study(cl)
+    else:
+        ft = int(values[0])
+        heroes[index].pray(ft)
+
+for hero in heroes:
+    hero.print()
+'''
+各勇者についての情報とそれに関する操作が多く、情報をたくさんの配列で管理したり、各操作を関数で実装したりするのは大変です。そこで、あるまとまりについての情報とその操作を管理するのに適しているクラスの出番です。
+勇者一人一人をオブジェクトに見立てることで、ステータスをメンバ変数、イベントをメンバ関数として実装し、入力に応じてそれらを呼び出すだけで処理できるようになります。
+問題文での指示に加えて、Hero クラスに print メソッドを追加しました。
+以下で print メソッドについて説明します。
+この print メソッドは勇者のステータスを出力するために実装しました。
+呼び出されると、レベル 体力 攻撃力 防御力 素早さ 賢さ 運 の形式で出力します。
+'''
+
 step3　格闘ゲーム
 step4  スーパースーパースーパーカー
 final　ロボットの暴走
