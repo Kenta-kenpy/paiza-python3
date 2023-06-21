@@ -1005,4 +1005,163 @@ f_x == f_y の場合、何もしない
 '''
 
 step4  スーパースーパースーパーカー
+# utf-8
+'''
+まず、それぞれの車には燃料という情報が存在し、様々な走り方に応じて燃料に変化が生じるといった共通の特徴があり、このような特徴を持つ物はクラスとして実装するとプログラムを簡潔にすることができます。
+また、スーパーカーの run と燃料は、全ての車に共通しているので、スーパーカークラスを継承して他 2 種類の車のクラスを実装することで実装が楽になります。
+'''
+
+class superCar:
+    def __init__(self, f, f_c):
+        self.fuel = f
+        self.fuel_consumption = f_c
+        self.mileage = 0
+
+    def run(self):
+        if self.fuel <= 0:
+            return
+
+        self.fuel -= 1
+        self.mileage += self.fuel_consumption
+
+    def get_mileage(self):
+        return self.mileage
+
+
+class superSuperCar(superCar):
+    def fly(self):
+        if self.fuel < 5:
+            super().run()
+        else:
+            self.fuel -= 5
+            self.mileage += self.fuel_consumption ** 2
+
+
+class superSuperSuperCar(superCar):
+    def fly(self):
+        if self.fuel < 5:
+            super().run()
+        else:
+            self.fuel -= 5
+            self.mileage += 2 * self.fuel_consumption ** 2
+
+    def teleport(self):
+        if self.fuel < self.fuel_consumption ** 2:
+            self.fly()
+        else:
+            self.fuel -= self.fuel_consumption ** 2
+            self.mileage += self.fuel_consumption ** 4
+
+
+n, k = [int(x) for x in input().split()]
+
+cars = [None] * n
+for i in range(n):
+    values = input().split()
+
+    car_type = values[0]
+    fuel = int(values[1])
+    fuel_consumption = int(values[2])
+
+    if car_type == "supercar":
+        cars[i] = superCar(fuel, fuel_consumption)
+    elif car_type == "supersupercar":
+        cars[i] = superSuperCar(fuel, fuel_consumption)
+    else:
+        cars[i] = superSuperSuperCar(fuel, fuel_consumption)
+
+for _ in range(k):
+    values = input().split()
+
+    index = int(values[0]) - 1
+    func = values[1]
+
+    if func == "run":
+        cars[index].run()
+    elif func == "fly":
+        cars[index].fly()
+    else:
+        cars[index].teleport()
+
+for car in cars:
+    print(car.get_mileage())
+
 final　ロボットの暴走
+# utf-8
+'''
+ぱっと見、処理が多く管理する情報が多いように見えます。そこで、各ロボットの情報は独立しており、共通の動作を持っていることに注目すると、ロボットをクラスで管理するという発想が出てきます。
+ロボットはレベルアップと移動を行い、現在位置の座標とレベルを持てば良いです。コードを簡潔にするために、レベルとは別に移動距離を持つのも良いと思います。
+ロボットの情報・行動についてのクラスが完成してしまえば、あとは入力に応じて対象のロボットの関数を呼び出したのち、各ロボットの情報を出力することでこの問題を解くことができます。
+
+クラスでロボットを管理します。
+クラスについては「構造体の検索」の解説で詳しく説明しているので、興味のある方はご覧ください。
+以下で、Robot クラスについて少し説明します。
+ロボットは移動のときに以下の 2 点に気をつける必要があります。
+進む大きさ
+進む方向
+これらの情報を辞書を用いて管理します。
+進む大きさ
+key : レベル, value : レベルに応じた進みの大きさ
+進む方向
+key : 方向を示す文字列, value : ベクトル (y, x の順)
+移動の際は、以下のようにします。
+y += (適切なベクトルの y 成分) * (レベルに応じた進みの大きさ)
+x += (適切なベクトルの x 成分) * (レベルに応じた進みの大きさ)
+適切なベクトル は渡される文字列から辞書を用いて確定します。
+'''
+
+class Robot:
+    large = {1: 1, 2: 2, 3: 5, 4: 10}
+    dirs = {"N": [-1, 0], "S": [1, 0], "E": [0, 1], "W": [0, -1]}
+
+    def __init__(self, y, x, lv):
+        self.y = y
+        self.x = x
+        self.lv = lv
+
+        self.lg = self.large[self.lv]
+
+    def move(self, direction):
+        value = self.dirs[direction]
+
+        self.y += value[0] * self.lg
+        self.x += value[1] * self.lg
+
+    def level_up(self):
+        self.lv = min(self.lv+1, 4)
+        self.lg = self.large[self.lv]
+
+    def get_point(self):
+        return [self.y, self.x]
+
+    def print(self):
+        print(self.x, self.y, self.lv)
+
+
+h, w, n, k = [int(x) for x in input().split()]
+
+boxes = [[None] for _ in range(10)]
+robots = [None] * n
+
+for i in range(10):
+    x, y = [int(x) for x in input().split()]
+    boxes[i] = [y, x]
+
+for i in range(n):
+    x, y, lv = [int(x) for x in input().split()]
+    robots[i] = Robot(y, x, lv)
+
+for _ in range(k):
+    values = input().split()
+
+    index = int(values[0]) - 1
+    direction = values[1]
+
+    robots[index].move(direction)
+
+    point = robots[index].get_point()
+    if point in boxes:
+        robots[index].level_up()
+
+for robot in robots:
+    robot.print()
