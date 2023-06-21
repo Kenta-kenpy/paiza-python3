@@ -5236,7 +5236,45 @@ else:
 '''
 
 # B100 計算の遅延
+# utf-8
+# 入力の解析
+N = int(input())
+score_changes = []
+for _ in range(N):
+    t, d, s = map(int, input().split())
+    score_changes.append((t, d, s))
 
+Q = int(input())
+queries = [int(input()) for _ in range(Q)]
+
+# 指定した時刻における表示スコアと正確なスコアの差を計算する関数
+def calculate_score_difference(target_time):
+    display_score = 0  # 表示スコア
+    exact_score = 0  # 正確なスコア
+    for t, d, delta in score_changes:
+        if t <= target_time:
+            exact_score += delta
+            if t + d <= target_time:
+                display_score += delta
+    difference = exact_score - display_score
+    return difference
+
+# 各質問に対してスコアの差を計算し、出力
+for query in queries:
+    difference = calculate_score_difference(query)
+    print(difference)
+'''
+与えられたスコア変化のリストとクエリのリストに基づいて、指定された時刻における表示スコアと正確なスコアの差を計算します。
+まず、入力を解析し、スコア変化のリスト score_changes とクエリのリスト queries を作成します。score_changes リストは、各スコア変化のタイムスタンプ t、遅延時間 d、スコア変化量 s をタプルとして保持します。
+queries リストには、計算したいクエリの時刻が含まれます。次に、calculate_score_difference 関数を定義します。
+この関数は、引数としてターゲットの時刻を受け取り、その時刻における表示スコアと正確なスコアの差を計算します。
+初期値として display_score と exact_score をそれぞれ 0 で初期化します。score_changes リストを順に処理し、各スコア変化に対して以下の処理を行います。
+もしスコア変化のタイムスタンプ t がターゲットの時刻以下であれば、正確なスコア exact_score にスコア変化量 s を加算します。
+もしスコア変化のタイムスタンプ t に遅延時間 d を加えた時刻がターゲットの時刻以下であれば、表示スコア display_score にスコア変化量 s を加算します。
+最後に、正確なスコアと表示スコアの差を計算し、その差を返します。
+最後のループでは、各クエリに対して calculate_score_difference 関数を呼び出し、結果を出力します。
+計算に遅延が含まれなくなり、スコアの加算も直接行われるため、正確なスコアと表示スコアの差をより迅速に計算できるようになりました。
+'''
 --------------------------------------------- B101　※欠番 ◆
 # B101 ◆
 # B102 膨張と収縮
