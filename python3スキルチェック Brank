@@ -912,114 +912,92 @@ xi, yi, pi = map(int, input().split())の部分で、空白区切りの入力を
 最後に、平均地価を求めて四捨五入し、結果を出力します。result = int(sum_price / k) + int((sum_price / k * 10) % 10) // 5の部分で、合計をkで割った商と剰余を用いて四捨五入を行っています。
 '''
 
-# B030 氷のダンジョン
-※入力例1のみOK
+# B030 氷のダンジョン ※Java
 # utf-8
-def explore_dungeon(H, W, dungeon, s_x, s_y, N, directions):
-    # 方向ごとの座標の変化量
-    dx = {'U': 0, 'R': 1, 'D': 0, 'L': -1}
-    dy = {'U': -1, 'R': 0, 'D': 1, 'L': 0}
+import java.util.*;
 
-    # 初期座標
-    x = s_x
-    y = s_y
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int H = Integer.parseInt(sc.next());
+        int W = Integer.parseInt(sc.next());
+        char[][] map = new char[H][W];
+        for (int i = 0; i < H; i++) {
+            map[i] = sc.next().toCharArray();
+        }
 
-    # 移動を実行
-    for direction in directions:
-        while True:
-            # 移動先の座標を計算
-            nx = x + dx[direction]
-            ny = y + dy[direction]
+        int s_y = Integer.parseInt(sc.next()) - 1;
+        int s_x = Integer.parseInt(sc.next()) - 1;
+        int N = Integer.parseInt(sc.next());
+        char[] direction = new char[N];
+        String getDir = "";
+        for (int i = 0; i < N; i++) {
+            getDir += sc.next();
+        }
+        direction = getDir.toCharArray();
 
-            # 移動先がダンジョン内かどうかをチェック
-            if nx < 1 or nx > W or ny < 1 or ny > H:
-                break  # 移動先がダンジョン外なら終了
+        boolean check = true;
+        for (int i = 0; i < N; i++) {
+            if (direction[i] == 'U') {
+                while (check) {
+                    if ((s_x - 1) >= 0) {
+                        if (map[s_x - 1][s_y] == '.') {
+                            s_x--;
+                            break;
+                        } else if (map[s_x - 1][s_y] == '#') {
+                            s_x--;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } else if (direction[i] == 'D') {
+                while (check) {
+                    if ((s_x + 1) < H) {
+                        if (map[s_x + 1][s_y] == '.') {
+                            s_x++;
+                            break;
+                        } else if (map[s_x + 1][s_y] == '#') {
+                            s_x++;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } else if (direction[i] == 'L') {
+                while (check) {
+                    if ((s_y - 1) >= 0) {
+                        if (map[s_x][s_y - 1] == '.') {
+                            s_y--;
+                            break;
+                        } else if (map[s_x][s_y - 1] == '#') {
+                            s_y--;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            } else if (direction[i] == 'R') {
+                while (check) {
+                    if ((s_y + 1) < W) {
+                        if (map[s_x][s_y + 1] == '.') {
+                            s_y++;
+                            break;
+                        } else if (map[s_x][s_y + 1] == '#') {
+                            s_y++;
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        s_x++;
+        s_y++;
 
-            # 移動先が壁なら終了
-            if dungeon[ny][nx] == '#':
-                break
-
-            # 移動先が土の床なら移動
-            x = nx
-            y = ny
-
-    return x, y
-
-
-# 入力の読み込み
-H, W = map(int, input().split())
-dungeon = []
-for _ in range(H):
-    dungeon.append(input().strip())
-s_x, s_y = map(int, input().split())
-N = int(input())
-directions = []
-for _ in range(N):
-    directions.append(input().strip())
-
-# ダンジョンの探索
-final_x, final_y = explore_dungeon(H, W, dungeon, s_x, s_y, N, directions)
-
-# 結果の出力
-print(final_x, final_y)
-
-※入力例2のみOK
-# utf-8
-def explore_dungeon():
-    # 入力読み取り
-    H, W = map(int, input().split())
-
-    # 制約条件のバリデーションチェック
-    if not (1 <= H <= 100) or not (1 <= W <= 100):
-        raise ValueError("Invalid dungeon size")
-
-    dungeon = [input() for _ in range(H)]
-    s_x, s_y = map(int, input().split())
-
-    # 制約条件のバリデーションチェック
-    if not (1 <= s_x <= W) or not (1 <= s_y <= H):
-        raise ValueError("Invalid starting position")
-
-    # 初期位置の土のマスチェック
-    if dungeon[s_y - 1][s_x - 1] != '.':
-        raise ValueError("Invalid starting position")
-
-    N = int(input())
-
-    # 制約条件のバリデーションチェック
-    if not (1 <= N <= 100):
-        raise ValueError("Invalid number of movements")
-
-    directions = [input().strip() for _ in range(N)]
-
-    # 移動関数
-    def move(x, y, direction):
-        if direction == 'U':
-            return x, y - 1
-        elif direction == 'R':
-            return x + 1, y
-        elif direction == 'D':
-            return x, y + 1
-        elif direction == 'L':
-            return x - 1, y
-
-    # 初期位置
-    current_x, current_y = s_x - 1, s_y - 1  # 0-indexed に変換
-
-    # 移動
-    for direction in directions:
-        next_x, next_y = move(current_x, current_y, direction)
-
-        # 次のマスが氷のマスならば進む
-        while dungeon[next_y][next_x] == '#':
-            next_x, next_y = move(next_x, next_y, direction)
-
-        current_x, current_y = next_x, next_y
-
-    # 結果出力
-    print(f"{current_x + 1} {current_y + 1}")  # 1-indexed に戻す
-
-explore_dungeon()
+        System.out.println(s_y + " " + s_x);
+    }
+}
 
 --------------------------------------------- B031　※欠番 ◆
 # B031 コインのウラとオモテ
