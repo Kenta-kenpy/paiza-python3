@@ -1539,7 +1539,6 @@ def estimate_pyzas(a, b, c, d):
 
     return estimated_pyzas
 
-
 # 入力の受け取り
 a, b, c, d = map(int, input().split())
 
