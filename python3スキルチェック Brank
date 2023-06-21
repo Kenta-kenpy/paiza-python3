@@ -5191,9 +5191,52 @@ for result in results:
 
 # B099 台風の接近
 # utf-8
+# 回答方針
+# (1) 各ルート毎の連想配列を作成...cf.[0:[0:100][1:200]...],]
+# (2) ルート毎の降水量を足し合わせて、閾値(M)と比較
+# (3) 閾値を超えない場合は、そのルート番号を配列で保持
+# (4) (3)を空文字区切りで表示、一つもない場合は"wait"と出力
 
+N, M = map(int, input().split())  # 地図のサイズ N, 通れない降水量 M を取得
+calLists = []  # 各地区の降水量を格納するリスト
+routeLists = []  # 各列の降水量を格納するリスト
+ansLists = []  # 通ることができるルートの番号を格納するリスト
+
+# 各地区の降水量を取得
+for _ in range(N):
+    routes = list(map(int, input().split()))
+    calLists.append(routes)
+
+# 各列の降水量を格納
+for x in range(N):
+    route = []
+    for y in range(N):
+        route.append(calLists[y][x])
+    routeLists.append(route)
+
+# ルート毎の降水量を、閾値(M)と比較
+for x, routes in enumerate(routeLists):
+    for y, route in enumerate(routes):
+        if M <= route:  # 降水量が閾値を超えた場合、そのルートは通れない
+            break
+        elif y == len(routes) - 1:
+            ansLists.append(x + 1)  # 降水量が閾値を超えなかった場合、通ることができるルート
+
+# 通ることができるルートの番号を表示、一つもない場合は"wait"と出力
+if not ansLists:
+    print("wait")
+else:
+    print(" ".join(str(ans) for ans in ansLists))
+'''
+与えられた地図と降水量の情報を元に、会社へ通うことができるルートを見つけるプログラムです。
+まず、入力から地図のサイズNと通れない降水量Mを受け取ります。その後、各地区の降水量を取得し、2次元リストcalListsに格納します。また、各列の降水量を保持するために、routeListsというリストも用意します。
+次に、各列の降水量を取得してrouteListsに格納します。これにより、各列ごとに降水量を確認できるようになります。
+その後、ルート毎の降水量を閾値Mと比較します。具体的には、2重のループを使用して各列の降水量を順に確認し、閾値Mを超えた場合はそのルートは通れないことになります。ルート毎に降水量を比較し、閾値を超えない場合はそのルート番号をansListsに追加します。
+最後に、ansListsを出力します。もしansListsが空であれば、"wait"と出力します。それ以外の場合は、ansListsの要素を空文字区切りで結合して出力します。
+'''
 
 # B100 計算の遅延
+
 --------------------------------------------- B101　※欠番 ◆
 # B101 ◆
 # B102 膨張と収縮
