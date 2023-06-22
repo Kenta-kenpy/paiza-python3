@@ -1,4 +1,59 @@
 # ハノイの塔 A
+# utf-8
+import sys
+
+
+def print_tower():
+    for one in towers:
+        if len(one) == 0:
+            print("-")
+            continue
+        print(" ".join(map(str, one)))
+
+
+def hanoi(n, frm, to, tmp, t):
+    global count
+
+    if n == 1:
+        towers[to].append(towers[frm][-1])
+        del towers[frm][-1]
+
+        count += 1
+        if count == t:
+            print_tower()
+            sys.exit(0)
+
+    else:
+        hanoi(n - 1, frm, tmp, to, t)
+        hanoi(1, frm, to, tmp, t)
+        hanoi(n - 1, tmp, to, frm, t)
+
+
+n, t = map(int, input().split())
+count = 0
+towers = [[n - i for i in range(n)], [], []]
+hanoi(n, 0, 2, 1, t)
+'''
+関数の中で自身を呼び出す再帰関数と呼ばれるものを用います。
+n 個の円盤を A から C に移すときの操作を次のように考えます。
+上から n-1 個の円盤を B に避ける。
+n 個目の円盤を C に移す。
+B に避けていた n-1 個の円盤を C に移す。
+n = 1 のときは A から C に円盤を一つ移すだけです。
+
+3 つの塔を 2 次元リスト、 towers にまとめています。
+一つ一つの塔はリストになっています。
+A, B, C のそれぞれがインデックス 0, 1, 2 に対応し、最も下の円盤がリストの 0 番目の要素になっていると考えます。このとき、初期状態は towers[0] に n, n-1, ..., 1 の n 個の整数が格納されている状態になります。
+この塔の表現において、A から B へ 1 枚円盤を移す操作は、A の配列の末尾の要素を削除し、B の配列の末尾に追加する操作になります。
+hanoi メソッドは方針の通り実装します。
+hanoi メソッドのそれぞれの引数の意味を少し説明します。
+n : 操作対象の円盤の総数
+frm : どの塔の円盤を移動するかのインデックス
+to : どこの塔に円盤を移動させたいかのインデックス
+tmp : to の塔に円盤を動かすために一時的に円盤を退避させる塔のインデックス
+t : 何回の操作で終了させるかの整数
+'''
+
 # 山折り谷折り A
 # 本の整理 A
 # 雪だるま作り A
