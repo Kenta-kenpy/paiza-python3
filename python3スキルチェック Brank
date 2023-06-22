@@ -912,93 +912,99 @@ xi, yi, pi = map(int, input().split())の部分で、空白区切りの入力を
 最後に、平均地価を求めて四捨五入し、結果を出力します。result = int(sum_price / k) + int((sum_price / k * 10) % 10) // 5の部分で、合計をkで割った商と剰余を用いて四捨五入を行っています。
 '''
 
-# B030 氷のダンジョン ※Java
+# B030 氷のダンジョン
 # utf-8
-import java.util.*;
+# ダンジョンの縦と横の長さを取得
+H, W = map(int, input().split())
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int H = Integer.parseInt(sc.next());
-        int W = Integer.parseInt(sc.next());
-        char[][] map = new char[H][W];
-        for (int i = 0; i < H; i++) {
-            map[i] = sc.next().toCharArray();
-        }
+# ダンジョンの情報を取得
+maze = []
+for _ in range(H):
+    row = input()
+    maze.append(row)
 
-        int s_y = Integer.parseInt(sc.next()) - 1;
-        int s_x = Integer.parseInt(sc.next()) - 1;
-        int N = Integer.parseInt(sc.next());
-        char[] direction = new char[N];
-        String getDir = "";
-        for (int i = 0; i < N; i++) {
-            getDir += sc.next();
-        }
-        direction = getDir.toCharArray();
+# 最初の座標を取得し、0-indexedに変換
+s_y, s_x = map(int, input().split())
+s_x -= 1
+s_y -= 1
 
-        boolean check = true;
-        for (int i = 0; i < N; i++) {
-            if (direction[i] == 'U') {
-                while (check) {
-                    if ((s_x - 1) >= 0) {
-                        if (map[s_x - 1][s_y] == '.') {
-                            s_x--;
-                            break;
-                        } else if (map[s_x - 1][s_y] == '#') {
-                            s_x--;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            } else if (direction[i] == 'D') {
-                while (check) {
-                    if ((s_x + 1) < H) {
-                        if (map[s_x + 1][s_y] == '.') {
-                            s_x++;
-                            break;
-                        } else if (map[s_x + 1][s_y] == '#') {
-                            s_x++;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            } else if (direction[i] == 'L') {
-                while (check) {
-                    if ((s_y - 1) >= 0) {
-                        if (map[s_x][s_y - 1] == '.') {
-                            s_y--;
-                            break;
-                        } else if (map[s_x][s_y - 1] == '#') {
-                            s_y--;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            } else if (direction[i] == 'R') {
-                while (check) {
-                    if ((s_y + 1) < W) {
-                        if (map[s_x][s_y + 1] == '.') {
-                            s_y++;
-                            break;
-                        } else if (map[s_x][s_y + 1] == '#') {
-                            s_y++;
-                        }
-                    } else {
-                        break;
-                    }
-                }
-            }
-        }
-        s_x++;
-        s_y++;
+# 移動回数を取得
+N = int(input())
 
-        System.out.println(s_y + " " + s_x);
-    }
-}
+# 各移動の方向を取得
+direction = []
+for _ in range(N):
+    d = input()
+    direction.append(d)
 
+check = True
+for i in range(N):
+    if direction[i] == 'U':
+        # 上方向に移動
+        while check:
+            if s_x - 1 >= 0:
+                if maze[s_x - 1][s_y] == '.':
+                    s_x -= 1
+                    break
+                elif maze[s_x - 1][s_y] == '#':
+                    s_x -= 1
+            else:
+                break
+    elif direction[i] == 'D':
+        # 下方向に移動
+        while check:
+            if s_x + 1 < H:
+                if maze[s_x + 1][s_y] == '.':
+                    s_x += 1
+                    break
+                elif maze[s_x + 1][s_y] == '#':
+                    s_x += 1
+            else:
+                break
+    elif direction[i] == 'L':
+        # 左方向に移動
+        while check:
+            if s_y - 1 >= 0:
+                if maze[s_x][s_y - 1] == '.':
+                    s_y -= 1
+                    break
+                elif maze[s_x][s_y - 1] == '#':
+                    s_y -= 1
+            else:
+                break
+    elif direction[i] == 'R':
+        # 右方向に移動
+        while check:
+            if s_y + 1 < W:
+                if maze[s_x][s_y + 1] == '.':
+                    s_y += 1
+                    break
+                elif maze[s_x][s_y + 1] == '#':
+                    s_y += 1
+            else:
+                break
+
+# 1-indexedに戻して最終的な座標を出力
+s_x += 1
+s_y += 1
+print(s_y, s_x)
+'''
+１．ダンジョンの情報を入力として受け取ります。
+　　最初に、縦の長さと横の長さを表す H と W を取得します。
+　　続いて、H 行分の文字列を入力として受け取り、ダンジョンの情報を表す2次元リスト maze に格納します。
+２．最初の座標と移動回数を入力として受け取ります。
+　　s_y と s_x に最初の座標を格納します。ここで、座標は 1-indexed で与えられているため、0-indexed に変換します。
+　　移動回数 N を取得します。
+３．各移動の方向を入力として受け取ります。
+　　N 回分の移動の方向を取得し、リスト direction に格納します。
+４．移動のシミュレーションを行います。
+　　N 回の移動を順番に処理します。
+　　移動の方向に応じて、現在の座標を更新します。
+　　上下左右の移動先がダンジョンの範囲内であり、移動先が土の床である場合にのみ移動します。
+５．最終的な座標を出力します。
+　　1-indexed の座標に戻し、最終的な座標を出力します。
+このコードは、入力されたダンジョンの情報に基づいて指定された移動回数だけ移動し、最終的な座標を出力するシミュレーションのアルゴリズムです。ダンジョンの範囲や床の種類を判定しながら移動を行っています。
+'''
 --------------------------------------------- B031　※欠番 ◆
 # B031 コインのウラとオモテ
 # utf-8
