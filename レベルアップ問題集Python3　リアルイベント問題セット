@@ -2,14 +2,12 @@
 # utf-8
 import sys
 
-
 def print_tower():
     for one in towers:
         if len(one) == 0:
             print("-")
             continue
         print(" ".join(map(str, one)))
-
 
 def hanoi(n, frm, to, tmp, t):
     global count
@@ -27,7 +25,6 @@ def hanoi(n, frm, to, tmp, t):
         hanoi(n - 1, frm, tmp, to, t)
         hanoi(1, frm, to, tmp, t)
         hanoi(n - 1, tmp, to, frm, t)
-
 
 n, t = map(int, input().split())
 count = 0
