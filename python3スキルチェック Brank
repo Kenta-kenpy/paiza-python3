@@ -5159,41 +5159,47 @@ for _ in range(M):
 total_time = calculate_total_time(N, M, groups)
 print(total_time)
 
-# B098 バズの検出　※入力例全てでNG
+# B098 バズの検出
 # utf-8
-def detect_buzz():
-    N, M, T, K = map(int, input().split())  # N, M, T, Kを取得
+# 発言ごとにT回、連続して配列の値を足し合わせてバズ判定を行う関数
+def bazzCheck(commentArr, M, T, K):
+    groupCounter = M - T + 1
+    counter = 0
+    for i_1 in range(groupCounter):
+        ans = 0
+        for i_2 in range(T):
+            ans += commentArr[i_1 + i_2]
+            if ans >= K:
+                return ["yes", i_1 + i_2 + 1]
+        counter += 1
+    return ["no", 0]
 
-    actions = []
-    for _ in range(M):
-        actions.append(list(map(int, input().split())))  # M行のアクションデータを取得
+# 入力を読み込む
+N, M, T, K = map(int, input().split())
+commentArrs = []
+for _ in range(M):
+    dataArr = list(map(int, input().split()))
+    commentArrs.append(dataArr)
 
-    buzz_results = []
-    
-    for j in range(N):
-        buzz_time = 0
-        
-        for i in range(M - T + 1):
-            total_actions = sum(actions[i:i+T][j])  # j番目の発言のi時間後からT時間後までのアクション数の合計を計算
-            
-            if total_actions >= K:
-                buzz_time = i + T  # バズっていると判定された時間を記録
-                break
-        
-        if buzz_time > 0:
-            buzz_results.append(("yes", buzz_time))
-        else:
-            buzz_results.append(("no", 0))
-    
-    return buzz_results
+ansArrs = []
+# 各発言に対してバズ判定を行う
+for i in range(N):
+    commentArr = [commentArrs[j][i] for j in range(M)]  # 各発言の配列を取得
+    ansArrs.append(bazzCheck(commentArr, M, T, K))
 
-
-# 入力を受け取りバズ判定を実行
-results = detect_buzz()
-
-# 結果の出力
-for result in results:
-    print(result[0], result[1])
+# 結果を出力する
+for ansArr in ansArrs:
+    print(ansArr[0], ansArr[1])
+'''
+bazzCheck()関数は、与えられた発言の配列に対してバズ判定を行う関数です。発言ごとにT回、連続して配列の値を足し合わせて、その合計値がK以上になるかどうかを判定します。合計値がK以上になった場合は、"yes"とその発言の開始時間を返し、そうでなければ"no"と0を返します。
+メインの処理は、以下のようになっています。
+入力値を取得し、N, M, T, Kに代入します。
+commentArrsという空のリストを作成します。
+M回のループを実行し、各発言の配列を取得してcommentArrsに追加します。
+ansArrsという空のリストを作成します。
+N回のループを実行し、各発言に対してbazzCheck関数を適用し、結果をansArrsに追加します。
+ansArrsの結果を出力します。
+'''
 
 # B099 台風の接近
 # utf-8
