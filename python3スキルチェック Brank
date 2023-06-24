@@ -3691,8 +3691,8 @@ queen 関数を呼び出して、クイーンの配置を開始します。
 この改善版のコードでは、メモ化を用いることで、同じ引数の組み合わせに対する計算結果を再利用することができます。これにより、再計算を避けることができ、処理速度の改善が期待できます。
 '''
 --------------------------------------------- B071　※欠番 ◆
-# B071 ダンベルトレーニング　※テストケース通過せず　80点　境界値で不一致
-# utf-8
+# B071 ダンベルトレーニング　
+# utf-8　※テストケース通過せず　80点　境界値で不一致
 import itertools
 
 def find_nearest_weight(N, weights, M):
@@ -3740,6 +3740,66 @@ for _ in range(N):
 
 nearest = find_nearest_weight(N, weights, M)
 print(nearest)
+
+# utf-8　※テストケース80点　境界値は満たす
+def closest_weight(N, M, weights):
+    max_sum = 0  # M以下の最大の偶数を保持する変数
+
+    # M以下の重さを降順に調べる
+    for i in range(M, -1, -1):
+        # 偶数のみを処理
+        if i % 2 == 0:
+            # バーの左側の重さの合計を計算
+            left_sum = i // 2
+
+            # バーの右側の重さの合計を計算
+            right_sum = i // 2
+
+            # おもりを組み合わせて追加していく
+            if can_balance(left_sum, right_sum, weights):
+                max_sum = i
+                break
+
+    return max_sum
+
+def can_balance(left_sum, right_sum, weights):
+    # 再帰的におもりの組み合わせを探索する関数
+    def dfs(idx, left_sum, right_sum):
+        if left_sum == 0 and right_sum == 0:
+            return True
+        if idx == len(weights):
+            return False
+
+        # バーの左側におもりを追加
+        if left_sum >= weights[idx] and dfs(idx + 1, left_sum - weights[idx], right_sum):
+            return True
+
+        # バーの右側におもりを追加
+        if right_sum >= weights[idx] and dfs(idx + 1, left_sum, right_sum - weights[idx]):
+            return True
+
+        # おもりを追加しない場合
+        if dfs(idx + 1, left_sum, right_sum):
+            return True
+
+        return False
+
+    return dfs(0, left_sum, right_sum)
+
+# 入力を受け取る
+N, M = map(int, input().split())
+weights = []
+for _ in range(N):
+    weights.append(int(input()))
+
+# 奇数個のおもりがある場合は出力を0とする
+if N % 2 != 0:
+    print(0)
+else:
+    # 関数を呼び出して結果を出力
+    result = closest_weight(N, M, weights)
+    print(result)
+
 
 # B072 反転スイッチ
 # utf-8
