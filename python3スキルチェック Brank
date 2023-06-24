@@ -294,194 +294,165 @@ for i in reversed(range(Z)):
 また、map(str, m[i])を使用して、マス目を文字列に変換し、join()関数でつなげて、横一列の文字列として出力しています。
 '''
 
-# B015 7セグメントディスプレイ（デジタル表示の数字）　※Javaなら100点
+# B015 7セグメントディスプレイ（デジタル表示の数字）
 # utf-8
-import java.util.Scanner;
+class SevenSegmentDisplay:
+    def __init__(self, first_number, second_number):
+        """
+        セブンセグメントディスプレイの表示状態を管理するクラス
 
-public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        Parameters:
+            first_number (list): 1つ目の数字のセグメント表示
+            second_number (list): 2つ目の数字のセグメント表示
+        """
+        self.seven_segment = [
+            [1, 1, 1, 1, 1, 1, 0],
+            [0, 1, 1, 0, 0, 0, 0],
+            [1, 1, 0, 1, 1, 0, 1],
+            [1, 1, 1, 1, 0, 0, 1],
+            [0, 1, 1, 0, 0, 1, 1],
+            [1, 0, 1, 1, 0, 1, 1],
+            [1, 0, 1, 1, 1, 1, 1],
+            [1, 1, 1, 0, 0, 1, 0],
+            [1, 1, 1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 0, 1, 1]
+        ]
+        self.number = [first_number, second_number]
+        self.display_state = []
 
-        String[] firstLine = sc.nextLine().split(" ");
-        String[] secondLine = sc.nextLine().split(" ");
+        self.check_display()
 
-        int[] firstNumber = new int[7];
-        int[] secondNumber = new int[7];
+    def check_display(self):
+        """
+        セグメント表示の状態をチェックし、表示状態を設定する関数
+        """
+        if self.is_valid_display(self.number):
+            self.display_state.append("Yes")
+        else:
+            self.display_state.append("No")
 
-        for (int i = 0; i < 7; i++) {
-            firstNumber[i] = Integer.parseInt(firstLine[i]);
-            secondNumber[i] = Integer.parseInt(secondLine[i]);
-        }
+        # 数字の対称移動をチェック
+        symmetry_check = [list(self.number[0]), list(self.number[1])]
+        if self.is_valid_display(self.symmetry_move(symmetry_check)):
+            self.display_state.append("Yes")
+        else:
+            self.display_state.append("No")
 
-        SevenSegmentDisplay display = new SevenSegmentDisplay(firstNumber, secondNumber);
-        display.printDisplayState();
+        # 数字の回転移動をチェック
+        rotate_check = [list(self.number[0]), list(self.number[1])]
+        if self.is_valid_display(self.rotate_move(rotate_check)):
+            self.display_state.append("Yes")
+        else:
+            self.display_state.append("No")
 
-        sc.close();
-    }
-}
+    def symmetry_move(self, change_number):
+        """
+        数字の対称移動を行う関数
 
-class SevenSegmentDisplay {
-    private int[][] sevenSegment = {
-            {1, 1, 1, 1, 1, 1, 0},
-            {0, 1, 1, 0, 0, 0, 0},
-            {1, 1, 0, 1, 1, 0, 1},
-            {1, 1, 1, 1, 0, 0, 1},
-            {0, 1, 1, 0, 0, 1, 1},
-            {1, 0, 1, 1, 0, 1, 1},
-            {1, 0, 1, 1, 1, 1, 1},
-            {1, 1, 1, 0, 0, 1, 0},
-            {1, 1, 1, 1, 1, 1, 1},
-            {1, 1, 1, 1, 0, 1, 1}
-    };
+        Parameters:
+            change_number (list): 移動する数字のリスト
 
-    private int[][] number;
-    private String[] displayState;
+        Returns:
+            list: 移動後の数字のリスト
+        """
+        change_number[0][0], change_number[1][0] = change_number[1][0], change_number[0][0]  # a1-b1の入れ替え
+        change_number[0][1], change_number[1][5] = change_number[1][5], change_number[0][1]  # a2-b6, a6-b2の入れ替え
+        change_number[0][5], change_number[1][1] = change_number[1][1], change_number[0][5]
+        change_number[0][6], change_number[1][6] = change_number[1][6], change_number[0][6]  # a7-b7の入れ替え
+        change_number[0][2], change_number[1][4] = change_number[1][4], change_number[0][2]  # a3-b5, a5-b3の入れ替え
+        change_number[0][4], change_number[1][2] = change_number[1][2], change_number[0][4]
+        change_number[0][3], change_number[1][3] = change_number[1][3], change_number[0][3]  # a4-b4の入れ替え
+        return change_number
 
-    public SevenSegmentDisplay(int[] firstNumber, int[] secondNumber) {
-        number = new int[2][7];
-        number[0] = firstNumber.clone();
-        number[1] = secondNumber.clone();
-        displayState = new String[3];
+    def rotate_move(self, change_number):
+        """
+        数字の回転移動を行う関数
 
-        checkDisplay();
-    }
+        Parameters:
+            change_number (list): 移動する数字のリスト
 
-    private void checkDisplay() {
-        if (checkDisplay(number)) {
-            displayState[0] = "Yes";
-        } else {
-            displayState[0] = "No";
-        }
+        Returns:
+            list: 移動後の数字のリスト
+        """
+        change_number[0][0], change_number[1][3] = change_number[1][3], change_number[0][0]  # a1-b4の入れ替え
+        change_number[0][1], change_number[1][4] = change_number[1][4], change_number[0][1]  # a2-b5, a6-b3の入れ替え
+        change_number[0][5], change_number[1][2] = change_number[1][2], change_number[0][5]
+        change_number[0][6], change_number[1][6] = change_number[1][6], change_number[0][6]  # a7-b7の入れ替え
+        change_number[0][2], change_number[1][5] = change_number[1][5], change_number[0][2]  # a3-b6, a5-b2の入れ替え
+        change_number[0][4], change_number[1][1] = change_number[1][1], change_number[0][4]
+        change_number[0][3], change_number[1][0] = change_number[1][0], change_number[0][3]  # a4-b1の入れ替え
+        return change_number
 
-        int[][] symmetryCheck = new int[2][7];
-        int[][] rotateCheck = new int[2][7];
+    def is_valid_display(self, check_number):
+        """
+        セグメント表示が正しいかどうかをチェックする関数
 
-        for (int i = 0; i < 7; i++) {
-            symmetryCheck[0][i] = number[0][i];
-            symmetryCheck[1][i] = number[1][i];
-            rotateCheck[0][i] = number[0][i];
-            rotateCheck[1][i] = number[1][i];
-        }
+        Parameters:
+            check_number (list): チェックする数字のリスト
 
-        if (checkDisplay(symmetryMove(symmetryCheck))) {
-            displayState[1] = "Yes";
-        } else {
-            displayState[1] = "No";
-        }
+        Returns:
+            bool: セグメント表示が正しい場合はTrue、そうでない場合はFalse
+        """
+        checker = 0
 
-        if (checkDisplay(rotateMove(rotateCheck))) {
-            displayState[2] = "Yes";
-        } else {
-            displayState[2] = "No";
-        }
-    }
+        for segment in self.seven_segment:
+            if self.check_display_number(segment, check_number[0]):
+                checker += 1
+            if self.check_display_number(segment, check_number[1]):
+                checker += 1
 
-    public void printDisplayState() {
-        for (String state : displayState) {
-            System.out.println(state);
-        }
-    }
+        return checker == 2
 
-    private int[][] symmetryMove(int[][] changeNumber) {
-        int temp;
+    def check_display_number(self, number1, number2):
+        """
+        2つの数字が一致しているかどうかをチェックする関数
 
-        // a1-b1
-        temp = changeNumber[0][0];
-        changeNumber[0][0] = changeNumber[1][0];
-        changeNumber[1][0] = temp;
+        Parameters:
+            number1 (list): 数字1のセグメント表示
+            number2 (list): 数字2のセグメント表示
 
-        // a2-b6, a6-b2
-        temp = changeNumber[0][1];
-        changeNumber[0][1] = changeNumber[1][5];
-        changeNumber[1][5] = temp;
-        temp = changeNumber[0][5];
-        changeNumber[0][5] = changeNumber[1][1];
-        changeNumber[1][1] = temp;
+        Returns:
+            bool: 2つの数字が一致している場合はTrue、そうでない場合はFalse
+        """
+        return number1 == number2
 
-        // a7-b7
-        temp = changeNumber[0][6];
-        changeNumber[0][6] = changeNumber[1][6];
-        changeNumber[1][6] = temp;
+    def print_display_state(self):
+        """
+        表示状態を出力する関数
+        """
+        for state in self.display_state:
+            print(state)
 
-        // a3-b5, a5-b3
-        temp = changeNumber[0][2];
-        changeNumber[0][2] = changeNumber[1][4];
-        changeNumber[1][4] = temp;
-        temp = changeNumber[0][4];
-        changeNumber[0][4] = changeNumber[1][2];
-        changeNumber[1][2] = temp;
+def main():
+    """
+    メイン関数
+    """
+    # 入力の読み込み
+    first_line = input().split()
+    second_line = input().split()
 
-        // a4-b4
-        temp = changeNumber[0][3];
-        changeNumber[0][3] = changeNumber[1][3];
-        changeNumber[1][3] = temp;
+    # 文字列を整数のリストに変換
+    first_number = [int(x) for x in first_line]
+    second_number = [int(x) for x in second_line]
 
-        return changeNumber;
-    }
+    # SevenSegmentDisplayクラスのインスタンスを作成し、結果を出力
+    display = SevenSegmentDisplay(first_number, second_number)
+    display.print_display_state()
 
-    private int[][] rotateMove(int[][] changeNumber) {
-        int temp;
-
-        // a1-b4
-        temp = changeNumber[0][0];
-        changeNumber[0][0] = changeNumber[1][3];
-        changeNumber[1][3] = temp;
-
-        // a2-b5, a6-b3
-        temp = changeNumber[0][1];
-        changeNumber[0][1] = changeNumber[1][4];
-        changeNumber[1][4] = temp;
-        temp = changeNumber[0][5];
-        changeNumber[0][5] = changeNumber[1][2];
-        changeNumber[1][2] = temp;
-
-        // a7-b7
-        temp = changeNumber[0][6];
-        changeNumber[0][6] = changeNumber[1][6];
-        changeNumber[1][6] = temp;
-
-        // a3-b6, a5-b2
-        temp = changeNumber[0][2];
-        changeNumber[0][2] = changeNumber[1][5];
-        changeNumber[1][5] = temp;
-        temp = changeNumber[0][4];
-        changeNumber[0][4] = changeNumber[1][1];
-        changeNumber[1][1] = temp;
-
-        // a4-b1
-        temp = changeNumber[0][3];
-        changeNumber[0][3] = changeNumber[1][0];
-        changeNumber[1][0] = temp;
-
-        return changeNumber;
-    }
-
-    private boolean checkDisplay(int[][] checkNumber) {
-        int checker = 0;
-
-        for (int i = 0; i < sevenSegment.length; i++) {
-            if (checkDisplayNumber(sevenSegment[i], checkNumber[0])) {
-                checker += 1;
-            }
-            if (checkDisplayNumber(sevenSegment[i], checkNumber[1])) {
-                checker += 1;
-            }
-        }
-
-        return (checker == 2);
-    }
-
-    private boolean checkDisplayNumber(int[] number1, int[] number2) {
-        for (int i = 0; i < 7; i++) {
-            if (number1[i] != number2[i]) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-}
-
+if __name__ == "__main__":
+    main()
+'''
+このコードは、セブンセグメントディスプレイの表示状態を管理する SevenSegmentDisplay クラスと、それを使用して入力された数字の表示状態をチェックする main 関数から構成されています。
+SevenSegmentDisplay クラスは、コンストラクタ __init__ を持ちます。このコンストラクタでは、セブンセグメントの各セグメントの状態を表す二次元リスト seven_segment を定義し、与えられた1つ目の数字と2つ目の数字の表示状態を保持するリスト number を初期化します。
+また、結果を格納するリスト display_state も初期化されます。
+check_display メソッドでは、与えられた数字の表示状態が正しいかどうかをチェックします。まず、与えられた数字自体が正しい表示かどうかを is_valid_display メソッドでチェックし、結果を display_state リストに追加します。
+次に、与えられた数字の対称移動と回転移動を行い、それぞれの移動後の表示状態もチェックし、結果を display_state リストに追加します。
+symmetry_move メソッドと rotate_move メソッドは、数字の対称移動と回転移動を行うためのメソッドです。これらのメソッドは、与えられた数字の表示状態を変更します。
+is_valid_display メソッドは、与えられた数字の表示状態が正しいかどうかを判定するためのメソッドです。check_display_number メソッドを使用して、与えられた数字の各セグメントとセブンセグメントの状態を比較し、一致するセグメントの数をカウントします。
+カウントされた数が2であれば、正しい表示と判定されます。print_display_state メソッドは、結果を表示するためのメソッドです。display_state リストに格納された結果を順に表示します。
+main 関数では、入力を受け取り、文字列を整数のリストに変換して SevenSegmentDisplay クラスのインスタンスを作成します。その後、print_display_state メソッドを呼び出して結果を表示します。
+以上が、このコードの概要と各部の役割の解説です。このコードは、与えられた数字のセブンセグメント表示が正しいかどうかをチェックし、さまざまな移動パターンも考慮して結果を表示する機能を持っています。
+'''
 
 # B016 ここはどこ？
 # utf-8
