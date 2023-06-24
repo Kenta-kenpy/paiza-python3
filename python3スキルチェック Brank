@@ -5640,99 +5640,79 @@ for _ in range(N):
 result = play_game(N, H, W, moves)
 print(*result)  # スペース区切りで出力
 
-# B106 席替えの席決め　※PHPでの解答　100点
+# B106 席替えの席決め
 # utf-8
-<?php
-    /*　回答方針 
-    * (1) H,W,Nを変数化、生徒の席番(studentArr),行を配列化(rowArrs = [[rowArr_1],rowArr_2])
-    * (2)  rowArrs[rowArr]に(studentArrのkey(i))を挿入。以下の式を実行
-    *  (2-1) 1行目に生徒が座っている時: rowArr = [[座席番号:生徒の番号]..]
-    *           ※ 生徒がいない時は[座席番号:0]
-    *  (2-2) 2行目以降の時、前列が0だった時に前列の rowArr = [座席番号:生徒の番号]
-    *           ※ 前列に生徒がいた場合は、現在の行にrowArr = [座席番号:生徒の番号]
-    * (3) rowArrsを画面に表示
-    */
+# 生徒の座席を設定する関数
+def set_seat(student_arr, col_arrs):
+    for row, col_arr in enumerate(col_arrs):
+        for student_no, seat_no in student_arr.items():
+            for col, seat in enumerate(col_arr):
+                if seat["seatNo"] == seat_no:
+                    col_arrs[row][col]["student"] = student_no
+                    break
+    return col_arrs
 
-    // (1) H,W,Nを変数化、生徒の席番(studentArr),行を配列化(rowArrs = [[rowArr_1],rowArr_2])
-    [$H,$W,$N] = array_map('intval', explode(" ", trim(fgets(STDIN))));
-    for($i=1; $i<= $N; $i++){
-        $studentArr[$i] = (int)trim(fgets(STDIN));
-    }
+# 座席を詰める関数
+def pack_seat(col_arrs, H):
+    for w, col_arr in enumerate(col_arrs):
+        student_list = [seat["student"] for seat in col_arr]
+        packed_students = [student for student in student_list if student != 0]
+        for i in range(H):
+            if i < len(packed_students):
+                col_arrs[w][i]["student"] = int(packed_students[i])
+            else:
+                col_arrs[w][i]["student"] = 0
+    return col_arrs
 
-    $rowArrs = array();
-    $index = 1;
-    // 行配列
-    for ($h = 1; $h <= $H; $h++) {
-        for ($w = 1; $w <= $W; $w++) {
-           $rowArrs[$h][$index] = 0;
-           $index++;
-        }
-    }
+# 座席の配置を出力する関数
+def answer(col_arrs, H, W):
+    for row in range(H):
+        answer = ""
+        for col in range(W):
+            answer += str(col_arrs[col][row]["student"]) + (" " if col != W - 1 else "")
+        print(answer)
 
-    // 列配列
-    for ($row = 0; $row < $W; $row++) {
-        $index = $row + 1;
-        for ($col = 0; $col < $H; $col++) {
-             $colArrs[$row][$col]["seatNo"] = $index;
-            //  $colArrs[$row][$col]["student"] = 0;
-             $index += $W;
-        }        
-    }
+# 入力: H, W, N
+H, W, N = map(int, input().split())
 
+student_arr = {}
+# 入力: 生徒の座席番号
+for i in range(1, N + 1):
+    student_arr[i] = int(input())
 
-    // (2)  rowArrs[rowArr]に(studentArrのkey(i))を挿入。以下の式を実行
+row_arrs = [[] for _ in range(H)]
+index = 1
+# 行の配列を作成
+for h in range(H):
+    for w in range(W):
+        row_arrs[h].append({"seatNo": index, "student": 0})
+        index += 1
 
-    $colArrs = setSeat($studentArr,$colArrs);
-    $colArrs = packSeat($colArrs,$H);
-    answer($colArrs,$H,$W);
+col_arrs = [[] for _ in range(W)]
+# 列の配列を作成
+for row in range(W):
+    index = row + 1
+    for col in range(H):
+        col_arrs[row].append({"seatNo": index, "student": 0})
+        index += W
 
+# 生徒の座席を設定
+col_arrs = set_seat(student_arr, col_arrs)
 
-    function setSeat($studentArr,$colArrs){
-        foreach ($colArrs as $row => $colArr) {
-            // 生徒の座席番号を調べて記録.
-            foreach ($studentArr as $studentNo => $seatNo) {
-                $key = array_search($seatNo, array_column( $colArr, "seatNo"));
-                // echo "keyは$key studentNoは$studentNo".PHP_EOL;
-                if($key !== false){
-                    // echo "出力: ".$colArrs[$row][$key]["student"].PHP_EOL;
-                    $colArrs[$row][$key]["student"] = $studentNo;
-                }else{
-                    continue;
-                }
-            }
-        }
-        return $colArrs;
-    }
+# 座席を詰める
+col_arrs = pack_seat(col_arrs, H)
 
-    function packSeat($colArrs,$H){
-        foreach ($colArrs as $w => $colArr) {
-            $str = implode(",",array_column($colArr, 'student'));
-            $strArr = explode(",",$str);
-            for($i = 0; $i < $H; $i++) {
-                if($str && $i < count($strArr)){
-                    // echo "通った".PHP_EOL;
-                    $colArrs[$w][$i]["student"] = (int)$strArr[$i];
-                }else{
-                    // echo "else通った".PHP_EOL;
-                    $colArrs[$w][$i]["student"] = 0;
-                }
-            }            
-        }
-        return $colArrs;
-    }
-
-
-    function answer($colArrs,$H,$W){
-        for ($row = 0; $row < $H; $row++) {
-            $answer = "";
-            for ($col = 0; $col < $W; $col++) {
-                $answer .= $col === $W - 1 ? $colArrs[$col][$row]["student"] : $colArrs[$col][$row]["student"]." ";
-            }
-            echo $answer.PHP_EOL;
-        }
-    }
-
-?>
+# 座席の配置を出力
+answer(col_arrs, H, W)
+'''
+最初の部分では、変数 H、W、N を入力として受け取ります。それぞれ、教室の行数、列数、生徒の数を表しています。
+次に、生徒の座席番号を入力として受け取ります。student_arr という辞書型の変数に生徒の番号をキー、座席番号を値として格納しています。
+row_arrs というリストを作成します。これは、教室の行ごとに座席の情報を格納するためのリストです。各行には、座席番号と生徒の番号を格納する辞書が含まれます。
+col_arrs というリストも作成します。これは、教室の列ごとに座席の情報を格納するためのリストです。各列には、座席番号と生徒の番号を格納する辞書が含まれます。
+set_seat 関数を使用して、生徒の座席を設定します。生徒の座席番号と教室の座席情報を比較し、一致する場合に生徒の番号を格納します。
+pack_seat 関数を使用して、座席を詰めます。各列ごとに生徒の番号を詰めて配置し、前の列に空席がある場合に詰め込まれた生徒の位置を調整します。
+最後に、answer 関数を使用して座席の配置を出力します。各行ごとに生徒の番号を表示し、列ごとにスペースで区切ります。
+'''
 
 # B107 カードシャッフル
 # B108 観覧車の稼働状況
