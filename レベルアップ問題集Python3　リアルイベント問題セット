@@ -153,5 +153,57 @@ tail と head のペアで 「K 以上」を達成できないときがありま
 '''
 
 # 最小の運賃 A
+# utf-8
+'''
+ダイクストラ法と呼ばれるアルゴリズムを用います。
+'''
+from queue import PriorityQueue
+
+
+class State:
+    def __init__(self, this, cost):
+        self.this = this
+        self.cost = cost
+
+    def __lt__(self, another):
+        return self.cost < another.cost
+
+
+E, V, T = map(int, input().split())
+
+g = [[-1] * V for _ in range(V)]
+for _ in range(E):
+    s, e, c = map(int, input().split())
+    g[s][e] = c
+    g[e][s] = c
+
+initial_state = State(0, 0)
+q = PriorityQueue()
+q.put(initial_state)
+closed = set()
+while q:
+    p = q.get()
+    if p.this == T:
+        break
+    if p.this in closed:
+        continue
+
+    closed.add(p.this)
+
+    for i, cost in enumerate(g[p.this]):
+        if cost == -1:
+            continue
+
+        next_state = State(i, p.cost + cost)
+        q.put(next_state)
+
+print(p.cost)
+'''
+駅間の関係は隣接行列で保存しています。
+ダイクストラ法を行うために queue クラスの PriorityQueue クラスをインポートして、これを用います。これは優先度付きキューと呼ばれるキューを実現するクラスです。
+PriorityQueue オブジェクトにプッシュするオブジェクトとして State クラスを定義しています。
+このクラスは __lt__ メソッドを実装することで、オブジェクト間の大小比較を行えるようにしています。
+'''
+
 # 文字列収集 S
 # 十億連勝 S
