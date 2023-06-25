@@ -5760,6 +5760,82 @@ cards_arr の要素を順番に出力します。
 '''
 
 # B108 観覧車の稼働状況
+# utf-8
+from collections import deque  # キューやスタックの操作に使用するデック（deque）をインポート
+from dataclasses import dataclass  # オブジェクトのデータクラスを定義するためのimport文
+from typing import List  # リスト型を使用するためのimport文
+
+@dataclass
+class Gondola:
+    capacity: int  # ゴンドラの収容人数を表す整数
+    ride_log: List[int]  # 乗車した人数のログを表すリスト
+    idx: int  # ゴンドラのインデックスを表す整数
+
+    def get_total_ride(self) -> int:
+        return sum(self.ride_log)
+
+
+def answer() -> None:
+    # ゴンドラの数とグループの数を取得
+    N, M = map(int, input().split())  # ゴンドラの数とグループの数を表す整数
+
+    # ゴンドラの収容人数をリストとして取得
+    A = [int(input()) for _ in range(N)]  # 各ゴンドラに乗車できる人数の制限を表す整数のリスト
+
+    # グループの人数をリストとして取得
+    B = [int(input()) for _ in range(M)]  # 各グループの人数を表す整数のリスト
+
+    # ゴンドラのキューを初期化
+    gondola_queue = deque([
+        Gondola(capacity, [], idx+1)
+        for idx, capacity in enumerate(A)
+    ])
+
+    # グループのキューを初期化
+    group_queue = deque(B)
+
+    while group_queue:
+        group_size = group_queue.popleft()  # 待っているグループから人数を取り出す
+        while group_size > 0:
+            gondola = gondola_queue.popleft()  # 先頭のゴンドラを取り出す
+
+            if gondola.capacity >= group_size:  # ゴンドラに乗れるだけの人数が残っている場合
+                gondola.ride_log.append(group_size)  # ゴンドラに乗った人数をログに追加
+                group_size = 0  # グループの残り人数を0にする
+            else:  # ゴンドラに乗れるだけの人数が残っていない場合
+                gondola.ride_log.append(gondola.capacity)  # ゴンドラに乗った人数をログに追加
+                group_size -= gondola.capacity  # グループの残り人数から乗った人数を引く
+
+            gondola_queue.append(gondola)  # ゴンドラをキューの末尾に追加
+
+    # ゴンドラのキューを回転して最初のゴンドラを先頭にする
+    while gondola_queue[0].idx != 1:
+        gondola_queue.rotate(-1)
+
+    # 各ゴンドラのトータルの乗車人数を出力
+    for gondola in gondola_queue:
+        print(gondola.get_total_ride())
+
+
+if __name__ == "__main__":
+    answer()
+'''
+ゴンドラの収容人数と待ちグループの人数を管理して、ゴンドラに乗車する人数を計算するプログラムです。
+まず、Gondoraというデータクラスが定義されています。このクラスは、ゴンドラの収容人数(capacity)、乗車した人数のログ(ride_log)、およびゴンドラのインデックス(idx)を保持します。また、get_total_ride()メソッドを持ち、乗車した人数の合計を計算することができます。
+answer関数は、ゴンドラの収容人数と待ちグループの人数を受け取り、各ゴンドラに乗車する人数を計算して出力します。
+まず、与えられたゴンドラの収容人数とインデックスを使用して、初期状態のゴンドラのリストを作成します。また、待ちグループの人数を管理するためのキューを作成します。
+次に、待ちグループのキューが空になるまで、以下の処理を繰り返します。
+
+待ちグループのキューから一人分の人数を取り出します。
+ゴンドラのリストから先頭のゴンドラを取り出します。
+ゴンドラの収容人数が待ちグループの人数以上であれば、待ちグループの人数全員が乗車できます。その場合は、ゴンドラの乗車ログに乗車した人数を追加し、待ちグループの人数から乗車した人数を引きます。
+ゴンドラの収容人数が待ちグループの人数より少ない場合、ゴンドラの収容人数分だけ乗車できます。その場合は、ゴンドラの乗車ログに収容人数を追加し、待ちグループの人数から収容人数を引きます。
+ゴンドラを再度キューの末尾に追加します。
+待ちグループのキューが空になった後は、ゴンドラのリストを再度並び替えます。これは、最初に取り出したゴンドラがゴンドラのリストの最後に来るようにするためです。
+
+最後に、ゴンドラのリストを順番に処理し、各ゴンドラの乗車人数の合計を出力します。
+'''
+
 # B109 映画館の席の予約
 # B110 解像度の向上
 --------------------------------------------- B111　※欠番 ◆
