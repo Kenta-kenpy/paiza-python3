@@ -5691,6 +5691,74 @@ pack_seat 関数を使用して、座席を詰めます。各列ごとに生徒�
 '''
 
 # B107 カードシャッフル
+# utf-8
+# カードを束ごとにシャッフルする関数
+def card_bundle(cards_arr, roup_count, remainder, last_key, M):
+    right_counter = 0
+    left_counter = last_key
+    new_cards_arr = [None] * len(cards_arr)
+    
+    for i in range(roup_count):
+        if remainder >= 1 and i == 0:
+            # 最後のカードの束がM枚未満の場合の処理
+            for i_s in range(remainder):
+                new_cards_arr[i_s] = cards_arr[left_counter - (remainder - i_s)]
+            
+            left_counter -= remainder
+            right_counter += remainder
+        else:
+            # 通常の束の処理
+            for i_s in range(M):
+                new_cards_arr[i_s + right_counter] = cards_arr[left_counter - (M - i_s)]
+            
+            left_counter -= M
+            right_counter += M
+    
+    return new_cards_arr
+
+
+# 入力値の受け取り
+N, M, K = map(int, input().split())
+remainder = N % M
+roup_count = (N // M) + 1 if remainder >= 1 else N // M
+cards_arr = list(range(1, N + 1))
+last_key = len(cards_arr)
+
+# カードのシャッフル
+for _ in range(K):
+    cards_arr = card_bundle(cards_arr, roup_count, remainder, last_key, M)
+
+# シャッフル後の結果を出力
+for card in cards_arr:
+    print(card)
+'''
+このコードは、与えられたカードの枚数を指定されたセットの枚数で束に分け、指定された回数だけシャッフルした後のカードの順序を出力します。
+card_bundle 関数:
+カードを束ごとにシャッフルするための関数です。
+引数として、シャッフル前のカードの配列 (cards_arr)、束の枚数 (roup_count)、最後の束の枚数 (remainder)、シャッフル前のカードの最後のインデックス (last_key)、束ごとの枚数 (M) を受け取ります。
+シャッフル後のカードを格納する新しい配列 (new_cards_arr) を作成し、束ごとにシャッフル処理を行います。
+最後のカードの束が M 枚未満の場合と通常の束の処理を分けて実行します。
+
+入力値の受け取り:
+N, M, K の値を入力から受け取ります。
+N はカードの枚数、M は1セットあたりの枚数、K はシャッフルの回数を表します。
+
+シャッフル処理の準備:
+remainder 変数には、カードの枚数をセットごとに分けた際の余りが格納されます。
+roup_count 変数には、束の枚数がセットごとに分けた際の総数が格納されます。
+cards_arr は、1 から N までの連続した整数を要素とするリストで、シャッフル前のカードを表します。
+last_key 変数には、cards_arr の最後の要素のインデックスが格納されます。
+
+カードのシャッフル:
+K 回のシャッフル処理を行います。
+card_bundle 関数を呼び出し、現在の cards_arr を引数として渡します。
+シャッフル後の結果を cards_arr に再代入します。
+
+シャッフル後の結果の出力:
+cards_arr の要素を順番に出力します。
+各カードの数字を整数として1行ずつ出力します。
+'''
+
 # B108 観覧車の稼働状況
 # B109 映画館の席の予約
 # B110 解像度の向上
