@@ -123,6 +123,35 @@ pos[i] : ID が i+1 の本の場所
 '''
 
 # 雪だるま作り A
+# utf-8
+N, K = map(int, input().split())
+heights = [int(x) for x in input().split()]
+
+heights.sort()
+ans = 0
+head, tail = N - 1, 0
+while tail < head:
+    if heights[head] + heights[tail] >= K:
+        ans += 1
+        head -= 1
+        tail += 1
+    else:
+        tail += 1
+
+print(ans)
+'''
+雪玉を大きさでソートし、そこから貪欲にペアを決めます。
+土台の雪玉を大きい順に選び、その土台に対し、未だに使われていなくてかつ条件を満たす最小の雪玉を頭部として選びます。
+このとき作成されるペア数が最大ペア数です。
+sort 関数を使って雪玉を高さが昇順になるように並べ替えます。
+
+【 雪玉の選び方 】
+tail を 0 と、head を N-1 として初期化して用意します。
+tail ≦ x ≦ head の範囲で最小の雪玉と最大の雪玉のペアが最大の雪玉の高さを最もよく活かせるペアです。そして、ソート済みのリスト内ではそのペアは tail と head です。
+従って、tail は head に向かって、head は tail に向かって値を更新させていきます。終了条件は tail と head が衝突したときです。
+tail と head のペアで 「K 以上」を達成できないときがあります。このときは tail が指す雪玉が小さすぎるので、tail を 1 つ進めます。
+'''
+
 # 最小の運賃 A
 # 文字列収集 S
 # 十億連勝 S
