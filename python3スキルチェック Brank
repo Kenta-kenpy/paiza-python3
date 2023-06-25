@@ -5915,6 +5915,55 @@ print(output)
 
 --------------------------------------------- B111　※欠番 ◆
 # B111 天秤のつりあい
+# utf-8
+def min_weight_difference(N, weights):
+    total_sum = sum(weights)  # 分銅の総和を計算
+    target_sum = total_sum // 2  # 目標の総和を総和の半分に設定
+
+    dp = [False] * (target_sum + 1)  # 部分和の組み合わせを記録する配列を初期化
+    dp[0] = True  # 総和が0の場合は部分和の組み合わせが存在するため、Trueとする
+
+    # 動的計画法により部分和の組み合わせを求める
+    for weight in weights:
+        for i in range(target_sum, weight - 1, -1):
+            dp[i] = dp[i] or dp[i - weight]
+
+    k = target_sum
+    while not dp[k]:
+        k -= 1
+
+    min_difference = total_sum - 2 * k  # 両皿の重さの差の最小値を計算
+    return min_difference
+
+# 入力の読み込み
+N = int(input())  # 乗せる分銅の数
+weights = list(map(int, input().split()))  # 分銅の重さのリスト
+
+# 最小差を求めて出力
+result = min_weight_difference(N, weights)
+print(result)
+'''
+まず、min_weight_difference関数は与えられた分銅の重さから両皿の重さの差の最小値を計算するための関数です。
+total_sum = sum(weights)
+　分銅の重さのリスト weights の総和を計算し、total_sum に代入します。
+target_sum = total_sum // 2
+　total_sum の半分を target_sum として設定します。この値は、両皿の重さの合計の差の最小値を求める際に使用します。
+dp = [False] * (target_sum + 1)
+　長さが target_sum + 1 の配列 dp を作成し、初期値をすべて False とします。この配列は、部分和の組み合わせを記録するためのものです。
+dp[0] = True
+　dp の最初の要素を True にします。総和が0の場合は部分和の組み合わせが存在するため、True とします。
+部分和の組み合わせを計算するためのループ処理
+　for weight in weights: のループを使用して、分銅の重さを1つずつ取り出します。
+　for i in range(target_sum, weight - 1, -1): のループを使用して、target_sum から weight まで逆順にループします。
+　dp[i] = dp[i] or dp[i - weight] を実行し、現在の総和 i の部分和の組み合わせが存在するかどうかを判定します。
+k の値を求める
+　k = target_sum とし、while not dp[k]: のループを使用して dp の値が True となる最初の k を見つけます。
+min_difference = total_sum - 2 * k
+　total_sum から 2 * k を引いた値を計算し、min_difference に代入します。これは両皿の重さの差の最小値です。
+min_difference を返して関数の実行を終了します。
+その後、入力の読み込みや関数の呼び出し、結果の出力が行われます。
+'''
+
 # B112 くじの作成
 # B113 2のべき連結ゲーム
 # B114 PAIZA運動会
