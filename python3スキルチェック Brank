@@ -5858,7 +5858,61 @@ for seat in seats:
 最後のループでは、リストseatsに格納された最も見やすい席の座標を出力します。映画館の座席情報と予約情報に基づき、予約されていない席の中で最も映画を見やすい席の座標を効率的に見つけます。
 '''
 
-# B110 解像度の向上
+# B110 解像度の向上　※入力例全てでNG
+# utf-8
+def interpolate_pixels(h, w, pixel_grid1, pixel_grid2):
+    interpolated_pixels = []
+
+    for i in range(2 * h - 1):
+        for j in range(2 * w - 1):
+            # 2枚目の画像の対応するピクセルを求める
+            row_idx = i // 2
+            col_idx = j // 2
+
+            # ピクセルの値を取得
+            pixel1 = pixel_grid1[row_idx][col_idx]
+            pixel2 = pixel_grid2[row_idx][col_idx]
+
+            # 重なる場合の処理
+            if pixel1 == 0 and pixel2 == 0:
+                interpolated_pixels.append(0)
+            elif pixel1 == pixel2:
+                interpolated_pixels.append(pixel1)
+            elif pixel1 == 255 and pixel2 == 255:
+                interpolated_pixels.append(255)
+            else:
+                interpolated_pixels.append((pixel1 + pixel2) // 2)
+
+    return interpolated_pixels
+
+# 入力を受け取る
+h, w = map(int, input().split())
+
+pixel_grid1 = []
+for _ in range(h):
+    row = list(map(int, input().split()))
+    pixel_grid1.append(row)
+
+pixel_grid2 = []
+for _ in range(h):
+    row = list(map(int, input().split()))
+    pixel_grid2.append(row)
+
+# ピクセルの補間を実行
+interpolated_pixels = interpolate_pixels(h, w, pixel_grid1, pixel_grid2)
+
+# 出力を生成
+output = ""
+for i in range(2 * h - 1):
+    for j in range(2 * w - 1):
+        output += str(interpolated_pixels[i * (2 * w - 1) + j])
+        if j != 2 * w - 2:
+            output += " "
+    output += "\n"
+
+# 結果を出力
+print(output)
+
 --------------------------------------------- B111　※欠番 ◆
 # B111 天秤のつりあい
 # B112 くじの作成
