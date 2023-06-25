@@ -1616,71 +1616,44 @@ date2 と辞書 d を比較して、カードの数字が日付を作るため�
 最後に、入力値を受け取り、get_lucky_day 関数を呼び出して結果を出力します。
 '''
 
-# B038 つるかめ算　※テストケース90点 条件内の特殊ケースを満たしていない
+# B038 つるかめ算
 # utf-8
-def estimate_pyzas(a, b, c, d):
-    estimated_pyzas = []
-
-    # どちらの動物も最低1匹ずついる場合
-    if a >= 1 and b >= 1 and c == 1 and d == 1:
-        estimated_pyzas.append((1, 1))
-    # どちらの動物も最低1匹ずついない場合または入力値が条件を満たさない場合
-    elif a < 0 or b < 0 or c < 0 or d < 0 or a > 100 or b > 100 or c > 100 or d > 100:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の足の合計が0の場合
-    elif a == 0 and b == 0 and (c + d) == 0:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の頭の数が同じで、足の合計が一致しない場合
-    elif a == b and (c + d) != a:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の頭の数が同じであり、足の合計も同じ場合
-    elif a == b and (c + d) == a:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が0以外の場合
-    elif a == 0 and b == 0 and c != 0:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の頭の数が0であり、足の数が異なる場合
-    elif a == 0 and b == 0 and c != d:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が異なる場合
-    elif c == 0 and d == 0 and a != b:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の足の数が0で、頭の数が一致する場合
-    elif c == 0 and d == 0 and a == b:
-        estimated_pyzas.append("miss")
-    # 特殊ケース: どちらか一方の動物が正の整数にならない場合
-    elif (a < c and b < d) or (a < d and b < c):
-        estimated_pyzas.append("miss")
-    # 特殊ケース: 鶴と亀の数が一意に定まらない場合
-    elif (c - d) == 0:
-        estimated_pyzas.append("miss")
-    # それ以外の場合
-    else:
-        try:
-            x = (a - b * d) // (c - d)
-            y = b - x
-            # 推定されるパイザ鶴とパイザ亀の数が正の整数になるかを確認
-            if x >= 1 and y >= 1 and a == x * c + y * d and b == x + y:
-                estimated_pyzas.append((x, y))
-            else:
-                estimated_pyzas.append("miss")
-        except ZeroDivisionError:
-            estimated_pyzas.append("miss")
-
-    return estimated_pyzas
-
-# 入力の受け取り
+# 入力を受け取る
 a, b, c, d = map(int, input().split())
 
-# 推定の実行
-estimated_pyzas = estimate_pyzas(a, b, c, d)
+# パイザ鶴とパイザ亀の匹数を格納するリスト
+matched = [0, 0]
 
-# 出力
-for result in estimated_pyzas:
-    if result == "miss":
-        print("miss")
-    else:
-        print(result[0], result[1])
+# 推定のためのループ
+for i in range(1, b):
+    # パイザ鶴とパイザ亀の足の本数の合計を計算
+    tmp_feet = i * c + (b - i) * d
+    
+    # 推定の結果が与えられた足の本数と一致する場合
+    if tmp_feet == a:
+        # 既に一意の結果が得られている場合は「miss」として終了
+        if matched != [0, 0]:
+            matched = [0, 0]
+            break
+        # 一意の結果が得られていない場合は推定結果を格納
+        else:
+            matched = [i, b - i]
+
+# 結果の出力
+if matched != [0, 0]:
+    print(matched[0], matched[1])
+else:
+    print('miss')
+'''
+最初に入力を受け取ります。a, b, c, d = map(int, input().split()) の行では、スペース区切りの入力を受け取り、それぞれの値を整数として変数 a, b, c, d に代入しています。
+推定結果を格納するための変数 matched を [0, 0] で初期化します。この変数は、一意の結果が得られたかどうかを管理するために使用します。
+ループを使って、推定を行います。for i in range(1, b) の行では、1から b-1 までの数値を順番に変数 i に代入しながらループを回します。
+ループ内では、仮の結果を計算しています。tmp_feet = i * c + (b - i) * d の行では、仮の結果として、i 匹のパイザ鶴の足の本数と (b - i) 匹のパイザ亀の足の本数の合計を計算しています。
+仮の結果が与えられた足の本数と一致する場合、一意の結果が得られるかどうかを判定します。if tmp_feet == a: の行では、仮の結果が与えられた足の本数と一致するかを確認しています。
+もし一意の結果がまだ得られていない場合、推定結果を matched 変数に格納します。matched = [i, b - i] の行では、i 匹のパイザ鶴と (b - i) 匹のパイザ亀を推定したことを表す結果を格納しています。
+ループが終了した後、最終的な結果を出力します。if matched != [0, 0]: の行では、一意の結果が得られたかどうかを判定しています。もし一意の結果が得られた場合、パイザ鶴とパイザ亀の匹数を出力します。それ以外の場合は、"miss" を出力します。
+このコードは、与えられた足の本数と頭の個数の合計から、パイザ鶴とパイザ亀の匹数を推定するための処理を行っています。ループを使用して可能な組み合わせを試し、一意の結果が得られるかどうかを判定しています。
+'''
 
 # B039 雨上がりの道
 # utf-8
