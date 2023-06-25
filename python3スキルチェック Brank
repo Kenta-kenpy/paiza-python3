@@ -2741,62 +2741,58 @@ calculate_max_combo 関数を呼び出し、ボタンの数 N、タイミング�
 返された最大コンボ数を出力します。
 '''
 
-# B057 回転寿司　※入力例3でNG
+# B057 回転寿司
 # utf-8
-def calculate_completion_time(L, sushi_positions, seat_positions):
-    sushi_positions.sort()
-    seat_positions.sort()
+def round_ring(ring):
+    # 寿司の位置リストを一つ回転させる関数
+    return [ring[-1]] + ring[:-1]
 
-    max_time = 0
-    sushi_count = len(sushi_positions)
-    seat_count = len(seat_positions)
+def eat(sushi_ring, eating_map, n):
+    # 指定された位置の客が寿司を食べるかどうかを判定する関数
+    if eating_map[n] > 0:
+        # まだ寿司を食べ終えていない場合、残りの時間を1秒減らす
+        eating_map[n] -= 1
+    elif sushi_ring[n] == 1:
+        # 寿司が存在しており、まだ食べていない場合、寿司を取り、食べるまでの時間を10秒に設定する
+        eating_map[n] = 10 - 1
+        sushi_ring[n] = 0
+        
+    return sushi_ring, eating_map
 
-    for i in range(sushi_count):
-        eating_time = 0
+# 入力を受け取る
+round_time, customer_num, sushi_num = map(int, input().split())
+customer_pos = list(map(int, input().split()))
+sushi_pos = list(map(int, input().split()))
 
-        for j in range(seat_count):
-            distance = (sushi_positions[i] - seat_positions[j] + L) % L
-            time_to_eat = distance + 10
-            eating_time = max(eating_time, time_to_eat)
+# 各客の座席位置を表すリストを作成する
+customer_ring = [1 if i in customer_pos else 0 for i in range(round_time)]
+# 寿司の位置を表すリストを作成する
+sushi_ring = [1 if i in sushi_pos else 0 for i in range(round_time)]
 
-        max_time = max(max_time, eating_time)
+# 各客が寿司を食べるかどうかの情報を保持するリスト
+eating_map = [0] * round_time
 
-    return max_time
+time = 0
+while sum(sushi_ring) > 0 or sum(eating_map) > 0:
+    # 各客の位置をチェックし、寿司を食べるかどうかを判定する
+    for n in customer_pos:
+        sushi_ring, eating_map = eat(sushi_ring, eating_map, n) 
+    # 寿司の位置を一周させる
+    sushi_ring = round_ring(sushi_ring)
+    time += 1
 
-
-L, N, M = map(int, input().split())
-sushi_positions = list(map(int, input().split()))
-seat_positions = list(map(int, input().split()))
-
-completion_time = calculate_completion_time(L, sushi_positions, seat_positions)
-
-print(completion_time)
-
-別解 # utf-8　※入力例1でNG
-def calculate_completion_time(sushi_positions, seat_positions, L):
-    sushi_positions.sort()
-    seat_positions.sort()
-
-    max_time = 0
-    for seat in seat_positions:
-        min_distance = L
-        for sushi in sushi_positions:
-            distance = (sushi - seat) % L
-            min_distance = min(min_distance, distance)
-
-        eating_time = (min_distance + L) % L + 10
-        max_time = max(max_time, eating_time)
-
-    return max_time
-
-
-L, N, M = map(int, input().split())
-sushi_positions = list(map(int, input().split()))
-seat_positions = list(map(int, input().split()))
-
-completion_time = calculate_completion_time(sushi_positions, seat_positions, L)
-
-print(completion_time)
+# 全ての寿司が完食されるまでの時間を出力する
+print(time)
+'''
+このプログラムは、与えられた入力に基づいて回転寿司店の状況をシミュレートし、全ての寿司が完食されるまでの時間を計算します。
+まず、与えられた入力を解析します。round_time はレーンの一周にかかる時間であり、customer_num は客席の数、sushi_num は時刻0における寿司の数を表しています。また、customer_pos は各客の座席位置を、sushi_pos は時刻0における各寿司の位置を表しています。
+次に、客のいる席と寿司の位置を表すリストを作成します。customer_ring リストは、客がいる位置には1を、それ以外の位置には0を持つリストです。sushi_ring リストも同様に、寿司がある位置には1を、それ以外の位置には0を持つリストです。
+次に、各客が寿司を食べるかどうかを判定します。eating_map リストは、各位置に対して寿司を食べるまでの残り時間を保持するリストです。初期値として、全ての位置の残り時間を0に設定します。
+そして、ループを開始して寿司の流れをシミュレートします。ループの条件は、まだ流れている寿司が存在するか、または誰かがまだ寿司を食べている場合にループを継続します。
+各客の位置に対して、eat() 関数を呼び出して寿司を食べるかどうかを判定します。eat() 関数は、指定された位置 n の客が寿司を食べるかどうかを判定します。もし eating_map[n] が0より大きい場合、その客はまだ寿司を食べ終えていないため、残りの時間を1秒減らします。それ以外の場合、寿司が存在しており、まだ食べていないため、寿司を取り、食べるまでの時間を10秒に設定します。
+ループの最後で、寿司の位置を一周させるために round_ring() 関数を呼び出します。
+round_ring() 関数は、寿司の位置リストを一つ回転させます。最後に、ループが終了したときの時間を出力します。これにより、全ての寿司が完食されるまでの時間が表示されます。
+'''
 
 # B058 ◆
 # B059 占領区域
