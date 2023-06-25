@@ -3067,62 +3067,44 @@ print(d)  # 掃除したマスの数を出力
 最後に、掃除したマスの数 d を出力します。
 '''
 
-# B063 支払う枚数とお釣りの枚数　※テストケース60点
+# B063 支払う枚数とお釣りの枚数
 # utf-8
-def count(x):
+# 支払いとお釣りに使う硬貨の合計枚数を計算する関数
+def coin_count(pay):
     coins = [500, 100, 50, 10, 5, 1]
-    c = 0
+    coin_count = 0
+    while pay:
+        for coin in coins:
+            coin_count += pay // coin  # 硬貨の枚数を加算
+            pay -= pay // coin * coin  # 支払った金額を引く
+    return coin_count
 
-    for coin in coins:
-        while x >= coin:
-            c += 1
-            x -= coin
+price = int(input())
 
-    return c
+# 最小の支払いとお釣りの枚数を保持する変数
+min_pay = 21
 
-def total_count(x, y):
-    return count(y) + count(y - x)
+# 各硬貨の枚数の組み合わせをループで試す
+for y500 in range(3):
+    for y100 in range(5):
+        for y50 in range(2):
+            for y10 in range(5):
+                for y5 in range(2):
+                    for y1 in range(5):
+                        pay = y500 * 500 + y100 * 100 + y50 * 50 + y10 * 10 + y5 * 5 + y1 * 1
+                        if pay >= price:  # 支払い金額が与えられた金額以上である場合のみ計算
+                            pay_count = y500 + y100 + y50 + y10 + y5 + y1
+                            charge_count = coin_count(pay - price)
+                            min_pay = min(pay_count + charge_count, min_pay)  # 最小枚数を更新
 
-x = int(input())
-minc = count(x)
-y = x
-
-if y % 10 > 0 and y % 10 < 5:
-    y = (y // 10) * 10 + 5
-    c = total_count(x, y)
-    if minc > c:
-        minc = c
-
-if y % 10 > 0:
-    y = (y // 10) * 10 + 10
-    c = total_count(x, y)
-    if minc > c:
-        minc = c
-
-if y % 100 > 0 and y % 100 < 50:
-    y = (y // 100) * 100 + 50
-    c = total_count(x, y)
-    if minc > c:
-        minc = c
-
-if y % 100 > 0:
-    y = (y // 100) * 100 + 100
-    c = total_count(x, y)
-    if minc > c:
-        minc = c
-
-if y < 500:
-    y = 500
-    c = total_count(x, y)
-    if minc > c:
-        minc = c
-
-y = 1000
-c = total_count(x, y)
-if minc > c:
-    minc = c
-
-print(minc)
+print(min_pay)
+'''
+支払いとお釣りに使用する硬貨の合計枚数を最小化するための方法を求めるものです。
+まず、coin_count関数は、与えられた金額を支払うために必要な硬貨の合計枚数を計算します。この関数では、与えられた金額を大きい硬貨から順に割り算していき、必要な枚数を加算します。その後、支払いに使用した硬貨の額を引いていきます。この操作を繰り返すことで、最小の硬貨枚数を計算します。
+メインのプログラムでは、与えられた金額を支払うための硬貨の組み合わせをすべて試します。各硬貨の枚数をループで変化させながら、金額を計算します。ただし、支払い金額が与えられた金額以上である場合にのみ計算を行います。
+計算した支払いとお釣りの硬貨の合計枚数を、現在の最小枚数と比較し、より小さい場合は最小枚数を更新します。
+最後に、最小枚数を出力します。
+'''
 
 # B064 うずを探せ
 # utf-8
