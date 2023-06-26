@@ -5140,48 +5140,58 @@ print(highest_score)
 得点リスト result から最高得点を求め、最終的な結果を出力します。
 '''
 
-# B096 ビンゴゲーム　※入力例1,3でNG
+# B096 ビンゴゲーム　※テストケースでNG
 # utf-8
-def check_bingo(card):
-    for row in card:
-        if all(cell == 'X' for cell in row):
+def check_bingo(bingo_card, called_numbers):
+    # ビンゴが達成されているかチェック
+    for row in bingo_card:
+        if all(num in called_numbers for num in row):
             return True
 
-    for col in zip(*card):
-        if all(cell == 'X' for cell in col):
+    for j in range(4):
+        column = [bingo_card[i][j] for i in range(4)]
+        if all(num in called_numbers for num in column):
             return True
 
-    diagonal1 = [card[i][i] for i in range(4)]
-    diagonal2 = [card[i][3 - i] for i in range(4)]
-    if all(cell == 'X' for cell in diagonal1) or all(cell == 'X' for cell in diagonal2):
+    diagonal1 = [bingo_card[i][i] for i in range(4)]
+    if all(num in called_numbers for num in diagonal1):
+        return True
+
+    diagonal2 = [bingo_card[i][3 - i] for i in range(4)]
+    if all(num in called_numbers for num in diagonal2):
         return True
 
     return False
 
+def find_next_bingo_number():
+    N = int(input())
+    bingo_card = []
+    for _ in range(4):
+        row = list(map(int, input().split()))
+        bingo_card.append(row)
 
-# 入力の読み込み
-N = int(input())
-card = [input().split() for _ in range(4)]
-numbers = [input() for _ in range(N)]
+    called_numbers = set()
+    for _ in range(N):
+        number = int(input())
+        called_numbers.add(number)
 
-# ビンゴの判定
-bingo = False
-for num in numbers:
-    for i in range(4):
-        for j in range(4):
-            if card[i][j] == num:
-                card[i][j] = 'X'
-                if check_bingo(card):
-                    bingo = True
-                    break
-        if bingo:
-            break
-    if bingo:
-        print(num)
-        break
+    # ビンゴが達成されている場合はすでにビンゴが達成されているため、"no"を出力
+    if check_bingo(bingo_card, called_numbers):
+        return "no"
 
-if not bingo:
-    print("no")
+    # ビンゴが達成されない場合は、次に発表される番号でビンゴを達成するか判定
+    for row in bingo_card:
+        for num in row:
+            if num not in called_numbers:
+                temp_called = called_numbers.copy()
+                temp_called.add(num)
+                if check_bingo(bingo_card, temp_called):
+                    return num
+
+    return "no"
+
+result = find_next_bingo_number()
+print(result)
 
 # B096(2) 爆弾の大爆発
 # utf-8
