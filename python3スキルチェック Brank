@@ -5140,7 +5140,7 @@ print(highest_score)
 得点リスト result から最高得点を求め、最終的な結果を出力します。
 '''
 
-# B096 ビンゴゲーム　※テストケースでNG
+# B096 ビンゴゲーム　※テストケース境界値以外でNG
 # utf-8
 def check_bingo(bingo_card, called_numbers):
     # ビンゴが達成されているかチェック
