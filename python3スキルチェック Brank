@@ -5180,13 +5180,12 @@ def find_next_bingo_number():
         return "no"
 
     # ビンゴが達成されない場合は、次に発表される番号でビンゴを達成するか判定
-    for row in bingo_card:
-        for num in row:
-            if num not in called_numbers:
-                temp_called = called_numbers.copy()
-                temp_called.add(num)
-                if check_bingo(bingo_card, temp_called):
-                    return num
+    for i in range(1, 101):  # 番号の範囲を1から100に限定
+        if i not in called_numbers:
+            temp_called = called_numbers.copy()
+            temp_called.add(i)
+            if check_bingo(bingo_card, temp_called):
+                return i
 
     return "no"
 
