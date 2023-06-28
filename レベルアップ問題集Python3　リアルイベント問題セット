@@ -206,4 +206,33 @@ PriorityQueue オブジェクトにプッシュするオブジェクトとして
 '''
 
 # 文字列収集 S
+# utf-8
+def push(dic, key, val):
+    if key in dic:
+        dic[key] += val
+        return
+
+    dic[key] = val
+
+
+N, M = map(int, input().split())
+value = {}
+for _ in range(N):
+    s, p = input().split()
+
+    prefix = s[0]
+    push(value, prefix, int(p))
+    for i in range(1, min(100, len(s))):
+        prefix += s[i]
+        push(value, prefix, int(p))
+
+for _ in range(M):
+    q = input()
+    print(value[q] if q in value else 0)
+'''
+各クエリに対し、接頭辞が合致する文字列の価格の総和を計算すると、実行時間制限を越えてしまいます。
+文字列から数値への連想配列を用意し、文字列 S と価格 P を受け取った時点で、S の先頭 1 文字から最大先頭 100 文字までの連想配列の要素に対して P の値を足します。
+これにより、各クエリに対して連想配列の要素を見ることで答えを出すことができるようになります。
+'''
+
 # 十億連勝 S
