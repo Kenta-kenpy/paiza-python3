@@ -1,1 +1,30 @@
+<ソートと検索(query)>
+step1　指定の位置への要素の追加
+step2　指定要素の検索
+step3　指定要素の検索(query)
+step4　先頭の要素の削除
+step5　先頭の要素の削除(query)
+step6　連想配列
+step7　連想配列(query)
+step8　ソートと検索
+final　ソートと検索(query)
 
+<Vtuber>
+step1　アイドルグループ
+step2　歴史を作る時間
+step3　銀行
+step4　経理
+final Vtuber
+
+<平方分割>
+step1　累積和
+step2　区間和
+step3　二次元累積和
+step4　二次元区間和
+step5　平方分割のパケット
+final　平方分割
+
+<点の幅>
+step1　'I'の数
+step2　ドーナツ
+final　点の幅　
