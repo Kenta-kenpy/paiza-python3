@@ -1,0 +1,32 @@
+<2つの数値を出力>
+step1　1つの文字列を出力
+step2　2つの文字列を出力
+step3　1行の出力
+step4　3行の出力
+final　2つの数値を出力
+
+<代入演算1>
+step1　足し算
+step2　割り算
+step3　累乗
+final　代入演算1
+
+<半角スペース区切りの2つの入力>
+step1　1行の入力
+step2　2行の入力
+step3　1つの入力
+final　半角スペース区切りの2つの入力
+
+<乗客人数>
+step1　入力された2つの文字列を出力
+step2　引き算・掛け算
+step3　代入演算2
+final　乗客人数
+
+<占い>
+step1　単純な条件分岐
+final　占い
+
+<FizzBuzz>
+step1　ある数字までの出力2
+final　FizzBuzz
