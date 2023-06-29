@@ -1,22 +1,22 @@
-## 標準入出力
-# 単純な入出力
+<標準入出力>
+step1 単純な入出力
 s = input()
 print(s)
 
-# 複数行にわたる出力
+step2 複数行にわたる出力
 n = int(input())
 
 for i in range(n):
     print("paiza")
     
-# 複数行にわたる入力
+step3 複数行にわたる入力
 N = int(input()) # n行
 
 for i in range(N):
     a = input()
     print(a)
 
-# 入力の配列による保持
+step4 入力の配列による保持
 n = int(input())
 
 A = [0]*n
@@ -42,7 +42,7 @@ a = input().split()
 for i in range(n):
     print(a[i])
     
-# 標準入出力
+final 標準入出力
 n = int(input())
 
 a = input().split()
@@ -50,22 +50,22 @@ a = input().split()
 for i in range(n):
     print(a[i])
     
-## 文字列
-# 整数と文字列
+<文字列>
+step1 整数と文字列
 n = int(input())
 
 for i in range(n):
     a = input()
     print(len(a))
     
-# 部分文字列
+step2 部分文字列
 n = int(input())
 
 for i in range(n):
     a = input()
     print(len(a))
 
-# 数字の文字列操作(基本)
+step3 数字の文字列操作(基本)
 S = input()
 
 a = int(S[0]) + int(S[3])
@@ -73,14 +73,14 @@ b = int(S[1]) + int(S[2])
 
 print(str(a) + str(b))
 
-# 数字の文字列操作(0埋め)
+step4 数字の文字列操作(0埋め)
 N = input()
 
 while len(N) < 3:
     N = "0" + N
 print(N)
 
-# 数字の文字列操作(時刻1)
+step5 数字の文字列操作(時刻1)
 S = input()
 h = int(S[:2])
 m = int(S[3:])
@@ -88,7 +88,7 @@ m = int(S[3:])
 print(h)
 print(m)
 
-# 数字の文字列操作(時刻2)
+step5 数字の文字列操作(時刻2)
 S = input()
 h = int(S[:2])
 m = int(S[3:])
@@ -106,7 +106,7 @@ if len(m) == 1:
     
 print(h+":"+m)
 
-# 文字列
+final 文字列
 N = int(input())
 
 for i in range(N):
@@ -125,8 +125,8 @@ for i in range(N):
     if ah >= 24:
         ah -= 24
         
-## forループ
-# 3の倍数のカウント
+<forループ>
+step1 3の倍数のカウント
 N = int(input())
 
 for i in range(N):
@@ -145,7 +145,7 @@ for i in range(N):
     if ah >= 24:
         ah -= 24
         
-# フラグ管理
+step2 フラグ管理
 n = int(input())
 flag = False
 
@@ -159,7 +159,7 @@ if flag:
 else:
     print("NO")
        
-# インデックス取得
+step3 インデックス取得
 n = int(input())
 
 a = [0]*n
@@ -174,7 +174,7 @@ for i in range(n):
         print(k+1)
         break
         
-# 多重ループ
+step4 多重ループ
 m = int(input())
 c = [""]*m
 
@@ -194,7 +194,7 @@ for i in range(m):
         else:
             print("NO")
             
-# forループ
+step5 forループ
 N, M, K = map(int, input().split())
 
 for i in range(N):
@@ -205,8 +205,8 @@ for i in range(N):
             ans += 1
     print(ans)
     
-## ソート
-# 昇順ソート
+<ソート>
+step1 昇順ソート
 n = int(input())
 a = [0]*n
 
@@ -218,7 +218,7 @@ a.sort()
 for i in range(n):
     print(a[i])
     
-# 降順ソート
+step2 降順ソート
 n = int(input())
 a = [0]*n
 
@@ -230,7 +230,7 @@ a.sort(reverse=True)
 for i in range(n):
     print(a[i])
     
-# 辞書式ソート
+step3 辞書式ソート
 n = int(input())
 ab = [None] * n
 
@@ -246,7 +246,7 @@ for i in range(n):
     [a,b] = ab[i]
     print(a,b)
     
-# ソート
+final ソート
 N = int(input())
 kingin = [0] * N
 
@@ -259,8 +259,8 @@ for i in range(N):
     [a,b] = kingin[i]
     print(b,a)
     
-## 辞書
-# 辞書の基本
+<辞書>
+step1 辞書の基本
 n = int(input())
 zaisan = {}
 
@@ -271,7 +271,7 @@ for i in range(n):
 S = input()
 print(zaisan[S])
 
-# 辞書のデータ更新
+step2 辞書のデータ更新
 n = int(input())
 dmg = {}
 
@@ -290,7 +290,7 @@ S = input()
 
 print(dmg[S])
 
-# 辞書データの順序
+step3 辞書データの順序
 n = int(input())
 dmg = {}
 
@@ -309,7 +309,7 @@ S = input()
 
 print(dmg[S])
 
-# 辞書
+final 辞書
 [p,q,r] = [int(i) for i in input().split()]
 AB = {}
 BC = {}
@@ -331,7 +331,7 @@ for i, k in AC.items():
     print(i,k)
     
 ## シミュレーション
-# 条件を満たす最小の自然数
+step1 条件を満たす最小の自然数
 n = 10000
 
 while True:
@@ -340,7 +340,7 @@ while True:
     n += 1
 print(n)
 
-# シミュレーションの練習
+step2 シミュレーションの練習
 n = int(input())
 [a,b] = input().split()
 a,b = int(a), int(b)
@@ -360,7 +360,7 @@ while True:
 
 print(times)
 
-# シミュレーション
+final シミュレーション
 H = int(input())
 
 # N <= 10**12
