@@ -4157,46 +4157,51 @@ M回のループで、順番に人がカウンターに並びます。
 計算された時間を出力します。
 '''
 
-# B078 動画視聴スケジュール　※テストケース通過せず
+# B078 動画視聴スケジュール
 # utf-8
-import sys
+def count_maximum_videos(N, videos):
+    # 動画を終了時間でソート
+    videos.sort(key=lambda x: x[0] + x[1])
 
-def calculate_max_videos(vacation_end, broadcast_schedule):
-    total_time = vacation_end
-    max_videos = 0
+    count = 1  # 視聴できる動画の数を初期化
+    end_time = videos[0][0] + videos[0][1]  # 最初の動画の終了時間
 
-    for start, duration in broadcast_schedule:
-        total_time -= duration
+    for i in range(1, N):
+        start_time, duration = videos[i]
 
-        if total_time >= 0:
-            max_videos += 1
-        else:
-            break
+        # 前の動画の終了時間と次の動画の開始時間が被らない場合、視聴できる動画の数を増やす
+        if end_time < start_time:
+            count += 1
+            end_time = start_time + duration
 
-    return max_videos
+    return count
 
-# 標準入力から入力を読み込む
-def read_input():
-    lines = sys.stdin.readlines()
-    N = int(lines[0])
-    broadcast_schedule = []
+# 入力を受け取る
+N = int(input())
+videos = []
+for _ in range(N):
+    start_time, duration = map(int, input().split())
+    videos.append((start_time, duration))
 
-    for line in lines[1:]:
-        start, duration = map(int, line.split())
-        broadcast_schedule.append((start, duration))
+# 最大の動画数を求める
+result = count_maximum_videos(N, videos)
 
-    vacation_end = broadcast_schedule[-1][0] + broadcast_schedule[-1][1]
-
-    return vacation_end, broadcast_schedule
-
-# 入力の読み込みと結果の出力
-def main():
-    vacation_end, broadcast_schedule = read_input()
-    max_videos = calculate_max_videos(vacation_end, broadcast_schedule)
-    print(max_videos)
-
-if __name__ == '__main__':
-    main()
+# 結果を出力
+print(result)
+'''
+このコードは、与えられた動画の情報を使って最大の視聴可能な動画数を計算するための関数 count_maximum_videos と、それを呼び出して結果を出力する部分から構成されています。
+まず、関数 count_maximum_videos 内では以下の手順で最大の動画数を計算しています：
+videos リストを動画の終了時間でソートします。これにより、視聴中の動画と次の動画との間に被りがないようになります。
+count 変数を 1 で初期化し、最初の動画は必ず視聴できるとします。
+end_time 変数には最初の動画の終了時間を格納します。これにより、次の動画の開始時間と比較することで、動画の被りがないかどうかを判定します。
+for ループを使用して、2 番目の動画から最後の動画までの間で処理を行います。各動画に対して以下の処理を行います：
+start_time 変数には現在の動画の開始時間を格納します。
+duration 変数には現在の動画の長さを格納します。
+end_time と start_time を比較して、動画の被りがないかどうかを判定します。もし被りがない場合、count をインクリメントし、end_time を次の動画の終了時間に更新します。
+ループが終了した時点で、count の値が最大の視聴可能な動画数となります。
+その後、与えられた入力を受け取り、動画の数 N と各動画の開始時間と長さを格納したリスト videos を作成します。
+最後に、関数 count_maximum_videos を呼び出して最大の動画数を計算し、結果を出力します。
+'''
 
 # B079 相性チェック
 # utf-8
