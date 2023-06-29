@@ -27,14 +27,14 @@ for i in range(n):
 
 print(max(A))
 
-# 半角スペース区切りでの出力
+step5 半角スペース区切りでの出力
 n = int(input())
 
 a = ["paiza"]*n
 
 print(" ".join(a))
 
-# 改行区切りでの出力
+step6 改行区切りでの出力
 n = int(input())
 
 a = input().split()
@@ -88,7 +88,7 @@ m = int(S[3:])
 print(h)
 print(m)
 
-step5 数字の文字列操作(時刻2)
+step6 数字の文字列操作(時刻2)
 S = input()
 h = int(S[:2])
 m = int(S[3:])
@@ -194,7 +194,7 @@ for i in range(m):
         else:
             print("NO")
             
-step5 forループ
+final forループ
 N, M, K = map(int, input().split())
 
 for i in range(N):
@@ -330,7 +330,7 @@ for i in range(1,p+1):
 for i, k in AC.items():
     print(i,k)
     
-## シミュレーション
+<シミュレーション>
 step1 条件を満たす最小の自然数
 n = 10000
 
