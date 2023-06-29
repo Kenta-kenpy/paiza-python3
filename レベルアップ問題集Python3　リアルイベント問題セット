@@ -236,3 +236,61 @@ for _ in range(M):
 '''
 
 # 十億連勝 S
+# utf-8
+'''
+各ステージが終わった時点での連勝数 w と、それまでに X 連勝したことがあるかの真偽値 b の組からなる状態 (w, b) を考え、各ステージ終了時点での各状態の組み合わせの数を計算します。
+各状態に対する組み合わせの数は連想配列で保持することができます。
+i-1 ステージ終了時の状態 (w, b) の組み合わせの数が c のとき、次のステージ i 終了時の各状態に次のように寄与します。
+w + A[i] ≦ X のとき、全勝する場合を考え、(w + A[i], b) の組み合わせの数を c だけ増やす。また、どこかで負ける場合を考え、(0, b) の組み合わせの数を c * A[i] だけ増やす。
+w + A[i] > X のとき、X 連勝ちょうどで負ける場合を考え、 (0, true) の組み合わせの数を c だけ増やす。また、X 連勝未満で負ける場合を考え、 (0, b) の組み合わせの数を c * (X - w) だけ増やす。X+1 連勝以上する場合は隠し要素の条件を満たさないので無視する。
+(0, false) の組み合わせの数が 1 という初期条件から初めて各ステージに対して計算すればよいです。
+下 9 桁の取り出しは 1000000000 で割った余りを用いれば良いです。
+'''
+def push(dic, key, val):
+    if key in dic:
+        dic[key] += val
+        return
+
+    dic[key] = val
+
+
+N, X = map(int, input().split())
+A = [int(input()) for _ in range(N)]
+mod = 10 ** 9
+
+states = {}
+states[(0, False)] = 1
+for i in range(N):
+    new_states = {}
+    for state, comb in states.items():
+        wins, cond = state
+        if wins + A[i] <= X:
+            # A[i] 全てに勝つ場合
+            push(new_states, (wins + A[i], cond), comb)
+
+            # A[i] のどこかで負ける場合
+            push(new_states, (0, cond), comb * A[i])
+        else:
+            # X 連勝ちょうどで負ける場合
+            push(new_states, (0, True), comb)
+
+            # X 連勝未満で負ける場合
+            push(new_states, (0, cond), comb * (X - wins))
+
+    # 下 9 桁のみにする
+    for key, comb in new_states.items():
+        if comb > mod:
+            new_states[key] = comb % mod
+
+    states = new_states
+
+# cond が真か wins が X になっているものの総和を出力
+ans = 0
+for state, comb in states.items():
+    wins, cond = state
+    if cond or wins == X:
+        ans += comb
+
+print(ans % mod)
+
+
