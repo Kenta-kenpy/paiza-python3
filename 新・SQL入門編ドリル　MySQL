@@ -6,6 +6,11 @@ SELECT * FROM ordered;
 よって、SELECT * FROM ordered; と書く*/
 
 step2　注文内容を取得しよう
+SELECT * FROM ordered_menu;
+/*ordered_menu テーブルのすべてのレコードを取得すればよい
+SELECT * FROM テーブル名 で、テーブル名 のテーブルのすべてのレコードを取得することができる
+よって、SELECT * FROM ordered_menu; と書く*/
+
 step3　メニューを取得しよう
 step4　カテゴリを取得しよう
 final　会員のリストを取得しよう
