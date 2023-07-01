@@ -12,6 +12,11 @@ SELECT * FROM テーブル名 で、テーブル名 のテーブルのすべて�
 よって、SELECT * FROM ordered_menu; と書く*/
 
 step3　メニューを取得しよう
+SELECT * FROM menu;
+/*問題文から、menu テーブルのすべてのレコードを取得すればよいとわかる。
+SELECT * FROM テーブル名 で、テーブル名 のテーブルのすべてのレコードを取得することができる
+よって、SELECT * FROM menu; と書く*/
+
 step4　カテゴリを取得しよう
 final　会員のリストを取得しよう
 
