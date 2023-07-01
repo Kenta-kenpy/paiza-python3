@@ -4291,6 +4291,64 @@ winner, max_coins = play_sugoroku(N, M, K, board_effects, coin_effects, dice_res
 # 結果を出力
 print(winner, max_coins)
 
+※別解　同じく入力例1でNG
+def calculate_winner(N, M, K, effects, dice_results):
+    coins = [0] * M  # プレイヤーごとのコインの初期化
+    positions = [0] * M  # プレイヤーごとの位置の初期化
+    goals = [False] * M  # ゴールに到達したかどうかのフラグ
+    
+    for turn in range(K):
+        for player in range(M):
+            if goals[player]:  # ゴール済みのプレイヤーはスキップ
+                continue
+            
+            dice = dice_results[turn][player]  # サイコロの目
+            
+            positions[player] += dice  # 位置を進める
+            
+            if positions[player] >= N - 1:  # ゴールに到達した場合
+                positions[player] = N - 1
+                goals[player] = True
+                
+            # ゴールしたプレイヤーにボーナスコインを付与
+            if sum(goals[:3]) == 3:  # 1〜3位のプレイヤーがすべてゴールした場合
+                if player == 0:  # 1位のプレイヤー
+                    bonus_coins = dice * 3
+                elif player == 1:  # 2位のプレイヤー
+                    bonus_coins = dice * 2
+                elif player == 2:  # 3位のプレイヤー
+                    bonus_coins = dice * 1
+                else:  # 4位以降のプレイヤー
+                    bonus_coins = 0
+                    
+                coins[player] += bonus_coins
+            
+            # マスの効果を適用
+            if positions[player] > 0 and positions[player] < N - 1:
+                effect = effects[positions[player] - 1]
+                positions[player] += effect[0]
+                coins[player] += effect[1]  # コインの増減
+            
+            if coins[player] < 0:  # コインが0未満にならないようにする
+                coins[player] = 0
+    
+    # 1位から3位までのプレイヤーを抽出
+    top_3_players = sorted(range(M), key=lambda x: coins[x], reverse=True)[:3]
+    winner = top_3_players[0] + 1  # 1位のプレイヤーを優勝者とする
+    return winner, coins[winner - 1]
+
+
+# 入力の読み込み
+N, M, K = map(int, input().split())
+effects = [list(map(int, input().split())) for _ in range(N-2)]
+dice_results = [list(map(int, input().split())) for _ in range(K)]
+
+# 優勝者の計算
+winner, coins = calculate_winner(N, M, K, effects, dice_results)
+
+# 結果の出力
+print(winner, coins)
+
 --------------------------------------------- B081　※欠番 ◆
 # B081 花壇のロープ
 # utf-8
