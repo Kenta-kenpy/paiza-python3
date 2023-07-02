@@ -5255,6 +5255,70 @@ def find_next_bingo_number():
 result = find_next_bingo_number()
 print(result)
 
+# utf-8 別解
+def validate_bingo_card(bingo_card):
+    numbers = set()
+    for row in bingo_card:
+        for number in row:
+            if number < 1 or number > 100:
+                return False
+            if number in numbers:
+                return False
+            numbers.add(number)
+    return True
+
+def check_bingo(bingo_card, called_numbers):
+    for row in bingo_card:
+        if all(num in called_numbers for num in row):
+            return True
+
+    for j in range(4):
+        column = [bingo_card[i][j] for i in range(4)]
+        if all(num in called_numbers for num in column):
+            return True
+
+    diagonal1 = [bingo_card[i][i] for i in range(4)]
+    if all(num in called_numbers for num in diagonal1):
+        return True
+
+    diagonal2 = [bingo_card[i][3 - i] for i in range(4)]
+    if all(num in called_numbers for num in diagonal2):
+        return True
+
+    return False
+
+def find_next_bingo_number():
+    N = int(input())
+    bingo_card = []
+    for _ in range(4):
+        row = list(map(int, input().split()))
+        bingo_card.append(row)
+
+    if not validate_bingo_card(bingo_card):
+        return "no"
+
+    called_numbers = set()
+    for _ in range(N):
+        number = int(input())
+        if number < 1 or number > 100:
+            return "no"
+        called_numbers.add(number)
+
+    if check_bingo(bingo_card, called_numbers):
+        return "no"
+
+    for i in range(1, 101):
+        if i not in called_numbers:
+            temp_called = called_numbers.copy()
+            temp_called.add(i)
+            if check_bingo(bingo_card, temp_called):
+                return str(i)
+
+    return "no"
+
+result = find_next_bingo_number()
+print(result)
+
 # B096(2) 爆弾の大爆発
 # utf-8
 def count_explosion_cells(field):
