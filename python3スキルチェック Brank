@@ -4240,115 +4240,137 @@ calculate_compatibility関数は、2つの名前を受け取り、相性を計�
 数列を作成します。隣り合う2つの数を足し合わせて新しい数列を作成します。ただし、要素の値が101を超えた場合は101を引きます。この手順を繰り返し、数列の要素数が1になるまで行います。
 2通りの相性を計算し、大きい方を返します。1つ目の名前を前にして計算する場合と、2つ目の名前を前にして計算する場合の2通りの相性を求め、大きい方の結果を採用します。
 '''
-# B080 みんなでスゴロク　※入力例1でNG
+# B080 みんなでスゴロク
 # utf-8
-def play_sugoroku(N, M, K, board_effects, coin_effects, dice_results):
-    positions = [0] * M  # プレイヤーの位置を管理するリスト
-    coins = [0] * M  # プレイヤーのコインの枚数を管理するリスト
+class Player:
+    c_award = 3
+    goal_pos = 0
+    
+    def __init__(self, sugoroku, position=0, coin=0, award=0):
+        """
+        プレイヤーの初期化を行うメソッド
+        
+        Parameters:
+            sugoroku (list): スゴロクの道の情報を格納したリスト
+            position (int): プレイヤーの初期位置 (デフォルトは0)
+            coin (int): プレイヤーの初期コイン数 (デフォルトは0)
+            award (int): プレイヤーの初期受賞コイン数 (デフォルトは0)
+        """
+        self.sugoroku = sugoroku
+        self.position = position
+        self.coin = coin
+        self.award = award
+        Player.goal_pos = len(sugoroku) - 1
+    
+    def move(self, roll):
+        """
+        プレイヤーをサイコロの目の分だけ進めるメソッド
+        
+        Parameters:
+            roll (int): サイコロの目の数
+        """
+        pos = max(min(self.position + roll, Player.goal_pos), 0)
+        self.set_award(pos)
+        self.position = pos
+    
+    def set_award(self, pos):
+        """
+        ゴールに到達した場合に受賞コインを設定するメソッド
+        
+        Parameters:
+            pos (int): 現在の位置
+        """
+        if pos == Player.goal_pos and self.award == 0:
+            self.award = Player.c_award
+            Player.c_award = max(Player.c_award-1, 0)
+    
+    def get_award(self, roll):
+        """
+        受賞コインを得るメソッド
+        
+        Parameters:
+            roll (int): サイコロの目の数
+        """
+        self.coin += self.award * roll
+    
+    def get_coin(self, amount):
+        """
+        コインを増減させるメソッド
+        
+        Parameters:
+            amount (int): 増減するコインの数
+        """
+        self.coin = max(self.coin + amount, 0)
 
-    for i in range(K):
-        for j in range(M):
-            dice = dice_results[i][j]
-            positions[j] += dice  # サイコロの目だけプレイヤーを進める
 
-            if positions[j] < N-1:
-                # プレイヤーがマスの効果を受ける場合
-                board_effect = board_effects[positions[j]-1]
-                coin_effect = coin_effects[positions[j]-1]
-                positions[j] += board_effect
-                coins[j] += coin_effect
+class Square:
+    def __init__(self, extend=0, coin=0):
+        """
+        スゴロクのマスの情報を初期化するメソッド
+        
+        Parameters:
+            extend (int): マスの進む数
+            coin (int): マスで得られるコイン数
+        """
+        self.extend = extend
+        self.coin = coin
 
-            # コインの枚数が負にならないようにする
-            if coins[j] < 0:
-                coins[j] = 0
 
-    max_coins = max(coins)  # 最もコインが多いプレイヤーの枚数
-    winner = coins.index(max_coins) + 1  # 最もコインが多いプレイヤーの番号
-    return winner, max_coins
+class Sugoroku:
+    def __init__(self, road):
+        """
+        スゴロクの道を初期化するクラス
+        
+        Parameters:
+            road (list): マスの情報を格納したリスト
+        """
+        self.road = road
+        self.start = 0
+        self.goal = len(road)
 
 
 # 入力を受け取る
 N, M, K = map(int, input().split())
-board_effects = []
-coin_effects = []
+'''
+スゴロクのマスの数を表す整数 N, プレイヤーの人数を表す M と各プレイヤーがサイコロを振る回数を表す整数 K
+'''
 
-# マスの効果とコインの効果を受け取る
-for _ in range(N - 2):
-    b, c = map(int, input().split())
-    board_effects.append(b)
-    coin_effects.append(c)
+road_map = [Square()]  # start
+for _ in range(N-2):
+    extend, coin = map(int, input().split())
+    road_map.append(Square(extend, coin))
+road_map.append(Square())  # goal
 
-dice_results = []
+player = [Player(road_map) for _ in range(M)]
 
-# サイコロの結果を受け取る
 for _ in range(K):
-    dice = list(map(int, input().split()))
-    dice_results.append(dice)
+    roll = list(map(int, input().split()))
+    for i in range(M):
+        p, r = player[i], roll[i]
+        p.get_award(r)
+        p.move(r)  # ダイスの目分進む
+        s = road_map[p.position]
+        p.get_coin(s.coin)
+        p.move(s.extend)
 
-# スゴロクをプレイして結果を取得
-winner, max_coins = play_sugoroku(N, M, K, board_effects, coin_effects, dice_results)
-
-# 結果を出力
-print(winner, max_coins)
-
-※別解　同じく入力例1でNG
-def calculate_winner(N, M, K, effects, dice_results):
-    coins = [0] * M  # プレイヤーごとのコインの初期化
-    positions = [0] * M  # プレイヤーごとの位置の初期化
-    goals = [False] * M  # ゴールに到達したかどうかのフラグ
-    
-    for turn in range(K):
-        for player in range(M):
-            if goals[player]:  # ゴール済みのプレイヤーはスキップ
-                continue
-            
-            dice = dice_results[turn][player]  # サイコロの目
-            
-            positions[player] += dice  # 位置を進める
-            
-            if positions[player] >= N - 1:  # ゴールに到達した場合
-                positions[player] = N - 1
-                goals[player] = True
-                
-            # ゴールしたプレイヤーにボーナスコインを付与
-            if sum(goals[:3]) == 3:  # 1〜3位のプレイヤーがすべてゴールした場合
-                if player == 0:  # 1位のプレイヤー
-                    bonus_coins = dice * 3
-                elif player == 1:  # 2位のプレイヤー
-                    bonus_coins = dice * 2
-                elif player == 2:  # 3位のプレイヤー
-                    bonus_coins = dice * 1
-                else:  # 4位以降のプレイヤー
-                    bonus_coins = 0
-                    
-                coins[player] += bonus_coins
-            
-            # マスの効果を適用
-            if positions[player] > 0 and positions[player] < N - 1:
-                effect = effects[positions[player] - 1]
-                positions[player] += effect[0]
-                coins[player] += effect[1]  # コインの増減
-            
-            if coins[player] < 0:  # コインが0未満にならないようにする
-                coins[player] = 0
-    
-    # 1位から3位までのプレイヤーを抽出
-    top_3_players = sorted(range(M), key=lambda x: coins[x], reverse=True)[:3]
-    winner = top_3_players[0] + 1  # 1位のプレイヤーを優勝者とする
-    return winner, coins[winner - 1]
-
-
-# 入力の読み込み
-N, M, K = map(int, input().split())
-effects = [list(map(int, input().split())) for _ in range(N-2)]
-dice_results = [list(map(int, input().split())) for _ in range(K)]
-
-# 優勝者の計算
-winner, coins = calculate_winner(N, M, K, effects, dice_results)
-
-# 結果の出力
-print(winner, coins)
-
+get_coin = [p.coin for p in player]
+max_coin = max(get_coin)
+winner = get_coin.index(max_coin) + 1
+print(winner, max_coin)
+'''
+与えられたスゴロクの道の情報とプレイヤーの行動に基づいて、最終的な勝者の番号とコインの枚数を求めるプログラムです。
+まず、Player クラスはプレイヤーの情報を管理するためのクラスです。インスタンス変数として、スゴロクの道の情報 sugoroku、現在の位置 position、所持しているコインの枚数 coin、受賞コインの枚数 award を持ちます。Player クラスの goal_pos は全プレイヤーで共有するゴールの位置を表しています。
+Player クラスの move メソッドは、与えられたサイコロの目の数に基づいてプレイヤーを移動します。現在の位置にサイコロの目の数を加えて新しい位置を計算し、ゴールを超える場合はゴールの位置に修正します。また、位置に応じて受賞コインを設定するための set_award メソッドもあります。
+Player クラスの get_award メソッドは、与えられたサイコロの目の数に基づいて受賞コインを獲得します。受賞コインの数にサイコロの目の数を掛けて現在のコインに加えます。
+Player クラスの get_coin メソッドは、与えられたコインの数を現在のコインに加えます。ただし、コインが負の値にならないように注意しています。
+次に、Square クラスはスゴロクのマスの情報を管理するためのクラスです。インスタンス変数として、進むマスの数 extend と獲得できるコインの枚数 coin を持ちます。
+Sugoroku クラスはスゴロクの道全体を管理するためのクラスです。インスタンス変数として、道の情報を格納したリスト road、スタートの位置 start、ゴールの位置 goal を持ちます。
+プログラムの実行部分では、まず入力からスゴロクのマスの数を表す整数 N、プレイヤーの人数を表す整数 M、各プレイヤーがサイコロを振る回数を表す整数 K を受け取ります。
+次に、スゴロクの道の情報を入力として受け取り、Square オブジェクトを生成し、リスト road_map に格納します。スタートとゴールのマスも含めて生成します。
+その後、プレイヤーの人数分だけ Player オブジェクトを生成し、リスト player に格納します。
+最後に、サイコロの目の数を受け取りながら、各プレイヤーの行動を順番に実行します。受賞コインの獲得、移動、マス効果によるコインの獲得などが行われます。
+全ての行動が終了した後、各プレイヤーの現在のコイン数を取得し、最もコイン数の多いプレイヤーを勝者として選びます。その勝者の番号とコイン数を出力します。
+'''
 --------------------------------------------- B081　※欠番 ◆
 # B081 花壇のロープ
 # utf-8
