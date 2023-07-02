@@ -24,6 +24,10 @@ SELECT * FROM テーブル名 で、テーブル名 のテーブルのすべて�
 よって、SELECT * FROM category; と書く*/
 
 final　会員のリストを取得しよう
+SELECT * FROM customer;
+/*問題文から、customer テーブルのすべてのレコードを取得すればよいとわかる.
+SELECT * FROM テーブル名 で、テーブル名 のテーブルのすべてのレコードを取得することができる
+よって、SELECT * FROM customer; と書く*/
 
 <漢字名、ひらがな、入会日、居住地を取得しよう>
 step1　合計金額を取得しよう
