@@ -683,6 +683,69 @@ for bit in range(2 ** n):
         ans += 1
 print(ans)
 
+# paizaの森練習問題コンテスト過去問題10　★
+# Q.　座席
+# utf-8
+s = []
+
+for i in range(9):
+    s.append(input())
+
+for i in range(3):
+    print(s[i * 3] + " " + s[i * 3 + 1] + " " + s[i * 3 + 2])
+
+# Q.　平均と平均
+# utf-8
+a, b = map(int, input().split())
+
+arithmetic_mean_pow = (a + b) * (a + b) / 4
+geometric_mean_pow = a * b
+
+if arithmetic_mean_pow > geometric_mean_pow:
+    print("arithmetic")
+elif arithmetic < geometric_mean_pow:
+    print("geometric")
+else:
+    print("equal")
+
+# Q.　親と子
+# utf-8
+a, b = map(int, input().split())
+
+if a * 2 + 1 == b or a * 2 + 2 == b:
+    print("Yes")
+else:
+    print("No")
+
+# Q.　卒論締め切り
+# utf-8
+n, a, b = map(int, input().split())
+
+if n <= a * min(30, b):
+    print("Yes")
+else:
+    print("No")
+
+# Q.　WBC
+# utf-8
+w = input()
+print("Yes" if w.isupper() else "No")
+
+# Q.  paizaとタイピング
+# utf-8
+s = input()
+n = len(s)
+verif = ["p", "a", "i", "z", "a"]
+cnt = 0
+
+res = "No"
+for i in range(n):
+    if s[i] == verif[cnt]:
+        cnt += 1
+    if cnt == 5:
+        res = "Yes"
+        break
+print(res)
 
 
 
