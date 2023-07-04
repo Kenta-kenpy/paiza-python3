@@ -5761,45 +5761,110 @@ cleaned_responses リストの要素の合計を計算し、要素数で割る�
 最後に、各設問の平均値を出力します。
 '''
 
-# B105 マッピングゲーム　※入力例全てでNG
+# B105 マッピングゲーム
 # utf-8
-def play_game(N, H, W, moves):
-    board = [['' for _ in range(W)] for _ in range(H)]
-    colors = ['Player {}'.format(i + 1) for i in range(N)]
-    counters = [0] * N
-    
-    for i in range(N):
-        for j in range(3):
-            x, y, s = moves[i][j]
-            
-            for r in range(y, min(y + s, H)):
-                for c in range(x, min(x + s, W)):
-                    if board[r][c] != colors[i] and board[r][c] != '':
-                        for k in range(N):
-                            if board[r][c] == colors[k]:
-                                counters[k] -= 1
-                                break
-                    
-                    board[r][c] = colors[i]
-                    counters[i] += 1
-    
-    return counters
+data = list(map(int, input().split()))  # 入力を整数のリストとして取得 [ターン数, yサイズ, xサイズ]
+turn_Count, ySize, xSize = data[0], data[1], data[2]
+board_Size = [[False] * xSize for _ in range(ySize)]  # マス目の使用状況を管理する2次元配列
+red_Have = [[False] * xSize for _ in range(ySize)]  # 赤プレイヤーが占有しているかどうかを管理する2次元配列
+blue_Have = [[False] * xSize for _ in range(ySize)]  # 青プレイヤーが占有しているかどうかを管理する2次元配列
+green_Have = [[False] * xSize for _ in range(ySize)]  # 緑プレイヤーが占有しているかどうかを管理する2次元配列
+playersCount = 3
+red_Count, blue_Count, green_Count = 0, 0, 0
 
+def checkingColor(player, y, x):
+    """
+    プレイヤーがマスを占有しようとしたときの色のチェックを行う関数
 
-# 入力を受け取る
-N, H, W = map(int, input().split())
-moves = []
+    Args:
+        player (int): プレイヤーの番号
+        y (int): マスのy座標
+        x (int): マスのx座標
+    """
+    if player == 0:
+        if blue_Have[y][x]:  # 青プレイヤーが既に占有している場合
+            blue_Have[y][x] = False
+            green_Have[y][x] = True
+        elif green_Have[y][x]:  # 緑プレイヤーが既に占有している場合
+            green_Have[y][x] = False
+            blue_Have[y][x] = True
+        elif red_Have[y][x]:  # 赤プレイヤーが既に占有している場合
+            return
+    elif player == 1:
+        if red_Have[y][x]:  # 赤プレイヤーが既に占有している場合
+            red_Have[y][x] = False
+            green_Have[y][x] = True
+        elif green_Have[y][x]:  # 緑プレイヤーが既に占有している場合
+            green_Have[y][x] = False
+            red_Have[y][x] = True
+        elif blue_Have[y][x]:  # 青プレイヤーが既に占有している場合
+            return
+    else:
+        if red_Have[y][x]:  # 赤プレイヤーが既に占有している場合
+            red_Have[y][x] = False
+            blue_Have[y][x] = True
+        elif blue_Have[y][x]:  # 青プレイヤーが既に占有している場合
+            blue_Have[y][x] = False
+            red_Have[y][x] = True
+        elif green_Have[y][x]:  # 緑プレイヤーが既に占有している場合
+            return
 
-for _ in range(N):
-    player_moves = []
-    for _ in range(3):
-        x, y, s = map(int, input().split())
-        player_moves.append([x, y, s])
-    moves.append(player_moves)
+def putColor(player, xStart, yStart, mass):
+    """
+    プレイヤーが色を置く処理を行う関数
 
-# ゲームをプレイして結果を出力
-result = play_game(N, H, W, moves)
-print(*result)  # スペース区切りで出力
+    Args:
+        player (int): プレイヤーの番号
+        xStart (int): 開始マスのx座標
+        yStart (int): 開始マスのy座標
+        mass (int): マスのサイズ
+    """
+    global red_Count, blue_Count, green_Count
+    for i in range(yStart, yStart + mass):
+        if i >= ySize:
+            return
+        for j in range(xStart, xStart + mass):
+            if j >= xSize:
+                break
+            if board_Size[i][j]:  # すでにマスが使用されている場合
+                checkingColor(player, i, j)
+            else:
+                board_Size[i][j] = True  # マスを使用済みにする
+                if player == 0:
+                    red_Have[i][j] = True  # 赤プレイヤーが占有
+                elif player == 1:
+                    blue_Have[i][j] = True  # 青プレイヤーが占有
+                else:
+                    green_Have[i][j] = True  # 緑プレイヤーが占有
+
+# ターンごとのプレイヤーの入力を処理する
+for _ in range(turn_Count):
+    for i in range(playersCount):
+        putData = list(map(int, input().split()))  # プレイヤーの入力を整数のリストとして取得 [x座標, y座標, マスのサイズ]
+        x, y, massSize = putData[0], putData[1], putData[2]
+        putColor(i, x, y, massSize)
+
+# 各色の占有マス数をカウントする
+for i in range(ySize):
+    for j in range(xSize):
+        if red_Have[i][j]:
+            red_Count += 1  # 赤色の占有マス数をカウント
+        elif blue_Have[i][j]:
+            blue_Count += 1  # 青色の占有マス数をカウント
+        elif green_Have[i][j]:
+            green_Count += 1  # 緑色の占有マス数をカウント
+
+print(f"{red_Count} {blue_Count} {green_Count}")
+'''
+最初に、ゲームの設定情報を入力します。ターン数、マップの縦サイズ、マップの横サイズを取得します。
+ゲームの状態を管理するための配列や変数を初期化します。board_Sizeはマス目の使用状況を管理する2次元配列で、red_Have、blue_Have、green_Haveは各プレイヤーが占有しているかどうかを管理する2次元配列です。
+ターン数だけループを実行し、各ターンでプレイヤーの入力を処理します。各プレイヤーの番号と、マスを占有するための情報（x座標、y座標、マスのサイズ）を入力として受け取ります。
+putColor関数は、プレイヤーが色を置く処理を行います。指定された範囲のマスを占有するかどうかを判断します。マスがすでに使用されている場合は、checkingColor関数を呼び出して色のチェックを行います。
+使用されていない場合は、マスを占有し、該当するプレイヤーの情報を更新します。ゲーム終了後、各色の占有マス数をカウントします。
+2重のループを使用して、各マスの状態をチェックし、占有されている色に応じて対応する変数をインクリメントします。
+最後に、赤、青、緑の占有マス数を表示します。
+このコードは、マッピングゲームを実行し、最終的な占有マス数を計算するためのものです。各プレイヤーの入力を処理し、マスの状態を更新しています。
+'''
 
 # B106 席替えの席決め
 # utf-8
