@@ -37,6 +37,11 @@ SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル�
 よって、SELECT bill FROM ordered; と書く*/
   
 step2　注文番号を取得しよう
+SELECT ordered_id FROM ordered_menu;
+/*問題文から、ordered_menu テーブルの ordered_id カラムを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT ordered_id FROM ordered_menu; と書く*/
+
 step3　メニュー名を取得しよう
 step4　カテゴリ名を取得しよう
 step5　居住地を取得しよう
