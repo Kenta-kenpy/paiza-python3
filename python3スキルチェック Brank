@@ -6858,7 +6858,32 @@ print(max_similarity)
 このプログラムは、与えられた名前のリストに対して、類似度の最大値を計算する効率的な方法です。ただし、名前の数が増えると計算時間が増えるため、入力の名前の数が大きい場合は注意が必要です。
 '''
 
-# B125 工場のボトルネック
+# B125 工場のボトルネック ※入力例全てでNG
+# utf-8
+L, Q = map(int, input().split())
+
+robot_positions = []  # ロボットの位置を記録するリスト
+max_bottleneck_time = 0  # ボトルネックの時間
+
+for _ in range(Q):
+    v, t = map(int, input().split())
+
+    if v > 0:
+        # ロボットが商品を運び出す位置を計算し、リストに追加する
+        position = robot_positions[-1] + v * t if robot_positions else v * t
+        robot_positions.append(position)
+    else:
+        # パッキングが行われる位置（アームの位置）を取得する
+        packing_position = min(robot_positions) if robot_positions else 0
+
+        # パッキングが行われる位置から最も遠いロボットの位置までの距離を計算する
+        bottleneck_time = L - packing_position
+
+        # ボトルネックの時間を更新する
+        max_bottleneck_time = max(max_bottleneck_time, bottleneck_time)
+
+print(max_bottleneck_time)
+
 # B126 ダンスパーティー
 # B127 ◆
 # B128 簡易的二次元バーコード
