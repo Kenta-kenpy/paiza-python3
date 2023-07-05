@@ -3647,8 +3647,7 @@ queen 関数を呼び出して、クイーンの配置を開始します。
 import itertools
 
 def find_nearest_weight(N, weights, M):
-    min_diff = float('inf')  # Mに最も近い重さの差を表す変数を無限大で初期化
-    nearest_weight = 0  # Mに最も近い重さの合計を表す変数を0で初期化
+    nearest_weight = float('inf')  # Mに最も近い重さを表す変数を無限大で初期化
 
     # おもりの組み合わせをすべて試す
     for r in range(1, N+1):
@@ -3657,18 +3656,22 @@ def find_nearest_weight(N, weights, M):
         for combination in combinations:
             total_weight = sum(combination)  # 組み合わせの合計重さ
 
-            # バーの両端の重さが等しくなり、M以下の偶数の場合、nearest_weightとmin_diffを更新する
-            if total_weight % 2 == 0 and total_weight <= M:
-                diff = abs(M - total_weight)
-                if diff < min_diff:
-                    min_diff = diff
-                    nearest_weight = total_weight
+            # ルール1: ダンベルの左右のバーの重さが釣り合うこと
+            if total_weight % 2 == 0:
 
-    if nearest_weight == 0:  # 条件を満たす組み合わせが存在しない場合
+                # ルール2: バーの両端につけるおもりの重さの合計が M kg 以下であること
+                if total_weight <= M:
+
+                    # ルール3: 特殊な場合の例外処理
+                    if (total_weight == M) or (total_weight < M and total_weight % 2 == 0):
+                        # nearest_weightを更新する
+                        if abs(M - total_weight) < abs(M - nearest_weight):
+                            nearest_weight = total_weight
+
+    if nearest_weight == float('inf'):  # 条件を満たす組み合わせが存在しない場合
         return 0
     else:
         return nearest_weight
-
 
 # 入力を受け取る
 N, M = map(int, input().split())
