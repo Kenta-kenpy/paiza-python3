@@ -49,8 +49,23 @@ SELECT name FROM menu;
 よって、SELECT name FROM menu; と書く*/
 
 step4　カテゴリ名を取得しよう
+SELECT name FROM category;
+/*問題文から、category テーブルの name カラムを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT name FROM category; と書く*/
+
 step5　居住地を取得しよう
+SELECT residence FROM customer;
+/*問題文から、customer テーブルの residence カラムを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT residence FROM customer; と書く*/
+
 step6　注文数、小計を取得しよう
+SELECT num, sum FROM ordered_menu;
+/*問題文から、ordered_menu テーブルの num カラムと sum カラムを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT num, sum FROM ordered_menu; と書く*/
+
 step7　メニュー名、価格を取得しよう
 step8　漢字名、ふりがなを取得しよう
 step9　注文番号、メニュー番号、注文数を取得しよう
