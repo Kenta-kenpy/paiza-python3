@@ -6374,7 +6374,41 @@ print(match_word_pair_num)
 最後に、組み合わせの数であるmatch_word_pair_numを出力します。
 '''
 
-# B116 プレゼント交換
+# B116 プレゼント交換　※入力例2,3でNG
+# utf-8
+def present_exchange(H, W, T):
+    # 男性と女性のプレゼントの元々の持ち主を格納するリスト
+    male_owners = [['M'] * W for _ in range(H)]
+    female_owners = [['F'] * W for _ in range(H)]
+
+    # 男性と女性の交換が発生するタイミングでプレゼントを交換
+    for t in range(T):
+        # 男性と女性の交差が発生する位置を計算
+        male_row = t % H
+        female_col = t % W
+        # 交換が発生する位置でプレゼントを交換
+        male_owners[male_row][female_col] = 'F'
+        female_owners[male_row][female_col] = 'M'
+
+    # 結果を出力
+    result = []
+    for i in range(H):
+        result.append('F ' + str(i + 1))
+    for j in range(W):
+        result.append('M ' + str(j + 1))
+
+    return result
+
+# 入力の読み込み
+H, W, T = map(int, input().split())
+
+# プレゼント交換の結果を求める
+output = present_exchange(H, W, T)
+
+# 結果を出力
+for line in output:
+    print(line)
+
 # B117 回る教習車
 # B118 背の順
 # B119 投網
