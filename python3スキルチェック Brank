@@ -6320,6 +6320,60 @@ for winner in winners:
     print(winner)
 
 # B115 アナグラムパズル
+# 2つの単語の長さと文字の一致を判定する関数
+def judge_match_word_pair(word_a, word_b):
+    # 単語の長さが異なる場合、一致しない
+    if len(word_a) != len(word_b):
+        return 0
+    # 単語の長さが同じ場合、文字の一致を判定
+    if len(word_a) == len(word_b):
+        for i in range(len(word_a)):
+            # word_a[i]がword_bに存在するか判定
+            match_position = word_b.find(word_a[i])
+            if match_position == -1:
+                return 0
+            # word_a[i]が一致した場合、word_bから取り除く
+            if match_position != -1:
+                word_b = word_b[:match_position] + word_b[match_position + 1:]
+        return 1
+
+# 標準入力から値を取得する関数
+def get_stdin():
+    return input().strip()
+
+# 単語の数を入力
+word_num = int(get_stdin())
+
+words = []
+match_word_pair_num = 0
+
+# 単語を入力し、リストに追加
+for _ in range(word_num):
+    words.append(get_stdin())
+
+all_word_pair = []
+
+# 単語のペアを生成
+for i in range(word_num):
+    for j in range(i, word_num):
+        all_word_pair.append(words[i] + words[j])
+
+# 全ての単語ペアに対して判定を行い、一致する数をカウント
+for word_pair in all_word_pair:
+    for word in words:
+        match_word_pair_num += judge_match_word_pair(word_pair, word)
+
+# 結果を出力
+print(match_word_pair_num)
+'''
+与えられた単語のリストから異なる2つの単語を選び、それらを連結して別の単語を作ることができる組み合わせの数を求める問題です。
+まず、標準入力から単語の数を取得し、その後の入力で単語のリストを受け取ります。
+次に、全ての単語のペアを生成します。これは、単語リスト内の全ての単語の組み合わせを考えるため、2重のループを使用しています。
+生成された単語のペアは、all_word_pairリストに追加されます。その後、全ての単語ペアに対して以下の処理を行います。
+まず、単語リスト内の各単語と比較します。比較には、judge_match_word_pairという関数が使用されます。この関数では、2つの単語の長さが一致しているかを確認し、一致している場合は文字の一致を判定します。一致する場合は、match_word_pair_num変数をインクリメントします。
+最後に、組み合わせの数であるmatch_word_pair_numを出力します。
+'''
+
 # B116 プレゼント交換
 # B117 回る教習車
 # B118 背の順
