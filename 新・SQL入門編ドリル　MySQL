@@ -92,7 +92,19 @@ SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル�
 
 <メニューを安い順に並べ替えよう>
 step1　合計金額の昇順に並べ替えよう
+SELECT * FROM ordered ORDER BY bill;
+/*問題文から、ordered テーブルのすべてのレコードを、bill カラムの値の昇順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+よって、SELECT * FROM ordered ORDER BY bill; と書く*/
+
 step2　注文数の昇順に並べ替えよう
+SELECT * FROM ordered_menu ORDER BY num;
+/*問題文から、ordered_menu テーブルのすべてのレコードを、num カラムの値の昇順に並べ替えればよいとわかる*
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+よって、SELECT * FROM ordered_menu ORDER BY num; と書く/
+
 step3　カテゴリ番号の昇順に並べ替えよう
 step4　小計の昇順に並べ替えよう
 step5　カテゴリ番号の昇順に並べ替えよう　※step3とタイトル同じなのは不自然
