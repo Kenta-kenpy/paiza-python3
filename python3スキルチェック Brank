@@ -6603,6 +6603,119 @@ rotate_floor 関数を呼び出して、回転後の床を計算します。
 '''
 
 # B122 うわさ
+# utf-8
+def propagate_rumors(city_map, initial_believers):
+    """
+    噂が伝播するまでの日数を計算する関数
+    :param city_map: 市の地図を表す2次元リスト
+    :param initial_believers: 初期の噂を信じる民家の座標のリスト
+    :return: 噂が全民家に伝播するまでの日数または"No"
+    """
+    rows = len(city_map)
+    cols = len(city_map[0])
+    rumor_map = [[False for _ in range(cols)] for _ in range(rows)]
+
+    # 初期の噂を信じる民家を設定
+    for house in initial_believers:
+        row, col = house
+        rumor_map[row][col] = True
+
+    days = 0
+
+    while True:
+        # 新たに噂を信じる民家の座標を保存するリスト
+        new_believers = []
+
+        for row in range(rows):
+            for col in range(cols):
+                # 既に噂を信じている民家はスキップ
+                if rumor_map[row][col]:
+                    continue
+
+                # 隣接する民家の噂を確認
+                neighbors = get_neighbors(row, col, rows, cols)
+                neighbor_rumors = sum(rumor_map[r][c] for r, c in neighbors)
+
+                # 噂を信じる条件を満たすか判定
+                if (city_map[row][col] == "#" and neighbor_rumors >= 1) or (city_map[row][col] in ["1", "2"] and neighbor_rumors >= int(city_map[row][col])):
+                    new_believers.append((row, col))
+
+        # 新たに噂を信じる民家が存在しない場合、終了
+        if len(new_believers) == 0:
+            break
+
+        # 新たに噂を信じる民家を更新
+        for house in new_believers:
+            row, col = house
+            rumor_map[row][col] = True
+
+        days += 1
+
+    # 全民家が噂を信じる場合、日数を返す
+    if all(all(row) for row in rumor_map):
+        return days
+    else:
+        return "No"
+
+
+def get_neighbors(row, col, rows, cols):
+    """
+    指定された座標の隣接する民家の座標を取得する関数
+    :param row: 現在の行インデックス
+    :param col: 現在の列インデックス
+    :param rows: 市の地図の行数
+    :param cols: 市の地図の列数
+    :return: 隣接する民家の座標のリスト
+    """
+    neighbors = []
+    if row > 0:
+        neighbors.append((row - 1, col))
+    if row < rows - 1:
+        neighbors.append((row + 1, col))
+    if col > 0:
+        neighbors.append((row, col - 1))
+    if col < cols - 1:
+        neighbors.append((row, col + 1))
+    return neighbors
+
+
+# 入力の読み込み
+H, W = map(int, input().split())
+city_map = []
+initial_believers = []
+
+for _ in range(H):
+    row = input().strip()
+    city_map.append(list(row))
+    for col in range(W):
+        if row[col] == "#":
+            initial_believers.append((_, col))
+
+# プログラムの実行
+result = propagate_rumors(city_map, initial_believers)
+
+# 結果の出力
+print(result)
+'''
+まず、propagate_rumors関数は、市の地図と初期の噂を信じる民家の座標を受け取り、噂が伝播するまでの日数を計算する関数です。関数内で使用される主な変数は以下の通りです。
+rowsとcols: 市の地図の行数と列数を格納する変数です。
+rumor_map: 各民家が噂を信じているかどうかを管理する2次元リストです。初期状態では全ての要素がFalse（噂を信じていない）となっています。
+new_believers: 新たに噂を信じる民家の座標を格納するリストです。
+days: 噂が伝播するまでの日数をカウントする変数です。
+まず、初期の噂を信じる民家の座標をrumor_mapに反映させます。その後、噂の伝播が終了するまでループを繰り返します。
+
+ループ内部では、各民家に対して以下の処理を行います。
+既に噂を信じている民家はスキップします。
+隣接する民家の噂を確認します。get_neighbors関数を使用して、指定された民家の上下左右の座標を取得します。
+隣接する民家の中で噂を信じている民家の数を数えます。
+噂を信じる条件を満たすか判定し、条件を満たす場合はnew_believersリストに座標を追加します。
+全ての民家に対して処理が完了した後、new_believersリストが空であればループを終了します。空でなければ、new_believersリストに含まれる民家をrumor_mapに追加し、daysを1日増やします。
+
+ループを抜けた後、rumor_mapが全ての要素がTrue（噂を信じている）であれば、daysを返します。そうでなければ、"No"を返します。
+また、get_neighbors関数は指定された座標の上下左右の隣接する民家の座標を取得する関数です。
+最後に、入力を受け取り、propagate_rumors関数を実行し、結果を出力します。
+'''
+
 # B123 ビットゲーム
 # B124 名前が似ている友達
 # B125 工場のボトルネック
