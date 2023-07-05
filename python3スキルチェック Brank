@@ -6812,6 +6812,52 @@ generate_new_hand() 関数を呼び出して、各プレイヤーの手札を新
 '''
 
 # B124 名前が似ている友達
+# utf-8
+def find_max_similarity(names):
+    max_similarity = 0
+
+    # すべての名前のペアの類似度を比較
+    for i in range(len(names)):
+        for j in range(i + 1, len(names)):
+            similarity = calculate_similarity(names[i], names[j])
+            max_similarity = max(max_similarity, similarity)
+
+    return max_similarity
+
+def calculate_similarity(name1, name2):
+    # 最長の共通部分文字列を求める
+    max_length = 0
+
+    for i in range(len(name1)):
+        for j in range(len(name2)):
+            length = 0
+            while i + length < len(name1) and j + length < len(name2) and name1[i + length] == name2[j + length]:
+                length += 1
+            max_length = max(max_length, length)
+
+    return max_length
+
+# 名前の個数を入力
+N = int(input())
+
+# 名前をリストとして入力
+names = []
+for _ in range(N):
+    names.append(input())
+
+# 類似度の最大値を求める
+max_similarity = find_max_similarity(names)
+print(max_similarity)
+'''
+このプログラムは、与えられた友達の名前のリストから、名前の類似度の最大値を求めるものです。
+まず、find_max_similarity関数は、与えられた名前のリストを受け取り、類似度の最大値を求めます。この関数では、2重のループを使用して、すべての名前のペアの類似度を比較します。
+外側のループでは、名前のリストの要素を1つずつ取り出し、内側のループでは、外側のループの要素の次の要素から末尾までの名前との類似度を計算します。類似度の最大値を更新していき、最終的な最大値を返します。
+次に、calculate_similarity関数は、2つの名前を受け取り、最長の共通部分文字列の長さを計算します。この関数では、2重のループを使用して、2つの名前の文字列の各文字を順番に比較します。共通部分文字列が見つかった場合、長さを増やしていきます。
+内側のループが終了した時点での最大の共通部分文字列の長さを返します。
+メインの処理では、まず名前の個数を入力します。その後、名前のリストを受け取ります。最後に、find_max_similarity関数を呼び出し、類似度の最大値を求めて出力します。
+このプログラムは、与えられた名前のリストに対して、類似度の最大値を計算する効率的な方法です。ただし、名前の数が増えると計算時間が増えるため、入力の名前の数が大きい場合は注意が必要です。
+'''
+
 # B125 工場のボトルネック
 # B126 ダンスパーティー
 # B127 ◆
