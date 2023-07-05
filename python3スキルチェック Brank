@@ -6884,7 +6884,7 @@ for _ in range(Q):
 
 print(max_bottleneck_time)
 
-# B126 ダンスパーティー
+# B126 ダンスパーティー　※入力例全てでNG
 # utf-8
 def calculate_qualifiers(rankings, num_players, num_songs):
     # 各選手の平均順位を計算する
