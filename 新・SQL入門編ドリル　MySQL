@@ -103,7 +103,7 @@ SELECT * FROM ordered_menu ORDER BY num;
 /*問題文から、ordered_menu テーブルのすべてのレコードを、num カラムの値の昇順に並べ替えればよいとわかる*
 SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
 ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
-よって、SELECT * FROM ordered_menu ORDER BY num; と書く/
+よって、SELECT * FROM ordered_menu ORDER BY num; と書く*/
 
 step3　カテゴリ番号の昇順に並べ替えよう
 step4　小計の昇順に並べ替えよう
