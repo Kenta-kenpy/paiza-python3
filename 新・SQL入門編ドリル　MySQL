@@ -43,6 +43,11 @@ SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル�
 よって、SELECT ordered_id FROM ordered_menu; と書く*/
 
 step3　メニュー名を取得しよう
+SELECT name FROM menu;
+/*問題文から、menu テーブルの name カラムを取得すればよいとわかる
+  SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT name FROM menu; と書く*/
+
 step4　カテゴリ名を取得しよう
 step5　居住地を取得しよう
 step6　注文数、小計を取得しよう
