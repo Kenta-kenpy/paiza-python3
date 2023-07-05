@@ -6490,6 +6490,51 @@ for student in students:
 '''
 
 # B119 投網
+# utf-8
+def catch_fish():
+    # 入力から値を読み取る
+    H, W = map(int, input().split())
+    radar = [list(map(int, input().split())) for _ in range(H)]
+    R, C = map(int, input().split())
+    net = [list(input()) for _ in range(R)]
+
+    max_fish = 0
+
+    # 網を投げ入れる全ての位置を試す
+    for i in range(H - R + 1):
+        for j in range(W - C + 1):
+            total_fish = 0
+
+            # 網が重なる範囲内の魚の総数を計算する
+            for r in range(R):
+                for c in range(C):
+                    if net[r][c] == '#':
+                        total_fish += radar[i + r][j + c]
+
+            # 最大の魚の総数を更新する
+            max_fish = max(max_fish, total_fish)
+
+    return max_fish
+
+# 関数を呼び出して結果を出力
+result = catch_fish()
+print(result)
+'''
+catch_fish() 関数を定義します。この関数は入力から値を読み取り、問題を解決します。
+H, W = map(int, input().split()) を使って、海域の縦幅 H と横幅 W を入力から読み取ります。
+radar = [list(map(int, input().split())) for _ in range(H)] を使って、H 行分の海域の情報を入力から読み取り、2次元リスト radar に格納します。各行の値は整数のリストとなります。
+R, C = map(int, input().split()) を使って、網の縦幅 R と横幅 C を入力から読み取ります。
+net = [list(input()) for _ in range(R)] を使って、R 行分の網の情報を入力から読み取り、2次元リスト net に格納します。各行は文字列となり、'#' または '.' の文字からなります。
+max_fish を初期化します。
+ネストした2重ループを使用して、網を投げ入れる全ての位置を試します。ループ変数 i は行方向のオフセットを表し、ループ変数 j は列方向のオフセットを表します。このループにより、網が重なる可能性のある位置をすべて網の左上の位置として試すことができます。
+ネストした2重ループを使用して、網が重なる範囲内の魚の総数を計算します。ループ変数 r は網の行方向のオフセットを表し、ループ変数 c は網の列方向のオフセットを表します。net[r][c] が '#' の場合、それに対応する位置の radar[i + r][j + c] の値を総数に加算します。
+総数 total_fish を最大の魚の総数 max_fish と比較し、更新します。
+最大の魚の総数 max_fish を返します。
+result = catch_fish() を呼び出して、問題を解決し、結果を変数 result に格納します。
+print(result) を使って、最終的な結果を出力します。
+このコードは、指定された入力フォーマットに基づいて値を読み取り、問題を解決します。海域の情報と網の情報を繰り返し試しながら、最大の魚の総数を求めるアルゴリズムを実装しています。
+'''
+
 # B120 ◆
 --------------------------------------------- B121　※欠番 ◆
 # B121 床の模様替え
