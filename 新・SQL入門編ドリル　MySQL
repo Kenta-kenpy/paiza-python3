@@ -67,6 +67,11 @@ SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル�
 よって、SELECT num, sum FROM ordered_menu; と書く*/
 
 step7　メニュー名、価格を取得しよう
+SELECT name, price FROM menu;
+/*問題文から、menu テーブルの name カラムと price カラムを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+よって、SELECT name, price FROM menu; と書く*/
+
 step8　漢字名、ふりがなを取得しよう
 step9　注文番号、メニュー番号、注文数を取得しよう
 final　漢字名、ふりがな、入会日、居住地を取得しよう
