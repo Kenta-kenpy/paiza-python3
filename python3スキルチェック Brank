@@ -6541,6 +6541,67 @@ print(result) を使って、最終的な結果を出力します。
 # B120 ◆
 --------------------------------------------- B121　※欠番 ◆
 # B121 床の模様替え
+# utf-8
+def rotate_floor(original_floor, r, c, s, d):
+    n = len(original_floor)
+    rotated_floor = [row[:] for row in original_floor]  # 回転後の床の初期化
+
+    if d == 0:
+        return rotated_floor  # 回転角度が 0 の場合は回転しない
+
+    # 回転させる部分の床を一時的な行列にコピーする
+    temp_floor = [[None] * s for _ in range(s)]
+    for i in range(s):
+        for j in range(s):
+            temp_floor[i][j] = rotated_floor[r - 1 + i][c - 1 + j]
+
+    # 回転後の床に要素をコピーする
+    for i in range(s):
+        for j in range(s):
+            if d == 90:
+                rotated_floor[r - 1 + j][c - 1 + s - i - 1] = temp_floor[i][j]  # 時計回りに 90 度回転
+            elif d == 180:
+                rotated_floor[r - 1 + s - i - 1][c - 1 + s - j - 1] = temp_floor[i][j]  # 時計回りに 180 度回転
+            elif d == 270:
+                rotated_floor[r - 1 + s - j - 1][c - 1 + i] = temp_floor[i][j]  # 時計回りに 270 度回転
+
+    return rotated_floor
+
+# タイルの情報の入力
+n = int(input())
+original_floor = []
+for _ in range(n):
+    row = list(map(int, input().split()))
+    original_floor.append(row)
+
+# 回転させる部分の床の情報の入力
+r, c, s, d = map(int, input().split())
+
+# 回転後の床の出力
+rotated_floor = rotate_floor(original_floor, r, c, s, d)
+for row in rotated_floor:
+    print(*row)
+'''
+このプログラムは、与えられた入力に基づいて床のタイルを回転させるための関数 rotate_floor を定義し、その関数を使用して回転後の床を出力しています。
+まず、rotate_floor 関数は、与えられた床の情報を元に回転後の床を計算します。関数の引数は次の通りです。
+original_floor: 元の床の情報を表す2次元リストです。
+r, c: 回転させる部分の床の左上の行と列のインデックスです。
+s: 回転させる部分の床の大きさです。
+d: 回転角度です。
+関数の動作は以下の通りです。
+
+元の床の情報を rotated_floor にコピーします。
+回転角度 d が 0 の場合は、回転せずに rotated_floor をそのまま返します。
+回転させる部分の床を一時的な行列 temp_floor にコピーします。
+回転後の床に要素をコピーします。回転角度に応じて、一時的な行列から要素を取り出して回転後の床に配置します。
+関数 rotate_floor の処理が完了したら、メインのプログラムでは以下の手順で入力を受け取り、回転後の床を出力しています。
+
+最初に、床のタイルの情報を入力します。タイルの情報は2次元リスト original_floor に格納されます。
+次に、回転させる部分の床の情報を入力します。左上の行と列のインデックスを表す r と c、部分の床の大きさを表す s、回転角度を表す d を受け取ります。
+rotate_floor 関数を呼び出して、回転後の床を計算します。
+回転後の床を出力します。
+'''
+
 # B122 うわさ
 # B123 ビットゲーム
 # B124 名前が似ている友達
