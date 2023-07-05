@@ -6717,6 +6717,100 @@ days: 噂が伝播するまでの日数をカウントする変数です。
 '''
 
 # B123 ビットゲーム
+# utf-8
+def generate_new_hand(p, q, R):
+    """
+    手札の数字列pと山札の数字列qに基づいて新たな手札を生成する関数
+    :param p: 手札の数字列
+    :param q: 山札の数字列
+    :param R: 命令
+    :return: 新たな手札の数字列
+    """
+    p_prime = ""
+    for i in range(len(p)):
+        if R == 'a':
+            # Rが'a'の場合、p[i]またはq[i]が'1'であれば'1'を生成し、それ以外は'0'を生成する
+            if p[i] == '1' or q[i] == '1':
+                p_prime += '1'
+            else:
+                p_prime += '0'
+        elif R == 'b':
+            # Rが'b'の場合、p[i]またはq[i]が'0'であれば'0'を生成し、それ以外は'1'を生成する
+            if p[i] == '0' or q[i] == '0':
+                p_prime += '0'
+            else:
+                p_prime += '1'
+        elif R == 'c':
+            # Rが'c'の場合、p[i]とq[i]が異なる数字であれば'1'を生成し、同じ数字であれば'0'を生成する
+            if p[i] != q[i]:
+                p_prime += '1'
+            else:
+                p_prime += '0'
+    return p_prime
+
+def main():
+    # プレイヤー数と山札の枚数を取得
+    N, M = map(int, input().split())
+
+    # 各プレイヤーの初期手札を取得
+    hands = []
+    for _ in range(N):
+        hand = input().split()
+        hands.append(hand)
+
+    # 山札の情報を取得
+    deck = []
+    for _ in range(M):
+        card = input().split()
+        deck.append(card)
+
+    # ゲームの進行
+    for card in deck:
+        R = card[0]
+        q = card[1:]
+        for i in range(N):
+            hands[i] = generate_new_hand(hands[i], q, R)
+
+    # 最終的な手札を10進数に変換して比較
+    max_value = -1
+    winners = []
+    for i in range(N):
+        value = int(''.join(hands[i]), 2)
+        if value > max_value:
+            max_value = value
+            winners = [i + 1]
+        elif value == max_value:
+            winners.append(i + 1)
+
+    # 勝者を表示
+    for winner in winners:
+        print(winner)
+
+if __name__ == '__main__':
+    main()
+'''
+generate_new_hand(p, q, R) 関数:
+手札の数字列 p と山札の数字列 q、命令 R に基づいて新たな手札を生成する関数です。
+R の値に応じて、指定されたルールに基づいて新たな手札を生成します。
+
+main() 関数:
+プログラムのメイン関数です。
+プレイヤー数と山札の枚数を取得し、各プレイヤーの初期手札と山札の情報を受け取ります。
+ゲームの進行と最終的な勝者の判定を行います。
+
+ゲームの進行:
+山札の情報を1枚ずつ取り出し、各プレイヤーの手札を更新します。
+generate_new_hand() 関数を呼び出して、各プレイヤーの手札を新たな手札で更新します。
+
+最終的な勝者の判定:
+各プレイヤーの手札を10進数に変換して比較し、最大の値を持つプレイヤーを勝者とします。
+勝者のID番号を記録し、同じ最大値を持つ場合は複数の勝者がいる可能性があるため、全ての勝者のID番号を記録します。
+
+勝者の表示:
+最終的な勝者のID番号を順に表示します。
+これにより、プレイヤー数と山札の情報を受け取り、ゲームを進行して最終的な勝者のID番号を出力するプログラムが実現されています。
+'''
+
 # B124 名前が似ている友達
 # B125 工場のボトルネック
 # B126 ダンスパーティー
