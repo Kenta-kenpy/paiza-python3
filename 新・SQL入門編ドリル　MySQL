@@ -175,6 +175,15 @@ ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の
 よって、SELECT * FROM menu ORDER BY price DESC; と書く*/
 
 step4　小計の降順に並べ替えよう
+SELECT ordered_id, sum FROM ordered_menu ORDER BY sum DESC;
+/*問題文から、
+ordered_menu テーブルの ordered_id カラムと sum カラムを取得する
+sum カラムの降順に並べ替える
+ことをすればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+よって、SELECT ordered_id, sum FROM ordered_menu ORDER BY sum DESC; と書く*/
+
 step5　注文番号の降順に並べ替えよう
 step6　通し番号の降順に並べ替えよう
 final　合計金額の高い順に並べ替えよう
