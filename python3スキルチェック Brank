@@ -7178,8 +7178,31 @@ max_down_time 関数に train_info リストと遮断機が下がっている時
 結果を出力します。
 '''
 
-# B133
-# B134
+# B133 ◆
+# B134 種まきシミュレーション　※入力例全てでNG
+# utf-8
+def count_seeds(N, M, S, seed_info):
+    field = [[0] * M for _ in range(N)]  # 畑の位置ごとに種の数を格納する2次元リスト
+
+    for seed in seed_info:
+        T, X, Y = map(int, seed.split())
+        for i in range(max(0, X - (T // 2)), min(N, X + (T // 2) + 1)):
+            for j in range(max(0, Y - (T // 2)), min(M, Y + (T // 2) + 1)):
+                if abs(X - i) + abs(Y - j) <= T // 2:
+                    field[i][j] += 1
+
+    return field
+
+# 入力の読み込み
+N, M = map(int, input().split())
+S = int(input())
+seed_info = [input() for _ in range(S)]
+
+# 結果の出力
+result = count_seeds(N, M, S, seed_info)
+for row in result:
+    print(' '.join(map(str, row)))
+
 # B135
 # B136
 # B137
