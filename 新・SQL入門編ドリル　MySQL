@@ -145,6 +145,12 @@ ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇�
 よって、SELECT customer_id, name, residence FROM customer ORDER BY customer_id; と書く*/
 
 final　メニューを安い順に並べ替えよう
+SELECT * FROM menu ORDER BY price;
+/*問題文の「価格の安い順」は「価格の昇順」と読み替えることができる
+つまり、menu テーブルのすべてのレコードを price カラムの昇順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+よって、SELECT * FROM menu ORDER BY price; と書く*/
 
 <合計金額の高い順に並べ替えよう>
 step1　注文数の降順に並べ替えよう
