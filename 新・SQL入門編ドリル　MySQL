@@ -154,6 +154,12 @@ ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇�
 
 <合計金額の高い順に並べ替えよう>
 step1　注文数の降順に並べ替えよう
+SELECT * FROM ordered_menu ORDER BY num DESC;
+/*問題文から、ordered_menu テーブルのすべてのレコードを、num カラムの値の降順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+よって、SELECT * FROM ordered_menu ORDER BY num DESC; と書く*/
+
 step2　カテゴリ番号の降順に並べ替えよう
 step3　価格の降順に並べ替えよう
 step4　小計の降順に並べ替えよう
