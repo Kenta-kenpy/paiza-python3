@@ -5228,121 +5228,106 @@ print(highest_score)
 得点リスト result から最高得点を求め、最終的な結果を出力します。
 '''
 
-# B096 ビンゴゲーム　※テストケース境界値以外でNG
+# B096 ビンゴゲーム
 # utf-8
-def check_bingo(bingo_card, called_numbers):
-    # ビンゴが達成されているかチェック
-    for row in bingo_card:
-        if all(num in called_numbers for num in row):
-            return True
+def main():
+    # 入力
+    N = int(input())  # Nを入力
+    s = [[0] * 4 for _ in range(4)]  # 4x4の二次元リストを作成し、0で初期化
+    for i in range(4):
+        s[i] = list(map(int, input().split()))  # 4行の数字を入力してsに格納
 
-    for j in range(4):
-        column = [bingo_card[i][j] for i in range(4)]
-        if all(num in called_numbers for num in column):
-            return True
-
-    diagonal1 = [bingo_card[i][i] for i in range(4)]
-    if all(num in called_numbers for num in diagonal1):
-        return True
-
-    diagonal2 = [bingo_card[i][3 - i] for i in range(4)]
-    if all(num in called_numbers for num in diagonal2):
-        return True
-
-    return False
-
-def find_next_bingo_number():
-    N = int(input())
-    bingo_card = []
-    for _ in range(4):
-        row = list(map(int, input().split()))
-        bingo_card.append(row)
-
-    called_numbers = set()
+    p = []
     for _ in range(N):
-        number = int(input())
-        called_numbers.add(number)
+        p.append(int(input()))  # N個の数字を入力してpに格納
 
-    # ビンゴが達成されている場合はすでにビンゴが達成されているため、"no"を出力
-    if check_bingo(bingo_card, called_numbers):
-        return "no"
+    # すでに選ばれている数字を"-1"に置き換える
+    for i in range(N):
+        for j in range(4):
+            for k in range(4):
+                if s[j][k] == p[i]:
+                    s[j][k] = -1
+                    break
 
-    # ビンゴが達成されない場合は、次に発表される番号でビンゴを達成するか判定
-    for i in range(1, 101):  # 番号の範囲を1から100に限定
-        if i not in called_numbers:
-            temp_called = called_numbers.copy()
-            temp_called.add(i)
-            if check_bingo(bingo_card, temp_called):
-                return i
+    # リーチチェック
+    # 縦を確認
+    height = [[0] * 4 for _ in range(2)]  # 高さを格納する二次元リストを作成し、0で初期化
+    # 横を確認
+    row = [[0] * 4 for _ in range(2)]  # 行を格納する二次元リストを作成し、0で初期化
+    # 右下方向斜めを確認
+    right_down = [[0] * 1 for _ in range(2)]  # 右下方向斜めを格納する二次元リストを作成し、0で初期化
+    # 左下方向斜めを確認
+    left_down = [[0] * 1 for _ in range(2)]  # 左下方向斜めを格納する二次元リストを作成し、0で初期化
+    answer = -1
 
-    return "no"
+    # 縦を確認
+    for i in range(4):
+        for j in range(4):
+            if s[j][i] == -1:
+                height[0][i] += 1  # -1の数をカウント
+            else:
+                height[1][i] = s[j][i]  # -1以外の数字を保存
+        if height[0][i] == 3:  # 3つの数字が-1の場合
+            answer = height[1][i]  # リーチとなる数字を保存
+            break
 
-result = find_next_bingo_number()
-print(result)
+    # 横を確認
+    if answer == -1:
+        for i in range(4):
+            for j in range(4):
+                if s[i][j] == -1:
+                    row[0][i] += 1  # -1の数をカウント
+                else:
+                    row[1][i] = s[i][j]  # -1以外の数字を保存
+            if row[0][i] == 3:  # 3つの数字が-1の場合
+                answer = row[1][i]  # リーチとなる数字を保存
+                break
 
-# utf-8 別解
-def validate_bingo_card(bingo_card):
-    numbers = set()
-    for row in bingo_card:
-        for number in row:
-            if number < 1 or number > 100:
-                return False
-            if number in numbers:
-                return False
-            numbers.add(number)
-    return True
+    # 右下方向斜めを確認
+    if answer == -1:
+        for i in range(4):
+            if s[i][i] == -1:
+                right_down[0][0] += 1  # -1の数をカウント
+            else:
+                right_down[1][0] = s[i][i]  # -1以外の数字を保存
+        if right_down[0][0] == 3:  # 3つの数字が-1の場合
+            answer = right_down[1][0]  # リーチとなる数字を保存
 
-def check_bingo(bingo_card, called_numbers):
-    for row in bingo_card:
-        if all(num in called_numbers for num in row):
-            return True
+    # 左下方向斜めを確認
+    if answer == -1:
+        for i, j in zip(range(4), range(3, -1, -1)):
+            if s[i][j] == -1:
+                left_down[0][0] += 1  # -1の数をカウント
+            else:
+                left_down[1][0] = s[i][j]  # -1以外の数字を保存
+        if left_down[0][0] == 3:  # 3つの数字が-1の場合
+            answer = left_down[1][0]  # リーチとなる数字を保存
 
-    for j in range(4):
-        column = [bingo_card[i][j] for i in range(4)]
-        if all(num in called_numbers for num in column):
-            return True
+    if answer == -1:
+        print("no")
+    else:
+        print(answer)
 
-    diagonal1 = [bingo_card[i][i] for i in range(4)]
-    if all(num in called_numbers for num in diagonal1):
-        return True
 
-    diagonal2 = [bingo_card[i][3 - i] for i in range(4)]
-    if all(num in called_numbers for num in diagonal2):
-        return True
-
-    return False
-
-def find_next_bingo_number():
-    N = int(input())
-    bingo_card = []
-    for _ in range(4):
-        row = list(map(int, input().split()))
-        bingo_card.append(row)
-
-    if not validate_bingo_card(bingo_card):
-        return "no"
-
-    called_numbers = set()
-    for _ in range(N):
-        number = int(input())
-        if number < 1 or number > 100:
-            return "no"
-        called_numbers.add(number)
-
-    if check_bingo(bingo_card, called_numbers):
-        return "no"
-
-    for i in range(1, 101):
-        if i not in called_numbers:
-            temp_called = called_numbers.copy()
-            temp_called.add(i)
-            if check_bingo(bingo_card, temp_called):
-                return str(i)
-
-    return "no"
-
-result = find_next_bingo_number()
-print(result)
+if __name__ == "__main__":
+    main()
+'''
+このコードは、ビンゴのゲームをシミュレートしてリーチの状態をチェックするものです。
+main()関数はプログラムのエントリーポイントです。ここから処理が始まります。
+最初に、変数Nに整数値を入力します。これはリーチの数字の個数を表します。
+sという2次元リストを作成し、4x4の盤面を表現します。初期値はすべて0です。
+4行の入力があり、それぞれの行には4つの数字がスペース区切りで入力されます。これらの数字はビンゴの盤面を表します。
+変数pはリーチの数字を格納するリストです。N回の入力があり、リーチの数字が入力されます。
+リーチの数字がすでに選ばれている場合、その数字を盤面上の該当する位置に置き換えます。すでに選ばれている数字は-1として表現されます。
+リーチチェックのための変数を初期化します。heightは縦方向、rowは横方向、right_downは右下方向の斜め、left_downは左下方向の斜めを表します。
+それぞれのリストの最初の要素はリーチの数字が選ばれた回数を、2番目の要素はリーチの数字自体を格納します。
+縦方向のリーチをチェックします。height[0]は-1の数をカウントし、height[1]は-1以外の数字を保存します。-1の数が3つになった場合、リーチとなる数字をanswerに保存します。
+横方向のリーチをチェックします。row[0]は-1の数をカウントし、row[1]は-1以外の数字を保存します。-1の数が3つになった場合、リーチとなる数字をanswerに保存します。
+右下方向の斜めのリーチをチェックします。right_down[0]は-1の数をカウントし、right_down[1]は-1以外の数字を保存します。-1の数が3つになった場合、リーチとなる数字をanswerに保存します。
+左下方向の斜めのリーチをチェックします。left_down[0]は-1の数をカウントし、left_down[1]は-1以外の数字を保存します。-1の数が3つになった場合、リーチとなる数字をanswerに保存します。
+最後に、answerの値をチェックして、リーチがある場合はその数字を出力し、リーチがない場合は"no"を出力します。
+ビンゴの盤面からリーチの状態を判定し、結果を出力する仕組みになっています。
+'''
 
 # B096(2) 爆弾の大爆発
 # utf-8
