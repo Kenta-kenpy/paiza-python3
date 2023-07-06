@@ -161,6 +161,12 @@ ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の
 よって、SELECT * FROM ordered_menu ORDER BY num DESC; と書く*/
 
 step2　カテゴリ番号の降順に並べ替えよう
+SELECT * FROM category ORDER BY category_id DESC;
+/*問題文から、category テーブルのすべてのレコードを、category_id カラムの値の降順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+よって、SELECT * FROM category ORDER BY category_id DESC; と書く*/
+
 step3　価格の降順に並べ替えよう
 step4　小計の降順に並べ替えよう
 step5　注文番号の降順に並べ替えよう
