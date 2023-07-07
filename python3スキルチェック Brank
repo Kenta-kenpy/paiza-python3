@@ -7002,93 +7002,67 @@ for f in field:
 また、入力の制約に従って、適切な範囲で処理を行います。
 '''
 
-# B130 ブロック挿入　※入力例1でNG
+# B130 ブロック挿入
 # utf-8
-def can_insert_block(N, M, obstacle_grid, block_shape):
-    def backtrack(row, col):
-        if row == N:
-            return True
-        
-        if col == M:
-            return backtrack(row + 1, 0)
-        
-        if obstacle_grid[row][col] == "#":
-            return backtrack(row, col + 1)
-        
-        for rotation in rotations:
-            if is_valid_placement(row, col, rotation):
-                place_block(row, col, rotation)
-                if backtrack(row, col + 1):
-                    return True
-                remove_block(row, col, rotation)
-        
-        return False
-
-    def is_valid_placement(row, col, rotation):
-        block_height = len(rotation)
-        block_width = len(rotation[0])
-
-        for i in range(block_height):
-            for j in range(block_width):
-                if rotation[i][j] == "#" and obstacle_grid[row + i][col + j] == "#":
+def can_place_block_at(board, block, x, y):
+    # ブロックをボードの指定された位置(x, y)に配置できるかをチェックします
+    for i in range(3):
+        for j in range(3):
+            if block[i][j] == 1:
+                # ボードの範囲外にブロックがはみ出している場合や、既にブロックが配置されている場合は配置不可とします
+                if x + i >= len(board) or y + j >= len(board[0]) or board[x + i][y + j] == 1:
                     return False
+    return True
 
-        return True
+def rotate_block(block):
+    # ブロックを反時計回りに回転させます
+    rotated = [[0] * 3 for _ in range(3)]
+    for i in range(3):
+        for j in range(3):
+            rotated[j][2 - i] = block[i][j]
+    return rotated
 
-    def place_block(row, col, rotation):
-        block_height = len(rotation)
-        block_width = len(rotation[0])
+def can_insert_block(board, block):
+    # ブロックを4回回転させながらボードに配置できるかをチェックします
+    for _ in range(4):
+        for j in range(len(board)):
+            for k in range(len(board[0])):
+                if can_place_block_at(board, block, j, k):
+                    # ブロックを配置できる位置が見つかった場合はTrueを返します
+                    return True
+        block = rotate_block(block)
+    # ブロックをどの向きでも配置できなかった場合はFalseを返します
+    return False
 
-        for i in range(block_height):
-            for j in range(block_width):
-                if rotation[i][j] == "#":
-                    obstacle_grid[row + i][col + j] = "#"
-
-    def remove_block(row, col, rotation):
-        block_height = len(rotation)
-        block_width = len(rotation[0])
-
-        for i in range(block_height):
-            for j in range(block_width):
-                if rotation[i][j] == "#":
-                    obstacle_grid[row + i][col + j] = "."
-
-    # 90度、180度、270度の回転パターンを作成
-    rotations = [
-        block_shape,
-        list(zip(*reversed(block_shape))),
-        list(reversed(block_shape)),
-        list(zip(*block_shape[::-1])),
-        list(map(list, zip(*reversed(block_shape)))),
-        list(reversed(list(zip(*block_shape[::-1])))),
-        list(map(list, zip(*block_shape))),
-        list(reversed(list(zip(*reversed(block_shape))))),
-    ]
-
-    # ブロックの挿入可能性の判定と探索
-    obstacle_grid = [list(row) for row in obstacle_grid]
-    result = "No"
-    if backtrack(0, 0):
-        result = "Yes"
-
-    return result
-
-# 入力の読み込み
+# 入力値を取得
 N, M = map(int, input().split())
 
-obstacle_grid = []
+# ボードの状態を入力値に基づいて構築します
+board = []
 for _ in range(N):
-    row = input().strip()
-    obstacle_grid.append(row)
+    line = input()
+    board.append([1 if ch == '#' else 0 for ch in line])
 
-block_shape = []
+# ブロックの形状を入力値に基づいて構築します
+block = []
 for _ in range(3):
-    row = input().strip()
-    block_shape.append(row)
+    line = input()
+    block.append([1 if ch == '#' else 0 for ch in line])
 
-# ブロックの挿入可能性の判定
-result = can_insert_block(N, M, obstacle_grid, block_shape)
-print(result)
+# ブロックをボードに配置できるかを判定し、結果を出力します
+if can_insert_block(board, block):
+    print("Yes")
+else:
+    print("No")
+'''
+このプログラムは、与えられたボード上に指定されたブロックを配置できるかどうかを判定します。具体的には、ボードとブロックの形状を入力として受け取り、ブロックを回転させながらボード上に配置できるかを判定します。
+まず、can_place_block_at関数は、指定された位置（x、y）にブロックを配置できるかどうかをチェックします。この関数は、ブロックの各セルをループして、ボードの範囲外にはみ出していないかや既にブロックが配置されていないかを確認します。
+次に、rotate_block関数は、与えられたブロックを反時計回りに回転させます。この関数では、ブロックの行と列を入れ替えることで回転を実現します。
+can_insert_block関数は、ボード上にブロックを配置できるかを判定します。4回のループを行い、各ループでブロックを回転させながらボード上の各位置に対して配置可能かどうかをチェックします。
+can_place_block_at関数を使用してブロックが配置可能かを判定し、配置可能な位置が見つかった場合はTrueを返します。
+メインのプログラムでは、入力値を受け取り、ボードとブロックを構築します。入力値では、ボードのサイズ（N、M）および各行の状態、ブロックの形状が与えられます。ボードとブロックは、#文字を1に変換し、それ以外の文字を0に変換することで構築されます。
+最後に、can_insert_block関数を使用してブロックをボードに配置できるかを判定し、結果を出力します。
+'''
 
 --------------------------------------------- B131　※欠番 ◆
 # B131 運賃計算
