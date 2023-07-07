@@ -195,6 +195,15 @@ ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の
 よって、SELECT ordered_id, datetime FROM ordered ORDER BY ordered_id DESC; と書く*/
 
 step6　通し番号の降順に並べ替えよう
+SELECT customer_id, name, name_yomi FROM customer ORDER BY customer_id DESC;
+/*問題文から、
+customer テーブルの customer_id カラムと name カラム、name_yomi カラムを取得する
+customer_id カラムの降順に並べ替える
+ことをすればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+よって、SELECT customer_id, name, name_yomi FROM customer ORDER BY customer_id DESC; と書く*/
+
 final　合計金額の高い順に並べ替えよう
 
 <入会した順に並べ替えよう>
