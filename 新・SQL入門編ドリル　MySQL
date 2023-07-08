@@ -205,6 +205,12 @@ ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の
 よって、SELECT customer_id, name, name_yomi FROM customer ORDER BY customer_id DESC; と書く*/
 
 final　合計金額の高い順に並べ替えよう
+SELECT * FROM ordered ORDER BY bill DESC;
+/*問題文の「注文の合計金額の高い順」は「注文の合計金額の降順」と読み替えることができる
+つまり、ordered テーブルのすべてのレコードを bill カラムの降順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+よって、SELECT * FROM ordered ORDER BY bill DESC; と書く*/
 
 <入会した順に並べ替えよう>
 step1　日時の昇順に並べ替えよう
