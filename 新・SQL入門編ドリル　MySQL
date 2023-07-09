@@ -214,6 +214,14 @@ ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の
 
 <入会した順に並べ替えよう>
 step1　日時の昇順に並べ替えよう
+SELECT * FROM ordered ORDER BY datetime;
+/*問題文から、ordered テーブルのすべてのレコードを、datetime カラムの値の昇順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+カラムの値が整数でないときも並べ替えることができる
+今回は日時の並べ替え
+よって、SELECT * FROM ordered ORDER BY datetime; と書く*/
+
 step2　カテゴリ名の昇順に並べ替えよう
 step3　ふりがなの昇順に並べ替えよう
 step4　メニュー名の昇順に並べ替えよう
