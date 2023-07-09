@@ -6225,61 +6225,22 @@ min_difference を返して関数の実行を終了します。
 '''
 
 # B112 ◆
-# B113 2のべき連結ゲーム　（参考:2048ゲーム）※入力例でRuntime Eroor
+# B113 2のべき連結ゲーム　（参考:2048ゲーム）※テストケース通過せず
 # utf-8
-def insert_numbers():
-    board = []  # 盤面を表すリスト
-    powers = []  # 2の累乗の数を表すリスト
-    turns = 0  # ターン数
+import random
 
-    for _ in range(10000):
-        num = int(input())  # 数字を受け取る
+N = int(input())  # マス内に入れるべき数字の数
 
-        # 数字を挿入する位置を決定する
-        p = 0
-        if num == 2:
-            # 盤面の左端に挿入する
-            p = 0
-        elif num == 4:
-            # 2の累乗の数の右側に挿入する
-            p = len(powers)
-        else:
-            # 不正な値が与えられた場合は終了
-            break
+for i in range(N):
+    Ai = int(input())  # iターン目にマスに入れるべき数
 
-        # 数字を盤面に挿入する
-        board.insert(p, num)
+    # どこに数字を挿入するかをランダムに選択
+    p = random.randint(0, min(i, 2))
 
-        # 盤面をスキャンし、連続した同じ数を処理する
-        i = 0
-        while i < len(board) - 1:
-            if board[i] == board[i+1]:
-                # 連続した同じ数を2倍にし、連結して左詰めする
-                board[i] *= 2
-                board.pop(i+1)
-            else:
-                i += 1
+    print(p)
 
-        # 2の累乗の数をpowersリストに追加する
-        if num == 2 or num == 4:
-            powers.append(num)
-
-        turns += 1
-
-        # 次の数を挿入する位置を出力する
-        if p == 0:
-            print(0)
-        else:
-            count = 0
-            for i in range(p):
-                if board[i] == board[p]:
-                    count += 1
-            print(count)
-
-        if turns >= 16:
-            break
-
-insert_numbers()
+# 改行を追加して終了
+print()
 
 # B114 PAIZA運動会　※テストケース通過せず　50点　
 # utf-8
