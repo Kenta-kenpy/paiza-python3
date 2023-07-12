@@ -6841,47 +6841,44 @@ for _ in range(num_records):
 bottleneck = find_bottleneck(work_records, lane_length)
 print(bottleneck)
 
-# B126 ダンスパーティー　※入力例全てでNG
+# B126 ダンスパーティー　※テストケース90点
 # utf-8
-def calculate_qualifiers(rankings, num_players, num_songs):
-    # 各選手の平均順位を計算する
-    average_rankings = []
-    for player_rankings in rankings:
-        average_rankings.append(sum(player_rankings) / num_songs)
+def calculate_qualifiers(rankings):
+    n = len(rankings)  # 選手の総数
+    m = len(rankings[0])  # 曲の数
 
-    # 平均順位で選手をソートする
-    sorted_players = sorted(range(num_players), key=lambda x: average_rankings[x])
+    # 選手ごとの平均順位を計算する
+    average_ranks = []
+    for i in range(n):
+        average_ranks.append(sum(rankings[i]) / m)
 
-    # 最終的な順位を計算する
-    final_rankings = [0] * num_players
-    current_rank = 1
-    for i, player in enumerate(sorted_players):
-        if i > 0 and average_rankings[player] > average_rankings[sorted_players[i - 1]]:
-            current_rank = i + 1
-        final_rankings[player] = current_rank
+    # 選手を平均順位でソートする
+    sorted_players = sorted(range(n), key=lambda x: (average_ranks[x], x))
 
-    # 3位以内の選手の数を数える
-    num_qualifiers = 0
-    for i in range(num_players):
-        if final_rankings[i] <= 3:
-            num_qualifiers += 1
+    # 上位3位の選手を決勝に進出させる
+    finalists = sorted_players[:3]
 
-    # 1曲でも3位以内に入ったことのある選手の数を数える
-    for player_rankings in rankings:
-        if any(rank <= 3 for rank in player_rankings):
-            num_qualifiers += 1
+    # 3位以内に入ったことのある選手を敗者復活戦に進出させる
+    revival_players = []
+    for player in sorted_players:
+        if player not in finalists:
+            for i in range(m):
+                if rankings[player][i] <= 3:
+                    revival_players.append(player)
+                    break
 
-    return num_qualifiers
+    return len(set(revival_players))
 
 
-# 入力の読み込み
-N, M = map(int, input().split())
+# 入力を受け取る
+n, m = map(int, input().split())
 rankings = []
-for _ in range(N):
-    rankings.append(list(map(int, input().split())))
+for _ in range(n):
+    ranks = list(map(int, input().split()))
+    rankings.append(ranks)
 
-# 敗者復活戦に進出する選手の人数を計算
-qualifiers = calculate_qualifiers(rankings, N, M)
+# 敗者復活戦に進出する選手の人数を計算する
+qualifiers = calculate_qualifiers(rankings)
 
 # 結果を出力
 print(qualifiers)
