@@ -6804,31 +6804,42 @@ print(max_similarity)
 このプログラムは、与えられた名前のリストに対して、類似度の最大値を計算する効率的な方法です。ただし、名前の数が増えると計算時間が増えるため、入力の名前の数が大きい場合は注意が必要です。
 '''
 
-# B125 工場のボトルネック ※入力例全てでNG
+# B125 工場のボトルネック ※入力例2でNG
 # utf-8
-L, Q = map(int, input().split())
+import sys
 
-robot_positions = []  # ロボットの位置を記録するリスト
-max_bottleneck_time = 0  # ボトルネックの時間
+def find_bottleneck(work_records, lane_length):
+    max_time = 0
+    robot_departure_time = 0
 
-for _ in range(Q):
-    v, t = map(int, input().split())
+    for record in work_records:
+        robot_speed, time = record
 
-    if v > 0:
-        # ロボットが商品を運び出す位置を計算し、リストに追加する
-        position = robot_positions[-1] + v * t if robot_positions else v * t
-        robot_positions.append(position)
-    else:
-        # パッキングが行われる位置（アームの位置）を取得する
-        packing_position = min(robot_positions) if robot_positions else 0
+        if robot_speed > 0:
+            arm_arrival_time = time + (lane_length / robot_speed)
+            packing_time = arm_arrival_time - robot_departure_time
 
-        # パッキングが行われる位置から最も遠いロボットの位置までの距離を計算する
-        bottleneck_time = L - packing_position
+            if packing_time > max_time:
+                max_time = packing_time
 
-        # ボトルネックの時間を更新する
-        max_bottleneck_time = max(max_bottleneck_time, bottleneck_time)
+        else:
+            robot_departure_time = time
 
-print(max_bottleneck_time)
+    return int(max_time)  # ボトルネックを整数に変換して返す
+
+# 入力の読み込み
+line = input().strip()
+lane_length, num_records = map(int, line.split())
+
+work_records = []
+for _ in range(num_records):
+    line = input().strip()
+    robot_speed, time = map(int, line.split())
+    work_records.append([robot_speed, time])
+
+# ボトルネックの計算
+bottleneck = find_bottleneck(work_records, lane_length)
+print(bottleneck)
 
 # B126 ダンスパーティー　※入力例全てでNG
 # utf-8
