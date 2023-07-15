@@ -275,6 +275,14 @@ ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇�
 よって、SELECT name, name_yomi FROM customer ORDER BY name; と書く*/
 
 final　入会した順に並べ替えよう
+SELECT * FROM customer ORDER BY join_date;
+/*問題文の「入会日が早い順」は「入会日の昇順」と読み替えることができる
+つまり、customer テーブルのすべてのレコードを join_date カラムの昇順に並べ替えればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+カラムの値が整数でないときも並べ替えることができる
+今回は日付の並べ替え
+よって、SELECT * FROM customer ORDER BY join_date; と書く*/
 
 <注文番号、小計、メニュー番号についての条件で並べ替えよう>
 step1　注文番号、注文数についての条件で並べ替えよう
