@@ -18,7 +18,6 @@ def isValidIp(m, c):
             ret = True
     return ret
 
-
 def main():
     # IPアドレスを読み込む
     mip = input().strip().split(".")
