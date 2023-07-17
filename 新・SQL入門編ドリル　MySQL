@@ -312,6 +312,18 @@ ORDER BY カラム名1 DESC, カラム名2 で、レコードを
 よって、SELECT * FROM menu ORDER BY price DESC, name; と書く*/
 
 step3　注文数、小計についての条件で並べ替えよう
+SELECT ordered_id, num, sum FROM ordered_menu ORDER BY num DESC, sum DESC;
+/*問題文から、ordered_menu テーブルのすべてのレコードを
+num カラムの降順
+そして num カラムの値が同じとき、sum カラムの降順
+に並べ替えればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+ORDER BY カラム名1 DESC, カラム名2 DESC で、レコードを
+カラム名1 カラムの値の降順
+そして カラム名1 カラムの値が同じとき、カラム名2 カラムの値の降順
+に並べ替えることができる
+よって、SELECT ordered_id, num, sum FROM ordered_menu ORDER BY num DESC, sum DESC; と書く*/
+
 step4　入会日、名前（ふりがな）についての条件で並べ替えよう
 final　注文番号、小計、メニュー番号についての条件で並べ替えよう
 
