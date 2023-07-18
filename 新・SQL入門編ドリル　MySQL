@@ -325,6 +325,19 @@ ORDER BY カラム名1 DESC, カラム名2 DESC で、レコードを
 よって、SELECT ordered_id, num, sum FROM ordered_menu ORDER BY num DESC, sum DESC; と書く*/
 
 step4　入会日、名前（ふりがな）についての条件で並べ替えよう
+SELECT join_date, name, name_yomi FROM customer ORDER BY join_date, name_yomi;
+/*問題文から、customer テーブルのすべてのレコードを
+join_date カラムの昇順
+そして join_date カラムの値が同じとき、name_yomi カラムの昇順
+に並べ替えればよいとわかる
+
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+ORDER BY カラム名1, カラム名2 で、レコードを
+カラム名1 カラムの値の昇順
+そして カラム名1 カラムの値が同じとき、カラム名2 カラムの値の昇順
+に並べ替えることができる
+よって、SELECT join_date, name, name_yomi FROM customer ORDER BY join_date, name_yomi; と書く*/
+
 final　注文番号、小計、メニュー番号についての条件で並べ替えよう
 
 <価格の高い順に10件取得しよう>
