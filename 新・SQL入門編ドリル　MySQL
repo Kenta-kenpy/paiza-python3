@@ -355,7 +355,19 @@ ORDER BY カラム名1 DESC, カラム名2 DESC, カラム名3 で、レコー�
 
 <価格の高い順に10件取得しよう>
 step1　上から50件を取得しよう
+SELECT * FROM ordered_menu LIMIT 50;
+/*問題文から、ordered_menu テーブルの上から 50 件のレコードを取得すればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+LIMIT 件数 で、上から 件数 件を取得することができる
+よって、SELECT * FROM ordered_menu LIMIT 50; と書く*/
+
 step2　上から25件を取得しよう
+SELECT ordered_id, num, sum FROM ordered_menu LIMIT 25;
+/*問題文から、ordered_menu テーブルの上から 25 件のレコードを取得すればよいとわかる
+SELECT カラム名1, カラム名2, ... FROM テーブル名で、テーブル名 のテーブルの カラム名1, カラム名2, ... カラムを取得することができる
+LIMIT 件数 で、上から 件数 件を取得することができる
+よって、SELECT ordered_id, num, sum FROM ordered_menu LIMIT 25; と書く*/
+
 step3　昇順に並べ替えて、上位10件を取得しよう
 step4　降順に並べ替えて、上位100件を取得しよう
 step5　複数の条件で並べ替えて、上位5件を取得しよう
