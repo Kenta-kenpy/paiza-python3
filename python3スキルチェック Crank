@@ -3557,7 +3557,73 @@ print(can_clean_rooms())
 この修正後のプログラムは、与えられた部屋の数とロボットの清掃順序に基づいて、全ての部屋を清掃できるかどうかを判定します。最終的には、"yes"または"no"を出力します。
 '''
 
-# C133　
+# C133　雷危険地域
+# utf-8
+def calculate_danger_region(H, W, grid):
+    # 3x3のエリアの平均値を計算する関数
+    def get_average(r, c):
+        total = 0
+        for i in range(3):
+            for j in range(3):
+                total += grid[r + i][c + j]
+        return total // 9
+
+    danger_regions = []
+    for i in range(0, H, 3):
+        row = []
+        for j in range(0, W, 3):
+            # 3x3のエリアごとに平均値を計算してリストに追加
+            row.append(get_average(i, j))
+        danger_regions.append(row)
+
+    return danger_regions
+
+# 入力を受け取る
+H, W = map(int, input().split())
+
+# 制約を満たさない場合はエラーを出力して終了
+if H % 3 != 0 or W % 3 != 0 or H < 3 or W < 3 or H > 999 or W > 999:
+    print("Error: Invalid input.")
+    exit()
+
+grid = []
+for _ in range(H):
+    # 各行をリストにしてgridに追加
+    row = list(map(int, input().split()))
+    grid.append(row)
+
+# 危険度を計算
+output = calculate_danger_region(H, W, grid)
+
+# 出力を整形して表示
+for row in output:
+    # 各エリアの平均値をスペース区切りで出力
+    print(*row)
+'''
+このプログラムは、与えられた地域のマス目に雷が落ちた回数を記録し、その地域を9マスごとに分割して各エリアの危険度を計算します。以下に、主な機能と処理の流れを説明します。
+
+calculate_danger_region 関数:
+3x3のエリアの平均値を計算するための関数です。
+エリア内の全マスの値を合計し、その平均値を求めて整数で返します。
+
+入力を受け取る:
+まず、標準入力から地域の縦と横のマスの数を受け取ります (変数 H, W)。
+その後、H行分の地域の各マスに雷が落ちた回数を受け取り、二次元リスト grid に格納します。
+
+制約のチェック:
+入力された H と W が制約を満たしているか確認します。
+H と W は共に3で割り切れる必要があり、3より小さくてはいけません。
+同時に、999より大きくてもいけません。制約を満たさない場合はエラーメッセージを表示して終了します。
+
+grid に格納された雷の回数を元に、各3x3エリアの危険度を計算します:
+3x3のエリアを1つずつ検討し、calculate_danger_region関数を使ってそのエリアの平均値を計算します。
+計算結果をリスト danger_regions に追加します。
+
+出力を整形して表示:
+計算された各エリアの危険度を整形して出力します。
+各行ごとにスペース区切りで表示されます。
+'''
+
 # C134　
 # C135　
 # C136　
