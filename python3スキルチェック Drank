@@ -2021,7 +2021,11 @@ X = int(input())
 Y = int(input())
 print(X+Y)
 
-# D252
+# D252　日課のランニング
+# utf-8
+X = int(input())
+print(X*4)
+
 # D253
 # D254
 # D255
