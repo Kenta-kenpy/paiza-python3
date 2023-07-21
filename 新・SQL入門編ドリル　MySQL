@@ -369,6 +369,16 @@ LIMIT 件数 で、上から 件数 件を取得することができる
 よって、SELECT ordered_id, num, sum FROM ordered_menu LIMIT 25; と書く*/
 
 step3　昇順に並べ替えて、上位10件を取得しよう
+SELECT * FROM ordered ORDER BY bill LIMIT 10;
+/*問題文から、
+ordered テーブルのすべてのレコードを、bill カラムの値の昇順に並べ替える
+上から 10 件取得する
+ことをすればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 で、レコードを カラム名 カラムの値の昇順に並べ替えることができる
+LIMIT 件数 で、上から 件数 件を取得することができる
+よって、SELECT * FROM ordered ORDER BY bill LIMIT 10; と書く*/
+
 step4　降順に並べ替えて、上位100件を取得しよう
 step5　複数の条件で並べ替えて、上位5件を取得しよう
 step6  複数の条件で並べ替えて、上位30件を取得しよう
