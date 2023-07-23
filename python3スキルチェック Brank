@@ -6321,40 +6321,52 @@ print(match_word_pair_num)
 最後に、組み合わせの数であるmatch_word_pair_numを出力します。
 '''
 
-# B116 プレゼント交換　※入力例2,3でNG
+# B116 プレゼント交換
 # utf-8
-def present_exchange(H, W, T):
-    # 男性と女性のプレゼントの元々の持ち主を格納するリスト
-    male_owners = [['M'] * W for _ in range(H)]
-    female_owners = [['F'] * W for _ in range(H)]
-
-    # 男性と女性の交換が発生するタイミングでプレゼントを交換
-    for t in range(T):
-        # 男性と女性の交差が発生する位置を計算
-        male_row = t % H
-        female_col = t % W
-        # 交換が発生する位置でプレゼントを交換
-        male_owners[male_row][female_col] = 'F'
-        female_owners[male_row][female_col] = 'M'
-
-    # 結果を出力
-    result = []
-    for i in range(H):
-        result.append('F ' + str(i + 1))
-    for j in range(W):
-        result.append('M ' + str(j + 1))
-
-    return result
-
-# 入力の読み込み
 H, W, T = map(int, input().split())
 
-# プレゼント交換の結果を求める
-output = present_exchange(H, W, T)
+# 男性と女性が持っているプレゼントの初期状態
+men_gifts = [('M', i) for i in range(1, H+1)]
+women_gifts = [('F', i) for i in range(1, W+1)]
 
-# 結果を出力
-for line in output:
-    print(line)
+# 男性と女性の初期座標
+men_pos = [(i, 0) for i in range(1, H+1)]
+women_pos = [(0, j) for j in range(1, W+1)]
+
+for t in range(1, T+1):
+    # 男性の時間tの座標
+    men_t = t % (2 * W)
+    if men_t > W:
+        men_t = 2 * W - men_t
+    men_pos = [(i, men_t) for i in range(1, H+1)]
+
+    # 女性の時間tの座標
+    women_t = t % (2 * H)
+    if women_t > H:
+        women_t = 2 * H - women_t
+    women_pos = [(women_t, j) for j in range(1, W+1)]
+
+    # それぞれの男女が同じ座標であればプレゼントを交換する
+    for r in range(H):
+        for c in range(W):
+            if men_pos[r] == women_pos[c]:
+                men_gifts[r], women_gifts[c] = women_gifts[c], men_gifts[r]
+
+# 出力
+for gift in men_gifts:
+    print(gift[0], gift[1])
+for gift in women_gifts:
+    print(gift[0], gift[1])
+'''
+与えられた部屋の縦幅(H)、横幅(W)、および交換会の時刻(T)に対して、プレゼント交換が終わった後のプレゼントの元々の持ち主を計算して出力するPythonの実装です。
+最初に、入力から部屋の縦幅(H)、横幅(W)、および交換会の時刻(T)を受け取ります。
+男性と女性が持っているプレゼントの初期状態をリストで作成します。男性は'M'と数字のペア、女性は'F'と数字のペアのタプルで表されています。例えば、男性が2人であれば、men_gifts = [('M', 1), ('M', 2)]となります。
+男性と女性の初期座標をリストで作成します。男性の初期座標は(i, 0)、女性の初期座標は(0, j)となります。
+時刻tにおける男性と女性の座標を計算します。男性は速度1で東西に往復し続けるため、時間tにおける座標はt % (2 * W)となります。ここで、t % (2 * W)は0から2*W-1の範囲の値を取ります。男性の座標は(1, t % (2 * W))から(2, t % (2 * W))となるため、men_pos = [(i, t % (2 * W)) for i in range(1, H+1)]として計算されます。女性の座標も同様に計算します。
+男性と女性の座標が同じ場合、プレゼントを交換します。具体的には、男性と女性の持ち物を入れ替えます。
+交換が終了した後、男性と女性のプレゼントの元々の持ち主を出力します。
+コードの内容は正確ですが、プレゼントの交換を行うループがT回分だけ行われる必要があります。そのため、交換を行うループ部分をT回分だけfor文で囲む必要があります。
+'''
 
 # B117 回る教習車
 # utf-8
