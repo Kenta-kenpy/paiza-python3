@@ -392,5 +392,22 @@ LIMIT 件数 で、上から 件数 件を取得することができる
 よって、SELECT ordered_id, num, sum FROM ordered_menu ORDER BY sum DESC LIMIT 100; と書く*/
 
 step5　複数の条件で並べ替えて、上位5件を取得しよう
+SELECT * FROM menu ORDER BY price, name LIMIT 5;
+/*問題文から、
+ordered_menu テーブルのすべてのレコードを
+price カラムの昇順
+そして price カラムの値が同じとき、name カラムの昇順
+に並べ替える
+上から 5 件取得する
+ことをすればよいとわかる
+
+問題文から、
+ordered_menu テーブルのすべてのレコードを
+price カラムの昇順
+そして price カラムの値が同じとき、name カラムの昇順
+に並べ替える
+上から 5 件取得する
+ことをすればよいとわかる*/
+
 step6  複数の条件で並べ替えて、上位30件を取得しよう
 final　価格の高い順に10件取得しよう
