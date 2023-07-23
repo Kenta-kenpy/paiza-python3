@@ -7120,29 +7120,87 @@ max_down_time 関数に train_info リストと遮断機が下がっている時
 '''
 
 # B133 ◆
-# B134 種まきシミュレーション　※入力例全てでNG
+# B134 種まきシミュレーション
 # utf-8
-def count_seeds(N, M, S, seed_info):
-    field = [[0] * M for _ in range(N)]  # 畑の位置ごとに種の数を格納する2次元リスト
+def make_line(y, masu, x, hatake_box, hatake_size):
+    # 基点 (x, y) を中心に、上下の行に masu マス分だけ種を植える関数
+    for j in range(masu):
+        a = x - (masu - j)
+        if a > 0:
+            hatake_box[y][a] += 1
+        b = x + (masu - j)
+        if b <= hatake_size[1]:
+            hatake_box[y][b] += 1
+    hatake_box[y][x] += 1
 
-    for seed in seed_info:
-        T, X, Y = map(int, seed.split())
-        for i in range(max(0, X - (T // 2)), min(N, X + (T // 2) + 1)):
-            for j in range(max(0, Y - (T // 2)), min(M, Y + (T // 2) + 1)):
-                if abs(X - i) + abs(Y - j) <= T // 2:
-                    field[i][j] += 1
+def add_line(x, masu, y, hatake_box, hatake_size):
+    # 基点 (x, y) を中心に、左右の列に masu マス分だけ種を植える関数
+    for j in range(masu - 1):
+        a = y - (masu - 1 - j)
+        if a > 0:
+            hatake_box[a][x] += 1
+        b = y + (masu - 1 - j)
+        if b <= hatake_size[0]:
+            hatake_box[b][x] += 1
+    hatake_box[y][x] += 1
 
-    return field
+def main():
+    # 畑の縦の区画数 N と横の区画数 M を入力
+    n, m = map(int, input().split())
+    # 何回種をまいたかを入力
+    s = int(input())
 
-# 入力の読み込み
-N, M = map(int, input().split())
-S = int(input())
-seed_info = [input() for _ in range(S)]
+    # 畑の状態を保持する二次元リストを作成し、すべての要素を 0 に初期化
+    hatake_box = [[0] * (m + 1) for _ in range(n + 1)]
 
-# 結果の出力
-result = count_seeds(N, M, S, seed_info)
-for row in result:
-    print(' '.join(map(str, row)))
+    for _ in range(s):
+        # i 回目の種まきでの情報を入力
+        t, x, y = map(int, input().split())
+
+        if t == 1:
+            # 高さが 1 の場合は、基点 (x, y) にのみ種を植える
+            hatake_box[y][x] += 1
+            continue
+
+        # 基点 (x, y) から masu マス分だけ種を植える
+        masu = t // 2
+
+        if y - masu > 0:
+            # 上段一列に masu マス分だけ種を植える
+            make_line(y - masu, masu, x, hatake_box, (n, m))
+
+        if y + masu <= n:
+            # 下段一列に masu マス分だけ種を植える
+            make_line(y + masu, masu, x, hatake_box, (n, m))
+
+        if x - masu > 0:
+            # 左側に masu マス分だけ種を植える
+            add_line(x - masu, masu, y, hatake_box, (n, m))
+
+        if x + masu <= m:
+            # 右側に masu マス分だけ種を植える
+            add_line(x + masu, masu, y, hatake_box, (n, m))
+
+    # 結果を出力
+    for row in hatake_box[1:]:
+        print(*row[1:])
+
+
+if __name__ == "__main__":
+    main()
+'''
+与えられた問題の要件に従って、空中から種を植えるドローンの動作をシミュレーションし、畑の各区画に植えられた種の個数を計算して出力するプログラムです。
+まず、入力から畑の縦の区画数 N と横の区画数 M を取得します。そして、何回種をまいたかを表す整数 S を取得します。
+畑の状態を保持する二次元リスト hatake_box を作成し、すべての要素を0に初期化します。このリストは、畑の各区画に植えられた種の個数を保持します。行は1からNまで、列は1からMまでの範囲で表現します。
+次に、S回の種まきの情報を入力から取得します。それぞれの情報は、高さ T 、種をまいた場所の列 X 、種をまいた場所の行 Y です。
+高さ T が1の場合は、単一の区画にだけ種を植えます。それ以外の場合は、Tを奇数の整数として、ドローンのいる区画を中心として一辺が T マスの正方形の辺の位置に種を植えます。
+以下の関数が、種をまく操作をシミュレートするために使用されます：
+make_line(y, masu, x, hatake_box, hatake_size): 基点 (x, y) を中心に、上下の行に masu マス分だけ種を植える関数。
+add_line(x, masu, y, hatake_box, hatake_size): 基点 (x, y) を中心に、左右の列に masu マス分だけ種を植える関数。
+これらの関数を使って、与えられた情報に基づいてドローンが畑に種をまく操作を行い、hatake_boxリストに種の個数を記録します。
+
+最後に、hatake_boxリストを使って、畑の各区画に植えられた種の個数を出力します。出力は、空白区切りで各行の種の個数を表示し、各行の末尾に改行を付け加えます。
+'''
 
 # B135
 # B136
