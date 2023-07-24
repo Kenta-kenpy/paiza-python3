@@ -426,3 +426,13 @@ LIMIT 件数 で、上から 件数 件を取得することができる
 よって、SELECT name, name_yomi, join_date FROM customer ORDER BY join_date DESC, name_yomi LIMIT 30; と書く*/
 
 final　価格の高い順に10件取得しよう
+SELECT * FROM menu ORDER BY price DESC LIMIT 10;
+/*問題文の「価格の高い順に 10 件」は「価格の降順の上から 10 件」と読み替えることができる
+つまり
+menu テーブルのすべてのレコードを、price カラムの昇順に並べ替える
+上から 10 件取得する
+ことをすればよいとわかる
+SELECT * FROM テーブル名 で テーブル名 のテーブルのすべてのレコードを取得することができる
+ORDER BY カラム名 DESC で、レコードを カラム名 カラムの値の降順に並べ替えることができる
+LIMIT 件数 で、上から 件数 件を取得することができる
+よって、SELECT * FROM menu ORDER BY price DESC LIMIT 10; と書く*/
