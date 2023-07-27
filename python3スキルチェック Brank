@@ -7214,7 +7214,42 @@ add_line(x, masu, y, hatake_box, hatake_size): 基点 (x, y) を中心に、左�
 最後に、hatake_boxリストを使って、畑の各区画に植えられた種の個数を出力します。出力は、空白区切りで各行の種の個数を表示し、各行の末尾に改行を付け加えます。
 '''
 
-# B135
+# B135 譜面チェック　※入力例全てでNG
+# utf-8
+def is_playable(left_hand, right_hand):
+    for hand in (left_hand, right_hand):
+        if len(hand) >= 2 and hand[0][0] == hand[1][0]:  # 同じ段の鍵盤を片手で押すことはできない
+            return False
+        if len(hand) == 3 and hand[0][0] == hand[2][0]:  # 片手で両端の鍵盤を押すことはできない
+            return False
+    if len(left_hand) >= 1 and len(right_hand) >= 1:
+        if left_hand[0][0] != right_hand[0][0]:  # 片手で左右の鍵盤を同時に押すことはできない
+            return False
+    return True
+
+def main():
+    N = int(input())
+    measures = [input().split()[1:] for _ in range(N)]
+
+    invalid_measures = []
+    for i, measure in enumerate(measures):
+        left_hand = []
+        right_hand = []
+        for note in measure:
+            if note[0] == 'L':
+                left_hand.append(note)
+            elif note[0] == 'R':
+                right_hand.append(note)
+        
+        if not is_playable(left_hand, right_hand):
+            invalid_measures.append(i + 1)
+
+    for measure_num in invalid_measures:
+        print(measure_num)
+
+if __name__ == "__main__":
+    main()
+
 # B136
 # B137
 # B138
