@@ -1,5 +1,22 @@
 <ソートと検索(query)>
 step1　指定の位置への要素の追加
+# utf-8
+N, K, Q = map(int, input().split())
+A = [int(input()) for _ in range(N)]
+
+A.insert(K, Q)
+
+for a in A:
+    print(a)
+'''
+配列を用意して A の各要素を受け取ったのち、要素を追加するメソッドを利用したり、新たに長さ N + 1 の配列 B を作成し、A の要素と次のように対応させることで問題を解くことができます。
+B_i = A_i (1 ≦ i ≦ K)
+B_i = Q (i = K + 1)
+B_i = A_{i-1} (K + 2 ≦ i ≦ N + 1)
+
+リストの insert メソッドを使って解いています。
+'''
+
 step2　指定要素の検索
 step3　指定要素の検索(query)
 step4　先頭の要素の削除
