@@ -2026,7 +2026,11 @@ print(X+Y)
 X = int(input())
 print(X*4)
 
-# D253
+# D253　宝くじとかけ金
+# utf-8
+N = int(input())
+print(N**2)
+
 # D254
 # D255
 # D256
