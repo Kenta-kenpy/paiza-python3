@@ -18,6 +18,23 @@ B_i = A_{i-1} (K + 2 ≦ i ≦ N + 1)
 '''
 
 step2　指定要素の検索
+# utf-8
+N, K = map(int, input().split())
+A = [int(input()) for _ in range(N)]
+
+exist = False
+for a in A:
+    if a == K:
+        exist = True
+        break
+
+print("YES" if exist else "NO")
+'''
+配列を用いてデータを受け取り、繰り返しを用いて、各要素について K かどうかを条件文で判定すれば良いです。
+判定の結果に応じて "YES" または "NO" を出力しましょう。
+for 文を使ってリストの各要素が K に一致するか判定しています。
+'''
+
 step3　指定要素の検索(query)
 step4　先頭の要素の削除
 step5　先頭の要素の削除(query)
