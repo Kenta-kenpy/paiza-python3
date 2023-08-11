@@ -106,6 +106,20 @@ for _ in range(K):
 '''
 
 step6　連想配列
+# utf-8
+N, K = map(int, input().split())
+roster = {(x, y) for x, y in [input().split() for _ in range(N)]}
+
+for _ in range(K):
+    q = input()
+    for num, ID in roster:
+        if num == q:
+            print(ID)
+'''
+全ての生徒の出席番号と ID をセットで保持し、出席番号が与えられたら、その出席番号と対応する ID を探して出力すれば良いです。
+出席番号と ID をセットで保持するには、配列を 2 つ用意して、 1 人の出席番号と ID を同じ要素番号に入れるなどすれば良いです。
+'''
+
 step7　連想配列(query)
 step8　ソートと検索
 final　ソートと検索(query)
