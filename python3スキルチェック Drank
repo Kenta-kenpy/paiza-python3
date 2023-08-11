@@ -2041,7 +2041,13 @@ if X > Y:
 else:
     print(Y-x)
 
-# D255
+# D255　学校でのあだな
+# utf-8
+S = input()
+X = input()
+
+print(X+S+X)
+
 # D256
 # D257
 # D258
