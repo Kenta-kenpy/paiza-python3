@@ -6223,22 +6223,54 @@ min_difference を返して関数の実行を終了します。
 '''
 
 # B112 ◆
-# B113 2のべき連結ゲーム　（参考:2048ゲーム）※テストケース通過せず
+# B113 2のべき連結ゲーム　（参考:2048ゲーム）※テストケース通過せず　70点
 # utf-8
-import random
+def insert_number(board, num, position):
+    # マスに数を挿入する関数
+    board.insert(position, num)
 
-N = int(input())  # マス内に入れるべき数字の数
+def merge_numbers(board):
+    # 近くに同じ数があれば結合する関数
+    i = 0
+    while i < len(board) - 1:
+        if board[i] == board[i + 1]:
+            board[i] *= 2
+            del board[i + 1]
+        i += 1
 
-for i in range(N):
-    Ai = int(input())  # iターン目にマスに入れるべき数
+def place_number(board, num):
+    # 数を適切な位置に配置する関数
+    for i in range(len(board)):
+        if i == 0:
+            if num <= board[i]:
+                insert_number(board, num, i)
+                return i  # 数字を挿入した位置を返す
+        elif i < len(board) and board[i-1] < num <= board[i]:
+            insert_number(board, num, i)
+            return i  # 数字を挿入した位置を返す
+    return len(board)  # 最後に挿入した場合はリストの末尾を返す
 
-    # どこに数字を挿入するかをランダムに選択
-    p = random.randint(0, min(i, 2))
+def game_strategy(numbers):
+    board = []
+    positions = []  # 各ターンで数字を入れた位置を保存するリスト
+    for num in numbers:
+        position = place_number(board, num)
+        positions.append(position)
+        merge_numbers(board)
+        while len(board) < 16:
+            board.append(2)  # マスが埋まるまで 2 を追加
+    return positions
 
-    print(p)
+# 入力を受け取る
+N = int(input())
+input_numbers = []
+for _ in range(N):
+    num = int(input())
+    input_numbers.append(num)
 
-# 改行を追加して終了
-print()
+positions = game_strategy(input_numbers)
+for pos in positions:
+    print(pos)
 
 # B114 PAIZA運動会　※テストケース通過せず　50点　
 # utf-8
