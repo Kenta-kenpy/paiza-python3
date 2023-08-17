@@ -2048,7 +2048,13 @@ X = input()
 
 print(X+S+X)
 
-# D256
+# D256　移住
+X = int(input()) # A市の人口
+Y = int(input()) # B市の人口
+# A市からB市に移住
+print(X-100)
+print(Y+100)
+
 # D257
 # D258
 # D259
