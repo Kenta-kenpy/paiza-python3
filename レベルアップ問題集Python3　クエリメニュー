@@ -192,6 +192,31 @@ for _ in range(K):
 
 <Vtuber>
 step1　アイドルグループ
+# utf-8
+N, K = map(int, input().split())
+names = {input() for _ in range(N)}
+
+for _ in range(K):
+    event = input()
+
+    if event == "handshake":
+        for name in sorted(names):
+            print(name)
+    else:
+        event, name = event.split()
+        if event == "join":
+            names.add(name)
+        else:
+            names.remove(name)
+'''
+イベントが最大で 100,000 回与えられることを踏まえると、実行時間制限に間に合う目安の計算回数である 10^8 以下に全体の計算量を抑えるためには、
+各イベントの処理「アイドルの加入」「アイドルの脱退」をO(log N) 程度の計算量で抑える必要があります。
+これらを満たすデータ構造として順序付集合が挙げられます。これは N 要素の集合への要素の追加・削除を O(log N) でおこなうことができ、要素を常にソートされた状態で保持します。
+入力に応じた順序付集合の処理を行うことでこの問題を解くことができます。set オブジェクトを使います。
+set オブジェクトの要素は set.remove(削除したい要素) のように remove メソッドを使うことで削除できます。
+set オブジェクトの remove メソッドの計算量は平均 O(1) です。
+'''
+
 step2　歴史を作る時間
 step3　銀行
 step4　経理
