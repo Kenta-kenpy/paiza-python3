@@ -2055,7 +2055,14 @@ Y = int(input()) # B市の人口
 print(X-100)
 print(Y+100)
 
-# D257
+# D257　後ろ文字D
+# utf-8
+S = input()
+if S[-1]=="d":
+    print("Yes")
+else:
+    print("No")
+
 # D258
 # D259
 # D260
