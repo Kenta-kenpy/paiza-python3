@@ -7246,38 +7246,62 @@ add_line(x, masu, y, hatake_box, hatake_size): 基点 (x, y) を中心に、左�
 最後に、hatake_boxリストを使って、畑の各区画に植えられた種の個数を出力します。出力は、空白区切りで各行の種の個数を表示し、各行の末尾に改行を付け加えます。
 '''
 
-# B135 譜面チェック　※入力例全てでNG
+# B135 譜面チェック　※テストケース通過せず
 # utf-8
-def is_playable(left_hand, right_hand):
-    for hand in (left_hand, right_hand):
-        if len(hand) >= 2 and hand[0][0] == hand[1][0]:  # 同じ段の鍵盤を片手で押すことはできない
+def is_valid_measure(measure):
+    left_hand = {'La', 'Lb'}
+    right_hand = {'Ra', 'Rb'}
+
+    left_hand_used = set()
+    right_hand_used = set()
+
+    for key in measure:
+        hand = key[0:2]  # 鍵盤の左2文字を取得
+
+        if hand in left_hand:
+            if hand in left_hand_used:
+                return False
+            left_hand_used.add(hand)
+        elif hand in right_hand:
+            if hand in right_hand_used:
+                return False
+            right_hand_used.add(hand)
+        else:
             return False
-        if len(hand) == 3 and hand[0][0] == hand[2][0]:  # 片手で両端の鍵盤を押すことはできない
+
+    # 片手で同じ段の鍵盤を同時に押すことはできない
+    for i in range(1, 7):
+        if f'La_{i}' in left_hand_used and f'Lb_{i}' in left_hand_used:
             return False
-    if len(left_hand) >= 1 and len(right_hand) >= 1:
-        if left_hand[0][0] != right_hand[0][0]:  # 片手で左右の鍵盤を同時に押すことはできない
+        if f'Ra_{i}' in right_hand_used and f'Rb_{i}' in right_hand_used:
             return False
+
+    # 同じ段の鍵盤でも両端を同時に押すことはできない
+    for i in [1, 6]:
+        if f'La_{i}' in left_hand_used and f'La_{6-i+1}' in left_hand_used:
+            return False
+        if f'Lb_{i}' in left_hand_used and f'Lb_{6-i+1}' in left_hand_used:
+            return False
+        if f'Ra_{i}' in right_hand_used and f'Ra_{6-i+1}' in right_hand_used:
+            return False
+        if f'Rb_{i}' in right_hand_used and f'Rb_{6-i+1}' in right_hand_used:
+            return False
+
     return True
 
 def main():
-    N = int(input())
-    measures = [input().split()[1:] for _ in range(N)]
-
+    n = int(input())
     invalid_measures = []
-    for i, measure in enumerate(measures):
-        left_hand = []
-        right_hand = []
-        for note in measure:
-            if note[0] == 'L':
-                left_hand.append(note)
-            elif note[0] == 'R':
-                right_hand.append(note)
-        
-        if not is_playable(left_hand, right_hand):
-            invalid_measures.append(i + 1)
 
-    for measure_num in invalid_measures:
-        print(measure_num)
+    for measure_number in range(1, n + 1):
+        m, *measure = input().split()
+        m = int(m)
+
+        if not is_valid_measure(measure):
+            invalid_measures.append(measure_number)
+
+    for measure_number in invalid_measures:
+        print(measure_number)
 
 if __name__ == "__main__":
     main()
