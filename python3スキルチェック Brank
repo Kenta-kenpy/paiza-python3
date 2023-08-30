@@ -6116,61 +6116,67 @@ for seat in seats:
 最後のループでは、リストseatsに格納された最も見やすい席の座標を出力します。映画館の座席情報と予約情報に基づき、予約されていない席の中で最も映画を見やすい席の座標を効率的に見つけます。
 '''
 
-# B110 解像度の向上　※入力例全てでNG
+# B110 解像度の向上
 # utf-8
-def interpolate_pixels(h, w, pixel_grid1, pixel_grid2):
-    interpolated_pixels = []
+import numpy as np
 
-    for i in range(2 * h - 1):
-        for j in range(2 * w - 1):
-            # 2枚目の画像の対応するピクセルを求める
-            row_idx = i // 2
-            col_idx = j // 2
+# ピクセル値を2で割る関数
+def func(x):
+    return int(x / 2)
 
-            # ピクセルの値を取得
-            pixel1 = pixel_grid1[row_idx][col_idx]
-            pixel2 = pixel_grid2[row_idx][col_idx]
+# 入力から解像度を読み込む
+H, W = map(int, input().split())
 
-            # 重なる場合の処理
-            if pixel1 == 0 and pixel2 == 0:
-                interpolated_pixels.append(0)
-            elif pixel1 == pixel2:
-                interpolated_pixels.append(pixel1)
-            elif pixel1 == 255 and pixel2 == 255:
-                interpolated_pixels.append(255)
-            else:
-                interpolated_pixels.append((pixel1 + pixel2) // 2)
+# 画像データを読み込む
+ex1 = []
+ex2 = []
 
-    return interpolated_pixels
+# 画像1のデータを読み込み、2倍に複製して ex1 に格納
+for count1 in range(H):
+    box = list(map(int, input().split()))
+    i = []
+    for count2 in range(W):
+        i.append(box[count2])
+        i.append(box[count2])  # ピクセル値を2倍に複製
+    ex1.append(i)
+    ex1.append(i)  # 行も2倍に複製
 
-# 入力を受け取る
-h, w = map(int, input().split())
+# 画像2のデータを読み込み、2倍に複製して ex2 に格納
+for count1 in range(H):
+    box = list(map(int, input().split()))
+    i = []
+    for count2 in range(W):
+        i.append(box[count2])
+        i.append(box[count2])  # ピクセル値を2倍に複製
+    ex2.append(i)
+    ex2.append(i)  # 行も2倍に複製
 
-pixel_grid1 = []
-for _ in range(h):
-    row = list(map(int, input().split()))
-    pixel_grid1.append(row)
-
-pixel_grid2 = []
-for _ in range(h):
-    row = list(map(int, input().split()))
-    pixel_grid2.append(row)
-
-# ピクセルの補間を実行
-interpolated_pixels = interpolate_pixels(h, w, pixel_grid1, pixel_grid2)
-
-# 出力を生成
-output = ""
-for i in range(2 * h - 1):
-    for j in range(2 * w - 1):
-        output += str(interpolated_pixels[i * (2 * w - 1) + j])
-        if j != 2 * w - 2:
-            output += " "
-    output += "\n"
-
-# 結果を出力
-print(output)
-
+# ピクセルの補間を行い、結果を出力
+for count1 in range(len(ex1) - 1):
+    # 対応するピクセル同士を足し合わせる
+    a = np.array(ex1[count1 + 1][1:]) + np.array(ex2[count1][:-1])
+    # ピクセル値を2で割って整数に変換
+    ans = list(map(func, a))
+    for count2 in range(len(ans)):
+        if count2 == len(ans) - 1:
+            print(ans[count2])  # 行末のピクセル値は改行
+        else:
+            print(ans[count2], end=" ")  # それ以外のピクセル値はスペースで区切って表示
+'''
+2つの画像（image1とimage2）を読み込み、これらの画像から新しい画像を生成するプログラムです。各画像は同じ解像度（H x W）を持っており、ピクセル値（0から255の整数）で表されます。
+import numpy as np：NumPyライブラリをインポートして、数値計算を補助します。
+def func(x):：ピクセル値を2で割る関数を定義しています。この関数は、後で新しい画像のピクセル値を計算する際に使用されます。
+H, W = map(int, input().split())：入力から解像度（HとW）を読み込みます。解像度は、画像の縦と横のピクセル数を示します。
+ex1 と ex2：2つの画像データを格納するためのリストです。これらのリストは、画像1（image1）と画像2（image2）のデータを2倍に複製して格納します。これは、新しい画像を生成する際にピクセルの対応を行うためです。
+2つの画像データを読み込み、2倍に複製して ex1 と ex2 に格納します。各行のピクセル値を2倍に複製することで、新しい画像の解像度が2倍になります。
+for count1 in range(len(ex1) - 1):：ex1 の長さ（行数）から1を引いた回数だけ、ピクセルの補間を行います。これにより、新しい画像のピクセル値が計算されます。
+a = np.array(ex1[count1 + 1][1:]) + np.array(ex2[count1][:-1])：新しい画像の各ピクセルに対して、対応するピクセルの値を足し合わせます。np.array を使用して数値の配列を作成し、対応するピクセル同士を足し合わせています。
+ans = list(map(func, a))：足し合わせた値を2で割り、小数点以下を切り捨てた整数に変換します。これにより、新しい画像の各ピクセルの値が得られます。
+for count2 in range(len(ans)):：新しい画像の各ピクセルの値に対して、以下の処理を行います。
+if count2 == len(ans) - 1:：行末のピクセルの場合、改行して次の行に移ります。
+else:：それ以外のピクセルの場合、スペースで区切って表示します。これにより、新しい画像が指定された形式で出力されます。
+このコードは、2つの画像を組み合わせて新しい画像を生成するための効率的な方法を実装しています。新しい画像のピクセル値は、元の2つの画像の対応する部分の平均値を取り、指定された条件に従って計算されます。
+'''
 --------------------------------------------- B111　※欠番 ◆
 # B111 天秤のつりあい
 # utf-8
