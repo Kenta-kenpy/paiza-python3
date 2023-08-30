@@ -6883,47 +6883,72 @@ for _ in range(num_records):
 bottleneck = find_bottleneck(work_records, lane_length)
 print(bottleneck)
 
-# B126 ダンスパーティー　※テストケース90点
+# B126 ダンスパーティー
 # utf-8
-def calculate_qualifiers(rankings):
-    n = len(rankings)  # 選手の総数
-    m = len(rankings[0])  # 曲の数
-
-    # 選手ごとの平均順位を計算する
-    average_ranks = []
-    for i in range(n):
-        average_ranks.append(sum(rankings[i]) / m)
-
-    # 選手を平均順位でソートする
-    sorted_players = sorted(range(n), key=lambda x: (average_ranks[x], x))
-
-    # 上位3位の選手を決勝に進出させる
-    finalists = sorted_players[:3]
-
-    # 3位以内に入ったことのある選手を敗者復活戦に進出させる
-    revival_players = []
-    for player in sorted_players:
-        if player not in finalists:
-            for i in range(m):
-                if rankings[player][i] <= 3:
-                    revival_players.append(player)
-                    break
-
-    return len(set(revival_players))
-
+def cal_rank():
+    vic_num = 1  # 同じ順位を持つ選手の数
+    score = score_list[0][0]  # 現在の最高順位
+    count = 1  # 選手を選び出した数
+    for i in range(1, people_num):
+        if score_list[i][0] == score:
+            vic_num += 1
+            count += 1
+        elif vic_num < 3:
+            vic_num += 1
+            score = score_list[i][0]  # 新しい最高順位を設定
+            count += 1
+        else:
+            break
+    for i in range(count):
+        score_list.pop(0)
 
 # 入力を受け取る
-n, m = map(int, input().split())
-rankings = []
-for _ in range(n):
-    ranks = list(map(int, input().split()))
-    rankings.append(ranks)
+people_num, song_num = list(map(int, input().split()))
+score_list = []
 
-# 敗者復活戦に進出する選手の人数を計算する
-qualifiers = calculate_qualifiers(rankings)
+# 各選手の順位データをリストに格納
+for i in range(people_num):
+    score_list.append([int(i) for i in list(input().split())])
+
+# 平均順位を計算し、1位、2位、3位の数も計算
+for i in range(people_num):
+    score_list[i] = [sum(score_list[i]) / song_num, i, score_list[i].count(1) + score_list[i].count(2) + score_list[i].count(3)]
+
+# 平均順位でソート
+score_list.sort()
+
+# cal_rank 関数を呼び出して最初の3人の選手を選び出す
+cal_rank()
+
+not_lose_count = 0  # 敗者復活戦に進出する選手の数
+
+# 1位、2位、3位に入った選手がいればカウントする
+for i in range(len(score_list)):
+    if score_list[i][2] >= 1:
+        not_lose_count += 1
 
 # 結果を出力
-print(qualifiers)
+print(not_lose_count)
+'''
+ダンス大会の審査員としての役割を果たすプログラムです。このプログラムは、ダンス大会の予選結果を入力として受け取り、敗者復活戦に進出する選手の数を計算します。以下に、コード全体の解説を行います：
+
+cal_rank 関数:
+この関数は、最初の3人の選手を選び出す役割を果たします。ダンスの順位データを処理し、最終的な順位が3位以内の選手を選び出します。
+vic_num 変数は、同じ順位を持つ選手の数をカウントします。
+score 変数は、現在の最高順位を追跡します。
+count 変数は、選手を選び出した数を記録します。
+ループを通じて、順位が変わるか、最初の3人の選手が選ばれるまで続けられます。
+メイン部分:
+最初に、選手の人数とダンスの曲数を読み取ります。
+各選手の順位データを score_list リストに格納します。
+各選手の平均順位と、1位、2位、3位の数を計算し、選手のデータを [平均順位, 選手番号, 1位・2位・3位の数] という形式に変換します。
+score_list リストを平均順位でソートします。
+cal_rank 関数を呼び出して、最初の3人の選手を選び出します。
+敗者復活戦に進出する選手の数を計算:
+not_lose_count 変数を使用して、敗者復活戦に進出する選手の数を計算します。1位、2位、3位に入った選手がいる場合、その数をカウントします。
+結果の出力:
+最終的に計算された not_lose_count の値を出力します。これは、敗者復活戦に進出する選手の数を表します。
+'''
 
 # B127 ◆
 # B128 簡易的二次元バーコード
