@@ -6278,31 +6278,59 @@ positions = game_strategy(input_numbers)
 for pos in positions:
     print(pos)
 
-# B114 PAIZA運動会　※テストケース通過せず　50点　
+# B114 PAIZA運動会　※テストケース通過せず　80点　
 # utf-8
 N, K = map(int, input().split())
+r = []
+for _ in range(N):
+    r.append(list(map(int, input().split())))
+    r[-1].sort(reverse=True)
 
-# プレイヤーごとの記録を保持するリスト
-records = []
+INF = 1 << 60
 
-# 各プレイヤーの記録を入力として受け取り、リストに追加する
+def chmin(a, b):
+    if a > b:
+        a = b
+        return True
+    return False
+
+def chmax(a, b):
+    if a < b:
+        a = b
+        return True
+    return False
+
+ans = [False] * 20
+cache = [True] * 20
+
+for j in range(K):
+    flag = 0
+    maximum = 0
+    for i in range(N):
+        if r[i][j] > maximum:
+            ans = [False] * 20
+            ans[i] = True
+            flag = 1
+            maximum = r[i][j]
+        elif r[i][j] == maximum:
+            ans[i] = True
+            flag = 0
+
+    for i in range(N):
+        ans[i] &= cache[i]
+
+    if flag == 1:
+        for i in range(N):
+            if ans[i]:
+                print(i + 1)
+        exit(0)
+
+    for i in range(N):
+        cache[i] &= ans[i]
+
 for i in range(N):
-    player_records = list(map(int, input().split()))
-    records.append(player_records)
-
-# 各プレイヤーの総合記録を計算する
-total_scores = []
-for i in range(N):
-    total_score = sum(records[i])
-    total_scores.append(total_score)
-
-# 総合記録が最大となるプレイヤーを特定する
-max_score = max(total_scores)
-winners = [i+1 for i in range(N) if total_scores[i] == max_score]
-
-# 結果を出力する
-for winner in winners:
-    print(winner)
+    if ans[i]:
+        print(i + 1)
 
 # B115 アナグラムパズル
 # 2つの単語の長さと文字の一致を判定する関数
