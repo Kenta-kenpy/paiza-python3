@@ -573,5 +573,38 @@ for _ in range(K):
 
 <点の幅>
 step1　'I'の数
+# utf-8
+N, K = map(int, input().split())
+A = [int(input()) for _ in range(N)]
+
+ans = [0] + A[:]
+for i in range(1, N + 1):
+    ans[i] += ans[i - 1]
+
+for _ in range(K):
+    a_left, a_right, b_left, b_right = map(int, input().split())
+
+    a = ans[a_right] - ans[a_left - 1]
+    b = ans[b_right] - ans[b_left - 1]
+
+    if a_right - a_left + 1 >= N / 3:
+        a = -1
+    if b_right - b_left + 1 >= N / 3:
+        b = -1
+
+    if a == b:
+        print("DRAW")
+    elif a > b:
+        print("A")
+    else:
+        print("B")
+'''
+教科書の i ページ目までの I の数の和 sum[i] = A[1] + ... + A[i] (ただし sum[0] = 0) を利用すると、l ≦ r である l, r について l ページ目から r ページ目までの I の数の和は sum[r] - sum[l-1] で求めることができます。
+この sum[i] は累積和と呼ばれ、sum[i] = sum[i-1] + A[i] の関係を用いると高速に計算できるので、これを事前に計算しておくことで各試合の勝敗の判定を O(1) でおこなうことができます。
+よって問題全体として、O(N + K)となるので実行時間制限以内で解くことができます。
+l ページ目から r ページ目を掴んだときの掴んだページ数は r - l + 1 になることに気をつけましょう。
+ルール違反した人のスコアを -1 にすると、勝敗の判定が単純な条件分岐でできるようになります。
+'''
+
 step2　ドーナツ
 final　点の幅　
