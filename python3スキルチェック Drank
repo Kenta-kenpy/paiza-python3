@@ -2075,7 +2075,15 @@ print((A*2)+(B*2))
 X = int(input())
 print(X-5)
 
-# D260
+# D260　色紙に載せる名前
+# utf-8
+A = input()
+B = input()
+if len(A) > len(B):
+    print(B)
+else:
+    print(A)
+
 ---------------------------------------------D251　※欠番 ◆
 # D251
 # D252
