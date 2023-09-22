@@ -3743,6 +3743,54 @@ max_diet_and_non_diet_days 関数を呼び出して、最大の連続ダイエ�
 '''
 
 # C137　取締役選任
+# utf-8
+# 株主の数を受け取る
+N = int(input())
+
+# 株主ごとの得票数を格納する辞書を初期化
+votes_by_candidate_1 = {}
+votes_by_candidate_2 = {}
+
+# 投票結果を集計
+for i in range(N):
+    candidate, shares = input().split()
+    shares = int(shares)
+
+    # 方法1：株主1人につき1票
+    if candidate in votes_by_candidate_1:
+        votes_by_candidate_1[candidate] += 1
+    else:
+        votes_by_candidate_1[candidate] = 1
+
+    # 方法2：株主1人につき持株数分の票
+    if candidate in votes_by_candidate_2:
+        votes_by_candidate_2[candidate] += shares
+    else:
+        votes_by_candidate_2[candidate] = shares
+
+# 方法1での最多得票数を得た者の名前を取得
+max_votes_1 = max(votes_by_candidate_1.values())
+director_method_1 = [candidate for candidate, votes in votes_by_candidate_1.items() if votes == max_votes_1]
+
+# 方法2での最多得票数を得た者の名前を取得
+max_votes_2 = max(votes_by_candidate_2.values())
+director_method_2 = [candidate for candidate, votes in votes_by_candidate_2.items() if votes == max_votes_2]
+
+# 結果を出力
+print("\n".join(director_method_1))
+print("\n".join(director_method_2))
+'''
+このプログラムは、与えられた株主の投票情報を使用して、2つの異なる方法で選任された取締役の名前を見つけます。
+最初に、株主の数を表す整数Nを標準入力から受け取ります。この数は1から1,000までの範囲内であることが保証されています。
+次に、N行の入力が続きます。各行には、株主の名前（C_i）とその株主が持つ株式数（S_i）がスペースで区切られています。これらの情報を取得し、株主ごとの得票数を計算します。
+得票数を集計するために、2つの辞書（votes_by_candidate_1とvotes_by_candidate_2）を初期化します。これらの辞書は、それぞれ方法1と方法2での得票数を格納します。
+各株主の情報を処理し、得票数を計算します。方法1では1票ずつ、方法2では持株数分の票を追加します。
+方法1と方法2それぞれで、最多得票を得た候補者を見つけます。最多得票数はmax()関数を使用して求め、最多得票を得た候補者はリストに追加します。条件により、最多得票を得る候補者が複数出ることはありません。
+最終的に、方法1で選任された取締役の名前（director_method_1）と方法2で選任された取締役の名前（director_method_2）をそれぞれ出力します。
+出力は指定されたフォーマットに従い、最終行には改行が含まれます。
+このプログラムは、与えられた制約条件に対応し、与えられた投票情報から取締役を選出する方法1と方法2の両方を正確に処理します。
+'''
+
 # C138　
 # C139
 # C140
