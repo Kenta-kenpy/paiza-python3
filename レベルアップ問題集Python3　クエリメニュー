@@ -607,4 +607,124 @@ l ページ目から r ページ目を掴んだときの掴んだページ数は
 '''
 
 step2　ドーナツ
-final　点の幅　
+# utf-8
+def calc_interval_sum(X, a, b, c, d):
+    rst = X[c][d]
+    if 0 < a and 0 < b:
+        rst += X[a - 1][b - 1]
+    if 0 < a:
+        rst -= X[a - 1][d]
+    if 0 < b:
+        rst -= X[c][b - 1]
+
+    return rst
+
+
+H, W, N = map(int, input().split())
+C = [[int(x) for x in input().split()] for _ in range(H)]
+
+ans = [[0] * (W + 1) for _ in range(H + 1)]
+for i in range(1, H + 1):
+    ans[i] = [0] + C[i - 1][:]
+    for j in range(1, W + 1):
+        ans[i][j] += ans[i - 1][j] + ans[i][j - 1] - ans[i - 1][j - 1]
+
+for _ in range(N):
+    y, x, b, s = map(int, input().split())
+
+    bm, sm = b // 2, s // 2
+
+    outer = calc_interval_sum(ans, y - bm, x - bm, y + bm, x + bm)
+    inner = calc_interval_sum(ans, y - sm, x - sm, y + sm, x + sm)
+    print(outer - inner)
+'''
+ドーナツを作ることをクエリとすると、この問題では最大で 100,000 個のクエリが与えられることになります。
+プログラムの実行時間を踏まえると、ドーナツ 1 つあたり 1000 回 程度の計算でドーナツ上のチョコの数を求める必要があります。
+ドーナツ上のチョコの数を求めるために、ドーナツである領域のマスのチョコを全て数えていては計算量が大きくなり過ぎてしまいます。
+これを解消するためにまず、ドーナツの穴をくり抜く前の生地のチョコの個数を数え、そこからくり抜いた穴の部分にあったチョコの数を引くという方針をとってみましょう。
+H 行 W 列の二次元配列の全ての長方形の領域の総和は、事前に O(HW) で二次元累積和を計算しておくことで O(1)で求めることができます。
+※二次元累積和・二次元区間和を参照してください。
+二次元配列の二次元区間和 SUM({a,b},{c,d}) を求めることができるとすると、中心 (y,x) , 外側の一辺の長さ B , 穴の一辺の長さ S であるドーナツに乗っているチョコの個数は
+SUM({y-floor(B/2),x-floor(B/2)},{y+floor(B/2),x+floor(B/2)}) - SUM({y-floor(S/2),x-floor(S/2)},{y+floor(S/2),x+floor(S/2)})
+で求めることができます。二次元累積和が存在するかどうかに気をつけながらこの値を求めることでこの問題を解くことができます。
+'''
+
+final　点の幅
+# utf-8
+def calc_min_and_max_in_divisioned_area(X, range_min, range_max, sqrt, left, right):
+    rst_min, rst_max = X[left], X[left]
+    now = left
+    while now <= right:
+        if now % sqrt == 0 and now + sqrt <= right:
+            rst_min = min(rst_min, range_min[now // sqrt])
+            rst_max = max(rst_max, range_max[now // sqrt])
+            now += sqrt
+        else:
+            rst_min = min(rst_min, X[now])
+            rst_max = max(rst_max, X[now])
+            now += 1
+
+    return rst_min, rst_max
+
+
+N, K = map(int, input().split())
+S = [int(input()) for _ in range(N)]
+
+sqrt = int(pow(N, 0.5))
+if sqrt ** 2 < N:
+    sqrt += 1
+
+range_max = [-1] * N
+range_min = [-1] * N
+for i in range(sqrt):
+    start, end = sqrt * i, sqrt * (i + 1)
+    range_max[i] = max(S[start:end])
+    range_min[i] = min(S[start:end])
+
+for _ in range(K):
+    a_left, a_right, b_left, b_right = map(lambda x: int(x) - 1, input().split())
+
+    a_rg = a_right - a_left + 1
+    b_rg = b_right - b_left + 1
+
+    a_rg_min, a_rg_max = calc_min_and_max_in_divisioned_area(
+        S, range_min, range_max, sqrt, a_left, a_right
+    )
+    b_rg_min, b_rg_max = calc_min_and_max_in_divisioned_area(
+        S, range_min, range_max, sqrt, b_left, b_right
+    )
+
+    a_score = a_rg_max - a_rg_min
+    b_score = b_rg_max - b_rg_min
+
+    if a_score == b_score:
+        print("DRAW")
+    elif a_score > b_score:
+        print("A")
+    else:
+        print("B")
+'''
+各試合の判定について A , B が選んだ生徒全員の点数を調べ(最高点 - 最低点)の値を求めた場合、1 試合あたり最大で N 人の生徒の点数を調べる必要があり、試合数は K なので全体として O(N*K) となります。この場合、最大 1,000,000,000 回処理を行う必要があり、これでは実行時間に間に合いません。
+まずはこのように何回ループが回るかの検討を立て、実行時間に間に合うような実装を考えることがクエリの問題では大切になってきます。
+では、実行時間に間に合うようにするにはどのような実装をすれば良いでしょうか？
+試合数は最大で 100,000 なので、1 試合のあたりのループ回数を 1000 回未満に抑えたいところです。
+そこで活躍するテクニックとして平方分割というアルゴリズムがあります。
+これは、決まった区間の最大値や最小値などを求めたいことがわかっているときに元のデータをルート N の区間ごとに分け、その区間内での最大値・最小値を求めておくことで、ある区間の最大値・最小値を求める際に必要なループ回数を最大でルート N 回程度に抑えることができるというアルゴリズムです。
+言葉ではわかりにくいので、図を使って説明します。
+例えば、長さ 9 の次の数列 A のある区間の要素の最大値を求めたいとします。
+A = {6,4,7,3,9,4,3,8,7} ルート 9 は 3 なので、3 つずつの区間 A_1 = {6,4,7}, A_2 = {3,9,4}, A_3 = {3,8,7} に分割します。
+この各区間の中での最大値はそれぞれ 7 , 9 , 8 です。ここまでが前処理になります。
+次に、最大値を求めたい区間の最大値を求めます。この値を求めるために区間の左端の A の要素からみていくのは普通の探索と変わりませんが、次のような工夫をします。
+探索途中に事前に分割した区間を完全に含む場合、その区間内の各要素を調べる代わりにその区間の代表値（ここでは最大値）を調べる。
+例として、A の 2 要素目から 7 要素目までの要素の最大値を求めたい場合、次の通り探索が進んでいきます。
+2 要素目を見る。値は 4 であるから、現在の最大値は 4
+3 要素目を見る。値は 7 であるから、現在の最大値は更新されて 7
+4 要素目から 6 要素目までを調べる代わりに A_2 の最大値を調べる。現在の最大値は更新されて 9
+7 要素目を見る。値は 3 であるから、答えは 9
+よって探索回数は 6 回から 4 回に減らすことができました。
+A の要素数 N が増えれば増えるほどこのアルゴリズムは効果を発揮します。具体的には以上のような探索を O(ルート N) でおこなうことができます。
+このアルゴリズムを使って各試合の値（最大値ー最小値）を計算すれば、全体の最大のループ回数を 10,000,000 程度に抑えることができ、この問題を解くことができます。
+
+min 関数に list オブジェクトを渡すと、その list オブジェクトに含まれる要素の最小値を返します。min 関数の計算量は O(N) です。
+また、平方分割を用いて最小値、最大値を求める処理を関数として抽出すると、簡潔なコードになります。
+'''
