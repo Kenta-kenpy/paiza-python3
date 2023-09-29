@@ -7429,8 +7429,66 @@ for e in result:
 '''
 
 # B137　ブロック消し
-# utf-8　※入力例すら一致せず
+# utf-8　※入力例全てでNG
+def remove_blocks(matrix, N, M):
+    def is_valid(x, y):
+        return 0 <= x < N and 0 <= y < M
 
+    def is_removable(x, y, color):
+        if not is_valid(x, y) or matrix[x][y] != color or visited[x][y]:
+            return False
+        return True
+
+    def remove_connected(x, y, color):
+        if not is_removable(x, y, color):
+            return 0
+        visited[x][y] = True
+        count = 1
+        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+            count += remove_connected(x + dx, y + dy, color)
+        return count
+
+    def shift_blocks():
+        for y in range(M):
+            new_column = [matrix[x][y] for x in range(N) if not visited[x][y]]
+            while len(new_column) < N:
+                new_column.insert(0, '#')
+            for x in range(N):
+                matrix[x][y] = new_column[x]
+
+    visited = [[False for _ in range(M)] for _ in range(N)]
+
+    while True:
+        removed = False
+        for x in range(N):
+            for y in range(M):
+                if matrix[x][y] != '#' and not visited[x][y]:
+                    count = remove_connected(x, y, matrix[x][y])
+                    if count >= 2:
+                        removed = True
+                        for i in range(N):
+                            for j in range(M):
+                                if visited[i][j]:
+                                    matrix[i][j] = '#'
+        if not removed:
+            break
+        shift_blocks()
+
+    return matrix
+
+# 入力を受け取る
+N, M, X = map(int, input().split())
+matrix = []
+for _ in range(N):
+    row = list(input())
+    matrix.append(row)
+
+# ブロックを削除して残りのブロックを取得
+result_matrix = remove_blocks(matrix, N, M)
+
+# 結果を出力
+for row in result_matrix:
+    print(" ".join(row))
 
 # B138
 # B139
