@@ -7429,66 +7429,56 @@ for e in result:
 '''
 
 # B137　ブロック消し
-# utf-8　※入力例全てでNG
-def remove_blocks(matrix, N, M):
-    def is_valid(x, y):
-        return 0 <= x < N and 0 <= y < M
+# utf-8
+import sys
 
-    def is_removable(x, y, color):
-        if not is_valid(x, y) or matrix[x][y] != color or visited[x][y]:
-            return False
-        return True
+# 入力を受け取ります
+input_line = input().strip()
+n, m, x = map(int, input_line.split())
 
-    def remove_connected(x, y, color):
-        if not is_removable(x, y, color):
-            return 0
-        visited[x][y] = True
-        count = 1
-        for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
-            count += remove_connected(x + dx, y + dy, color)
-        return count
+array = []
 
-    def shift_blocks():
-        for y in range(M):
-            new_column = [matrix[x][y] for x in range(N) if not visited[x][y]]
-            while len(new_column) < N:
-                new_column.insert(0, '#')
-            for x in range(N):
-                matrix[x][y] = new_column[x]
+# ブロックの初期配置を受け取ります
+for _ in range(n):
+    input_row = input().strip()
+    array.append(input_row.split())
 
-    visited = [[False for _ in range(M)] for _ in range(N)]
+# ブロックの状態を確認するためのコピーを作成します
+copy = [[0 for _ in range(m)] for _ in range(n)]
 
-    while True:
-        removed = False
-        for x in range(N):
-            for y in range(M):
-                if matrix[x][y] != '#' and not visited[x][y]:
-                    count = remove_connected(x, y, matrix[x][y])
-                    if count >= 2:
-                        removed = True
-                        for i in range(N):
-                            for j in range(M):
-                                if visited[i][j]:
-                                    matrix[i][j] = '#'
-        if not removed:
-            break
-        shift_blocks()
+# 上下左右に同じ色のブロックが隣接しているかをチェックします
+for i in range(n):
+    for j in range(m):
+        if (i > 0 and array[i][j] == array[i - 1][j]) or (i < n - 1 and array[i][j] == array[i + 1][j]) or (j > 0 and array[i][j] == array[i][j - 1]) or (j < m - 1 and array[i][j] == array[i][j + 1]):
+            copy[i][j] = 1
 
-    return matrix
+# 消去すべきブロックを '#' で置き換えます
+for i in range(n):
+    for j in range(m):
+        if copy[i][j] == 1:
+            array[i][j] = "#"
 
-# 入力を受け取る
-N, M, X = map(int, input().split())
-matrix = []
-for _ in range(N):
-    row = list(input())
-    matrix.append(row)
+# ブロックを下に移動させます
+for k in range(n):
+    for i in range(n - 2, -1, -1):
+        for j in range(m):
+            if array[i + 1][j] == "#":
+                array[i + 1][j], array[i][j] = array[i][j], "#"
 
-# ブロックを削除して残りのブロックを取得
-result_matrix = remove_blocks(matrix, N, M)
-
-# 結果を出力
-for row in result_matrix:
-    print(" ".join(row))
+# 結果を出力します
+for i in range(n):
+    output = " ".join(array[i])
+    print(output)
+'''
+最初に、標準入力から行数（n）、列数（m）、ブロックの色の種類（x）を読み取ります。
+ブロックの初期配置を保持する2次元リストである array を作成し、入力から行ごとにブロックの色を読み取ります。
+ブロックの隣接関係をチェックするための copy という2次元リストを作成します。このリストは、各ブロックの上下左右に同じ色のブロックがあるかどうかを示します。
+各ブロックに対して、上下左右に同じ色のブロックが隣接しているかどうかをチェックし、隣接している場合は copy リストに1を設定します。
+copy リストを元に、消去すべきブロックを '#' で置き換えます。
+ブロックを下に移動させる処理を行います。ブロックが '#' の場合、上の行に同じ列番号のブロックがあれば、それに置き換えます。
+最終的なブロックの配置を出力します。
+ブロックの初期配置を受け取り、指定されたルールに従ってブロックを消去し、消去後のブロックの配置を計算し、最終的な結果を出力します。
+'''
 
 # B138
 # B139
