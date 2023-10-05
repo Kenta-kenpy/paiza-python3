@@ -2090,7 +2090,15 @@ else:
 n = int(input())
 print(n * 13)
 
-# D262
+# D262　同じ長さ
+A = input()
+B = input()
+
+if(len(A)==len(B)):
+    print("Yes")
+else:
+    print("No")
+
 # D263
 # D264
 # D265
