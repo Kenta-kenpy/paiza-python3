@@ -2099,7 +2099,12 @@ if(len(A)==len(B)):
 else:
     print("No")
 
-# D263
+# D263　部品の発注
+# utf-8
+x = int(input()) # 部品の価格
+n = int(input()) # 発注量
+print(x*n)
+
 # D264
 # D265
 # D266
