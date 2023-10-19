@@ -2105,7 +2105,14 @@ x = int(input()) # 部品の価格
 n = int(input()) # 発注量
 print(x*n)
 
-# D264
+# D264　割引価格
+# utf-8
+p = int(input())
+if(p >=1000):
+    print(p-100)
+else:
+    print(p)
+
 # D265
 # D266
 # D267
