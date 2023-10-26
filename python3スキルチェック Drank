@@ -2113,7 +2113,12 @@ if(p >=1000):
 else:
     print(p)
 
-# D265
+# D265　薬の処方
+n = int(input()) # 薬の処方日数
+m = int(input()) # 朝昼晩それぞれにのむ錠剤の数
+
+print(n*m*3)
+
 # D266
 # D267
 # D268
