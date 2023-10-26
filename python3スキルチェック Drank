@@ -2114,6 +2114,7 @@ else:
     print(p)
 
 # D265　薬の処方
+# utf-8
 n = int(input()) # 薬の処方日数
 m = int(input()) # 朝昼晩それぞれにのむ錠剤の数
 
