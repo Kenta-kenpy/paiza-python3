@@ -315,4 +315,41 @@ max を用いて dp[0] ~ dp[n-1] の最大値を求めています。
 
 <最長減少部分列>
 step1　最長部分増加列
+# utf-8
+n = int(input())
+a = [int(input()) for i in range(n)]
+
+dp = [1] * n
+for i in range(1, n):
+    for j in range(0, i):
+        if a[j] < a[i]:
+            dp[i] = max(dp[i], dp[j] + 1)
+
+print(max(dp))
+'''
+dp[k] を最後が木 k であるような増加部分列のうち最長であるものの長さとすると、dp[1] ~ dp[k-1] と dp[k] の関係は dp[k] = max({{dp[j]+1 | j < k, a_j < a_k)}, 1}) となります。この漸化式に従って、dp[1] から dp[n] まで順に計算すればよいです。
+答えは dp[1] ~ dp[n] の最大値です。
+実装の都合上、0始まりの添字を用いて実装しています。
+dp[k] の初期値を1としています (木 k のみからなる増加部分列の長さに対応) 。
+max を用いて dp[0] ~ dp[n-1] の最大値を求めています。
+'''
+
 final　最長減少部分列
+# utf-8
+n = int(input())
+a = [int(input()) for i in range(n)]
+
+dp = [1] * n
+for i in range(1, n):
+    for j in range(0, i):
+        if a[j] > a[i]:
+            dp[i] = max(dp[i], dp[j] + 1)
+
+print(max(dp))
+'''
+dp[k] を最後が木 k であるような減少部分列のうち最長であるものの長さとすると、dp[1] ~ dp[k-1] と dp[k] の関係は dp[k] = max({{dp[j]+1 | j < k, a_j > a_k)}, 1}) となります。この漸化式に従って、dp[1] から dp[n] まで順に計算すればよいです。
+答えは dp[1] ~ dp[n] の最大値です。
+実装の都合上、0始まりの添字を用いて実装しています。
+dp[k] の初期値を1としています (木 k のみからなる減少部分列の長さに対応) 。
+max を用いて dp[0] ~ dp[n-1] の最大値を求めています。
+'''
