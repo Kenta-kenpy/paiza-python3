@@ -876,8 +876,74 @@ for j in range(n): ループは、各問題について生徒の解答を確認�
 
 # paizaの森練習問題コンテスト過去問題12　★
 # Q.　文字列の一致
+# utf-8
+a = input()
+b = input()
+
+if a == b:
+    print("Yes")
+else:
+    print("No")
+
 # Q.　部分文字列
+# utf-8
+a = input()
+b = input()
+
+if b in a:
+    print("Yes")
+else:
+    print("No")
+
 # Q.　グラフの連結
+# utf-8
+n = int(input())
+t = [[False for j in range(3)] for i in range(3)]
+for i in range(n):
+    a, b = map(int, input().split())
+    t[a][b] = t[b][a] = True
+
+if t[0][2] or t[0][1] and t[1][2]:
+    print("Yes")
+else:
+    print("No")
+
 # Q.　拡張子
+# utf-8
+s = input()
+
+idx_jpg = s.find(".jpg")
+idx_png = s.find(".png")
+if idx_png == -1:
+    print(idx_jpg)
+elif idx_jpg == -1:
+    print(idx_png)
+elif idx_jpg < idx_png:
+    print(idx_jpg)
+else:
+    print(idx_png)
+
 # Q.　日程調整
+# utf-8
+l1, r1, l2, r2 = map(int, input().split())
+
+print(max(0, min(r1, r2) - max(l1, l2) + 1))
+
 # Q.　プレゼントの好み
+# utf-8
+n, k = map(int, input().split())
+
+a = [int(e) for e in input().split()]
+ma = -1
+for i in range(n):
+    if ma < a[i]:
+        ma = a[i]
+
+res = "No"
+b = [int(e) for e in input().split()]
+for i in range(k):
+    b[i] -= 1
+    if a[b[i]] == ma:
+        res = "Yes"
+
+print(res)
