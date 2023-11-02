@@ -2120,7 +2120,12 @@ m = int(input()) # 朝昼晩それぞれにのむ錠剤の数
 
 print(n*m*3)
 
-# D266
+# D266　ソフトウェアの名前
+# utf-8
+S = input()
+c = input()
+print(S+c)
+
 # D267
 # D268
 # D269
