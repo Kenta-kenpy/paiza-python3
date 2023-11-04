@@ -440,8 +440,29 @@ LIMIT 件数 で、上から 件数 件を取得することができる
 新・SQL入門編03ドリル
 <バーガーを全種類取得しよう>
 step1　日時を指定して取得しよう
+SELECT * FROM ordered WHERE datetime = "2021-12-17 13:37:00";
+/*問題文から、ordered テーブルの datetime カラムの値が 2021-12-17 13:37:00 であるレコードを取得すればよいとわかる
+WHERE カラム名 = 値 で、カラム名 カラムの値が 値 であるレコードを絞り込むことができる
+よって、SELECT * FROM ordered WHERE datetime = "2021-12-17 13:37:00"; と書く*/
+
 step2　メニュー番号を指定して取得しよう
+SELECT menu_id, num FROM ordered_menu WHERE menu_id = 9;
+/*問題文から、ordered_menu テーブルについて、
+menu_id カラムと num カラムを取得する
+menu_id カラムの値が 9 であるレコードを絞り込む
+ことをすればよいとわかる
+WHERE カラム名 = 値 で、カラム名 カラムの値が 値 であるレコードを絞り込むことができる
+よって、SELECT menu_id, num FROM ordered_menu WHERE menu_id = 9; と書く*/
+
 step3　価格を指定して取得しよう
+SELECT * FROM menu WHERE price = 250 ORDER BY name;
+/*問題文から、menu テーブルについて、
+price カラムの値が 250 であるレコードを絞り込む
+name カラムの昇順に並べ替える
+ことをすればよいとわかる
+WHERE カラム名 = 値 で、カラム名 カラムの値が 値 であるレコードを絞り込むことができる
+よって、SELECT * FROM menu WHERE price = 250 ORDER BY name; と書く*/
+
 step4　カテゴリ番号を指定して取得しよう
 step5　入会日を指定して取得しよう
 final　バーガーを全種類取得しよう
