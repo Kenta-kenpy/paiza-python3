@@ -1,10 +1,46 @@
 <5以上の整数の合計>
 step1　インクリメント
+# utf-8
+num = int(input())
+print(num + 1)
+'''
+入力を受け取って変数 n に代入します。
+n に 1 を加算して出力します。
+'''
+
 step2　複数行の入力と出力
+# utf-8
+num = int(input())
+
+for i in range(num):
+    print(input())
+'''
+入力を受け取って変数 n に代入します。
+for 文などを用い、n 回入力を受け取ります。
+受け取った入力は、そのまま出力します。
+'''
+
 step3　配列（リスト）要素の合計
 step4　5以上か4以下か
 step5　配列（リスト）データの足し合わせ
 final　5以上の整数の合計
+# utf-8
+result = 0
+num = int(input())
+
+for i in range(num):
+    tmp = int(input())
+
+    if tmp >= 5:
+        result += tmp
+
+print(result)
+'''
+5 以上の数値の和を記録する変数を ans とおき、0 で初期化します。
+1 行目の入力を変数 n に代入し、n 回のループを回します。
+ループ内部で a_i を受け取り、5 以上であるかどうかを調べます。5 以上であれば ans に加算します。
+最終的な ans が求める答えなので、ans を出力します。
+'''
 
 <足すか掛けるか>
 step1　インクリメント
