@@ -2126,7 +2126,15 @@ S = input()
 c = input()
 print(S+c)
 
-# D267
+# D267　カードを配る
+# utf-8
+# カードの枚数 n 枚、ゲームに参加する人数 m 人、1人に配るカードの枚数 p 枚
+n = int(input())
+m = int(input())
+p = int(input())
+
+print(n-(m*p))
+
 # D268
 # D269
 # D270
