@@ -45,6 +45,8 @@ else:
 '''
 
 step5　配列（リスト）データの足し合わせ
+# utf-8
+
 final　5以上の整数の合計
 # utf-8
 result = 0
