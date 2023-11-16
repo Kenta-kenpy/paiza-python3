@@ -2135,7 +2135,14 @@ p = int(input())
 
 print(n-(m*p))
 
-# D268
+# D268　お菓子のつまみ食い
+# utf-8
+N = int(input())
+a = int(input())
+b = int(input())
+
+print(N-a-b)
+
 # D269
 # D270
 ---------------------------------------------D271　※欠番 ◆
