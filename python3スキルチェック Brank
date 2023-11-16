@@ -7537,8 +7537,41 @@ donut_count 変数を初期化し、ドーナツの絵の数を数えるため�
 最終的に、計算されたドーナツの絵の数を出力します。これにより、正しい結果が表示されます。
 '''
 
-# B139
-# B140
+# B139 ◆
+# B140 ネズミ駆除
+# utf-8
+H, W = map(int, input().split())
+N, T = map(int, input().split())
+
+# 各区画に対するネズミの数を管理する辞書
+mouse_count = {}
+
+# ネズミの情報を読み込んでネズミの数をカウント
+for _ in range(N):
+    x, y = map(int, input().split())
+    pos = (x, y)
+    if pos in mouse_count:
+        mouse_count[pos] += 1
+    else:
+        mouse_count[pos] = 1
+
+# ネズミの数が多い順にソート
+sorted_mouse_count = sorted(mouse_count.values(), reverse=True)
+
+# 最大で T 枚のネズミ捕りを使って、ネズミを捕獲
+result = 0
+for i in range(min(T, len(sorted_mouse_count))):
+    result += sorted_mouse_count[i]
+
+print(result)
+'''
+最初に、領域の縦横のサイズと、ネズミの数(N)と使えるネズミ捕りの数(T)を入力から取得します。
+各ネズミの座標を読み取り、それぞれの座標に現れるネズミの数をmouse_countという辞書で管理します。
+各区画に現れるネズミの数を降順でソートし、sorted_mouse_countに格納します。
+最大でT枚のネズミ捕りを使って、ネズミを捕獲します。min(T, len(sorted_mouse_count))は、Tとソートされたネズミの数の小さい方を選びます。そして、それだけのネズミを捕獲して、その数をresultに加算します。
+最終的な結果を出力します。
+'''
+
 -----------------------------------------------B141　※欠番◆
 # B141
 # B142
