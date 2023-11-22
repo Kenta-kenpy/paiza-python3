@@ -79,6 +79,14 @@ print(result)
 
 <足すか掛けるか>
 step1　インクリメント
+# utf-8
+num = int(input())
+print(num + 1)
+'''
+入力を受け取って変数 n に代入します。
+n に 1 を加算して出力します。
+'''
+
 step2　文字列の出力
 step3　文字列の分割
 step4　整数の足し算
