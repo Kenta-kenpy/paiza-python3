@@ -100,8 +100,48 @@ for 文などを用い、n 回入力を受け取ります。
 '''
 
 step3　文字列の分割
+# utf-8
+std_in = input()
+
+for string in std_in.split():
+    print(string)
+'''
+1 行の入力をスペースで分割するために、文字列を文字列によって分割する関数を用います。
+'''
+
 step4　整数の足し算
+# utf-8
+std_in = input()
+result = 0
+
+for num in std_in.split():
+    result += int(num)
+
+print(result)
+'''
+分割した双方を、足し合わせた結果を出力します。
+'''
+
 final　足すか掛けるか
+# utf-8
+time = int(input())
+result = 0
+
+for i in range(time):
+    std_in = input()
+    array = std_in.split()
+
+    if array[0] == array[1]:
+        result += int(array[0]) * int(array[1])
+    else:
+        result += int(array[0]) + int(array[1])
+
+print(result)
+'''
+解答を記録する変数として、ans を置きます。
+n 組の整数 a, b について、a と b が等しければその積を、そうでなければその和を求め、ans に加算します。
+n 組すべてに上記の処理を行い、最終的な ans を出力します。
+'''
 
 <文字列を切り取る>
 step1　文字列の分割
