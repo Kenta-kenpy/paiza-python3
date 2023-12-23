@@ -3638,7 +3638,29 @@ queen 関数を呼び出して、クイーンの配置を開始します。
 この改善版のコードでは、メモ化を用いることで、同じ引数の組み合わせに対する計算結果を再利用することができます。これにより、再計算を避けることができ、処理速度の改善が期待できます。
 '''
 --------------------------------------------- B071　※欠番 ◆
-# B071 ダンベルトレーニング　
+# B071 ダンベルトレーニング
+# utf-8 ※テストケース通過せず　80点　境界値で不一致
+from itertools import combinations
+
+def closest_weight(N, M, weights):
+    result = 0  # 初期値を0に設定
+    for r in range(N+1):
+        # おもりの組み合わせを生成
+        for combo in combinations(weights, r):
+            total_weight = sum(combo)
+            # 重さが M 以下であり、かつ M にもっとも近く、かつ偶数の場合の結果を更新
+            if total_weight <= M and abs(M - total_weight) < abs(M - result) and total_weight % 2 == 0:
+                result = total_weight
+    return result
+
+# 入力処理
+N, M = map(int, input().split())
+weights = [int(input()) for _ in range(N)]
+
+# 結果を出力
+output_result = closest_weight(N, M, weights)
+print(output_result)
+
 # utf-8　※テストケース通過せず　80点　境界値で不一致
 import itertools
 
