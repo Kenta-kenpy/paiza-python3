@@ -2171,7 +2171,12 @@ if(B > A):
 else:
     print("No")
     
-# D272
+# D272　お菓子の重さ
+# utf-8
+N = int(input())
+a = int(input())
+print(N*a)
+
 # D273
 # D274
 # D275
