@@ -7575,7 +7575,70 @@ print(result)
 -----------------------------------------------B141　※欠番◆
 # B141　ガーベラ・コレクション
 
-# B142
+# B142　黒石
+# utf-8
+def count_black_moves(N, board):
+    # 8方向の移動を定義
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0), (1, 1), (-1, -1), (1, -1), (-1, 1)]
+
+    def is_valid_move(x, y):
+        return 0 <= x < N and 0 <= y < N
+
+    def is_valid_direction(x, y, dx, dy):
+        # 挟む方向が相手の石であるかを確認
+        return is_valid_move(x + dx, y + dy) and board[x + dx][y + dy] == 'W'
+
+    def can_place_black(x, y):
+        # 空白マスに黒石を置けるかを判定
+        if board[x][y] != '.':
+            return False
+
+        for dx, dy in directions:
+            if is_valid_direction(x, y, dx, dy):
+                nx, ny = x + dx, y + dy
+                # 相手の石を挟みながら自分の石にたどり着くかを確認
+                while is_valid_move(nx, ny) and board[nx][ny] == 'W':
+                    nx, ny = nx + dx, ny + dy
+                if is_valid_move(nx, ny) and board[nx][ny] == 'B':
+                    return True
+
+        return False
+
+    count = 0
+    # 盤面全体を調べて黒石を置けるマスを数える
+    for i in range(N):
+        for j in range(N):
+            if can_place_black(i, j):
+                count += 1
+
+    return count
+
+
+if __name__ == "__main__":
+    N = int(input())
+    board = [input().strip() for _ in range(N)]
+
+    # 黒石を置けるマスの数を計算して出力
+    result = count_black_moves(N, board)
+    print(result)
+'''
+このプログラムは、与えられたリバーシの盤面上で、黒石を置けるマスの数を数えるものです。
+count_black_moves 関数:
+
+Nは盤面の縦横のマス数を表す整数です。
+boardは盤面の状態を表す文字列のリストで、各文字は'.'（空白）、'B'（黒石）、'W'（白石）のいずれかです。
+directionsは8方向の移動を示すタプルのリストです。縦、横、斜めのいずれかに1つ以上の石を挟むことができます。
+is_valid_move関数は盤面内の有効なマスであるかを確認します。
+is_valid_direction関数は挟む方向が相手の石であるかを確認します。
+can_place_black関数は特定のマスに黒石を置けるかを判定します。そのために、指定されたマスの周囲8方向に対して挟むことができるかを確認します。
+メイン部分 (__main__ ブロック):
+
+最初に盤面のサイズ N を標準入力から受け取ります。
+次に、N 行分の盤面の状態を標準入力から受け取り、それぞれ board リストに格納します。
+count_black_moves関数を呼び出して、黒石を置けるマスの数を計算します。
+結果を出力します。
+'''
+
 # B143
 # B144
 # B145
