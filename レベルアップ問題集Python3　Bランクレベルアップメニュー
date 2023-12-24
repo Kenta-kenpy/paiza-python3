@@ -207,7 +207,29 @@ s の a 文字目から b 文字目を切り出します。ほとんどの言語
 
 <指定範囲だけ大文字>
 step1　文字列の分類
+# utf-8
+std_in = input()
+
+for string in std_in.split():
+    print(string)
+'''
+1 行の入力をスペースで分割するために、文字列を文字列によって分割する関数を用います。
+'''
+
 step2　整数の足し算
+# utf-8
+std_in = input()
+result = 0
+
+for num in std_in.split():
+    result += int(num)
+
+print(result)
+'''
+入力を2つに分割するところは、前問と同じです。
+分割した双方を、足し合わせた結果を出力します。
+'''
+
 step3　文字列の長さ
 step4　文字列の1文字目
 step5　大文字にする
