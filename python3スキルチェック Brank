@@ -7595,7 +7595,35 @@ print(result)
 '''
 
 -----------------------------------------------B141　※欠番◆
-# B141　ガーベラ・コレクション
+# B141　ガーベラ・コレクション　※入力例1,2でNG
+# utf-8
+def min_operations_to_sort_flowers(N, colors):
+    target_order = list(range(1, N + 1)) * 2
+    current_order = colors[:]
+    operations = 0
+
+    for i in range(2 * N):
+        if current_order[i] == target_order[0]:
+            # Check if the flowers are already in the correct order
+            if current_order == target_order:
+                break
+
+            # Perform a cyclic shift to move the misplaced flowers to the correct positions
+            for j in range(i, i + N):
+                current_order[j % (2 * N)], current_order[(j - N) % (2 * N)] = current_order[(j - N) % (2 * N)], current_order[j % (2 * N)]
+
+            # Update the number of operations
+            operations += 1
+
+    return operations
+
+# 入力を受け取る
+N = int(input())
+colors = [int(input()) for _ in range(2 * N)]
+
+# 結果を出力
+result = min_operations_to_sort_flowers(N, colors)
+print(result)
 
 # B142　黒石
 # utf-8
