@@ -2199,7 +2199,16 @@ N = int(input())
 a = int(input())
 print(N*a)
 
-# D273
+# D273　再来月
+# utf-8
+M = int(input())
+if 1 <= M <= 10:
+    print(M+2)
+elif M == 11:
+    print(1)
+elif M == 12:
+    print(2)
+    
 # D274
 # D275
 # D276
