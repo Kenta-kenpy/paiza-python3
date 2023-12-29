@@ -2146,17 +2146,11 @@ print(N-a-b)
 # D269　呪文の解読
 # utf-8
 # 文字列の奇数番目を取り出して順に並べて解読するプログラム
-def decrypt_string(s):
-    result = s[::2]  # 奇数文字目を取り出す
-    print(result)
-
-# 入力を受け取る
-input_str = input().strip()
-
-# 解読プログラムを呼び出し
-decrypt_string(input_str)
+S = input().strip()
+moji = S[::2]
+print(moji)
 '''
-input() 関数を使用して標準入力から文字列を受け取り、strip() メソッドを使って余分な空白を削除します。その後、解読プログラム decrypt_string を呼び出し、奇数文字目を取り出して出力します。
+input() 関数を使用して標準入力から文字列を受け取り、strip() メソッドを使って余分な空白を削除します。
 '''
 
 # D270　スカイダイビング
