@@ -34,7 +34,6 @@ for _ in range(M):
     
 # C006 ハイスコアランキング
 # utf-8
-# coding: utf-8
 s = input().strip().split(" ")  # アイテム数N、プレイ人数M、ランキング順位K
 n1 = list(map(int, s))  # 数値変換
 
