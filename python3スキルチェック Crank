@@ -34,51 +34,36 @@ for _ in range(M):
     
 # C006 ハイスコアランキング
 # utf-8
-def calculate_score(C, X):
-    """
-    スコアを計算する関数
-    :param C: アイテム種別ごとの得点を格納したリスト
-    :param X: ユーザーのアイテム持ち数を格納したリスト
-    :return: スコア
-    """
-    score = sum([C[i] * X[i] for i in range(len(C))])
-    return round(score)
+# coding: utf-8
+s = input().strip().split(" ")  # アイテム数N、プレイ人数M、ランキング順位K
+n1 = list(map(int, s))  # 数値変換
 
-def top_k_scores(C, X, M, K):
-    """
-    トップKのスコアを計算する関数
-    :param C: アイテム種別ごとの得点を格納したリスト
-    :param X: ユーザーのアイテム持ち数を格納したリスト
-    :param M: ユーザーの数
-    :param K: トップKのスコアを取得する数
-    :return: トップKのスコアを格納したリスト
-    """
-    scores = []
-    for i in range(M):
-        score = calculate_score(C, X[i])
-        scores.append(score)
-    top_k_scores = sorted(scores, reverse=True)[:K]
-    return top_k_scores
+s = input().strip().split(" ")  # 得点Ci
+n2 = list(map(float, s))  # 数値変換
 
-# 入力を受け取る
-params = input().split() # 一行目のパラメータをスペースで分割してリストに格納
-N = int(params[0])
-M = int(params[1])
-K = int(params[2])
+score = [0 for i in range(n1[1])]  # 人数分の成績
 
-C = list(map(float, input().split())) # 二行目のパラメータをスペースで分割してリストに格納し、float型に変換
-X = [] # 三行目以降のパラメータを二次元リストに格納
-for _ in range(M):
-    x = list(map(int, input().split())) # 三行目以降のパラメータをスペースで分割してリストに格納し、int型に変換
-    X.append(x)
+for i in range(n1[1]):  # 一人ずつ設定
+    s = input().strip().split(" ")  # 所持数Xi
+    n3 = list(map(int, s))  # 数値変換
 
-# トップKのスコアを計算
-top_k_scores = top_k_scores(C, X, M, K)
+    for j in range(n1[0]):
+        score[i] += n2[j] * n3[j]
 
-# 結果を改行で出力
-for i in range(K):
-    print(top_k_scores[i])
-    
+score.sort()
+score.reverse()
+
+for i in range(n1[2]):
+    print(int(score[i] + 0.5))
+'''
+最初にアイテムの種類N、ユーザーの人数M、トップKの順位を入力として読み込みます。
+次に各アイテムの得点Ciを読み込み、浮動小数点数に変換します。
+各ユーザーについて、アイテムごとの所持数Xiを読み込み、ユーザーのスコアを計算します。
+各ユーザーのスコアを降順にソートします。
+上位K個のスコアを整数に変換して出力します。
+最後に、各ユーザーのスコア計算やソートなどの処理が行われ、最終的に上位K個のスコアが整数で出力されます。
+'''
+
 # C007 ◆
 # C008 ◆
 # C009 ◆
