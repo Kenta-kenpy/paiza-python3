@@ -255,6 +255,16 @@ print(lower.upper())
 '''
 
 step6　あいだの整数
+# utf-8
+nums = input().split()
+
+for i in range(int(nums[0]), int(nums[1]) + 1):
+    print(i)
+'''
+入力を半角スペースで分割し、変数 a と b に格納します。
+a から b までの for ループを記述し、その間の数字を出力します。
+'''
+
 final　指定範囲だけ大文字
 # utf-8
 nums = input().split()
