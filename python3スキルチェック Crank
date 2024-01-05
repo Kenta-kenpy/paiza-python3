@@ -164,20 +164,30 @@ for i in range(n):
 # 結果を昇順に出力
 for num in result:
     print(num)
-    
+'''
+最初の行では、入力からボールの個数(n)と半径(r)を取得しています。次に、各箱の情報を取得します。n回分のループを回り、各箱の高さ(h)、幅(w)、奥行き(d)を取得してリストboxesにタプルとして格納しています。
+ボールを収納できる箱の番号を格納するためのリストresultを初期化します。各箱について、ボールを収納できるかを判定します。それぞれの箱に対して、その箱の最も短い辺（高さ、幅、奥行きの中で最小の値）を取得し、その辺の長さがボールの直径の2倍以上であれば、ボールを収納できるとみなして、その箱の番号をresultリストに追加します。
+最後に、収納できる箱の番号を昇順に出力します。このコードは、ボールを収納できるかどうかを判定する基本的なロジックを持っています。ボールの直径が最も短い辺の長さよりも小さい場合、その箱は収納できないと見なされます。
+'''
+
 # C015 ポイントカードの計算
 # utf-8
-# coding: utf-8
 import math
 
+# レシートの数を取得
 cnt = int(input())
 
+# 初期ポイントを0に設定
 sum = 0
-for i in range(cnt):
-    s = input().strip().split(" ")
-    a = str(s[0])
-    n = int(s[1])
 
+# 各レシートの情報を処理
+for i in range(cnt):
+    # レシートの情報を取得し、日付と購入金額に分割
+    s = input().strip().split(" ")
+    a = str(s[0])  # 日付
+    n = int(s[1])  # 購入金額
+
+    # ポイントの計算ルールに基づいてポイントを加算
     if "3" in a:
         sum += math.floor(n / 100 * 3)
     elif "5" in a:
@@ -185,11 +195,21 @@ for i in range(cnt):
     else:
         sum += math.floor(n / 100)
 
+# 計算されたポイントを出力
 print(sum)
+'''
+レシートの数を受け取ります。
+各レシートの情報を取得します。
+日付に応じてポイントを計算し、それを合計ポイントに加算します。
+最終的な合計ポイントを出力します。
+プログラムは日付に「3」が含まれる場合は3%のポイント、日付に「5」が含まれる場合は5%のポイント、それ以外の場合は1%のポイントを計算しています。最終的に、今月末までにたまったポイントの合計が出力されます。
+'''
 
 # C016 Leet文字列
 # utf-8
+# Leetに変換する関数を定義
 def to_leet_string(input_string):
+    # Leetの置き換え規則を辞書として定義
     leet_rules = {
         'A': '4',
         'E': '3',
@@ -200,18 +220,31 @@ def to_leet_string(input_string):
         'Z': '2'
     }
 
+    # 変換されたLeet文字列を格納する変数を初期化
     leet_string = ''
+
+    # 入力文字列の各文字に対してLeetの置き換えを行う
     for char in input_string:
+        # 文字が置き換え規則に含まれていれば置き換え、それ以外はそのまま追加
         if char.upper() in leet_rules:
             leet_string += leet_rules[char.upper()]
         else:
             leet_string += char
 
+    # 変換されたLeet文字列を返す
     return leet_string
 
-input_string = input().rstrip() # 入力文字列を取得し、末尾の改行を削除
+# 入力文字列を取得し、末尾の改行を削除
+input_string = input().rstrip()
+# Leetに変換した文字列を取得
 leet_string = to_leet_string(input_string)
-print(leet_string, end='\n') # Leet文字列を出力し、最後に改行を追加
+# Leet文字列を出力し、最後に改行を追加
+print(leet_string, end='\n')
+'''
+最初に、Leetスラングの置き換え規則が辞書として leet_rules に定義されています。この辞書は、特定のアルファベットがどのように置き換えられるかを示しています。
+次に、Leetに変換するための関数 to_leet_string が定義されています。この関数は、与えられた文字列を受け取り、Leetスラングに変換した文字列を返します。
+最後に、ユーザーからの入力を受け取り、Leetに変換した結果を表示します。
+'''
 
 # C017　ハイアンドロー・カードゲーム
 def compare_cards(parent_card, child_card):
