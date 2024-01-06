@@ -7595,35 +7595,55 @@ print(result)
 '''
 
 -----------------------------------------------B141　※欠番◆
-# B141　ガーベラ・コレクション　※入力例1,2でNG
+# B141　ガーベラ・コレクション
 # utf-8
-def min_operations_to_sort_flowers(N, colors):
-    target_order = list(range(1, N + 1)) * 2
-    current_order = colors[:]
-    operations = 0
+def main():
+    # ガーベラの色の数を受け取る
+    n = int(input())
 
-    for i in range(2 * N):
-        if current_order[i] == target_order[0]:
-            # Check if the flowers are already in the correct order
-            if current_order == target_order:
+    # ガーベラの総本数を計算する
+    m = 2 * n
+
+    # ガーベラの色の配列を受け取る
+    A = [int(input()) for _ in range(m)]
+
+    # ガーベラの並び替え操作の回数を記録する変数 cnt を初期化
+    cnt = 0
+
+    for i in range(m):
+        # ガーベラが期待される位置にあればスキップ
+        if A[i] == i % n + 1:
+            continue
+
+        # 期待される位置にない場合、正しい位置を見つけて交換操作を行う
+        j = i + 1
+        while A[j % m] != i % n + 1:
+            j += 1
+            if j == i:  # インデックスが i に戻ってしまった場合、見つからないと判断
                 break
 
-            # Perform a cyclic shift to move the misplaced flowers to the correct positions
-            for j in range(i, i + N):
-                current_order[j % (2 * N)], current_order[(j - N) % (2 * N)] = current_order[(j - N) % (2 * N)], current_order[j % (2 * N)]
+        # 交換操作が終了すると、cnt が増加
+        while j > i:
+            A[j % m], A[(j - 1) % m] = A[(j - 1) % m], A[j % m]
+            cnt += 1
+            j -= 1
 
-            # Update the number of operations
-            operations += 1
+    # 結果を標準出力に出力
+    print(cnt)
 
-    return operations
-
-# 入力を受け取る
-N = int(input())
-colors = [int(input()) for _ in range(2 * N)]
-
-# 結果を出力
-result = min_operations_to_sort_flowers(N, colors)
-print(result)
+if __name__ == "__main__":
+    main()
+'''
+main() 関数は、与えられた問題を解決するためのメイン関数です。
+n はガーベラの色の種類数、m はガーベラの総本数です。
+A はガーベラの色の配列を表します。リスト内包表記を使って、2N本分のガーベラの色を入力から受け取っています。
+cnt はガーベラの並び替え操作の回数を記録する変数です。
+メインの for ループでは、各ガーベラについて正しい位置に並ぶように操作を行います。
+ガーベラが期待される位置にあればスキップし、期待される位置にない場合は正しい位置を見つけて交換操作を行います。
+while ループ内で、ガーベラの位置を交換し、そのたびに cnt を増加させています。
+最終的に cnt を標準出力に出力しています。
+このコードは、指定された問題に対して隣り合う2本のガーベラを交換する操作を繰り返し、所望の順番にガーベラを並べ替えるための最小の操作回数を求めています。
+'''
 
 # B142　黒石
 # utf-8
