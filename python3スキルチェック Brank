@@ -3661,7 +3661,7 @@ weights = [int(input()) for _ in range(N)]
 output_result = closest_weight(N, M, weights)
 print(output_result)
 
-# utf-8　※テストケース通過せず　80点　境界値で不一致
+# utf-8　※テストケース80点　境界値で不一致
 import itertools
 
 def find_nearest_weight(N, weights, M):
@@ -3713,7 +3713,7 @@ for _ in range(N):
 nearest = find_nearest_weight(N, weights, M)
 print(nearest)
 
-# utf-8　※テストケース80点　境界値は満たす
+# utf-8　　※テストケース80点　境界値で不一致
 def closest_weight(N, M, weights):
     max_sum = 0  # M以下の最大の偶数を保持する変数
 
@@ -3771,6 +3771,29 @@ else:
     # 関数を呼び出して結果を出力
     result = closest_weight(N, M, weights)
     print(result)
+
+# utf-8　※テストケース80点　境界値は満たす
+def closest_even_weight(N, M, weights):
+    # Mから1ずつ減少していき、おもりの組み合わせで実現できる最大の偶数を求める
+    for current_weight in range(M, -1, -1):
+        for i in range(1 << N):
+            total_weight = 0
+            for j in range(N):
+                if i & (1 << j):
+                    total_weight += weights[j]
+            if total_weight == current_weight and total_weight % 2 == 0:
+                return current_weight
+    
+    # 実現できる偶数が見つからない場合は-1を返す
+    return -1
+
+# 入力の読み込み
+N, M = map(int, input().split())
+weights = [int(input()) for _ in range(N)]
+
+# 結果の出力
+result = closest_even_weight(N, M, weights)
+print(result)
 
 
 # B072 反転スイッチ
