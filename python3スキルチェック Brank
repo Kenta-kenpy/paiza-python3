@@ -3772,7 +3772,7 @@ else:
     result = closest_weight(N, M, weights)
     print(result)
 
-# utf-8　※テストケース80点　境界値は満たす
+# utf-8　※テストケース80点　境界値は満たす 数学の組み合わせアプローチ
 def closest_even_weight(N, M, weights):
     # Mから1ずつ減少していき、おもりの組み合わせで実現できる最大の偶数を求める
     for current_weight in range(M, -1, -1):
@@ -3794,6 +3794,32 @@ weights = [int(input()) for _ in range(N)]
 # 結果の出力
 result = closest_even_weight(N, M, weights)
 print(result)
+
+# utf-8　※テストケース80点　境界値で不一致
+from itertools import combinations
+
+def closest_weight_sum(N, M, weights):
+    closest_sum = 0
+
+    # おもりの組み合わせを考える
+    for r in range(1, N + 1):
+        for combination in combinations(weights, r):
+            current_sum = sum(combination)
+
+            # 現在の合計が M 以下かつ偶数かつ最大のものであれば更新
+            if current_sum <= M and current_sum % 2 == 0 and current_sum > closest_sum:
+                closest_sum = current_sum
+
+    return closest_sum
+
+# 入力を受け取る
+N, M = map(int, input().split())
+weights = [int(input()) for _ in range(N)]
+
+# 出力
+result = closest_weight_sum(N, M, weights)
+print(result)
+
 
 
 # B072 反転スイッチ
