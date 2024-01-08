@@ -579,29 +579,70 @@ print(c)：くじごとに当選番号と一致する数字の数を出力。
 
 # C024　ミニ・コンピュータ
 # utf-8
+def simulate_computer(n, commands):
+    # 変数1と変数2の初期化
+    variables = [0, 0]
+
+    # 各命令を順番に実行
+    for command in commands:
+        # 命令をトークンに分割
+        tokens = command.split()
+        
+        # SET命令の場合
+        if tokens[0] == "SET":
+            i, a = int(tokens[1]) - 1, int(tokens[2])
+            # 変数iに値aを代入
+            variables[i] = a
+        # ADD命令の場合
+        elif tokens[0] == "ADD":
+            a = int(tokens[1])
+            # 変数1の値にaを加え、結果を変数2に代入
+            variables[1] = variables[0] + a
+        # SUB命令の場合
+        elif tokens[0] == "SUB":
+            a = int(tokens[1])
+            # 変数1の値からaを引き、結果を変数2に代入
+            variables[1] = variables[0] - a
+
+    # 最終的な変数1と変数2の値を返す
+    return variables
+
+# 入力の読み込み
 n = int(input())
-num1 = 0
-num2 = 0
+commands = [input().strip() for _ in range(n)]
 
-cul = []
+# コンピュータのシミュレーション
+result = simulate_computer(n, commands)
 
-for i in range(0, n):
-    cul.append(input().split(" "))
-
-    #SET
-    if("SET" in cul[i]):
-        if(cul[i][1] == "1"):
-            num1 = int(cul[i][2])
-        else:
-            num2 = int(cul[i][2])
-    #ADD
-    elif("ADD" in cul[i]):
-        num2 = num1 + int(cul[i][1])
-    #SUB
-    else:
-        num2 = num1 - int(cul[i][1])
-
-print(num1, num2)
+# 結果の出力
+print(result[0], result[1])
+'''
+simulate_computer 関数:
+この関数は、コンピュータのシミュレーションを行うためのメインの関数です。
+nは命令の個数で、commandsは各命令を格納したリストです。
+variablesリストは2つの変数の初期値を保持します。
+コンピュータの初期化:
+variablesリストは [0, 0] で初期化され、変数1と変数2の初期値がそれぞれ0に設定されます。
+各命令の実行:
+for ループは各命令を順番に処理します。
+各命令は文字列として受け取られ、split() メソッドを使用してトークンに分割されます。
+SET命令の場合:
+SET 命令では、変数に特定の値を代入します。
+i は変数のインデックス（1または2）、a は代入される値です。
+ADD命令の場合:
+ADD 命令では、変数1の値に特定の値を加え、その結果を変数2に代入します。
+a は加算される値です。
+SUB命令の場合:
+SUB 命令では、変数1の値から特定の値を引き、その結果を変数2に代入します。
+a は減算される値です。
+最終的な変数の値を返す:
+simulate_computer 関数は最終的に、変数1と変数2の値を保持するリスト variables を返します。
+入力の読み込みと出力:
+n と commands を標準入力から受け取ります。
+simulate_computer 関数にこれらの入力を渡して、コンピュータをシミュレートします。
+最終的な変数の値を出力します。
+このプログラムは、与えられた命令に基づいて変数1と変数2の値を計算し、最終的な結果を出力します。
+'''
 
 # C025　ファックスの用紙回収
 # utf-8
