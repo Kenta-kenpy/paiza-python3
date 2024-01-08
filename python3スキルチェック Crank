@@ -539,6 +539,19 @@ low_price = min(low_prices)
 
 # 結果を出力
 print(start_price, end_price, high_price, low_price, end='')
+'''
+与えられた株価データからn日間の始値、終値、高値、安値を計算し、それを1行で出力するものです。以下はコードの解説です。
+n = int(input()): 最初に日数 n を入力します。これは株価データの日数です。
+start_prices, end_prices, high_prices, low_prices: 各日の始値、終値、高値、安値を格納するためのリストを用意します。
+for i in range(n):: 入力された日数分だけループします。
+a. s, e, h, l = map(int, input().split()): 各日の始値、終値、高値、安値を取得し、整数に変換して変数に格納します。
+b. start_prices.append(s), end_prices.append(e), high_prices.append(h), low_prices.append(l): 各日のデータを対応するリストに格納します。
+start_price = start_prices[0]: n日間の始値は最初の日の始値です。この値を start_price に格納します。
+end_price = end_prices[-1]: n日間の終値は最後の日の終値です。この値を end_price に格納します。
+high_price = max(high_prices): n日間の高値は最大の高値です。max() 関数を使用して最大値を求め、それを high_price に格納します。
+low_price = min(low_prices): n日間の安値は最小の安値です。min() 関数を使用して最小値を求め、それを low_price に格納します。
+print(start_price, end_price, high_price, low_price, end=''): 計算結果を1行で出力します。end='' は改行を抑制しています。
+'''
 
 # C023 クジの当選番号
 # utf-8
@@ -552,7 +565,18 @@ for j in range(N):
         if a[i] in b[j]:
             c += 1
     print(c)
-    
+'''
+このプログラムは、くじの当選番号と購入したくじの数字を比較して、一致する数字の数を出力するものです。
+最初に、当選番号をリスト a に格納します。次に、購入したくじの枚数 N を受け取ります。その後、くじごとの数字を2次元リスト b に格納します。
+ループを使って各くじについて、当選番号と一致する数字の数を数え、結果を出力します。
+for j in range(N):：各くじについてのループ。
+c = 0：当選番号と一致する数字の数を格納する変数を初期化。
+for i in range(len(b[0])):：当選番号の各数字についてのループ。
+if a[i] in b[j]:：当選番号の数字がくじの中に含まれていれば、一致する数字の数を増やす。
+print(c)：くじごとに当選番号と一致する数字の数を出力。
+このようにして、各くじについて当選番号と一致する数字の数を求めるプログラムが完成しています。
+'''
+
 # C024　ミニ・コンピュータ
 # utf-8
 n = int(input())
