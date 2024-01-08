@@ -646,55 +646,46 @@ simulate_computer 関数にこれらの入力を渡して、コンピュータ�
 
 # C025　ファックスの用紙回収
 # utf-8
-def simulate_computer(instructions):
-    """
-    コンピュータをシミュレートする関数
+import math
 
-    Args:
-        instructions (list): コンピュータに与える命令のリスト
+# 1度に運べる紙の最大枚数 M を取得し、0.0 で浮動小数点に変換
+M = int(input()) + 0.0
+# 1日にファックスが届く回数 N を取得
+N = int(input())
 
-    Returns:
-        tuple: 変数1と変数2の最終的な値のタプル
-    """
-    var1 = 0  # 変数1の初期値
-    var2 = 0  # 変数2の初期値
+# N 回分の時刻とファックスの枚数を2次元リスト Fax に格納
+Fax = [[int(i) for i in input().split()]for j in range(N)]
+# 最初のファックスが届く時間を最初に格納
+hours = Fax[0][0]
+# 1度に取りに行ける最大枚数を累積する変数
+paper = 0
+# 取りに行く回数の総計を格納する変数
+total = 0
 
-    for instruction in instructions:
-        operation = instruction[0]
-        value = instruction[1]
+# Fax リストをイテレート
+for i, j, k in Fax:
+    # 時間が同じ場合は紙の枚数を累積
+    if hours == i:
+        paper += k
+    else:
+        # 時間が異なる場合はそれまでに累積された枚数を1度に運べる最大枚数で割り、切り上げて取りに行く回数を計算
+        total += math.ceil(paper / M)
+        # 累積された枚数をリセットし、新しい時間と枚数を格納
+        paper = 0
+        hours = i
+        paper += k
 
-        if operation == "SET":
-            var_idx = int(instruction[2]) - 1  # 変数のインデックス
-            if var_idx == 0:
-                var1 = value
-            elif var_idx == 1:
-                var2 = value
-        elif operation == "ADD":
-            var2 += value
-        elif operation == "SUB":
-            var2 -= value
-
-    return var1, var2
-
-# 命令の数を入力
-n = int(input("命令の個数を入力してください: "))
-
-instructions = []
-# 命令のリストを入力
-for i in range(n):
-    while True:
-        instr = input(f"命令{i+1}を入力してください（例: SET 1 10、ADD 5、SUB 3）: ").split()
-        if len(instr) != 3 or instr[0] not in ["SET", "ADD", "SUB"] or not instr[1].isdigit() or not instr[2].isdigit():
-            print("命令のフォーマットが不正です。再度入力してください。")
-        else:
-            break
-    instructions.append([instr[0], int(instr[1]), int(instr[2])])
-
-# コンピュータをシミュレートし、変数1と変数2の最終的な値を取得
-result = simulate_computer(instructions)
-
-# 変数1と変数2の最終的な値を半角スペース区切りで1行に出力し、最後に改行を追加
-print(*result, sep=" ", end="\n")
+# 最後に最後のファックスまでに累積された枚数を同様に計算し、total に加えて、取りに行く必要がある総回数を出力
+total += math.ceil(paper / M)
+print(total)
+'''
+このプログラムは、与えられた条件に基づいて、ファックスが届く時間と枚数に基づいて、ファックスを取りに行く必要がある回数を計算します。
+最初に、1度に運べる紙の最大枚数 M と、1日にファックスが届く回数 N を入力から受け取ります。
+N 回分の時刻とファックスの枚数を受け取り、それを2次元リスト Fax に格納します。
+変数 hours には、最初のファックスが届く時間を格納し、変数 paper にはその時間に届いたファックスの枚数を格納します。また、変数 total には今までに取りに行った回数を格納します。
+Fax リストをイテレートしながら、時間が同じ場合は紙の枚数を累積し、異なる場合はそれまでに累積された枚数を1度に運べる最大枚数で割り、切り上げて取りに行く回数を計算します。
+最後に、最後のファックスまでに累積された枚数を同様に計算し、total に加えて、取りに行く必要がある総回数を出力します。
+'''
 
 # C026　ウサギと人参
 # utf-8
@@ -719,28 +710,44 @@ if max_index != -1:
     print(max_index)  # 最大質量の人参の番号を出力
 else:
     print("not found")  # 見つからなかった場合は "not found" を出力
+'''
+Rabbit社の要件に基づいて、与えられた人参のデータから糖分が許容範囲内で質量が最も大きい人参の番号を見つけるものです。
+最初に、3つの整数 N, S, p を1行で入力として受け取ります。これは、人参のデータの数、目安となる糖分、許容誤差を表しています。
+最大質量とその人参の番号を記録する変数 max_mass と max_index を初期化します。N回のループを行い、各人参のデータを入力として受け取ります。人参の質量を mass、糖分を sugar として取得します。
+各人参について、糖分が許容範囲内でかつ質量が最大の場合、最大質量とその人参の番号を更新します。最後に、最大質量の人参の番号を出力します。もし見つからなかった場合は "not found" を出力します。
+'''
 
 # C027　◆
 # C028　単語テストの採点
 # utf-8
-N = int(input())
-words = [input().split() for x in range(N)] #出力[q_1,a_1][q_2,a_2]....
-score = 0
+N = int(input())  # 問題数を表す N を取得
+
+# N 行分の入力を取得し、それぞれ正解と生徒の解答をリストに格納
+words = [input().split() for x in range(N)]
+
+score = 0  # 合計得点を初期化
 
 for word in words:
-    if len(word[0]) == len(word[1]):
-        miss = 0 #missは毎回０になる必要がある
-        for i in range(len(word[0])):#文字の長さだけ繰り返される(if文で文字列の数が違うものは省いているので差異を気にする必要はない)
-            if (word[0])[i] != (word[1])[i]:#リストにしている単語を1文字ずつ(i)比べる
-                miss += 1
-        
+    if len(word[0]) == len(word[1]):  # 正解と解答の長さが一致する場合
+        miss = 0  # missは1問ごとに初期化されるべき変数で、不一致の文字数を保持する
+        for i in range(len(word[0])):  # 文字の長さだけ繰り返し
+            if word[0][i] != word[1][i]:  # 正解と解答の対応する位置の文字が異なる場合
+                miss += 1  # 不一致の文字数を増やす
+
         if miss < 1:
-            score += 2
-            
+            score += 2  # 完全一致なら2点加算
+
         elif miss < 2:
-            score += 1
-            
-print(score)
+            score += 1  # 不一致が1文字の場合は1点加算
+
+print(score)  # 生徒の合計得点を出力
+'''
+入力から問題数 N を取得し、各問題の正解と生徒の解答をリストに格納します。
+各問題について、正解と解答の長さが一致するかを確認します。
+長さが一致する場合、対応する位置の文字を比較し、不一致の文字数をカウントします。
+不一致の文字数に基づいて得点を計算し、合計得点に加えます。
+全ての問題に対して得点を計算した後、最終的な合計得点を出力します。
+'''
 
 # C029　旅行の計画
 # utf-8
