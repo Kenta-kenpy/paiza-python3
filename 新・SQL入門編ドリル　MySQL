@@ -496,6 +496,17 @@ WHERE カラム名 = 値 で、カラム名 カラムの値が 値 であるレ�
 SQL ドリルの各問題では、test という名前のデータベースを使っています。*/
 
 final　バーガーを全種類取得しよう
+SELECT * FROM menu WHERE category_id = 1 ORDER BY price DESC;
+/*問題文は、
+「カテゴリがバーガーのメニュー」=「menu テーブルの category_id が 1 のレコード」
+「価格の高い順」=「price カラムの降順」
+と読み替えることができる
+つまり、menu テーブルについて、
+category_id カラムの値が 1 であるレコードを絞り込む
+price カラムの降順に並べ替える
+ことをすればよいとわかる
+WHERE カラム名 = 値 で、カラム名 カラムの値が 値 であるレコードを絞り込むことができる
+よって、SELECT * FROM menu WHERE category_id = 1 ORDER BY price DESC; と書く*/
 
 <入会日を指定して取得しよう>
 step1　日時を指定して取得しよう
