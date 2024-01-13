@@ -2203,7 +2203,16 @@ elif M == 11:
 elif M == 12:
     print(2)
     
-# D274
+# D274 水の量
+# utf-8
+N = int(input())
+a = int(input())
+
+if a <= N:
+    print("Yes")
+else:
+    print("No")
+
 # D275
 # D276
 # D277
