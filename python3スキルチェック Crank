@@ -4079,7 +4079,36 @@ if __name__ == "__main__":
 プログラムの最後で、販売したお客さんの数 (count) を出力します。プログラムが直接実行された場合に main 関数を呼び出します。これにより、他のスクリプトからこのスクリプトがインポートされたときには main 関数が呼び出されないようになります。
 '''
 --------------------------------------------- C141　※欠番 ◆
-# C141　
+# C141　クラス委員選挙
+# utf-8
+from collections import Counter
+
+def find_class_representative():
+    # クラスの人数を取得
+    N = int(input().strip())
+
+    # 生徒の投票結果を取得
+    votes = [input().strip() for _ in range(N)]
+
+    # 投票数をカウント
+    vote_counts = Counter(votes)
+
+    # 最も得票数が多い生徒を取得
+    class_representative = max(vote_counts, key=vote_counts.get)
+
+    # 結果を出力
+    print(class_representative)
+
+# プログラムを実行
+find_class_representative()
+'''
+このプログラムは、クラス委員を決めるための選挙で最も得票数の多い生徒を見つけるためのものです。Counterクラスを使うために必要なライブラリをインポートしています。Counterクラスは、リストや文字列などの要素の出現回数を数えるのに便利なクラスです。
+find_class_representativeという関数を定義しています。この関数は、クラス委員を見つけるための主要な処理を含みます。
+まず、クラスの人数 N を受け取ります。次に、forループを使用して各生徒の投票結果をリスト votes に格納します。input().strip()は、入力から余分な空白や改行を取り除くために使用されています。
+Counterを使用して、各生徒が得た得票数を数えます。votes リストから得票数を抽出し、辞書の形で保持します。max関数を使用して、vote_counts 辞書の中で最も得票数が多いキー（生徒の名前）を見つけます。key引数には、比較の基準となる関数を指定しています。この場合、vote_counts.get を用いて各生徒の得票数を比較しています。
+最終的に、最も得票数が多い生徒の名前を出力します。関数 find_class_representative を呼び出してプログラムを実行します。
+'''
+
 # C142　
 # C143　
 # C144　
