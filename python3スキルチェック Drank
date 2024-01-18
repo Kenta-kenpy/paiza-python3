@@ -2213,7 +2213,12 @@ if a <= N:
 else:
     print("No")
 
-# D275
+# D275 服の値段
+# utf-8
+a = int(input())
+b = int(input())
+print(a+b)
+
 # D276
 # D277
 # D278
