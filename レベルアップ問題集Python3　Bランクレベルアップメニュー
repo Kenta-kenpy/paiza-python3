@@ -295,8 +295,39 @@ print(string[0])
 '''
 
 step3　配列（リスト）の要素の出力
+# utf-8
+cities = ["Nara", "Shiga", "Hokkaido", "Chiba"]
+
+for city in cities:
+    print(city)
+
 step4　1文字ずつ出力
+# utf-8
+string = input()
+
+for char in string:
+    print(char)
+'''
+文字列の文字数と同じ回数だけ回る for 文を記述し、カウント変数を使って 1 文字ずつ出力します。
+'''
+
 final　文字の重複カウント
+pattern = input()
+string = input()
+result = 0
+
+for i in range(len(string) - len(pattern) + 1):
+    portion = string[i : i + len(pattern)]
+
+    if portion == pattern:
+        result += 1
+
+print(result)
+'''
+解答を記録する変数 ans を 0 で初期化します。
+文字列 s を 1 文字ずつ調べます。その文字が c と一致していれば ans を 1 増やします。
+文字列 s を構成する全ての文字について調べ終わったら、ans を出力すれば OK です。
+'''
 
 <文字列の重複カウント>
 step1　文字列の長さ
