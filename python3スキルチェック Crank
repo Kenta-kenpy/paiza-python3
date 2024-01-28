@@ -785,22 +785,22 @@ print(start_date, end_date)
 # 画像のサイズを表す整数 H, W を入力から取得
 H, W = map(int, input().split())
 
-# 画像の各画素値を表す整数の二次元配列 img を入力から取得
-img = []
-for _ in range(H):
-    row = list(map(int, input().split()))
-    img.append(row)
-
-# 二値画像に変換して結果を出力
 for i in range(H):
+    # 画像の各行をリストとして取得
+    row = list(map(int, input().split()))
+    
     for j in range(W):
         # 画素値が 128 以上ならば 1 (白)、それ以下ならば 0 (黒) に変換
-        if img[i][j] >= 128:
-            img[i][j] = 1
+        if row[j] >= 128:
+            row[j] = 1
         else:
-            img[i][j] = 0
-        print(img[i][j], end=" ")  # 変換結果をスペース区切りで出力
-    print()  # 改行して次の行を出力
+            row[j] = 0
+    
+    # リスト内の各要素を文字列に変換し、スペースで区切って1行にする
+    s = ' '.join(map(str, row))
+    
+    # 1行ごとに出力
+    print(s)
 
 --------------------------------------------- C031　※欠番 ◆
 # C031　時差を求めたい
