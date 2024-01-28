@@ -358,12 +358,47 @@ for char in string:
 step4　文字列の1、2文字目
 step5　文字列のn文字目とn+1文字目
 final　文字列の重複カウント
+# utf-8
+pattern = input()
+string = input()
+result = 0
+
+for i in range(len(string) - len(pattern) + 1):
+    portion = string[i : i + len(pattern)]
+
+    if portion == pattern:
+        result += 1
+
+print(result)
+'''
+解答を格納する変数 ans を置き、0 で初期化します。
+開始地点を先頭から順にずらしながら、t を s と同じ長さだけ切り取り、s と一致するかどうかを確認します。一致した場合は ans に 1 を加算します。
+t の長さが len(t) 、s の長さが len(s) の時、t を s と同じ長さだけ切り取れるのは、切り取る範囲の先頭が 0 文字目から len(t) - len(s) 文字目の時のみであることに注意してください。
+最終的な ans を出力すれば OK です。
+'''
 
 <文字と整数の組のソート>
 step1　インクリメント
 step2　数字のみの出力
 step3　昇順ソート出力
 final　文字と整数の組のソート
+# utf-8
+num = int(input())
+inputs = {}
+
+for i in range(num):
+    tmp = input().split()
+    inputs[int(tmp[1])] = tmp[0]
+
+inputs = sorted(inputs.items())
+
+for i in inputs:
+    print(i[1])
+'''
+整数をキー、文字を値に持つ連想配列 ds を作成します。
+入力の 2 行目以降の各行では、s_i と d_i を受け取り、ds[d_i] に s_i を代入していきます。
+連想配列をキーで昇順にソートするためには、各言語に用意されているソート関数を使用します。
+'''
 
 <文字と整数の組のソート2>
 step1　インクリメント
@@ -373,12 +408,94 @@ step4　配列のソート
 step5　数字のみの出力
 step6　昇順ソート出力
 final　文字と整数の組のソート2
+# utf-8
+num = int(input())
+inputs = {}
+result = {}
+
+for i in range(num):
+    tmp = input().split()
+
+    exist = False
+    for (key, value) in inputs.items():
+        if key == tmp[0]:
+            exist = True
+
+    if exist:
+        inputs[tmp[0]] = inputs[tmp[0]] + int(tmp[1])
+    else:
+        inputs[tmp[0]] = int(tmp[1])
+
+# ソート用にkeyとvalueを反転させた辞書を作る
+for (key, value) in inputs.items():
+    result[value] = key
+
+result = sorted(result.items(), reverse=True)
+
+for i in result:
+    print(i[1] + " " + str(i[0]))
+'''
+キーを文字、値を整数とする連想配列 array を定義します。
+S_i, D_i を受け取ったら、array[S_i] に D_i を加算します。
+各言語に組み込まれているソート関数を使い、連想配列を値で降順にソートし、順に出力すれば OK です。
+'''
 
 <アルファベット探し>
 step1　文字列の出力
 step2　アルファベットの範囲の文字の出力
 step3　アルファベットの順番
 final　アルファベット探し
+# utf-8
+first = input()
+last = input()
+pattern = input()
+
+alphabets = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+]
+result = "false"
+
+in_a_range = False
+for alphabet in alphabets:
+    if first == alphabet:
+        in_a_range = True
+
+    if in_a_range and pattern == alphabet:
+        result = "true"
+
+    if last == alphabet:
+        break
+
+print(result)
+'''
+STEP: 1 と同じ要領で、3 行で入力される X Y C を変数に格納します。
+X から Y の範囲に C が含まれているかどうかは X <= C かつ C <= Y が true になるかどうかを確認することにより調べることができます。
+'''
 
 <五目並べ>
 step1　文字列の出力
@@ -387,6 +504,106 @@ step3　五目並べ(横)
 step4　五目並べ(縦)
 step5　五目並べ(斜め)
 final　五目並べ
+# utf-8
+board = []
+
+for i in range(5):
+    board.append(input())
+
+
+def row():
+    result = "D"
+
+    for line in board:
+        pivot = line[0]
+        count = 0
+
+        for stone in line:
+            if stone != "." and stone == pivot:
+                count += 1
+            else:
+                break
+
+        if count == 5:
+            result = pivot
+            break
+
+    return result
+
+
+def column():
+    result = "D"
+
+    for i in range(5):
+        pivot = ""
+        count = 0
+
+        for j in range(5):
+            if pivot == "":
+                pivot = board[j][i]
+
+            stone = board[j][i]
+            if stone != "." and stone == pivot:
+                count += 1
+            else:
+                break
+
+        if count == 5:
+            result = pivot
+            break
+
+    return result
+
+
+def oblique():
+    result = "D"
+    direction = [True, False]
+
+    for reverse in direction:
+        pivot = ""
+        count = 0
+
+        if reverse:
+            j = 0
+            j_diff = 1
+        else:
+            j = 4
+            j_diff = -1
+
+        for i in range(5):
+
+            stone = board[i][j]
+
+            if pivot == "":
+                pivot = stone
+
+            if stone != "." and stone == pivot:
+                count += 1
+
+            j = j + j_diff
+
+        if count == 5:
+            result = pivot
+            break
+
+    return result
+
+
+row = row()
+column = column()
+oblique = oblique()
+
+if row != "D":
+    print(row)
+elif column != "D":
+    print(column)
+elif oblique != "D":
+    print(oblique)
+else:
+    print("D")
+'''
+横・縦・斜めのそれぞれについて揃っているかどうかを調べます。
+'''
 
 <占い>
 step1　連想配列（辞書）を使う
@@ -395,6 +612,30 @@ step3　1人の血液型
 step4　1つの血液型を占う
 step5　1人の占い結果
 final　占い
+# utf-8
+n = int(input())
+users = {}
+for i in range(n):
+    tmp = input().split()
 
+    users[tmp[0]] = tmp[1]
+
+m = int(input())
+fortunes = {}
+for i in range(m):
+    tmp = input().split()
+
+    fortunes[tmp[0]] = tmp[1]
+
+for user, user_blood in users.items():
+    for blood, fortune in fortunes.items():
+        if user_blood == blood:
+            print(user + " " + fortune)
+            break
+'''
+ユーザー名と血液型を対応させる連想配列 userToBlood と、血液型と占い型を対応させる連想配列 bloodToFortune の 2 つを作成します。
+各言語に組み込まれている連想配列 (辞書) が、挿入順を記憶せず、挿入した順に値を参照することができない言語を利用して解く場合は、
+ユーザーが入力で与えられる順序を他の配列によって記憶するなどの工夫が必要です。
+'''
 
 
