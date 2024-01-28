@@ -71,6 +71,13 @@ for i in range(n):
         print("blank")
 
 # Q. 野球の審判 C
+step2 「野球の審判」を解くために:part1
+step3 「野球の審判」を解くために:part2
+step4 「野球の審判」を解くために:part3
+step5 「野球の審判」を解くために:part4
+step6 「野球の審判」を解くために:part5
+step7 「野球の審判」を解くために:part6
+step1 野球の審判（力試し編）& final 野球の審判
 # utf-8
 n = int(input())
 
