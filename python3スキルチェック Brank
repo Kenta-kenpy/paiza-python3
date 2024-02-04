@@ -7758,7 +7758,46 @@ count_black_moves関数を呼び出して、黒石を置けるマスの数を計
 結果を出力します。
 '''
 
-# B143
+# B143　じゃんけん列車
+# utf-8
+from collections import defaultdict  # defaultdictを使うためのインポート
+
+def find_winner(N, M, records):
+    # 初期状態: 各園児が1人の列車を持つ
+    trains = {i: [i] for i in range(1, N+1)}
+
+    # じゃんけんの勝敗情報を処理する
+    for x, y in records:
+        # 園児 x が園児 y に勝った場合
+        # x の列車の末尾に y の列車を連結し、y の列車を削除する
+        trains[x].extend(trains[y])
+        del trains[y]
+
+    # 最も長い列車の先頭の園児が優勝者
+    max_length = max(len(train) for train in trains.values())
+    winners = [train[0] for train in trains.values() if len(train) == max_length]
+
+    return winners
+
+# 入力を取得
+N, M = map(int, input().split())
+records = [tuple(map(int, input().split())) for _ in range(M)]
+
+# 優勝者を見つける
+winners = find_winner(N, M, records)
+
+# 結果を出力
+for winner in winners:
+    print(winner)
+'''
+じゃんけん列車ゲームの優勝者を見つけるためのプログラムです。defaultdictは、辞書のようなデータ構造ですが、存在しないキーを参照した場合に自動的に初期値を返す機能を持っています。
+find_winner関数は、与えられたじゃんけんの勝敗情報を元に、じゃんけん列車ゲームの優勝者を見つけるための関数です。引数として、園児の人数 N、じゃんけんの勝敗記録の個数 M、じゃんけんの勝敗記録の情報 records を受け取ります。
+trainsは、園児の出席番号をキーとし、各園児の列車を値として持つ辞書です。初期状態では、各園児が1人の列車を持っています。
+recordsから1つずつじゃんけんの勝敗情報を取り出し、各情報に基づいて列車を操作します。園児 x が園児 y に勝った場合、x の列車の末尾に y の列車を連結し、y の列車を削除します。
+最も長い列車の先頭の園児が優勝者です。max_lengthに最も長い列車の長さを求め、その長さと同じ列車の先頭の園児をwinnersリストに追加します。
+優勝者の出席番号を小さい順に出力します。入力を受け取り、find_winner関数を呼び出して優勝者を見つけ、その結果を出力します。
+'''
+
 # B144
 # B145
 # B146
@@ -7767,3 +7806,6 @@ count_black_moves関数を呼び出して、黒石を置けるマスの数を計
 # B149
 # B150
 -----------------------------------------------B151　※欠番◆
+# B151
+# B152
+# B153
