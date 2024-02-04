@@ -86,6 +86,17 @@ print(N)
 '''
 
 step3 「野球の審判」を解くために:part2
+# utf-8
+N = int(input())
+for i in range(N):
+    print("strike or ball")
+'''
+標準入力を用いて、入力を受け取ります。
+受け取った値を変数に代入します。【ここまでが前の問題でやった内容です】
+N 回実行される繰り返し処理を書きます。
+繰り返し処理の中で strike or ball という文字列を出力します。
+'''
+
 step4 「野球の審判」を解くために:part3
 step5 「野球の審判」を解くために:part4
 step6 「野球の審判」を解くために:part5
