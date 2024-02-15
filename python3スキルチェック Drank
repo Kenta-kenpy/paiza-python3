@@ -2252,6 +2252,10 @@ print(n-m)
 X = int(input())
 print(X//80)
 
-# D279
+# D279　積雪の深さ
+# utf-8
+A,B = map(int,input().split())
+print(A + B)
+
 # D280
 ---------------------------------------------D281　※欠番 ◆
