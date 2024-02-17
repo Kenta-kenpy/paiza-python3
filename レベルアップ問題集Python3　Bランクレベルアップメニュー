@@ -356,6 +356,13 @@ for char in string:
 '''
 
 step4　文字列の1、2文字目
+# utf-8
+string = input()
+print(string[0] + " " + string[1])
+'''
+1 文字目を取得するのと同じ要領で 2 文字目も取得します。半角スペースで結んで出力すれば OK です。
+'''
+
 step5　文字列のn文字目とn+1文字目
 final　文字列の重複カウント
 # utf-8
