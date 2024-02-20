@@ -364,6 +364,13 @@ print(string[0] + " " + string[1])
 '''
 
 step5　文字列のn文字目とn+1文字目
+# utf-8
+n = int(input()) - 1
+string = input()
+
+if n + 1 < len(string):
+    print(string[n] + " " + string[n + 1])
+
 final　文字列の重複カウント
 # utf-8
 pattern = input()
