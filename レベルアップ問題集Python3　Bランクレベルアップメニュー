@@ -458,6 +458,25 @@ n に 1 を加算して出力します。
 '''
 
 step2　重複の判定
+# utf-8
+array = ["HND", "NRT", "KIX", "NGO", "NGO"]
+duplicate = False
+
+for i in range(len(array)):
+    for j in range(len(array)):
+        if i != j and array[i] == array[j]:
+            duplicate = True
+
+if duplicate:
+    print("true")
+else:
+    print("false")
+'''
+問題で指示されている通りの配列を array に定義します。
+全ての要素について、その要素ではないが同じ要素が配列に含まれているかを確認します。
+含まれている場合は重複があるので true を出力します。含まれていない場合は false を出力します。
+'''
+
 step3　配列（リスト）の重複カウント
 step4　配列のソート
 step5　数字のみの出力
