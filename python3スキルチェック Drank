@@ -2279,7 +2279,13 @@ if (Y_1 + Y_2 + Y_3) < X:
 else:
     print("NG")
 
-# D282
+# D282　ティッシュ箱の収納
+# utf-8
+N = int(input()) # ティッシュ箱の高さ
+M = int(input()) # 収納するスペースの高さ
+
+print(M//N)
+
 # D283
 # D284
 # D285
