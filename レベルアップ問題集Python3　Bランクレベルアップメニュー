@@ -478,6 +478,25 @@ else:
 '''
 
 step3　配列（リスト）の重複カウント
+# utf-8
+array = ["HND", "NRT", "KIX", "NGO", "NGO", "NGO", "NGO", "NGO"]
+count = {}
+
+for pattern in array:
+    if pattern in count:
+        count[pattern] += 1
+    else:
+        count[pattern] = 1
+
+for (key, value) in count.items():
+    if value != 1:
+        print(value)
+'''
+問題に示されている配列を array に定義します。
+キーが array の各要素、値がその出現回数になるような別の連想配列 count を作成します。
+count の各要素について、値が 2 以上であるかを調べ、2 以上であればその値を出力します。
+'''
+
 step4　配列のソート
 step5　数字のみの出力
 step6　昇順ソート出力
