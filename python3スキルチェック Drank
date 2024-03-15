@@ -2286,7 +2286,15 @@ M = int(input()) # 収納するスペースの高さ
 
 print(M//N)
 
-# D283
+# D283  ポイント払い
+# utf-8
+X,P = map(int, input().split()) # カートに入った商品の合計金額を表す整数 X  ポイントカードに貯まったポイント P 
+
+if X >= P:
+    print(X-P)
+else:
+    print(0)
+
 # D284
 # D285
 # D286
