@@ -511,6 +511,15 @@ for i in nums:
 '''
 
 step5　数字のみの出力
+# utf-8
+num = int(input())
+
+for i in range(num):
+    print(input().split()[1])
+'''
+文字列を半角スペースで分割するには、各言語に組み込まれている文字列を文字列で分割する関数を使用します。
+'''
+
 step6　昇順ソート出力
 final　文字と整数の組のソート2
 # utf-8
