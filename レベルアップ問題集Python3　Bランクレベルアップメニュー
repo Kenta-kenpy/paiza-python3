@@ -521,6 +521,22 @@ for i in range(num):
 '''
 
 step6　昇順ソート出力
+# utf-8
+input()  # 1つ目の入力は使わないので読み飛ばす
+strings = input().split()
+nums = []
+
+for num in strings:
+    nums.append(int(num))
+
+nums.sort()
+
+for i in nums:
+    print(i)
+'''
+a_1, a_2, ..., a_n を 1 つの配列に格納し、各言語に用意されているソート関数を用いてソートします。
+'''
+
 final　文字と整数の組のソート2
 # utf-8
 num = int(input())
