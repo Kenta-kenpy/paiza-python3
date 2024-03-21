@@ -2295,7 +2295,14 @@ if X >= P:
 else:
     print(0)
 
-# D284
+# D284　風速の計測
+# utf-8
+w = int(input())
+if w >= 8:
+    print("OK")
+else:
+    print("NG")
+
 # D285
 # D286
 # D287
