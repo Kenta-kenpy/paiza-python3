@@ -580,6 +580,56 @@ for i in range(3):
 '''
 
 step2　アルファベットの範囲の文字の出力
+# utf-8
+string = input()
+alphabets = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+]
+
+first = string[0]
+last = string[len(string) - 1]
+
+flag = False
+for alphabet in alphabets:
+    if first == alphabet:
+        flag = True
+
+    if flag:
+        print(alphabet)
+
+    if last == alphabet:
+        break
+'''
+先頭 1 文字と末尾 1 文字を取得し、それぞれを文字コードに変換します。文字コードへの変換には各言語に用意されている関数を使用します。
+A の文字コードは 65 、B の文字コードは 66 、... 、Z の文字コードは 90 と順に並んでいることを利用して、for 文を用いて 1 文字ずつ出力します。先頭 1 文字と末尾 1 文字を取得し、それぞれを文字コードに変換します。文字コードへの変換には各言語に用意されている関数を使用します。
+A の文字コードは 65 、B の文字コードは 66 、... 、Z の文字コードは 90 と順に並んでいることを利用して、for 文を用いて 1 文字ずつ出力します。
+'''
+
 step3　アルファベットの順番
 final　アルファベット探し
 # utf-8
