@@ -631,6 +631,53 @@ A の文字コードは 65 、B の文字コードは 66 、... 、Z の文字�
 '''
 
 step3　アルファベットの順番
+# utf-8
+string = input()
+alphabets = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+]
+result = "true"
+
+first = string[0]
+last = string[len(string) - 1]
+
+for alphabet in alphabets:
+    if first == alphabet:
+        break
+
+    if last == alphabet:
+        result = "false"
+
+print(result)
+'''
+文字の順序の大小は比較演算子を使って調べることができます。
+'''
+
 final　アルファベット探し
 # utf-8
 first = input()
