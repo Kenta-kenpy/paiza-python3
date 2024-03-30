@@ -741,6 +741,27 @@ for i in range(5):
 '''
 
 step2　五目並べ(1行)
+# utf-8
+board = input()
+result = "D"
+
+pivot = board[0]
+count = 0
+for stone in board:
+    if stone != "." and stone == pivot:
+        count += 1
+    else:
+        break
+
+if count == 5:
+    result = pivot
+
+print(result)
+'''
+入力が OOOOO か XXXXX の場合、その記号のプレイヤーが勝者です。
+勝者がいない場合に D と出力することを忘れないように注意してください。
+'''
+
 step3　五目並べ(横)
 step4　五目並べ(縦)
 step5　五目並べ(斜め)
