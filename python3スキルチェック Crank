@@ -4281,7 +4281,51 @@ print("%.1f" % result)
 
 # C146　怪盗からのメッセージ
 # utf-8
+def decrypt_message(message):
+    decrypted_message = ""
+    i = 0
+    while i < len(message):
+        char = message[i]
+        if char.isdigit():
+            # 連続する数字を処理する
+            num = ""
+            while i < len(message) and message[i].isdigit():
+                num += message[i]
+                i += 1
+            # 数字を1加算して解読されたメッセージに追加
+            decrypted_message += str((int(num) + 1))
+        elif char.isalpha():
+            # 英字の場合、1文字後ろにずらす
+            if char == 'Z':
+                decrypted_message += 'A'
+            else:
+                decrypted_message += chr(ord(char) + 1)
+            i += 1
+        else:
+            # 英字でも数字でもない場合、そのまま追加
+            decrypted_message += char
+            i += 1
+    return decrypted_message
 
+# 入力を受け取る
+encrypted_message = input()
+
+# メッセージの解読
+decrypted_message = decrypt_message(encrypted_message)
+
+# 解読されたメッセージを出力
+print(decrypted_message)
+'''
+与えられた暗号化されたメッセージを解読し、解読されたメッセージを出力するものです。
+まず、decrypt_message 関数が定義されています。この関数は、暗号化されたメッセージを引数として受け取り、解読されたメッセージを返します。解読されたメッセージは decrypted_message という変数に格納されます。
+次に、メインの処理が始まります。まず、入力を受け取るために input 関数が使われます。この入力は暗号化されたメッセージです。
+その後、解読されたメッセージを出力するために decrypt_message 関数が呼び出されます。解読されたメッセージは decrypted_message 変数に格納され、それが print 関数を使って出力されます。
+decrypt_message 関数では、与えられたメッセージを文字ごとに処理します。各文字が英字大文字か数字であるかをチェックし、それに応じて処理を行います。
+英字大文字の場合、その文字をアルファベットの次の文字に置き換えます。ただし、Z の場合は A に戻ります。
+数字の場合、連続する数字をまとめて処理し、それぞれの数字に1を加算します。ただし、10で割った余りを取ることで、Zの次はAに戻るようにします。
+最後に、それ以外の文字（空白など）の場合はそのまま解読されたメッセージに追加します。
+解読されたメッセージが完成したら、それを返します。
+'''
 
 # C147　
 # C148　
