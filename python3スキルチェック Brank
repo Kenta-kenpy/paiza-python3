@@ -3820,7 +3820,33 @@ weights = [int(input()) for _ in range(N)]
 result = closest_weight_sum(N, M, weights)
 print(result)
 
+# utf-8 ※テストケース80点　境界値通過せず 数学の組み合わせアプローチ
+from itertools import combinations
 
+# 釣り合うおもりの組み合わせを見つける関数
+def find_balanced_combinations(weights):
+    balanced_combinations = []
+    for i in range(1, len(weights) + 1):
+        for combo in combinations(weights, i):
+            if sum(combo) % 2 == 0:  # 左右の重さが釣り合うかを確認
+                balanced_combinations.append(combo)
+    return balanced_combinations
+
+# 入力の取得
+N, M = map(int, input().split())
+weights = [int(input()) for _ in range(N)]
+
+# 釣り合うおもりの組み合わせを探す
+balanced_combinations = find_balanced_combinations(weights)
+
+# M以下で最大の重さの組み合わせを見つける
+max_weight = 0
+for combo in balanced_combinations:
+    if sum(combo) <= M:
+        max_weight = max(max_weight, sum(combo))
+
+# 結果の出力
+print(max_weight)
 
 # B072 反転スイッチ
 # utf-8
