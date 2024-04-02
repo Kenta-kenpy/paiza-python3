@@ -763,6 +763,28 @@ print(result)
 '''
 
 step3　五目並べ(横)
+# utf-8
+result = "D"
+
+for i in range(5):
+    board = input()
+
+    pivot = board[0]
+    count = 0
+    for stone in board:
+        if stone != "." and stone == pivot:
+            count += 1
+        else:
+            break
+
+    if count == 5:
+        result = pivot
+print(result)
+'''
+STEP: 1 と STEP: 2 の組み合わせで解くことができます。
+勝者の記号を出力するのは一度きりであることに注意してください。
+'''
+
 step4　五目並べ(縦)
 step5　五目並べ(斜め)
 final　五目並べ
