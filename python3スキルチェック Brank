@@ -7855,7 +7855,54 @@ print(result)
 最後に、残っているお化けが存在できる区画の数を数えます。リスト内の値が1である区画がお化けが存在できる区画であるため、1の数を合計します。
 '''
 
-# B145
+# B145　ビンゴゲームの判定　※入力例全てでNG
+# utf-8 
+def check_bingo(bingo_card, selected_numbers):
+    # ビンゴの数をカウントする変数
+    bingo_count = 0
+
+    # 横のラインをチェックする関数
+    def check_rows(card):
+        for row in card:
+            if all(num == 0 for num in row):
+                return True
+        return False
+
+    # 縦のラインをチェックする関数
+    def check_columns(card):
+        for col in range(len(card[0])):
+            if all(card[row][col] == 0 for row in range(len(card))):
+                return True
+        return False
+
+    # 左上から右下への斜めのラインをチェックする関数
+    def check_diagonal1(card):
+        return all(card[i][i] == 0 for i in range(len(card)))
+
+    # 右上から左下への斜めのラインをチェックする関数
+    def check_diagonal2(card):
+        return all(card[i][len(card)-1-i] == 0 for i in range(len(card)))
+
+    # 抽選された数字がビンゴカードに存在するかチェック
+    for number in selected_numbers:
+        if number == 0:
+            if (check_rows(bingo_card) or
+                check_columns(bingo_card) or
+                check_diagonal1(bingo_card) or
+                check_diagonal2(bingo_card)):
+                bingo_count += 1
+
+    return bingo_count
+
+# 入力を受け取る
+N, K = map(int, input().split())
+bingo_card = [list(map(int, input().split())) for _ in range(N)]
+selected_numbers = list(map(int, input().split()))
+
+# ビンゴの数をチェックして結果を出力
+bingo_count = check_bingo(bingo_card, selected_numbers)
+print(bingo_count)
+
 # B146
 # B147
 # B148
