@@ -786,6 +786,40 @@ STEP: 1 と STEP: 2 の組み合わせで解くことができます。
 '''
 
 step4　五目並べ(縦)
+# utf-8
+board = []
+result = "D"
+
+for i in range(5):
+    board.append(input())
+
+for i in range(5):
+    pivot = ""
+    count = 0
+
+    for j in range(5):
+        stone = board[j][i]
+
+        if pivot == "":
+            pivot = stone
+
+        if stone != "." and stone == pivot:
+            count += 1
+        else:
+            break
+
+    if count == 5:
+        result = pivot
+        break
+
+
+print(result)
+'''
+盤面を、各マスを board[行][列] で参照できる形で二次元配列 board に格納します。
+ある列について、各行の O と X の出現回数を数え、5 回ならばその記号が縦に揃っているということになります。その時、その記号が勝者の記号です。
+全ての列について、全ての行の値を確認するので、2 重ループを記述します。
+'''
+
 step5　五目並べ(斜め)
 final　五目並べ
 # utf-8
