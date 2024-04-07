@@ -821,6 +821,49 @@ print(result)
 '''
 
 step5　五目並べ(斜め)
+# utf-8
+board = []
+result = "D"
+direction = [True, False]
+
+for i in range(5):
+    board.append(input())
+
+for reverse in direction:
+    pivot = ""
+    count = 0
+
+    if reverse:
+        j = 0
+        j_diff = 1
+    else:
+        j = 4
+        j_diff = -1
+
+    for i in range(5):
+
+        stone = board[i][j]
+
+        if pivot == "":
+            pivot = stone
+
+        if stone != "." and stone == pivot:
+            count += 1
+
+        j = j + j_diff
+
+    if count == 5:
+        result = pivot
+        break
+
+print(result)
+'''
+盤面は、前問と同様に board[行][列] で参照できる形で連想配列に格納します。
+斜めで記号が揃うパターンは、0 から 4 までの i に対して board[i][i] が同じ記号か、board[i][4 - i] が同じ記号の 2 パターンです。
+board[i][i] が同じ記号なのは左上から右下まで一直線に揃うパターン、board[i][4 - i] が同じ記号なのは右上から左下まで一直線に揃うパターンです。
+この 2 パターンを調べれば良いです。
+'''
+
 final　五目並べ
 # utf-8
 board = []
