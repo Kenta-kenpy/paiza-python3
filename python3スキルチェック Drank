@@ -2322,7 +2322,11 @@ print(days_needed)
 最後に、print(days_needed)を使って必要な日数を出力します。
 '''
 
-# D286
+# D286  テストの採点
+# utf-8
+X,T = map(int,input().split())
+print((60＊T)//X)
+
 # D287
 # D288
 # D289
