@@ -968,6 +968,22 @@ else:
 
 <占い>
 step1　連想配列（辞書）を使う
+# utf-8
+user2blood = {
+    "Kyoko": "B",
+    "Rio": "O",
+    "Tsubame": "AB",
+    "KurodaSensei": "A",
+    "NekoSensei": "A",
+}
+
+for user, blood in user2blood.items():
+    print(user + " " + blood)
+'''
+各言語に組み込まれている連想配列 (辞書) が、挿入順を記憶しており、挿入した順に出力することができる場合は、問題文の順に連想配列 (辞書) を定義し、foreach 文などで出力すれば OK です。
+挿入順を記憶しない言語を用いて解く場合は、順序を他の配列によって記憶するなどの工夫が必要です。
+'''
+
 step2　ユーザーの血液型のデータ処理
 step3　1人の血液型
 step4　1つの血液型を占う
