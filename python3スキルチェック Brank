@@ -7903,7 +7903,7 @@ selected_numbers = list(map(int, input().split()))
 bingo_count = check_bingo(bingo_card, selected_numbers)
 print(bingo_count)
 
-# B146
+# B146 最少攻撃回数
 # B147
 # B148
 # B149
