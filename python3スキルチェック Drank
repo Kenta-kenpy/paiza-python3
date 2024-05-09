@@ -2327,9 +2327,9 @@ print(days_needed)
 X,T = map(int,input().split())
 print((60＊T)//X)
 
-# D287
-# D288
-# D289
+# D287 安いお弁当
+# D288 バッテリー残量
+# D289 花の種
 # D290
 # D291
 # D292
