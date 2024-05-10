@@ -2344,6 +2344,15 @@ else:
     print(n)
 
 # D289 花の種
+# utf-8
+'''
+必要な種の個数 n と種 1 つあたりの値段 p
+'''
+
+n = int(input())
+p = int(input())
+print(n*p)
+
 # D290
 # D291
 # D292
