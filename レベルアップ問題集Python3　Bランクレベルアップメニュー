@@ -1021,6 +1021,25 @@ for user, blood in dictionary.items():
 '''
 
 step4　1つの血液型を占う
+# utf-8
+import sys
+
+target = input()
+n = int(input())
+dictionary = {}
+
+for i in range(n):
+    tmp = input().split()
+    dictionary[tmp[0]] = tmp[1]
+
+for blood, fortune in dictionary.items():
+    if blood == target:
+        print(fortune)
+        break
+'''
+血液型をキー、占い結果を値とした連想配列を作成します。
+入力から血液型を受け取り、その血液型に対応する占い結果を、作成した連想配列から取り出して出力します。
+'''
 step5　1人の占い結果
 final　占い
 # utf-8
