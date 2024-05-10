@@ -2325,7 +2325,7 @@ print(days_needed)
 # D286  テストの採点
 # utf-8
 X,T = map(int,input().split())
-print((60＊T)//X)
+print((60*T)//X)
 
 # D287 安いお弁当
 # utf-8
