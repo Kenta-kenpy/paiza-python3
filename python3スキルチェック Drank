@@ -2328,7 +2328,21 @@ X,T = map(int,input().split())
 print((60＊T)//X)
 
 # D287 安いお弁当
+# utf-8
+A,B = map(int,input().split())
+if (A < (B*7)//10):
+    print(A)
+else:
+    print((B*7)//10)
+
 # D288 バッテリー残量
+# utf-8
+n = int(input())
+if(n <= 10):
+    print("low")
+else:
+    print(n)
+
 # D289 花の種
 # D290
 # D291
