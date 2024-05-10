@@ -4327,7 +4327,9 @@ decrypt_message 関数では、与えられたメッセージを文字ごとに�
 解読されたメッセージが完成したら、それを返します。
 '''
 
-# C147　合言葉　◆
+# C147　合言葉
+# utf-8
+
 # C148　戦闘シミュレーション
 # utf-8
 def simulate_level_changes(N, L, opponents):
