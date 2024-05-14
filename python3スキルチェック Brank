@@ -7903,7 +7903,52 @@ selected_numbers = list(map(int, input().split()))
 bingo_count = check_bingo(bingo_card, selected_numbers)
 print(bingo_count)
 
-# B146 最少攻撃回数
+# B146 最少攻撃回数  
+# utf-8 ※テストケース通過せず　80点
+def min_attacks(A, B, N, h):
+    # モンスターのHPを降順にソート
+    h.sort(reverse=True)
+    
+    # 最小攻撃回数を初期化
+    attack_count = 0
+
+    while h and h[0] > 0:
+        # 現在の最もHPが高いモンスターのHP
+        max_hp = h[0]
+
+        if max_hp <= B:
+            # すべてのモンスターのHPが全体攻撃一回で倒せる場合
+            attack_count += 1
+            break
+
+        # 必要な全体攻撃回数
+        whole_attacks_needed = (max_hp + B - 1) // B
+        
+        # 全体攻撃を適用
+        attack_count += whole_attacks_needed
+        h = [max(0, hp - whole_attacks_needed * B) for hp in h]
+        h.sort(reverse=True)
+    
+    # 残りのHPに対して単体攻撃を適用
+    for hp in h:
+        if hp > 0:
+            attack_count += (hp + A - 1) // A
+
+    return attack_count
+
+# 入力の読み込み
+import sys
+input = sys.stdin.read
+data = input().split()
+A = int(data[0])
+B = int(data[1])
+N = int(data[2])
+h = list(map(int, data[3:]))
+
+# 最小攻撃回数の計算
+result = min_attacks(A, B, N, h)
+print(result)
+
 # B147
 # B148
 # B149
