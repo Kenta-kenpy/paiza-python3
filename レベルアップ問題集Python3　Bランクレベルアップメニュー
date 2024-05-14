@@ -1041,6 +1041,38 @@ for blood, fortune in dictionary.items():
 入力から血液型を受け取り、その血液型に対応する占い結果を、作成した連想配列から取り出して出力します。
 '''
 step5　1人の占い結果
+# utf-8
+target = input()
+
+n = int(input())
+users = {}
+for i in range(n):
+    tmp = input().split()
+
+    users[tmp[0]] = tmp[1]
+
+m = int(input())
+fortunes = {}
+for i in range(m):
+    tmp = input().split()
+
+    fortunes[tmp[0]] = tmp[1]
+
+user_blood = None
+for user, blood in users.items():
+    if user == target:
+        user_blood = blood
+        break
+
+for blood, fortune in fortunes.items():
+    if blood == user_blood:
+        print(fortune)
+        break
+'''
+ユーザー名と血液型を対応させる連想配列 userToBlood と、血液型と占い型を対応させる連想配列 bloodToFortune の 2 つを作成します。
+ユーザー名に対応する占い型を取得するためには、まず userToBlood からユーザー名に対応する血液型を取得し、
+次に bloodToFortune から取得した血液型に対応する占い結果を取得します。
+'''
 final　占い
 # utf-8
 n = int(input())
