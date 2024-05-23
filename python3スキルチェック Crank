@@ -4417,7 +4417,47 @@ simulate_level_changes関数を呼び出し、引数としてN、L、およびop
 
 # C149 大文字小文字
 # utf-8
+import sys
 
+# 標準入力からデータを読み取る
+base_string = input().strip()  # 校正ルール表の読み取り
+target_string = input().strip()  # 校正前の文字列の読み取り
+
+# 文字列をリストに変換して処理する（文字列はイミュータブルなので、リストに変換すると処理が簡単になる）
+target_list = list(target_string)
+count = len(target_list)
+
+# 校正ルールに従って文字列を変換するループ
+for i in range(count):
+    for j in range(26):
+        lower_string = target_list[i].lower()  # 現在の文字を小文字に変換
+        upper_string = target_list[i].upper()  # 現在の文字を大文字に変換
+        
+        # 校正ルールに従って文字を置き換える
+        if base_string[j] != target_list[i] and (base_string[j].lower() == lower_string or base_string[j].upper() == upper_string):
+            target_list[i] = base_string[j]  # 文字の置き換え
+            break  # 内側のループを終了
+
+# リストを文字列に戻して出力する
+corrected_string = ''.join(target_list)
+print(corrected_string)
+'''
+データの読み取り:
+base_stringには校正ルール表が、target_stringには校正前の文字列が格納されます。
+strip()を使用して、末尾の改行や余計な空白を取り除きます。
+
+文字列をリストに変換:
+文字列はイミュータブル（変更不可）なので、変更可能なリストに変換します。
+
+校正ルールに従った変換:
+外側のループでtarget_listの各文字を順に処理します。
+内側のループでbase_stringの各文字と照合します。
+lower_stringとupper_stringを使用して、小文字と大文字をそれぞれ変換します。
+条件に合う文字が見つかれば、target_listの対応する位置をbase_stringの文字に置き換え、内側のループを終了します（break）。
+
+リストを文字列に戻して出力:
+target_listを文字列に結合し、結果を出力します。
+'''
 
 # C150
 --------------------------------------------- C151　※欠番 ◆
