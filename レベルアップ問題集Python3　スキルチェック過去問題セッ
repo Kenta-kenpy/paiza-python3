@@ -23,6 +23,21 @@ for word in word_list:
 '''
 
 step3 「単語のカウント」を解くために:part2
+# utf-8
+word_list = input().split()
+if "red" in word_list:
+    print("Yes")
+else:
+    print("No")
+'''
+入力された単語を配列やリストに格納します。
+　　配列やリストの名前に特に決まりはありませんが、この解説では、単語(word)の一覧(lsit)であることを表現する意図を持ってword_listと名付けています。
+演算子などを使って、配列やリストの中に red が含まれているか調べます。
+結果に応じてYesかNoを出力します。
+
+Python では in 演算子を使うことで、リストの中に特定の値が含まれているか否か調べることができます。
+'''
+
 step4 「単語のカウント」を解くために:part3
 step5 「単語のカウント」を解くために:part4
 step6 「単語のカウント」を解くために:part5
