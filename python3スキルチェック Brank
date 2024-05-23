@@ -7949,7 +7949,9 @@ h = list(map(int, data[3:]))
 result = min_attacks(A, B, N, h)
 print(result)
 
-# B147
+# B147 スライムの王
+
+
 # B148
 # B149
 # B150
