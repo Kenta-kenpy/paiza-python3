@@ -2353,7 +2353,7 @@ n = int(input())
 p = int(input())
 print(n*p)
 
-# D290
+# D290 表示される文字
 # D291
 # D292
 # D293
