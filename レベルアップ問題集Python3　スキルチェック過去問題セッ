@@ -39,6 +39,25 @@ Python では in 演算子を使うことで、リストの中に特定の値が
 '''
 
 step4 「単語のカウント」を解くために:part3
+# utf-8
+word_list = input().split()
+order = []
+
+for word in word_list:
+    if word in order:
+        print("already_been")
+    else:
+        order.append(word)
+        print(word)
+'''
+orderという配列やリストを用意します。
+　　入力された単語を入力された順番(order)で格納していくので、orderと名付けています。
+条件分岐を用いて以下のような処理をします
+　　もし、与えられた単語が既にorderに含まれていれば、その単語は既出なので、already_beenという文字列を出力します。
+　　もし、与えられた単語がまだorderに含まれていなければ、その単語を出力します。
+　　この時、次に同じ単語が入力された時に正しく分岐されるよう、入力された単語をorderに追加します。
+'''
+
 step5 「単語のカウント」を解くために:part4
 step6 「単語のカウント」を解くために:part5
 step7 「単語のカウント」を解くために:part6
