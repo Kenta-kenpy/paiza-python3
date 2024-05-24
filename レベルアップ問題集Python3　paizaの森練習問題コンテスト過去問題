@@ -1157,10 +1157,71 @@ two_third = r - (r - l) / 3
 print(f"{one_third} {two_third}")
 
 # Q.　割り切れる数の個数
+# utf-8
+import math
+
+
+def calc(x):
+    return x // 2 + x // 3 - x // 6
+
+
+a, b = map(int, input().split())
+
+print(calc(b) - calc(a - 1))
+
 # Q.　パイプを切る
+# utf-8
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+pipe_count = 0
+for i in range(n):
+    pipe_count += a[i] // k
+
+print(pipe_count)
+
 # Q.　好みのピザ
+# utf-8
+n, m = map(int, input().split())
+a = list(map(int, input().split()))
+
+a = set(a)
+print(len(a))
+
 # Q.　家計の収支
+# utf-8
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
+ans = k
+for i in range(n):
+    ans += a[i] - b[i]
+print(ans)
+
 # Q.　野球世界大会 1 次ラウンドの順位
+# utf-8
+from collections import defaultdict
+
+# 参加国の入力
+countries = [input() for i in range(5)]
+
+# 勝数の計算
+wins = defaultdict(int)
+for i in range(10):
+    game, result = input().split()
+    team1, team2 = game.split("-")
+
+    if result == "1":
+        wins[team1] += 1
+    else:
+        wins[team2] += 1
+
+# 順位の決定
+ranking = sorted(wins.items(), key=lambda x: (-x[1], x[0]))
+
+# 上位 2 チームの出力
+print(ranking[0][0])
+print(ranking[1][0])
 
 # paizaの森練習問題コンテスト過去問題15　★
 
