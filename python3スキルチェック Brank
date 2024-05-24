@@ -3639,214 +3639,66 @@ queen 関数を呼び出して、クイーンの配置を開始します。
 '''
 --------------------------------------------- B071　※欠番 ◆
 # B071 ダンベルトレーニング
-# utf-8 ※テストケース通過せず　80点　境界値で不一致
+# utf-8
+import sys
 from itertools import combinations
 
-def closest_weight(N, M, weights):
-    result = 0  # 初期値を0に設定
-    for r in range(N+1):
-        # おもりの組み合わせを生成
+def main():
+    input = sys.stdin.read
+    data = input().strip().split()
+    
+    # おもりの数と目標重さを読み取る
+    N = int(data[0])
+    M = int(data[1])
+    
+    # 各おもりの重さをリストに格納する
+    weights = list(map(int, data[2:2 + N]))
+
+    closest_weight = 0
+
+    # すべての可能な部分集合の組み合わせを試す
+    for r in range(1, N + 1):
         for combo in combinations(weights, r):
             total_weight = sum(combo)
-            # 重さが M 以下であり、かつ M にもっとも近く、かつ偶数の場合の結果を更新
-            if total_weight <= M and abs(M - total_weight) < abs(M - result) and total_weight % 2 == 0:
-                result = total_weight
-    return result
-
-# 入力処理
-N, M = map(int, input().split())
-weights = [int(input()) for _ in range(N)]
-
-# 結果を出力
-output_result = closest_weight(N, M, weights)
-print(output_result)
-
-# utf-8　※テストケース80点　境界値で不一致
-import itertools
-
-def find_nearest_weight(N, weights, M):
-    nearest_weight = float('inf')  # Mに最も近い重さを表す変数を無限大で初期化
-
-    # おもりの組み合わせをすべて試す
-    for r in range(1, N+1):
-        combinations = itertools.combinations(weights, r)  # おもりの組み合わせを生成
-
-        for combination in combinations:
-            total_weight = sum(combination)  # 組み合わせの合計重さ
-
-            # ルール1: ダンベルの左右のバーの重さが釣り合うこと
+            # 合計重さが偶数の場合のみ検討
             if total_weight % 2 == 0:
+                half_weight = total_weight // 2
+                # 左右に分けて重さが等しくなるか確認
+                if can_partition(combo, half_weight):
+                    # 合計重さがM以下なら更新
+                    if total_weight <= M:
+                        closest_weight = max(closest_weight, total_weight)
 
-                # ルール2: バーの両端につけるおもりの重さの合計が M kg 以下であること
-                if total_weight <= M:
+    # 最も近い重さを出力
+    print(closest_weight)
 
-                    # ルール3: 特殊な場合の例外処理
-                    if (total_weight == M) or (total_weight < M and total_weight % 2 == 0):
-                        # nearest_weightを更新する
-                        if abs(M - total_weight) < abs(M - nearest_weight):
-                            nearest_weight = total_weight
+def can_partition(weights, target):
+    # 動的計画法で部分和問題を解く
+    dp = [False] * (target + 1)
+    dp[0] = True  # 初期状態: 0kgは常に達成可能
 
-    if nearest_weight == float('inf'):  # 条件を満たす組み合わせが存在しない場合
-        return 0
-    else:
-        return nearest_weight
+    for weight in weights:
+        # 現在の重さから逆順にチェック
+        for j in range(target, weight - 1, -1):
+            dp[j] = dp[j] or dp[j - weight]
 
-# 入力を受け取る
-N, M = map(int, input().split())
+    return dp[target]
 
-# バリデーションチェック
-if not (1 <= N <= 10):
-    print("Nの値が範囲外です")
-    exit()
-if not (1 <= M <= 100):
-    print("Mの値が範囲外です")
-    exit()
-
-weights = []
-for _ in range(N):
-    weight = int(input())
-    if not (1 <= weight <= 10):
-        print("おもりの重さが範囲外です")
-        exit()
-    weights.append(weight)
-
-nearest = find_nearest_weight(N, weights, M)
-print(nearest)
-
-# utf-8　　※テストケース80点　境界値で不一致
-def closest_weight(N, M, weights):
-    max_sum = 0  # M以下の最大の偶数を保持する変数
-
-    # M以下の重さを降順に調べる
-    for i in range(M, -1, -1):
-        # 偶数のみを処理
-        if i % 2 == 0:
-            # バーの左側の重さの合計を計算
-            left_sum = i // 2
-
-            # バーの右側の重さの合計を計算
-            right_sum = i // 2
-
-            # おもりを組み合わせて追加していく
-            if can_balance(left_sum, right_sum, weights):
-                max_sum = i
-                break
-
-    return max_sum
-
-def can_balance(left_sum, right_sum, weights):
-    # 再帰的におもりの組み合わせを探索する関数
-    def dfs(idx, left_sum, right_sum):
-        if left_sum == 0 and right_sum == 0:
-            return True
-        if idx == len(weights):
-            return False
-
-        # バーの左側におもりを追加
-        if left_sum >= weights[idx] and dfs(idx + 1, left_sum - weights[idx], right_sum):
-            return True
-
-        # バーの右側におもりを追加
-        if right_sum >= weights[idx] and dfs(idx + 1, left_sum, right_sum - weights[idx]):
-            return True
-
-        # おもりを追加しない場合
-        if dfs(idx + 1, left_sum, right_sum):
-            return True
-
-        return False
-
-    return dfs(0, left_sum, right_sum)
-
-# 入力を受け取る
-N, M = map(int, input().split())
-weights = []
-for _ in range(N):
-    weights.append(int(input()))
-
-# 奇数個のおもりがある場合は出力を0とする
-if N % 2 != 0:
-    print(0)
-else:
-    # 関数を呼び出して結果を出力
-    result = closest_weight(N, M, weights)
-    print(result)
-
-# utf-8　※テストケース80点　境界値は満たす 数学の組み合わせアプローチ
-def closest_even_weight(N, M, weights):
-    # Mから1ずつ減少していき、おもりの組み合わせで実現できる最大の偶数を求める
-    for current_weight in range(M, -1, -1):
-        for i in range(1 << N):
-            total_weight = 0
-            for j in range(N):
-                if i & (1 << j):
-                    total_weight += weights[j]
-            if total_weight == current_weight and total_weight % 2 == 0:
-                return current_weight
-    
-    # 実現できる偶数が見つからない場合は-1を返す
-    return -1
-
-# 入力の読み込み
-N, M = map(int, input().split())
-weights = [int(input()) for _ in range(N)]
-
-# 結果の出力
-result = closest_even_weight(N, M, weights)
-print(result)
-
-# utf-8　※テストケース80点　境界値で不一致
-from itertools import combinations
-
-def closest_weight_sum(N, M, weights):
-    closest_sum = 0
-
-    # おもりの組み合わせを考える
-    for r in range(1, N + 1):
-        for combination in combinations(weights, r):
-            current_sum = sum(combination)
-
-            # 現在の合計が M 以下かつ偶数かつ最大のものであれば更新
-            if current_sum <= M and current_sum % 2 == 0 and current_sum > closest_sum:
-                closest_sum = current_sum
-
-    return closest_sum
-
-# 入力を受け取る
-N, M = map(int, input().split())
-weights = [int(input()) for _ in range(N)]
-
-# 出力
-result = closest_weight_sum(N, M, weights)
-print(result)
-
-# utf-8 ※テストケース80点　境界値通過せず 数学の組み合わせアプローチ
-from itertools import combinations
-
-# 釣り合うおもりの組み合わせを見つける関数
-def find_balanced_combinations(weights):
-    balanced_combinations = []
-    for i in range(1, len(weights) + 1):
-        for combo in combinations(weights, i):
-            if sum(combo) % 2 == 0:  # 左右の重さが釣り合うかを確認
-                balanced_combinations.append(combo)
-    return balanced_combinations
-
-# 入力の取得
-N, M = map(int, input().split())
-weights = [int(input()) for _ in range(N)]
-
-# 釣り合うおもりの組み合わせを探す
-balanced_combinations = find_balanced_combinations(weights)
-
-# M以下で最大の重さの組み合わせを見つける
-max_weight = 0
-for combo in balanced_combinations:
-    if sum(combo) <= M:
-        max_weight = max(max_weight, sum(combo))
-
-# 結果の出力
-print(max_weight)
+if __name__ == "__main__":
+    main()
+'''
+入力の読み取り:
+標準入力からデータを読み取って、最初の2つの値をおもりの数 N と目標重さ M に、それ以降の値を各おもりの重さのリスト weights に格納します。
+全ての部分集合の組み合わせを試す:
+combinations を使って、おもりの全ての部分集合を生成します。
+部分集合の合計重さ total_weight が偶数の場合にのみチェックします。
+部分集合の重さが等しいか確認する:
+can_partition 関数を使って、左右に分けて重さが等しくなるかを確認します。
+M kg 以下で最もM kgに近い重量を見つける:
+total_weight が M kg 以下であれば、closest_weight を更新します。
+動的計画法による部分和問題の解決:
+can_partition 関数では、動的計画法を用いて、与えられた部分集合が特定の重さに分割可能かどうかを確認します。
+'''
 
 # B072 反転スイッチ
 # utf-8
