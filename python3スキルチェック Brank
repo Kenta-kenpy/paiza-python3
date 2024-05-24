@@ -7949,8 +7949,42 @@ h = list(map(int, data[3:]))
 result = min_attacks(A, B, N, h)
 print(result)
 
-# B147 スライムの王
+# B147 スライムの王　※入力例3でNG
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+    
+    N = int(data[0])
+    X = int(data[1])
+    slimes = list(map(int, data[2:]))
+    
+    # スライムのリストを昇順にソート
+    slimes.sort()
+    
+    count = 0
+    
+    # 最も大きいスライムの大きさ
+    max_slime_size = max(slimes)
+    
+    while slimes and X < max_slime_size:
+        for i in range(len(slimes)):
+            if slimes[i] <= X:
+                X += slimes.pop(i)
+                count += 1
+                break
+        else:
+            # 取り込めるスライムがない場合
+            break
+    
+    if X >= max_slime_size:
+        print(count)
+    else:
+        print(-1)
 
+if __name__ == "__main__":
+    main()
 
 # B148
 # B149
