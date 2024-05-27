@@ -5331,111 +5331,80 @@ print(result)
 '''
 
 # B097 カウンター席
-※入力例1でNG
 # utf-8
-def calculate_total_time(seats, groups):
-    # グループを客数の昇順でソートする
-    sorted_groups = sorted(groups, key=lambda x: x[0])
+def ramen_shop_simulation():
+    import sys
+    input = sys.stdin.read
+    data = input().strip().split()
     
-    # 各グループに席を割り当てる
-    last_seat = 0
-    total_time = 0
+    # カウンター席の数とグループの数を読み取る
+    idx = 0
+    N = int(data[idx])
+    idx += 1
+    M = int(data[idx])
+    idx += 1
     
-    for group in sorted_groups:
-        group_size = group[0]
-        group_time = max(group[1:])  # グループの最後の客が食事を終えるまでの時間
-        
-        # 空いている席の中で一番左に座ることを試みる
-        for i in range(last_seat, len(seats) - group_size + 1):
-            if all(seats[i+j] == 0 for j in range(group_size)):
-                # 席の割り当てを行う
-                for j in range(group_size):
-                    seats[i+j] = 1
-                last_seat = i + group_size
-                
-                # 所要時間を更新する
-                total_time += group_time
-                break
-        else:
-            # 座れる席がない場合は、次の席を試す
-            last_seat += 1
+    groups = []
     
-    return total_time
-
-# 入力の読み込み
-N = int(input())  # カウンター席の数
-M = int(input())  # グループ数
-groups = []
-for _ in range(M):
-    group_info = list(map(int, input().split()))
-    groups.append(group_info)
-
-# カウンター席の初期状態（0: 空席、1: 座席使用中）
-seats = [0] * N
-
-# 全体の所要時間を計算する
-total_time = calculate_total_time(seats, groups)
-
-# 結果を出力する
-print(total_time)
-
-※入力例2でNG
-# utf-8
-def calculate_total_time(N, M, groups):
-    total_time = 0
-    seats = [0] * N  # 初期状態では席は空
-
-    for group_info in groups:
-        group_size, *group_eating_times = map(int, group_info)
-
-        # グループの人数と時間のバリデーションチェック
-        if not (1 <= group_size <= min(N, 10)):
-            raise ValueError("Invalid group size")
-        if not all(1 <= t <= 10 for t in group_eating_times):
-            raise ValueError("Invalid eating time")
-
-        # グループが座れる場所を探す
-        available_seats = []
-        for i in range(N - group_size + 1):
-            if all(seats[i + j] == 0 for j in range(group_size)):
-                available_seats.append(i)
-
-        if available_seats:
-            # グループを座らせる
-            seat_index = available_seats[0]
-            for j in range(group_size):
-                seats[seat_index + j] = 1
-            if group_eating_times:
-                total_time += max(group_eating_times)
-        else:
-            # 座らせる場所がない場合、左端から順番に座らせる
-            for i in range(N):
-                if seats[i] == 0:
-                    seats[i] = 1
-                    if group_eating_times:
-                        total_time += max(group_eating_times)
+    # 各グループのデータを読み取る
+    for _ in range(M):
+        G_i = int(data[idx])
+        idx += 1
+        times = [int(data[idx + j]) for j in range(G_i)]
+        idx += G_i
+        groups.append((G_i, times))
+    
+    # 座席の初期化（-1 は空席を表す）
+    seats = [-1] * N
+    
+    # 現在の時間
+    current_time = 0
+    
+    # 各グループを処理する
+    for G_i, times in groups:
+        # 現在のグループに十分な空席が見つかるまで待つ
+        while True:
+            # G_i 連続する空席のセグメントを探す
+            found = False
+            for start in range(N - G_i + 1):
+                if all(seats[start + i] == -1 for i in range(G_i)):
+                    # グループをこれらの席に配置する
+                    for i in range(G_i):
+                        seats[start + i] = times[i] + current_time
+                    found = True
                     break
+            
+            if found:
+                break
+            
+            # 次のイベント（最短完食時間）まで時間を進める
+            current_time = min([seat for seat in seats if seat != -1])
+            # 現在の時間で完食した席を空席に戻す
+            seats = [-1 if seat == current_time else seat for seat in seats]
+    
+    # 全てのグループが席に座った後、最大の完食時間を求める
+    final_time = max(seats)
+    
+    print(final_time)
 
-    return total_time
-
-
-# 入力の読み込み
-N = int(input())
-M = int(input())
-
-# NとMのバリデーションチェック
-if not (1 <= N <= 10):
-    raise ValueError("Invalid counter seats")
-if not (1 <= M <= 10):
-    raise ValueError("Invalid number of groups")
-
-groups = []
-for _ in range(M):
-    group_info = input().split()
-    groups.append(list(map(int, group_info[1:])))
-
-total_time = calculate_total_time(N, M, groups)
-print(total_time)
+# この行はスクリプトを直接実行する際のテスト用です
+if __name__ == "__main__":
+    ramen_shop_simulation()
+'''
+入力の読み取り：input()で全体の入力を読み取り、データをスペースで分割します。
+初期設定：座席の数とグループの数を読み取ります。各グループのデータをリストに格納します。
+座席管理：座席の状況をリストで管理し、初期値はすべて-1（空席）とします。
+グループ配置：各グループについて、連続する空席が見つかるまで時間を進めます。連続する空席が見つかったら、そのグループのメンバーの完食時間を設定します。
+時間更新：全グループが座席に座った後、全員の退店時間（完食時間）を求め、その最大値を出力します。
+sys.stdin.readで標準入力全体を一度に読み取り、スペースで分割してdataリストに格納します。このリストには、カウンター席の数、グループの数、各グループの人数とそのメンバーが完食するまでの時間が順番に含まれています。
+dataリストから最初の2つの要素を取り出し、カウンター席の数Nとグループの数Mを取得します。idxは現在の読み取り位置を示すインデックスです。
+グループごとに、人数G_iと各メンバーの完食時間を読み取ります。これらの情報はタプル(G_i, times)としてリストgroupsに格納されます。
+カウンター席の状態をリストseatsで管理します。初期状態ではすべて-1とし、これは空席を示します。
+シミュレーションの現在の時間をcurrent_timeとして初期化します。
+各グループについて、全員が横並びで座れる連続した空席を探します。見つかった場合、そのグループの各メンバーの完食時間をseatsに記録します。もし見つからない場合、現在の時間を最短の完食時間に進め、該当する席を空席に戻します。
+すべてのグループが座席に座った後、seatsリストの最大値（最も遅く完食する時間）を求めます。
+最終的に、全員が完食するまでにかかった時間final_timeを出力します。
+'''
 
 # B098 バズの検出
 # utf-8
