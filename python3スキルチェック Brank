@@ -6796,42 +6796,73 @@ print(max_similarity)
 このプログラムは、与えられた名前のリストに対して、類似度の最大値を計算する効率的な方法です。ただし、名前の数が増えると計算時間が増えるため、入力の名前の数が大きい場合は注意が必要です。
 '''
 
-# B125 工場のボトルネック ※入力例2でNG
+# B125 工場のボトルネック
 # utf-8
-import sys
+def find_bottleneck():
+    import sys
+    input = sys.stdin.read
+    
+    # 入力データを読み取り、スペースで分割
+    data = input().split()
+    
+    # レーンの長さ L と作業記録の数 Q を取得
+    L = int(data[0])
+    Q = int(data[1])
+    
+    # 作業記録を格納するリスト
+    tasks = []
+    for i in range(Q):
+        v_i = int(data[2 + 2 * i])
+        t_i = int(data[2 + 2 * i + 1])
+        tasks.append((v_i, t_i))
+    
+    # 商品の到着時間を計算して格納するリスト
+    arrival_times = []
+    for v, t in tasks:
+        if v > 0:
+            # 到着時間を計算
+            arrival_time = t + L / v
+            arrival_times.append((arrival_time, t))
+    
+    # 到着時間でソート
+    arrival_times.sort()
+    
+    # 最大ボトルネック時間を記録する変数
+    max_bottleneck = 0
+    
+    # 作業記録を処理
+    for v, t in tasks:
+        if v == 0:  # アームのパッキングタイミング
+            pack_time = t
+            # 到着した商品を順次処理
+            while arrival_times and arrival_times[0][0] <= pack_time:
+                arrival, start_time = arrival_times.pop(0)
+                # 運搬開始からパッキング完了までの時間を計算
+                bottleneck = pack_time - start_time
+                # 最大ボトルネック時間を更新
+                if bottleneck > max_bottleneck:
+                    max_bottleneck = bottleneck
+    
+    # 最大ボトルネック時間を出力
+    print(int(max_bottleneck))
 
-def find_bottleneck(work_records, lane_length):
-    max_time = 0
-    robot_departure_time = 0
-
-    for record in work_records:
-        robot_speed, time = record
-
-        if robot_speed > 0:
-            arm_arrival_time = time + (lane_length / robot_speed)
-            packing_time = arm_arrival_time - robot_departure_time
-
-            if packing_time > max_time:
-                max_time = packing_time
-
-        else:
-            robot_departure_time = time
-
-    return int(max_time)  # ボトルネックを整数に変換して返す
-
-# 入力の読み込み
-line = input().strip()
-lane_length, num_records = map(int, line.split())
-
-work_records = []
-for _ in range(num_records):
-    line = input().strip()
-    robot_speed, time = map(int, line.split())
-    work_records.append([robot_speed, time])
-
-# ボトルネックの計算
-bottleneck = find_bottleneck(work_records, lane_length)
-print(bottleneck)
+# 標準入力からデータを受け取って実行
+find_bottleneck()
+'''
+このプログラムは、工場で運搬ロボットによって運ばれる商品のボトルネック時間（運搬開始からパッキング完了までの最長時間）を求めるものです。
+sys.stdin.readを使って標準入力からデータを一括で読み込みます。読み込んだデータをスペースで分割してdataリストに格納します。
+dataリストの最初の2つの要素から、レーンの長さ L と作業記録の数 Q を取得します。
+各作業記録を (速度, 時刻) のタプルとして tasks リストに格納します。
+作業記録は、速度 v_i とその作業が開始された時刻 t_i のペアです。
+商品がレーンの先頭に到達する時間を計算し、到着時間と運搬開始時間のペアを arrival_times リストに格納します。
+到着時間は 運搬開始時刻 t + (レーンの長さ L / 速度 v) で計算されます。
+到着時間を基準に arrival_times リストをソートします。これにより、先に到着した商品から順に処理できます。
+max_bottleneck はボトルネック時間を記録する変数です。
+作業記録を順に処理し、速度 v が 0 の場合はパッキングタイミングとみなします。
+パッキングタイミング pack_time より前に到着した商品を順に処理し、各商品の運搬開始からパッキング完了までの時間（ボトルネック時間）を計算します。
+計算したボトルネック時間が現時点での最大ボトルネック時間より大きければ、max_bottleneck を更新します。
+最終的に最大ボトルネック時間を整数として出力します。
+'''
 
 # B126 ダンスパーティー
 # utf-8
