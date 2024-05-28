@@ -59,6 +59,21 @@ orderという配列やリストを用意します。
 '''
 
 step5 「単語のカウント」を解くために:part4
+# utf-8
+word_list = input().split()
+order = []
+
+for word in word_list:
+    if word not in order:
+        order.append(word)
+        print(word)
+'''
+orderという配列やリストを用意します。
+　　入力された単語を入力された順番(order)で格納していくので、orderと名付けています。
+もし、与えられた単語がまだorderに含まれていなければ、その単語をorderに追加し、出力します
+　　（今回の問題では、与えられた単語が既にorderに含まれている場合にしなければならない処理は存在しません。）
+'''
+
 step6 「単語のカウント」を解くために:part5
 step7 「単語のカウント」を解くために:part6
 step8 「単語のカウント」を解くために:part7
