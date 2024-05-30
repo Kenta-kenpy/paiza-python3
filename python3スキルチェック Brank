@@ -7707,53 +7707,78 @@ print(result)
 最後に、残っているお化けが存在できる区画の数を数えます。リスト内の値が1である区画がお化けが存在できる区画であるため、1の数を合計します。
 '''
 
-# B145　ビンゴゲームの判定　※入力例全てでNG
-# utf-8 
-def check_bingo(bingo_card, selected_numbers):
-    # ビンゴの数をカウントする変数
-    bingo_count = 0
+# B145　ビンゴゲームの判定
+# utf-8
+class Bingo:
+    def __init__(self, sheet_size):
+        # ビンゴカードを初期化する
+        self.sheet = []
+        for _ in range(sheet_size):
+            # ビンゴカードの各行を入力から読み込んでリストに格納する
+            row = list(map(int, input().split()))
+            self.sheet.append(row)
 
-    # 横のラインをチェックする関数
-    def check_rows(card):
-        for row in card:
-            if all(num == 0 for num in row):
-                return True
-        return False
+    def hole(self, lottery_time):
+        # 抽選された数字を読み込む
+        lottery_numbers = list(map(int, input().split()))
+        for num in lottery_numbers:
+            # 抽選された数字がビンゴカードに存在する場合、そのマスを開ける
+            for i in range(len(self.sheet)):
+                for j in range(len(self.sheet[0])):
+                    if self.sheet[i][j] == num:
+                        self.sheet[i][j] = 0
+                        break
 
-    # 縦のラインをチェックする関数
-    def check_columns(card):
-        for col in range(len(card[0])):
-            if all(card[row][col] == 0 for row in range(len(card))):
-                return True
-        return False
+    def count(self):
+        # ビンゴの数をカウントする
+        sheet_size = len(self.sheet)
+        bingo_num = 0
 
-    # 左上から右下への斜めのラインをチェックする関数
-    def check_diagonal1(card):
-        return all(card[i][i] == 0 for i in range(len(card)))
+        # 横方向のビンゴをチェックする
+        for i in range(sheet_size):
+            if all(cell == 0 for cell in self.sheet[i]):
+                bingo_num += 1
 
-    # 右上から左下への斜めのラインをチェックする関数
-    def check_diagonal2(card):
-        return all(card[i][len(card)-1-i] == 0 for i in range(len(card)))
+        # 縦方向のビンゴをチェックする
+        for j in range(sheet_size):
+            if all(self.sheet[i][j] == 0 for i in range(sheet_size)):
+                bingo_num += 1
 
-    # 抽選された数字がビンゴカードに存在するかチェック
-    for number in selected_numbers:
-        if number == 0:
-            if (check_rows(bingo_card) or
-                check_columns(bingo_card) or
-                check_diagonal1(bingo_card) or
-                check_diagonal2(bingo_card)):
-                bingo_count += 1
+        # 斜め方向のビンゴをチェックする
+        if all(self.sheet[i][i] == 0 for i in range(sheet_size)):
+            bingo_num += 1
+        if all(self.sheet[i][sheet_size - 1 - i] == 0 for i in range(sheet_size)):
+            bingo_num += 1
 
-    return bingo_count
+        return bingo_num
 
-# 入力を受け取る
-N, K = map(int, input().split())
-bingo_card = [list(map(int, input().split())) for _ in range(N)]
-selected_numbers = list(map(int, input().split()))
 
-# ビンゴの数をチェックして結果を出力
-bingo_count = check_bingo(bingo_card, selected_numbers)
-print(bingo_count)
+def main():
+    # 入力を読み込む
+    sheet_size, lottery_time = map(int, input().split())
+    # Bingoクラスのインスタンスを作成する
+    bingo = Bingo(sheet_size)
+    # 抽選を実行する
+    bingo.hole(lottery_time)
+    # ビンゴの数をカウントして結果を出力する
+    bingo_num = bingo.count()
+    print(bingo_num)
+
+if __name__ == "__main__":
+    main()
+'''
+このプログラムは、与えられたビンゴカードと抽選結果を処理し、最終的なビンゴの数を計算します。
+Bingo クラスの定義:
+__init__ メソッド: ビンゴカードを初期化します。ビンゴカードは、与えられたサイズの正方形の行列であり、各マスにはランダムに数字が書かれています。ビンゴカードの情報は、与えられた入力から読み込まれます。
+hole メソッド: 抽選された数字がビンゴカードに存在する場合、そのマスを開けます。ビンゴカードは、抽選された数字と一致するマスを見つけて、そのマスの数字を0に変更します。
+count メソッド: ビンゴカードの状態からビンゴの数を計算します。ビンゴの条件は、横、縦、斜めのいずれかの方向に、すべてのマスが開けられた状態です。
+main 関数:
+入力を読み込み、必要な処理を実行します。
+入力は、ビンゴカードのサイズと抽選回数です。
+Bingo クラスのインスタンスを作成し、ビンゴカードの初期化と抽選の実行を行います。
+最後に、ビンゴの数を計算して出力します。
+これにより、与えられたビンゴカードと抽選結果から、最終的なビンゴの数が計算され、出力されます。
+'''
 
 # B146 最少攻撃回数  
 # utf-8 ※テストケース通過せず　90点
