@@ -75,6 +75,27 @@ orderという配列やリストを用意します。
 '''
 
 step6 「単語のカウント」を解くために:part5
+# utf-8
+word_list = input().split()
+order = []
+count = []
+for word in word_list:
+    if word in order:
+        count.append(1)
+    else:
+        order.append(word)
+        print(word)
+        
+for c in count:
+    print(c)
+'''
+countという配列やリストを用意します。
+　　最終的には単語の出現した回数を格納するのでcountと名付けていますが、この問題では1だけを格納します。
+もし、与えられた単語が orderに含まれていれば、count に 1 を追加します。
+もし、与えられた単語が order に含まれていなければ、その単語をorder に追加し、出力します
+ループを用いて、count の要素をひとつずつ出力します。
+'''
+
 step7 「単語のカウント」を解くために:part6
 step8 「単語のカウント」を解くために:part7
 
