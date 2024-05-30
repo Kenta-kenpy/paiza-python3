@@ -2387,7 +2387,41 @@ y = int(input())
 print(y//x)
 print(y%x)
 
-# D292
+# D292 梅雨入り
+# utf-8
+def is_tsuyu(rainfall):
+    rainy_days = 0
+    for day in rainfall:
+        if day == "Rain":
+            rainy_days += 1
+    if rainy_days >= 4:
+        return "Yes"
+    else:
+        return "No"
+
+# 入力を受け取る
+rainfall = []
+for _ in range(7):
+    day_weather = input().strip()
+    rainfall.append(day_weather)
+
+# 梅雨入りを判定して出力
+print(is_tsuyu(rainfall))
+'''
+is_tsuyu 関数:
+この関数は、引数として雨の降った日のリストを受け取り、その日数が4日以上かどうかを判定します。
+関数は、雨の日数をカウントして、4日以上ならば "Yes" を、そうでなければ "No" を返します。
+入力処理:
+7日間の天気を記録するためのリスト rainfall を作成します。
+input() 関数を使って、7行分の天気情報をユーザーから受け取り、それぞれの行を rainfall リストに追加します。
+strip() メソッドを使って、各行の末尾の改行文字を削除します。
+梅雨入りの判定:
+is_tsuyu() 関数に rainfall リストを渡して、梅雨入りを判定します。
+関数は、4日以上雨が降った場合に "Yes" を返し、そうでなければ "No" を返します。
+出力:
+判定結果を出力します。
+'''
+
 # D293
 # D294
 # D295
