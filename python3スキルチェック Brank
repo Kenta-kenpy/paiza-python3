@@ -7811,42 +7811,66 @@ def main():
 if __name__ == "__main__":
     main()
 
-# B147 スライムの王　※入力例3でNG
+# B147 スライムの王
 # utf-8
-def main():
-    import sys
-    input = sys.stdin.read
-    data = input().split()
-    
-    N = int(data[0])
-    X = int(data[1])
-    slimes = list(map(int, data[2:]))
-    
-    # スライムのリストを昇順にソート
-    slimes.sort()
-    
-    count = 0
-    
-    # 最も大きいスライムの大きさ
-    max_slime_size = max(slimes)
-    
-    while slimes and X < max_slime_size:
-        for i in range(len(slimes)):
-            if slimes[i] <= X:
-                X += slimes.pop(i)
-                count += 1
-                break
-        else:
-            # 取り込めるスライムがない場合
-            break
-    
-    if X >= max_slime_size:
-        print(count)
-    else:
-        print(-1)
+# 標準入力から入力を読み込みます
+N, X = map(int, input().split())
 
-if __name__ == "__main__":
-    main()
+# 各スライムのサイズをリストとして読み込みます
+nums = list(map(int, input().split()))
+
+# 大きい順にソートして、取り込みの効率を上げます
+nums.sort(reverse=True)
+
+# 二分探索を用いて、指定したサイズ以下のスライムを探す関数
+def left_bound(arr: list, target: int) -> int:
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = left + (right - left) // 2
+        if arr[mid] < target:
+            right = mid - 1
+        elif arr[mid] > target:
+            left = mid + 1
+        elif arr[mid] == target:
+            right = mid - 1
+    # 目標値が存在するかを確認します
+    if left < 0 or left >= len(nums):
+        return -1
+    # 見つけた左境界が目標値かどうかを確認し、見つからない場合は目標値より小さい最小のインデックスを返します
+    return left 
+
+# スライムを取り込みながら、王になるための関数
+def find_slime_king(X: int, nums: list) -> int:
+    count = 0  # 取り込んだスライムの数をカウント
+    max_size = nums[0]  # 最も大きいスライムのサイズ
+    idx = 0  # 取り込むスライムのインデックス
+    while X <= max_size:
+        # 取り込めるスライムを見つける
+        idx = left_bound(nums, X)
+        if idx == -1:  # 取り込めるスライムがない場合
+            return -1
+        else:
+            # スライムを取り込んでサイズを増やす
+            X += nums.pop(idx)
+            count += 1
+    return count
+
+# 結果を出力
+print(find_slime_king(X, nums))
+'''
+このコードは、スライムの国において、プレイヤーが他のスライムを取り込んで自分のサイズを大きくし、一番大きいスライム（王）になるために、最小限の取り込み回数を計算するものです。
+ここでは、標準入力からスライムの数 N とプレイヤーの初期サイズ X を読み込みます。また、各スライムのサイズをリスト nums に格納します。
+nums リストを降順（大きい順）にソートします。これにより、取り込むスライムを効率的に選択できます。
+関数 left_bound は、二分探索を用いて、指定された target 以下のスライムのうち、最も大きいもののインデックスを返します。具体的には、ターゲットサイズ以下のスライムの左境界（最左位置）を見つけます。
+関数 find_slime_king は、プレイヤーが一番大きいスライムになるために取り込むスライムの数を計算します。
+count は取り込んだスライムの数をカウントします。
+max_size は最も大きいスライムのサイズを格納します。
+while ループ内で、取り込めるスライムを left_bound 関数を使って見つけます。
+もし取り込めるスライムが存在しない場合（idx == -1）、-1 を返します。
+スライムを取り込むと、プレイヤーのサイズ X にそのスライムのサイズを加え、count を増やし、リストからそのスライムを削除します。
+ループを繰り返し、プレイヤーが最大のスライムになったら count を返します。
+find_slime_king 関数を呼び出して、一番大きいスライムになるための最小の取り込み回数の結果を標準出力に表示します。
+'''
 
 # B148
 # B149
