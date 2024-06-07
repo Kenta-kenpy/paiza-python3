@@ -97,7 +97,36 @@ countという配列やリストを用意します。
 '''
 
 step7 「単語のカウント」を解くために:part6
+# utf-8
+word_list = input().split()
+S = input()
+print(word_list.index(S))
+'''
+文字列 S を標準入力から受け取ります。
+word_listの中で S が登場するインデックス番号を出力します。
+'''
+
 step8 「単語のカウント」を解くために:part7
+word_list = input().split()
+order = []
+count = []
+for word in word_list:
+    if word in order:
+        count[order.index(word)] += 1
+    else:
+        count.append(1)
+        order.append(word)
+        print(word)
+for c in count:
+    print(c)
+'''
+入力から、既にorderに含まれている単語が与えられた場合、countの数を1増やします。そうすることで単語の出現回数を数えます。
+「既にorderに含まれている単語が与えられた場合」と「orderに含まれていない単語が与えられた場合」で処理を分岐させます。
+　　既にorderに含まれている単語が与えられた場合、countの数を1増やします。
+　　このとき、countの中の何番目の数字がどの単語に対応しているかを分かるようにしておく必要があります。
+　　そのため、orderの中の単語の順番と、countの中の数字の順番を対応させる必要があります。
+　　例えば、入力例1のケースでは、orderの 0 番目に "red" が保存されているので、countの 0 番目に "red" の出現回数を保存します。
+'''
 
 単語のカウント（力試し編）& final 単語のカウント
 # utf-8
