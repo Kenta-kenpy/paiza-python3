@@ -1259,7 +1259,92 @@ print(number_of_permutation)
 '''
 
 # Q.　単語のカウント
+# utf-8
+li = input().split()
+
+m = []
+k = []
+
+for i in li:
+    if i in m:
+        k[m.index(i)] += 1
+    else:
+        m.append(i)
+        k.append(1)
+
+for i in range(len(m)):
+    print(m[i], k[i])
+
 # Q.　倍数の存在
+# utf-8
+a, b, c = map(int, input().split())
+
+flag = False
+for i in range(b, c + 1):
+    if i % a == 0:
+        flag = True
+        break
+
+if flag:
+    print("Yes")
+else:
+    print("No")
+'''
+このコードは、与えられた数 a, b, c に対して、a の倍数が b 以上 c 以下の範囲に存在するかどうかを確認するものです。
+標準入力からスペース区切りで与えられた a, b, c を整数として読み込みます。
+a: 倍数の基準となる整数
+b: 範囲の開始点（この値以上）
+c: 範囲の終了点（この値以下）
+flag 変数を False に初期化します。これは、a の倍数が見つかったかどうかを記録するための変数です。
+b から c までのすべての整数 i について、以下の処理を行います。
+
+i が a の倍数かどうかを判定します (i % a == 0)。
+もし i が a の倍数であれば、flag を True に設定し、ループを終了します (break)。
+i % a == 0 という条件は、i を a で割ったときの余りが 0 であることを意味します。つまり i が a の倍数であることを意味します。
+ループが終了した後、flag の値に基づいて結果を出力します。
+
+flag が True であれば「Yes」を出力します。
+flag が False のままであれば「No」を出力します。
+'''
+
 # Q.　全員が不正答
+# utf-8
+# 入力を受け取る
+import sys
+input = sys.stdin.read
+data = input().strip().split()
+
+# 1行目のテストの問題数 n, 生徒数 m を取得
+n = int(data[0])
+m = int(data[1])
+
+# 生徒の解答データを取得
+c = []
+index = 2
+for _ in range(m):
+    c.append(list(map(int, data[index:index + n])))
+    index += n
+
+# 全員が不正答だった問題があるかをチェック
+for j in range(n):
+    all_incorrect = True
+    for i in range(m):
+        if c[i][j] == 1:
+            all_incorrect = False
+            break
+    if all_incorrect:
+        print("Yes")
+        exit()
+
+print("No")
+'''
+この問題では、与えられた生徒の解答データから、全員が不正答（0）だった問題が存在するかどうかを判定する必要があります。
+標準入力からデータを読み取ります。
+最初の行からテストの問題数 n と生徒数 m を取得します。
+その後、各生徒の解答データを2次元リスト c に格納します。
+各問題について、全ての生徒が不正答だったかどうかをチェックします。具体的には、ある問題 j について、全ての生徒 i の解答が0であるかを確認します。
+全ての生徒が不正答だった問題が見つかった場合は即座に "Yes" を出力してプログラムを終了します。
+全ての問題をチェックした結果、全員不正答だった問題が一つもなかった場合は "No" を出力します。
+'''
 
 # paizaの森練習問題コンテスト過去問題16　★
