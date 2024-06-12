@@ -7251,65 +7251,61 @@ add_line(x, masu, y, hatake_box, hatake_size): 基点 (x, y) を中心に、左�
 最後に、hatake_boxリストを使って、畑の各区画に植えられた種の個数を出力します。出力は、空白区切りで各行の種の個数を表示し、各行の末尾に改行を付け加えます。
 '''
 
-# B135 譜面チェック　※テストケース通過せず
+# B135 譜面チェック
 # utf-8
-def is_valid_measure(measure):
-    left_hand = {'La', 'Lb'}
-    right_hand = {'Ra', 'Rb'}
-
-    left_hand_used = set()
-    right_hand_used = set()
-
-    for key in measure:
-        hand = key[0:2]  # 鍵盤の左2文字を取得
-
-        if hand in left_hand:
-            if hand in left_hand_used:
-                return False
-            left_hand_used.add(hand)
-        elif hand in right_hand:
-            if hand in right_hand_used:
-                return False
-            right_hand_used.add(hand)
-        else:
-            return False
-
-    # 片手で同じ段の鍵盤を同時に押すことはできない
-    for i in range(1, 7):
-        if f'La_{i}' in left_hand_used and f'Lb_{i}' in left_hand_used:
-            return False
-        if f'Ra_{i}' in right_hand_used and f'Rb_{i}' in right_hand_used:
-            return False
-
-    # 同じ段の鍵盤でも両端を同時に押すことはできない
-    for i in [1, 6]:
-        if f'La_{i}' in left_hand_used and f'La_{6-i+1}' in left_hand_used:
-            return False
-        if f'Lb_{i}' in left_hand_used and f'Lb_{6-i+1}' in left_hand_used:
-            return False
-        if f'Ra_{i}' in right_hand_used and f'Ra_{6-i+1}' in right_hand_used:
-            return False
-        if f'Rb_{i}' in right_hand_used and f'Rb_{6-i+1}' in right_hand_used:
-            return False
-
-    return True
-
 def main():
-    n = int(input())
-    invalid_measures = []
+    import sys
+    input = sys.stdin.read
+    data = input().strip().split('\n')  # 標準入力を読み込み、改行で分割してリストに格納
 
-    for measure_number in range(1, n + 1):
-        m, *measure = input().split()
-        m = int(m)
+    N = int(data[0])  # 小節数を読み込む
+    ans = []  # 条件を満たさない小節番号を格納するリスト
 
-        if not is_valid_measure(measure):
-            invalid_measures.append(measure_number)
+    for n in range(1, N + 1):  # 各小節について処理
+        datas = data[n].split(' ')  # 小節のデータをスペースで分割
+        M = int(datas[0])  # その小節の鍵盤数
+        key = datas[1:M + 1]  # 鍵盤のリスト
+        checker = ''.join(key)  # 鍵盤を連結して一つの文字列にする
 
-    for measure_number in invalid_measures:
-        print(measure_number)
+        outcount = 0  # 制限違反のカウント
+        okline = 1  # 制限違反を許容する回数（片側の手が空いている場合）
+
+        # 両側の鍵盤を使う場合
+        if 'L' in checker and 'R' in checker:  # 'L' と 'R' の両方が含まれる場合
+            okline = 0  # 制限を許容しない
+
+        # 上下の鍵盤
+        if ('La' in checker and 'Lb' in checker) or ('Ra' in checker and 'Rb' in checker):
+            outcount += 1  # 上下の鍵盤を同時に押す場合は違反カウントを増やす
+            if outcount > okline:  # 許容範囲を超えた場合
+                ans.append(n)  # 現在の小節番号をリストに追加
+                continue  # 次の小節に進む
+
+        # 両端の鍵盤
+        if ('La_1' in checker and 'La_6' in checker) or ('Ra_1' in checker and 'Ra_6' in checker) \
+                or ('Lb_1' in checker and 'Lb_6' in checker) or ('Rb_1' in checker and 'Rb_6' in checker):
+            outcount += 1  # 両端の鍵盤を同時に押す場合は違反カウントを増やす
+            if outcount > okline:  # 許容範囲を超えた場合
+                ans.append(n)  # 現在の小節番号をリストに追加
+                continue  # 次の小節に進む
+
+    for i in ans:  # 条件を満たさない小節番号を出力
+        print(i)
 
 if __name__ == "__main__":
-    main()
+    main()  # メイン関数を呼び出し
+'''
+データの読み込みと分割: sys.stdin.readで標準入力を全て読み込み、改行で分割してリストに格納します。
+小節数の取得: 最初の要素を小節数として整数に変換します。
+条件を満たさない小節番号のリスト作成: ansリストを初期化します。
+各小節の処理: 各小節について、データをスペースで分割し、鍵盤の情報を抽出します。
+演奏制限のチェック: 鍵盤の文字列を連結し、違反条件をチェックします。
+両側の鍵盤を同時に押す場合
+上下の鍵盤を同時に押す場合
+両端の鍵盤を同時に押す場合
+違反があればリストに追加: 制限違反がある小節番号を ans に追加します。
+結果の出力: 条件を満たさない小節番号を出力します。
+'''
 
 # B136　チョコのお返し
 # utf-8
