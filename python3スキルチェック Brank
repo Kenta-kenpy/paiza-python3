@@ -6145,54 +6145,56 @@ min_difference を返して関数の実行を終了します。
 '''
 
 # B112 ◆
-# B113 2のべき連結ゲーム　（参考:2048ゲーム）※テストケース通過せず　70点
+# B113 2のべき連結ゲーム　（参考:2048ゲーム）
 # utf-8
-def insert_number(board, num, position):
-    # マスに数を挿入する関数
-    board.insert(position, num)
+def main():
+    import sys
+    input = sys.stdin.read  # 標準入力からすべての入力を読み込む関数を定義
+    data = input().split()  # 入力を空白で分割してリストに変換
+    
+    N = int(data[0])  # 最初の要素は数字の数
+    A = [int(data[i]) for i in range(1, N + 1)]  # 続くN個の要素を整数に変換してリストに格納
+    
+    ans = [0] * N  # 出力用のリストを初期化
+    list_nums = []  # 盤面の数を格納するリストを初期化
+    
+    list_nums.append(A[0])  # 最初の数を盤面に追加
+    
+    for i in range(1, N):  # 2つ目以降の数についてループ
+        inserted = False  # 数が挿入されたかどうかを追跡するフラグ
+        for x in range(len(list_nums)):  # 盤面のリストを走査
+            if list_nums[x] <= A[i]:  # 挿入する数が現在の数以下なら
+                list_nums.insert(x, A[i])  # 現在の数の前に挿入
+                ans[i] = x  # 挿入位置を記録
+                inserted = True  # 挿入フラグを立てる
+                break  # 挿入が完了したのでループを抜ける
+        if not inserted:  # もしどこにも挿入されなかったら
+            list_nums.append(A[i])  # リストの末尾に追加
+            ans[i] = len(list_nums) - 1  # 挿入位置を記録
+        
+        x = 1  # インデックスを1に設定
+        while x < len(list_nums):  # リスト内の数をチェック
+            if list_nums[x - 1] == list_nums[x]:  # 連続する同じ数があれば
+                list_nums[x - 1] *= 2  # 前の数を2倍にする
+                del list_nums[x]  # 現在の数をリストから削除
+                x = 1  # インデックスをリセットして最初からチェック
+            else:
+                x += 1  # 次のインデックスに進む
+    
+    for num in ans:  # 出力用リストを走査
+        print(num)  # 各挿入位置を出力
 
-def merge_numbers(board):
-    # 近くに同じ数があれば結合する関数
-    i = 0
-    while i < len(board) - 1:
-        if board[i] == board[i + 1]:
-            board[i] *= 2
-            del board[i + 1]
-        i += 1
-
-def place_number(board, num):
-    # 数を適切な位置に配置する関数
-    for i in range(len(board)):
-        if i == 0:
-            if num <= board[i]:
-                insert_number(board, num, i)
-                return i  # 数字を挿入した位置を返す
-        elif i < len(board) and board[i-1] < num <= board[i]:
-            insert_number(board, num, i)
-            return i  # 数字を挿入した位置を返す
-    return len(board)  # 最後に挿入した場合はリストの末尾を返す
-
-def game_strategy(numbers):
-    board = []
-    positions = []  # 各ターンで数字を入れた位置を保存するリスト
-    for num in numbers:
-        position = place_number(board, num)
-        positions.append(position)
-        merge_numbers(board)
-        while len(board) < 16:
-            board.append(2)  # マスが埋まるまで 2 を追加
-    return positions
-
-# 入力を受け取る
-N = int(input())
-input_numbers = []
-for _ in range(N):
-    num = int(input())
-    input_numbers.append(num)
-
-positions = game_strategy(input_numbers)
-for pos in positions:
-    print(pos)
+if __name__ == "__main__":
+    main()  # main関数を呼び出してプログラムを実行
+'''
+このPythonコードは、与えられた問題の条件に従って、与えられた数値を16個のマスに挿入するプログラムです。
+ここでは、与えられた数値は2の累乗の値であり、挿入される数値は左詰めされます。
+まず、プログラムは標準入力からデータを読み取ります。このデータには、最初の行にマスに挿入されるべき数の総数が与えられ、続く各行に挿入される数値が記述されています。
+次に、それぞれの数値がどの位置に挿入されるかを特定するためのアルゴリズムが適用されます。
+アルゴリズムの中心的な部分は、数値を挿入する際のループです。このループでは、挿入する数値が盤面のどの位置に挿入されるかを決定し、それに応じて挿入位置を記録します。
+挿入位置が決まった後、連続する同じ数値があればそれらを2倍にし、左詰めします。これにより、数値の連結が実現されます。
+最後に、各数値が挿入される位置のインデックスを出力します。これにより、与えられた数値がどの位置に挿入されたかが示されます。
+'''
 
 # B114 PAIZA運動会　
 # utf-8
