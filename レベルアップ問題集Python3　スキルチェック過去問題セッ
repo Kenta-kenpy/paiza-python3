@@ -390,6 +390,7 @@ M 回実行される繰り返し処理を書きます。
 
 step4 「みかんの仕分け」を解くために:part3
 step5 「みかんの仕分け」を解くために:part4
+step6 「みかんの仕分け」を解くために:part5
 step1 みかんの仕分け（力試し編）& final みかんの仕分け
 # utf-8
 N, M = [int(i) for i in input().split()]
