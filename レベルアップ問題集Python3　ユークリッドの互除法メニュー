@@ -1,0 +1,22 @@
+<拡張ユークリッドの互除法>
+step1 ユークリッドの互除法
+step2 3つ以上の整数の最大公約数
+step3 最小公倍数
+step4 ax + by = c
+final 拡張ユークリッドの互除法
+
+<意地悪すごろく>
+step1 分数
+final 意地悪すごろく
+
+<RSA暗号の基本原理>
+step1 合同式
+step2 modの演算
+step3 modの逆元
+step4 高速な累乗の計算
+final RSA暗号の基本原理
+
+<RSA暗号の作成(文字列)>
+step1 RSA暗号の解読(1文字)
+step2 RSA暗号の解読(文字列)
+final RSA暗号の作成(1文字)
