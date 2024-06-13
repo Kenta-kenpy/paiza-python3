@@ -7894,7 +7894,62 @@ while ループ内で、取り込めるスライムを left_bound 関数を使�
 find_slime_king 関数を呼び出して、一番大きいスライムになるための最小の取り込み回数の結果を標準出力に表示します。
 '''
 
-# B148
+# B148 順位決め
+# utf-8
+def calculate_ranks(scores):
+    # スコアと元のインデックスをペアにしてリストにする
+    indexed_scores = [(score, i) for i, score in enumerate(scores)]
+    
+    # スコアを降順にソート
+    indexed_scores.sort(reverse=True, key=lambda x: x[0])
+    
+    ranks = [0] * len(scores)  # 結果を格納するリスト
+    
+    # 初期の順位を1位に設定
+    current_rank = 1
+    for i, (score, original_index) in enumerate(indexed_scores):
+        # 同じスコアの参加者がいる場合の処理
+        if i > 0 and score == indexed_scores[i - 1][0]:
+            ranks[original_index] = current_rank
+        else:
+            current_rank = i + 1
+            ranks[original_index] = current_rank
+    
+    return ranks
+
+# 標準入力からデータを読み込む
+import sys
+input = sys.stdin.read
+data = input().split()
+
+N = int(data[0])
+scores = list(map(int, data[1:N + 1]))
+
+# 順位を計算
+ranks = calculate_ranks(scores)
+
+# 結果を出力
+for rank in ranks:
+    print(rank)
+'''
+参加者の得点に基づいて順位を計算し、その順位を出力するようになっています。標準入力を読み込むためにsysモジュールをインポートします。
+sys.stdin.readを使って全ての入力を一度に読み込みます。その後、split()メソッドを使って空白で区切り、リストdataに格納します。
+最初の要素data[0]を整数に変換して参加者の数Nを取得します。続いて、dataリストの2番目以降の要素を整数に変換し、scoresリストとして得点を格納します。
+
+得点とインデックスのペアを作成：
+enumerateを使って、各得点とその元のインデックスのタプルリストindexed_scoresを作成します。
+ソート：
+indexed_scoresを得点で降順にソートします。これにより、得点が高い順に並びます。
+順位の計算：
+ranksリストを初期化します。このリストには各参加者の順位が格納されます。
+ソートされたリストをループして順位を計算します。前の得点と同じ場合は同じ順位を、異なる場合は新しい順位を割り当てます。
+
+順位の計算：
+calculate_ranks関数を呼び出して、得点リストから順位リストranksを取得します。
+順位の出力：
+ranksリストの各順位を一行ずつ標準出力に出力します。
+'''
+
 # B149
 # B150
 -----------------------------------------------B151　※欠番◆
