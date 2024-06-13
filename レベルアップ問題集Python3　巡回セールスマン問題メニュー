@@ -1,0 +1,32 @@
+<順列全列挙によるTSP>
+step1　ユークリッド距離
+step2　巡回路長の計算
+step3　順列全列挙
+final　順列全列挙によるTSP
+
+<動的計画法によるTSP>
+step1  ビットによる集合の表現
+step2  動的計画法によるTSP(1)
+final  動的計画法によるTSP(2)
+
+<2-近似によるTSP>
+step1  最小全域木
+final  2-近似によるTSP
+
+<最近傍法によるTSP>
+step1  最も近い都市
+final  最近傍法によるTSP
+
+<貪欲法によるTSP>
+step1  1辺の追加
+final  貪欲法によるTSP
+
+<2-opt法によるTSP>
+step1  1辺の交換
+final  2-opt法によるTSP
+
+<禁断探索法によるTSP>
+final  禁断探索法によるTSP
+
+<焼きなまし法によるTSP>
+final  焼きなまし法によるTSP
