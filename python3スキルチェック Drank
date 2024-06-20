@@ -2443,7 +2443,12 @@ m = int(input())  # キャベツ 1/2 玉の値段 m
 if n < (m*2): # キャベツ1玉のほうが安いとき
     print((m*2)-n)
 
-# D295
+# D295 田んぼの管理
+# utf-8
+n = int(input())
+m = int(input())
+print(n*m)
+
 # D296
 # D297
 # D298
