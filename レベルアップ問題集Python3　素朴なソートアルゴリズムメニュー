@@ -1,3 +1,47 @@
 <挿入ソート>
+# utf-8
+def insertion_sort(a, n):
+    for i in range(1, n):
+        x = a[i]
+        j = i - 1
+
+        while j >= 0 and a[j] > x:
+            a[j + 1] = a[j]
+            j -= 1
+
+        a[j + 1] = x
+
+        print(*a)
+
+
+n = int(input())
+a = list(map(int, input().split()))
+
+insertion_sort(a, n)
+'''
+疑似コードに従って挿入ソートを実装すればよいです。
+'''
+
 <選択ソート>
+# utf-8
+def selection_sort(a, n):
+    for i in range(0, n - 1):
+        min_index = i
+        for j in range(i + 1, n):
+            if a[j] < a[min_index]:
+                min_index = j
+
+        a[i], a[min_index] = a[min_index], a[i]
+
+        print(*a)
+
+
+n = int(input())
+a = list(map(int, input().split()))
+
+selection_sort(a, n)
+'''
+疑似コードに従って選択ソートを実装すればよいです。
+'''
+
 <バブルソート>
