@@ -2449,7 +2449,14 @@ n = int(input())
 m = int(input())
 print(n*m)
 
-# D296
+# D296 同じ文字
+# utf-8
+# 整数 n とある 1 文字 c 
+n = int(input())
+c = input()
+
+print(c*n)
+
 # D297
 # D298
 # D299
