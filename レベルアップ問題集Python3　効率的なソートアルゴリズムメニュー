@@ -33,4 +33,48 @@ shell_sort(a, n, h)
 '''
 
 <マージソート>
+# utf-8
+count = 0
+INF = 1000000001
+
+
+def merge(a, left, mid, right):
+    global count
+    l = a[left:mid]
+    r = a[mid:right]
+    l.append(INF)
+    r.append(INF)
+
+    lindex = 0
+    rindex = 0
+
+    for i in range(left, right):
+        if l[lindex] < r[rindex]:
+            a[i] = l[lindex]
+            lindex += 1
+        else:
+            a[i] = r[rindex]
+            rindex += 1
+            count += 1
+
+
+def merge_sort(a, left, right):
+    if left + 1 < right:
+        mid = (left + right) // 2
+        merge_sort(a, left, mid)
+        merge_sort(a, mid, right)
+        merge(a, left, mid, right)
+
+
+n = int(input())
+a = list(map(int, input().split()))
+
+merge_sort(a, 0, n)
+
+print(*a)
+print(count)
+'''
+疑似コードに従ってマージソートを実装すればよいです。
+'''
+
 <クイックソート>
