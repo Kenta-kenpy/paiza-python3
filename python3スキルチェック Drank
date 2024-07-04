@@ -2457,7 +2457,17 @@ c = input()
 
 print(c*n)
 
-# D297
+# D297 海開き
+# utf-8
+c_1 = int(input())
+c_2 = int(input())
+c_3 = int(input())
+
+if(c_1 and c_2 and c_3) > 20:
+    print("OK")
+else:
+    print("NG")
+
 # D298
 # D299
 # D300
