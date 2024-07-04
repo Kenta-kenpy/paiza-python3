@@ -78,3 +78,38 @@ print(count)
 '''
 
 <クイックソート>
+# utf-8
+count = 0
+
+
+def quick_sort(a, left, right):
+    global count
+
+    if left + 1 >= right:
+        return
+
+    pivot = a[right - 1]
+
+    cur_index = left
+    for i in range(left, right - 1):
+        if a[i] < pivot:
+            a[cur_index], a[i] = a[i], a[cur_index]
+            cur_index += 1
+            count += 1
+
+    a[cur_index], a[right - 1] = a[right - 1], a[cur_index]
+
+    quick_sort(a, left, cur_index)
+    quick_sort(a, cur_index + 1, right)
+
+
+n = int(input())
+a = list(map(int, input().split()))
+
+quick_sort(a, 0, n)
+
+print(*a)
+print(count)
+'''
+疑似コードに従ってクイックソートを実装すればよいです。
+'''
