@@ -2463,7 +2463,7 @@ c_1 = int(input())
 c_2 = int(input())
 c_3 = int(input())
 
-if(c_1 and c_2 and c_3) > 20:
+if c_1 >= 20 and c_2 >= 20 and c_3 >= 20:
     print("OK")
 else:
     print("NG")
