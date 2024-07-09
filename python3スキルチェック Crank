@@ -4509,26 +4509,52 @@ houses リストの各家の座標 (x, y) についてループを回します�
 # C152 虹が見える日
 # utf-8
 def find_rainbow_days(d, weather):
+    # 虹が見られる可能性がある日を格納するリストを初期化
     rainbow_days = []
     
+    # 天気予報を1日目から順に走査
     for i in range(1, d):
+        # 前日が雨（2）で当日が晴れ（0）の日を探す
         if weather[i - 1] == 2 and weather[i] == 0:
+            # 見つけた場合、その日のインデックスを追加
             rainbow_days.append(i)
     
+    # 虹が見られる可能性がある日が見つかった場合
     if rainbow_days:
+        # 日付をスペース区切りで出力
         print(" ".join(map(str, rainbow_days)))
     else:
+        # 見つからなかった場合は -1 を出力
         print(-1)
 
 if __name__ == "__main__":
     import sys
     input = sys.stdin.read
+    
+    # 標準入力からすべての入力を読み込み
     data = input().split()
     
+    # 最初の要素を天気予報が与えられる日数 D に設定
     D = int(data[0])
+    # 残りの要素を天気予報のリスト weather に設定
     weather = list(map(int, data[1:]))
     
+    # 虹が見られる可能性のある日を探す関数を呼び出し
     find_rainbow_days(D, weather)
+'''
+find_rainbow_days 関数の定義:d は天気予報が与えられる日数を表す整数。weather は天気予報を示す整数のリスト。
+rainbow_days リストの初期化:虹が見られる可能性がある日を格納するリストを初期化。
+天気予報の解析:ループで天気予報のリストを1日目から順に走査。
+前日が雨（2）で当日が晴れ（0）の日を見つけた場合、その日のインデックスを rainbow_days リストに追加。
+結果の出力:rainbow_days リストに虹が見られる可能性がある日が含まれている場合、それらの日をスペース区切りで出力。
+該当する日がない場合は -1 を出力。
+メイン部分:if __name__ == "__main__": ブロックは、このスクリプトが直接実行された場合にのみ実行。
+sys.stdin.read を使用して標準入力からすべての入力を一度に読み込み。
+input().split() で入力をスペース区切りのリストに分割。
+D は最初の要素であり、天気予報が与えられる日数を表す。
+weather は残りの要素で、各日の天気予報を整数のリストとして表す。
+find_rainbow_days(D, weather) を呼び出して結果を処理。
+'''
 
 # C153
 # C154
