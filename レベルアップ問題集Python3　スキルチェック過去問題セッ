@@ -10,6 +10,9 @@ print(f"{s}@{t}")
 '''
 
 # Q. N倍の文字列　D(殿堂入り)
+# utf-8
+N = int(input())
+print("*" * N)
 
 # Q. 単語のカウント C
 step2 「単語のカウント」を解くために:part1
@@ -526,7 +529,37 @@ w % N == 0 : (w を N で割ったあまりが 0 かどうか)
 ans := これまでにみた候補の箱に書かれた番号のうち、x に最も近いもの
 '''
 # Q. 残り物の量　C(殿堂入り)
+# utf-8
+# utf-8
+def calculate_leftover_amount(m, p, q):
+    """
+    生鮮食品の売れ残り量を計算する関数
 
+    Args:
+        m (int): 生鮮食品の仕入れ量(kg)
+        p (int): 生のまま売れた割合(%)
+        q (int): お総菜に変換された売れ残りの割合(%)
+
+    Returns:
+        float: 最終的な売れ残り量(kg)
+    """
+    # 生鮮食品の売れ残り量を計算
+    leftover_amount = m * (100 - p) / 100
+
+    # お総菜に変換された売れ残り量を計算
+    leftover_amount = leftover_amount * (100 - q) / 100
+
+    return leftover_amount
+
+
+# 生鮮食品の仕入れ量、生のまま売れた割合、お総菜に変換された売れ残りの割合を入力
+m, p, q = map(int, input().split())
+
+# 生鮮食品の売れ残り量を計算
+leftover_amount = calculate_leftover_amount(m, p, q)
+
+# 売れ残り量を小数値で出力
+print("{:.4f}".format(leftover_amount))
 
 # Q. 日別訪問者数の最大平均区間 B
 # utf-8
@@ -666,6 +699,9 @@ x 軸と水平方向から見たシルエットとは、y-z 二次元平面に�
 G にメモされた影を、出力する順番に注意して出力してください。
 '''
 # Q. 名刺バインダー管理　B(殿堂入り)
+# utf-8
+n, m = map(int, input().split())
+print((m-1)//n*n+2*n-(m-1)%n if (m-1) % (2*n) < n else (m-1)//n*n-(m-1)%n)
 
 # Q. 日別訪問者数の最大平均区間(large) A
 # utf-8
