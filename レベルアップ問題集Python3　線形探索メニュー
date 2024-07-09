@@ -1,5 +1,21 @@
 <指定された値の探索>
 step1　指定された値の個数
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+k = int(input())
+
+num_of_k = 0
+for val in a:
+    if val == k:
+        num_of_k += 1
+
+print(num_of_k)
+'''
+数列に k が何個現れるかを表す変数 num_of_k を用意し、for 文などのループを用いて数列の各要素と k を比べ、
+一致していたら num_of_k を1増やす、という処理をすればよいです。
+'''
+
 step2　指定された値の位置1
 step3　指定された値の位置2
 final　指定された値の位置3
