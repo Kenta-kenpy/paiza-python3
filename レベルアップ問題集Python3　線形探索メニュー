@@ -139,4 +139,60 @@ final　成績優秀者の列挙2
 
 <第k要素の探索>
 step1　2番目に大きな値
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+
+maximum = 1000000001
+for i in range(2):
+    next_maximum = -1000000001
+    for val in a:
+        if val < maximum:
+            next_maximum = max(next_maximum, val)
+    maximum = next_maximum
+
+print(maximum)
+'''
+数列に重複する要素がないことを利用します。for 文などのループを用いて数列の最大値を求めた後、数列の値であってその値未満であるもののうち、最大であるものを求めればよいです。
+また、数列をソートすると上のような処理をせずとも答えを求めることができます。
+数列に含まれる値で、maximum 未満であるもののうち最大であるものを求め、maximum をその値で更新するという一連の処理を2回おこなうことにより、数列に含まれる値のうち2番目に大きいものを求めています。
+入力の最大値が 1,000,000,000 であることがわかっているので、maximum の初期値は 1,000,000,001 としておけば十分です。
+
+<別解>
+n = int(input())
+a = [int(x) for x in input().split()]
+
+a.sort()
+print(a[-2])
+list.sort() を用いるとリストをソートすることができます。
+list.sort() はデフォルトで昇順ソートを行うため、ソート後、2番目に大きい値は a[-2] に入っています。
+'''
 final　k番目に大きな値
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+k = int(input())
+
+maximum = 1000000001
+for i in range(k):
+    next_maximum = -1000000001
+    for val in a:
+        if val < maximum:
+            next_maximum = max(next_maximum, val)
+    maximum = next_maximum
+
+print(maximum)
+'''
+数列に重複する要素がないことを利用します。数列の最大値を求め、その値未満のうち最大であるものを求め、さらにその値未満のうち最大であるものを求め......という処理を k 回繰り返せば、数列に含まれる値のうち k 番目に大きいものを求めることができます。
+数列に含まれる値で、maximum 未満であるもののうち最大であるものを求め、maximum をその値で更新するという一連の処理を k 回おこなうことにより、数列に含まれる値のうち k 番目に大きいものを求めています。入力の最大値が 1,000,000,000 であることがわかっているので、maximum の初期値は 1,000,000,001 としておけば十分です。
+
+<別解>
+n = int(input())
+a = [int(x) for x in input().split()]
+k = int(input())
+
+a.sort()
+print(a[-k])
+list.sort() を用いるとリストをソートすることができます。
+list.sort() はデフォルトで昇順ソートを行うため、ソート後、k 番目に大きい値は a[-k] に入っています。
+'''
