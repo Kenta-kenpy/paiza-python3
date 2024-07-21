@@ -722,3 +722,70 @@ print(ave.count(m), ave.index(m) + 1)
 そして、連続する k 日の期間のうち、その合計訪問者数が max_visitor に等しい期間の数を数えます。
 このとき同時にそのような期間のうち最も速い開始日を記録しておきます。
 '''
+
+# Q. お菓子の詰め合わせ　A(殿堂入り)
+# utf-8
+def combinations(iterable, r):
+    # combinations()関数は、与えられたiterableからr個の要素を持つすべての組み合わせを生成するジェネレータです。
+    pool = tuple(iterable)  # 入力のiterableをタプルに変換してpoolに格納
+    n = len(pool)  # poolの長さを取得
+    if r > n:  # rがnより大きければ、組み合わせは存在しないので終了
+        return
+    indices = list(range(r))  # 組み合わせを表すインデックスのリストを作成
+    yield tuple(pool[i] for i in indices)  # 最初の組み合わせを生成して返す
+    while True:
+        for i in reversed(range(r)):  # 右端から左に向かってインデックスを調整
+            if indices[i] != i + n - r:
+                break
+        else:
+            return
+        indices[i] += 1  # インデックスを調整
+        for j in range(i + 1, r):  # 調整後のインデックスを更新
+            indices[j] = indices[j - 1] + 1
+        yield tuple(pool[i] for i in indices)  # 新しい組み合わせを生成して返す
+
+# 入力の受け取り
+N, money = map(int, input().split())  # N: お菓子の種類数, money: 指定制限金額
+All = []  # お菓子の値段リスト
+for n in range(N):
+    All.append(int(input()))  # 各お菓子の値段をリストに追加
+
+All.sort()  # お菓子の値段リストを昇順にソート
+
+# なるべく多くの種類を購入するための計算
+temp = 0  # 合計金額の一時変数
+count = 0  # 購入するお菓子の種類数
+for i in All:
+    temp += i  # お菓子の値段を加算
+    if temp > money:  # 合計が指定制限金額を超えたらループを終了
+        break
+    count += 1  # 購入する種類数をインクリメント
+
+temp = []  # 指定制限金額を超えない購入パターンの釣銭リスト
+# 全ての組み合わせを生成して、釣銭を計算
+for i in combinations(All, count):
+    s = sum(i)  # 組み合わせの合計値を計算
+    if s <= money:  # 指定制限金額を超えない場合
+        temp.append(money - s)  # 釣銭をリストに追加
+
+print(min(temp))  # 最小の釣銭を出力
+'''
+combinations関数の定義:
+combinations(iterable, r)は、与えられたiterable（例:リスト）からr個の要素を持つすべての組み合わせを生成します。
+最初に入力をタプルに変換し、その長さを取得します。
+組み合わせを生成するためのインデックスリストを初期化し、最初の組み合わせを生成します。
+以降、右端からインデックスを調整しながら新しい組み合わせを生成します。
+入力の受け取り:
+1行目からお菓子の種類数Nと指定制限金額moneyを受け取ります。
+続くN行から各お菓子の値段をリストAllに追加します。
+お菓子の値段リストのソート:
+お菓子の値段リストを昇順にソートします。これにより、安いお菓子から順に選ぶことができます。
+種類数最大化のための計算:
+合計金額tempと購入するお菓子の種類数countを初期化します。
+お菓子の値段リストを順に見ていき、合計が指定制限金額を超えない範囲で種類数を増やしていきます。
+指定制限金額内での購入パターンと釣銭の計算:
+combinations関数を使って、購入するお菓子の組み合わせを生成します。
+各組み合わせの合計金額が指定制限金額を超えない場合、釣銭を計算してリストtempに追加します。
+結果の出力:
+釣銭リストtempから最小の釣銭を選んで出力します。
+'''
