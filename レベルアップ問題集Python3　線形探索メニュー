@@ -129,12 +129,122 @@ list.sort() はデフォルトで昇順ソートを行うため、a[-1] が最�
 
 <特殊な探索>
 step1　偶数の探索
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+
+index_of_even = 0
+for i in range(n):
+    if a[i] % 2 == 0:
+        index_of_even = i + 1
+        break
+
+print(index_of_even)
+'''
+最初に現れる偶数の添字を保存しておく変数 index_of_even を用意し、for 文などのループを利用して数列を先頭から順に見ていき、
+最初に偶数が現れたときの添字を index_of_even に保存しループを抜け、index_of_even を出力すればよいです。
+'''
+
 step2　奇数の探索
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+
+index_of_odd = 0
+for i in range(n - 1, -1, -1):
+    if a[i] % 2 == 1:
+        index_of_odd = i + 1
+        break
+
+print(index_of_odd)
+'''
+「数列を先頭から順に見たときに最後に現れる奇数」 = 「数列を後ろから見たときに最初に現れる奇数」であることに気が付くと実装が楽になります。
+数列を先頭から順に見たときに最後に現れる奇数の添字を保存しておく変数 index_of_odd を用意し、for 文などのループを利用して数列を後ろから順に見ていき、
+最初に奇数が現れたときの添字を index_of_odd に保存しループを抜け、index_of_odd を出力すればよいです。
+'''
+
 step3　条件付き最小値
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+k = int(input())
+
+answer = 101
+for val in a:
+    if val >= k:
+        answer = min(answer, val)
+
+print(answer)
+'''
+答えを保存する変数 answer を用意し、適当に大きな数で初期化します。今回は k 以上である値が必ず数列に含まれていることと、入力の最大値が 100 であることがわかっているので、初期値は 101 としておけば十分です。
+そして、数列の各要素 a_i について、k 以上であるものについて、answer を a_i と answer のうち小さいほうで更新します。
+このとき、answer は求めたい答え (数列に含まれる値であって k 以上であるもののうち値が最小のもの) となっています。
+'''
+
 step4　条件付き最大値
+# utf-8
+n = int(input())
+a = [int(x) for x in input().split()]
+k = int(input())
+
+answer = -101
+for val in a:
+    if val <= k:
+        answer = max(answer, val)
+
+print(answer)
+'''
+答えを保存する変数 answer を用意し、適当に小さな数で初期化します。今回は k 以下である値が必ず数列に含まれていることと、入力の最小値が -100 であることがわかっているので、初期値は -101 としておけば十分です。
+そして、数列の各要素 a_i について、k 以下であるものについて、answer を a_i と answer のうち大きいほうで更新します。
+このとき、answer は求めたい答え (数列に含まれる値であって k 以下であるもののうち値が最大のもの) となっています。
+'''
+
 step5　点と点の距離
+# utf-8
+n = int(input())
+points = [[int(x) for x in input().split()] for _ in range(n)]
+k = int(input())
+
+xn, yn = points[-1]
+answer = 0
+
+for xi, yi in points:
+    if abs(xi - xn) + abs(yi - yn) <= k:
+        answer += 1
+
+print(answer)
+'''
+点 n とのマンハッタン距離が k 以下である点の数を保存する変数を用意します。点 n とのマンハッタン距離を定義に従って計算し、
+それが k 以下であるなら答えを1増やす、という処理を各点についてすればよいです。
+abs で絶対値を求めることができます。
+'''
+
 step6　長方形に含まれる点
+# utf-8
+n = int(input())
+points = [[int(x) for x in input().split()] for _ in range(n)]
+xs, xt = [int(x) for x in input().split()]
+ys, yt = [int(x) for x in input().split()]
+
+answer = 0
+
+for xi, yi in points:
+    horizontal = xs <= xi <= xt
+    vertical = ys <= yi <= yt
+    if horizontal and vertical:
+        answer += 1
+
+print(answer)
+'''
+点 (x_i, y_i) について、 x_s ≦ x_i ≦ x_t と y_s ≦ y_i ≦ y_t がともに満たされているとき、この点は(x_s, y_s), (x_s, y_t), (x_t, y_t), (x_t, y_s) の4頂点からなる長方形に含まれています。
+従って、答えを保存する変数を用意し、各点について上の2つの不等式が満たされているかどうかを確認し、
+満たされているなら答えを1増やす処理をすればよいです。
+1つめの不等式の評価結果を horizontal に、2つめの不等式の評価結果を vertical にそれぞれ保存し、それらがともに真であるかどうかを確かめることにより、点が長方形に含まれているかどうかを判定しています。
+'''
+
 step7　成績優秀者の列挙1
+
+
 final　成績優秀者の列挙2
 
 <第k要素の探索>
