@@ -4555,6 +4555,93 @@ D は最初の要素であり、天気予報が与えられる日数を表す。
 weather は残りの要素で、各日の天気予報を整数のリストとして表す。
 find_rainbow_days(D, weather) を呼び出して結果を処理。
 '''
+# C152(2) 勤怠管理
+# utf-8
+def calculate_total_time(n, times):
+    total_minutes = 0  # 総在室時間（分単位）の初期化
+
+    for entry in times:
+        # 入室時刻と退室時刻を取得
+        entry_time, exit_time = entry.split()
+        # 入室時刻を時間と分に分割して整数に変換
+        entry_hours, entry_minutes = map(int, entry_time.split(':'))
+        # 退室時刻を時間と分に分割して整数に変換
+        exit_hours, exit_minutes = map(int, exit_time.split(':'))
+
+        # 入室時間を分単位に変換
+        entry_total_minutes = entry_hours * 60 + entry_minutes
+        # 退室時間を分単位に変換
+        exit_total_minutes = exit_hours * 60 + exit_minutes
+
+        # 日毎の在室時間（分単位）を計算
+        daily_minutes = exit_total_minutes - entry_total_minutes
+        # 総在室時間に追加
+        total_minutes += daily_minutes
+
+    # 総在室時間を時間と分に変換
+    total_hours = total_minutes // 60
+    remaining_minutes = total_minutes % 60
+
+    # 時間と分をタプルで返す
+    return total_hours, remaining_minutes
+
+def main():
+    import sys
+    input = sys.stdin.read  # 標準入力からデータを読み込む
+    data = input().strip().split('\n')  # 入力を行単位で分割
+    
+    n = int(data[0].strip())  # 最初の行から日数を取得
+    times = data[1:]  # 残りの行から各日の入室・退室時刻を取得
+    
+    # 総在室時間を計算
+    total_hours, remaining_minutes = calculate_total_time(n, times)
+    
+    # 結果を出力
+    print(total_hours, remaining_minutes)
+
+if __name__ == "__main__":
+    main()  # スクリプトが直接実行されたときにmain関数を呼び出す
+'''
+1. calculate_total_time関数
+この関数は、研究室にいた合計時間を計算するために設計されています。
+引数:
+n: 研究室に通った日数（整数）。
+times: 各日の入室時刻と退室時刻が含まれるリスト（文字列のペア）。
+処理内容:
+total_minutesの初期化:
+総在室時間を分単位で保存するための変数で、最初は0に設定します。
+ループ処理:
+timesリストに含まれる各日の入室時刻と退室時刻のペアについて処理します。
+入室時刻 (entry_time) と退室時刻 (exit_time) を空白で分割し、それぞれの時刻を時間 (hh) と分 (mm) に分解します。
+時刻の分単位変換:
+入室時刻と退室時刻を、分単位の合計時間に変換します。これは、entry_hours * 60 + entry_minutes という計算で行います。
+在室時間の計算:
+退室時刻から入室時刻を引いて、1日分の在室時間を計算します。これを daily_minutes という変数に保存し、total_minutes に加算します。
+時間と分の変換:
+全体の分単位の在室時間を、時間単位 (total_hours) と分単位 (remaining_minutes) に変換します。total_hours は total_minutes // 60 で計算し、remaining_minutes は total_minutes % 60 で計算します。
+結果の返却:
+計算された時間と分をタプル (total_hours, remaining_minutes) として返します。
+
+2. main関数
+この関数は、プログラムのエントリーポイントであり、標準入力からデータを読み込み、処理結果を出力します。
+処理内容:
+標準入力からデータの読み込み:
+sys.stdin.read() を使用して標準入力からすべてのデータを読み込みます。データは1つの文字列として取得されます。
+データの整形:
+input().strip().split('\n') を使って、読み込んだデータを行単位で分割し、リスト data を作成します。最初の要素が日数 n で、それ以降の要素が各日の入室・退室時刻です。
+日数の取得:
+data[0] から日数 n を整数に変換して取得します。
+各日の時刻を取得:
+data[1:] で、各日の入室・退室時刻のリスト times を取得します。
+総在室時間の計算:
+calculate_total_time(n, times) を呼び出して、合計の在室時間を計算します。結果は total_hours と remaining_minutes に保存されます。
+結果の出力:
+計算結果の時間と分を、print(total_hours, remaining_minutes) を使用して標準出力に出力します。
+
+3. スクリプトの実行
+if __name__ == "__main__"::
+この条件文は、スクリプトが直接実行されたときに main() 関数を呼び出すために使用します。これにより、他のモジュールからインポートされたときに main() が実行されないようにします。
+'''
 
 # C153
 # C154
