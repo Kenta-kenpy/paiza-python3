@@ -243,10 +243,30 @@ print(answer)
 '''
 
 step7　成績優秀者の列挙1
+# utf-8
+n = int(input())
+results = [input().split() for _ in range(n)]
+k = int(input())
 
+for name, score in results:
+    if int(score) >= k:
+        print(name)
+'''
+入力された順に生徒を見ていき、各生徒が合格しているかどうかを判定し、合格していればその生徒の名前を出力する、という処理をすればよいです。
+'''
 
 final　成績優秀者の列挙2
+# utf-8
+n = int(input())
+results = [input().split() for _ in range(n)]
+k, l = [int(x) for x in input().split()]
 
+for name, score in results:
+    if k <= int(score) <= l:
+        print(name)
+'''
+入力された順に生徒を見ていき、各生徒が合格しているかどうかを判定し、合格していればその生徒の名前を出力する、という処理をすればよいです。
+'''
 <第k要素の探索>
 step1　2番目に大きな値
 # utf-8
