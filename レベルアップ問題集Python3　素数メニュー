@@ -1,18 +1,444 @@
 <素数大学>
 step1 グロタンディーク素数
+# utf-8
+grothendieck = 57
+is_prime = True
+
+for i in range(2, 57):
+    if grothendieck % i == 0:
+        is_prime = False
+        break
+
+if is_prime:
+    print("YES")
+else:
+    print("NO")
+'''
+57 より大きい数では明らかに 57 を割り切ることができないので、57 が素数である条件は「57 が 2 〜 56 の全ての整数で割り切れないこと」になります。
+逆に、これらのうちどれか 1 つでも 57 を割り切ることができた場合、 57 は素数でないということになります。
+繰り返しなどを用いて、実際に 57 は 2 〜 56 で割り切れるかどうかを調べることでこの問題を解くことができます。
+グロタンディーク素数が素数である場合 is_prime に True が、素数でない場合 False が格納されるようにしています。
+'''
+
 step2 素数判定
+# utf-8
+N = int(input())
+
+is_prime = True
+
+if N == 1:
+    is_prime = False
+
+for i in range(2, N):
+    if N % i == 0:
+        is_prime = False
+
+if is_prime:
+    print("YES")
+else:
+    print("NO")
+'''
+N より大きい数では明らかに N を割り切ることができないので、N が素数である条件は「N が 2 〜 N-1 の全ての整数で割り切れないこと」になります。
+逆に、これらのうちどれか 1 つでも N を割り切ることができた場合、 N は素数でないということになります。
+繰り返しなどを用いて、実際に N が 2 〜 N-1 で割り切れるかどうかを調べることでこの問題を解くことができます。
+実装によっては N = 1 のときに割り切れるかどうかを調べるループが回らずに 1 を素数と判定してしまう可能性があるので注意してください。1 は素数ではありません。
+N が素数である場合 is_prime に True が、素数でない場合 False が格納されるようにしています。
+N が 1 である場合には、例外的に is_prime を False にしています。
+'''
+
 step3 大きな数の素数判定
+# utf-8
+N = int(input())
+
+is_prime = True
+
+if N == 1:
+    is_prime = False
+
+for i in range(2, int(N ** 0.5) + 1):
+    if N % i == 0:
+        is_prime = False
+
+if is_prime:
+    print("YES")
+else:
+    print("NO")
+'''
+N より大きい数では明らかに N を割り切ることができないので、N が素数である条件は「N が 2 〜 N-1 の全ての整数で割り切れないこと」になります。
+逆に、どれか 1 つでも N を割り切ることができた場合、 N は素数でないということになります。
+しかし、今回 N の制約が1 ≦ N ≦ 1,000,000,000,000であるため、実際に N を 2 〜 N-1 で割ろうとすると、最悪ケースにおいて計算回数が 10^12 回程度になってしまうため、制限時間内に間に合う計算回数の目安である 10^8 回を超えてしまいます。
+実は N を割り切れるかどうかを 2 〜 N-1 の全ての整数について調べなくても、 2 〜 ルート N の整数について調べるだけで N の素数判定ができます。
+具体的な証明は省略しますが、これは N に 1 と N 以外の約数があると仮定した場合、少なくとも 1 つは N の 0.5 乗（ルート N ） 以下の約数があるという約数の性質に基づくものです。
+実装によっては N = 1 のときに割り切れるかどうかを調べるループが回らずに 1 を素数と判定してしまう可能性があるので注意してください。1 は素数ではありません。
+N が素数である場合に is_prime が True に、素数でない場合に False が格納されるようにしています。
+N が 1 である場合には、例外的に is_prime を False にしています。
+'''
+
 step4 エラトステネスの篩
+# utf-8
+N = int(input())
+
+is_prime = [True] * (N + 1)
+
+is_prime[0] = False
+is_prime[1] = False
+
+for i in range(2, N + 1):
+    if is_prime[i]:
+        for j in range(i * 2, N + 1, i):
+            is_prime[j] = False
+
+if is_prime[N]:
+    print("YES")
+else:
+    print("NO")
+'''
+is_prime が true である数のうち、もっとも小さい数は 2 なので、素数であることが確定します。 そして 2 の倍数の is_prime を false にします。
+エラトステネスの篩は 0 〜 N の全ての整数の素数判定を O(N log log N) 程度で行うことができるため、多くの整数について素数判定を行う必要があるときに有効な素数判定法です。
+計算量の導出方法
+エラトステネスの篩では、注目している整数 X が素数であった場合、1 〜 N の整数のうち N/X 個の X の倍数について演算を行います。これらの演算の回数の総和は N/2 + N/3 + N/5 + ... + N/p (p ≦ ルート N) となります。ここで N が十分大きいとき、ルート N までの素数の逆数の和は log log N 程度になります。よって、
+N/2 + N/3 + N/5 + ... + N/p (p ≦ ルート N)
+  = N(1/2 + 1/3 + 1/5 ... 1/p) 
+  = N(log log N)
+  = N log log N
+となり、エラトステネスの篩の計算量が導出できます。
+'''
+
 step5 フェルマーテスト
+# utf-8
+N = int(input())
+
+is_prime = True
+a = 2
+fermat = 1
+
+if N % a == 0:
+    is_prime = False
+
+for i in range(N - 1):
+    fermat *= a
+    fermat %= N
+
+if fermat % N != 1:
+    is_prime = False
+
+if is_prime:
+    print("YES")
+else:
+    print("NO")
+'''
+フェルマーテストは手軽で高精度な素数判定法ですが、
+3 つ目の入力例の 341 = 11 × 31 のように、素数でない数であってもフェルマーテストでは素数と判定される整数が存在します。
+'''
+
 final 素数大学
+# utf-8
+N = int(input())
+
+is_prime = [True] * 6000001
+is_prime[0] = False
+is_prime[1] = False
+
+for i in range(2, 6000001):
+    if is_prime[i]:
+        for j in range(i * 2, 6000001, i):
+            is_prime[j] = False
+
+for _ in range(N):
+    A = int(input())
+    if is_prime[A]:
+        print("pass")
+    else:
+        print("failure")
+'''
+各 A_i (1 ≦ i ≦ N) について、入力が与えられるたびに素数判定の計算を行った場合は、素数判定に O(√A_i) かかるため、全体として O(√A_1 + ... + √A_N）となり、最悪ケースの場合 10^8　回程度計算が行われるため実行時間制限に間に合うかどうかが際どくなります。
+そこで、エラトステネスの篩という素数判定法が役立ちます。
+これは、ある整数 N について、1 〜 N の全ての整数の素数判定が O(N log log N) でできる素数判定法です。
+これを題材にした「エラトステネスの篩」という問題がこの問題集にあるので、そちらもぜひ取り組んでみてください。
+これを用いて予め 1 〜 1,000,000 の全ての整数の素数判定を行うことで、各 A_i (1 ≦ i ≦ N) が素数かどうかを O(1) で判定することができるので、A_i (1 ≦ i ≦ N) の最大値を A_max とすると、全体の計算量が O(Amax log log Amax + N) となり、この問題を解くことができます。
+'''
 
 <最小公倍数>
 step1 素因数分解
+# utf-8
+N = int(input())
+
+prime_factors = []
+for i in range(2, int(N ** 0.5) + 1):
+    while N % i == 0:
+        prime_factors.append(i)
+        N //= i
+
+if N != 1:
+    prime_factors.append(N)
+
+for a in prime_factors:
+    print(a)
+'''
+N 以下の素数を列挙したのち、各素数で N を何回割ることができるかを調べるという方針でこの問題を解くことができますが、より簡単な方法として次のような方法が挙げられます。
+0. X = 2 で初期化しておく。
+1. i を X 〜 √N まで動かしながら i で N を割り切れるかどうか調べる。
+2. 手順 1 において i で割り切れた場合、i は N の素因数である。N を i で割り切れなくなるまで i で割る。割り切れなくなったら手順 1 へ戻る。
+3. 手順 2 を終えた時点で N が 1 でないとき N は素因数である。これ以上 N を割ることができないので N の素因数分解を終了する。
+prime_factors に素因数を格納しています。
+方針の手順 2 の割り切れなくなるまで i で割るという操作は while 文を用いると綺麗に実装できます。
+手順 3 の「N が 1 でないとき、 N は素因数である」点に注意しましょう。
+'''
+
 step2 約数の個数
+# utf-8
+from collections import defaultdict
+
+N = int(input())
+
+divisors = defaultdict(int)
+for i in range(2, int(N ** 0.5) + 1):
+    while N % i == 0:
+        divisors[i] += 1
+        N //= i
+
+if N != 1:
+    divisors[N] += 1
+
+ans = 1
+for k, v in divisors.items():
+    ans *= v + 1
+
+print(ans)
+'''
+N をどの素因数で何回割ることができたかを保持しておき、(各素因数で割った回数 + 1) の積を求めればよいです。
+例として、整数 N がN = (p^n)(q^m)(r^l)... と素因数分解できるとき、約数の個数は(n+1)(m+1)(l+1)...となります。
+N を素因数で割る操作は素因数分解と同様の方針で行うことができます。
+どの素因数で何回割ることができたかを保持するためには、連想配列を利用すると良いです。
+素因数をキー、N を割った回数を値として、N を素因数で割る度にその素因数に対応する値を +1 することで、どの素因数で何回割ることができたかを保持することができます。
+Python では連想配列として `defaultdict` が用意されています。
+int 型を要素とする 連想配列 では、初めてアクセスする際に値が 0 に初期化されることを利用して実装しました。
+for k, v in divisors.items()と記述することで、連想配列に記録した N に含まれる各素因数 k の個数 v を取り出すことができます。
+'''
+
 step3 最大公約数
+# utf-8
+# utf-8
+from collections import defaultdict
+
+def factorize(a: int):
+    prime_factor_map = defaultdict(int)
+
+    j = 2
+    while j ** 2 <= a:
+        while a % j == 0:
+            prime_factor_map[j] += 1
+            a //= j
+        j += 1
+    
+    if a != 1:
+        prime_factor_map[a] += 1
+    
+    return prime_factor_map
+
+
+N = int(input())
+A = int(input())
+
+prime_factor_map = factorize(A)
+
+for i in range(1, N):
+    A = int(input())
+    prime_factor_map_local = factorize(A)
+
+    for factor, power in prime_factor_map.items():
+        prime_factor_map[factor] = min(power, prime_factor_map_local[factor])
+
+ans = 1
+for factor, power in prime_factor_map.items():
+    for i in range(power):
+        ans *= factor
+
+print(ans)
+'''
+問題文中にある性質を用いて最大公約数の求めるプログラムを実装するには、次のような処理を行えば良いです。
+1. 答えとなる最大公約数の素因数とその個数を保持する連想配列を初期化する。
+2. 各 A_i (1 ≦ i ≦ N) について次の操作を行う。
+    A_i を素因数分解する。
+    i = 1 のとき、その時点での最大公約数に含まれる素因数とその個数は
+     A_1 のそれと等しいので、A_1 に含まれる素因数とその個数を、最大公約数に含まれる素因数とその個数とする。
+    i ≠ 1 のとき、その時点での最大公約数に含まれる素因数 P の個数を
+     min(最大公約数の素因数に含まれる P の個数 , A_i の素因数に含まれる P の個数) で更新する。
+3. 最大公約数に含まれる素因数の積を求める。
+これらの処理を行うことで、「A_1 〜 A_N に共通する素因数の{最小の指数}乗」の積を求めることができ、この問題を解くことができます。
+実際に入力される値を用いて処理の流れを追うことで、確かに最大公約数になることを確かめることで勉強になると思います。
+Python では連想配列として collections モジュールの defaultdict メソッド が用意されています。
+関数 factorize で a = b^m * c^n ... に対して { b = m, c = n, ...} といった形式の map を作っています。
+prime_factor_map にその時点での最大公約数の素因数とその個数を、prime_factor_map_local に現在注目している整数の素因数とその個数を保持しています。
+for factor, power in prime_factor_mapのように用いることで、prime_factor_map の全てのキー・値のペアを factor, power に代入しながらループ処理を行うことができます。
+
+<別解>
+Python では最大公約数を求めるための gcd モジュールがあらかじめ用意されているのでこれを用います。
+gcd(a, b)で a と b の最大公約数を求めることができます。
+from math import gcd
+
+N = int(input())
+
+ans = 0
+for _ in range(N):
+    A = int(input())
+    ans = gcd(ans, A)
+
+print(ans)
+'''
+
 final 最小公倍数
+# utf-8
+from collections import defaultdict
+
+def factorize(a: int):
+    prime_factor_map = defaultdict(int)
+
+    j = 2
+    while j ** 2 <= a:
+        while a % j == 0:
+            prime_factor_map[j] += 1
+            a //= j
+        j += 1
+    
+    if a != 1:
+        prime_factor_map[a] += 1
+    
+    return prime_factor_map
+
+
+N = int(input())
+A = int(input())
+
+prime_factor_map = factorize(A)
+
+for i in range(1, N):
+    A = int(input())
+    prime_factor_map_local = factorize(A)
+
+    for factor, power in prime_factor_map_local.items():
+        prime_factor_map[factor] = max(power, prime_factor_map[factor])
+
+ans = 1
+for factor, power in prime_factor_map.items():
+    for i in range(power):
+        ans *= factor
+
+print(ans)
+'''
+問題文中にある性質を用いて最小公倍数の求めるプログラムを実装するには、次のような処理を行えば良いです。
+1. 答えとなる最小公倍数の素因数とその個数を保持する連想配列と素因数を保持するデータ構造を初期化する。
+2. 各 A_i (1 ≦ i ≦ N) について次の操作を行う。
+    A_i を素因数分解する。
+    A_i の素因数のうち、現時点での最小公倍数の素因数に含まれていない物があれば、
+    最小公倍数の素因数に追加する。
+    現時点での最小公倍数の全ての素因数 P について次の操作を行う。
+    「最小公倍数に含まれる P の個数を max(最小公倍数に含まれる P の個数, A_i に含まれる P の個数) で更新する。」
+3. 最小公倍数に含まれる素因数の積を求める。
+これら処理を行うことで、「A_1 〜 A_N のうち、いずれかの整数の素因数の{最大の指数}乗」の積を求めることができ、この問題を解くことができます。
+実際に入力される値を用いて処理の流れを追うことで、確かに最小公倍数になることを確かめることができます。
+Python では連想配列として collections モジュールの defaultdict メソッド が用意されています。
+関数 factorize で a = b^m * c^n ... に対して { b = m, c = n, ...} といった形式の map を作っています。
+prime_factor_map にその時点での最大公約数の素因数とその個数を、prime_factor_map_local に現在注目している整数の素因数とその個数を保持しています。
+for factor, power in prime_factor_map_localのように用いることで、prime_factor_map_local の全てのキー・値のペアを factor, power に代入しながらループ処理を行うことができます。
+
+<別解>
+Python では最大公約数を求めるための gcd モジュールがあらかじめ用意されているのでこれを用います。
+gcd(a, b)で a と b の最大公約数を求めることができます。
+また、 a と b の最小公倍数をlcm(a, b)とすると、lcm(a, b) = a * b / gcd(a, b)という公式があるので、解説ではこの式を用いて最小公倍数を計算しています。
+from math import gcd
+
+N = int(input())
+
+ans = 1
+for _ in range(N):
+    A = int(input())
+    ans = ans * A // gcd(ans, A)
+
+print(ans)
+'''
 
 <paiza予想>
 step1 ゴールドバッハ予想
+# utf-8
+N = int(input())
+
+is_prime = [True] * (N + 1)
+is_prime[0] = False
+is_prime[1] = False
+
+for i in range(2, N + 1):
+    if is_prime[i]:
+        for j in range(i * 2, N + 1, i):
+            is_prime[j] = False
+
+multi = -1
+ans = [-1, -1]
+for p in range(N + 1):
+    if is_prime[p]:
+        other_prime = N - p
+        if is_prime[other_prime]:
+            if p * other_prime > multi:
+                multi = p * other_prime
+                ans = [p, other_prime]
+
+print(ans[0])
+print(ans[1])
+'''
+n 以下の全ての素数（n = 100,000 のとき 9592 個）を予め列挙しておき、全ての 2 つの素数の組について「和が N になるかどうか」「和が N の組のうち積は最大であるか」を調べることでこの問題を解くことができます。
+n 以下の全ての素数の列挙にはエラトステネスの篩を用いると良いです。エラトステネスの篩は多くの数についての素数判定を高速に行うことができるアルゴリズムです。
+エラトステネスの篩を用いる事で実装をしています。
+N 以下の全ての素数を is_prime を用いて保持しています。
+'''
+
 step2 中国剰余定理
+# utf-8
+m1, m2, b1, b2 = map(int, input().split())
+
+for i in range(m2):
+    Z = m1 * i + b1
+    if Z % m2 == b2:
+        print(Z)
+        break
+'''
+0 以上 m1 × m2 未満の全ての数について m1 , m2 で割った余りが b1 , b2 かどうかを調べると、制約より計算回数が最悪ケースで 10,000,000,000 回となってしまい実行時間制限に間に合いません。
+0 以上 m1 × m2 未満の整数のうち、 m1 で割った余りが b1 になるような整数 Z は Z = m1 * i + b1 (0 ≦ i < m2)という形で表すことができ、その個数は m2 個です。この m2 個の各整数について m2 で割った余りが b2 になるかどうかを調べることで
+この問題を最大 100,000　回程度の計算で解くことができます。
+'''
+
 final paiza予想
+# utf-8
+def is_prime(x: int) -> bool:
+    if x < 2:
+        return False
+
+    for i in range(2, int(x ** 0.5) + 1):
+        if x % i == 0:
+            return False
+
+    return True
+
+
+ans = []
+for i in range(3, int((10 ** 8) ** 0.5) + 1, 2):
+    if not is_prime(i * i - 2):
+        ans.append(i * i)
+
+if len(ans) == 0:
+    print("paiza's conjecture is correct.")
+else:
+    for a in ans:
+        print(a)
+'''
+100,000,000 以下の素数は 5,761,455 個存在するため、「予め素数を配列 prime などに列挙しておき、各平方数について 平方数 - prime[i] が素数かどうかで判定する」などの方針だと、実行時間制限に間に合わない可能性があります。
+そこで、現時点で反例の見つかっていないゴールドバッハ予想と「素数のうち偶数のものは 2 のみ」という素数の特性を用いた次のような方針を考えてみましょう。
+paiza 予想を満たすかどうか調べたい平方数 N について
+N が偶数のとき（N の平方根が偶数のとき）
+ゴールドバッハ予想より、 N は 2 つの素数の和で表すことができる。
+N が奇数のとき（N の平方根が奇数のとき）
+2 つの整数の和が奇数になるのは「偶数 + 奇数」の場合のみであり、素数のうち偶数のものは 2 のみである。
+よって、N が 2 つの素数の和で表されるとき、「N = 2 + 素数」の形であるので、N - 2 が素数の場合のみ N は paiza 予想を満たす。
+この方針で解くと、平方根が奇数である平方数について N - 2 が素数であるかを判定することでこの問題を解くことができます。
+関数 is_prime(x) で x が素数かどうかを判定しています。
+paiza 予想を満たさない平方数を ans に格納しています。
+'''
