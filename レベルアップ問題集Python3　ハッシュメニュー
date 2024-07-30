@@ -1,10 +1,125 @@
 <ハッシュ関数を作ってみよう>
 step1　ハッシュ関数とは
+# utf-8
+n, mod = map(int, input().split())
+
+for i in range(n):
+    x = int(input())
+    print(x % mod)
+'''
+問題文にて与えられたハッシュ関数 H(x) = x % mod を実装すればよいです。
+'''
+
 step2　やや複雑なハッシュ
+# utf-8
+n, a, b, mod = map(int, input().split())
+
+for i in range(n):
+    x = int(input())
+    print((a * x + b) % mod)
+'''
+問題文にて与えられたハッシュ関数 H(x) = (a * x + b) % mod を実装すればよいです。
+'''
+
 step3　文字列のハッシュ
+# utf-8
+n = int(input())
+
+for i in range(n):
+    x = input()
+
+    hash = x.count("p") + x.count("a") + x.count("i") + x.count("z")
+    print(hash)
+'''
+問題文にて与えられたハッシュ関数 H(x) = x.count('p') + x.count('a') + x.count('i') + x.count('z') を実装すればよいです。
+'''
+
 final　ハッシュ関数を作ってみよう
+# utf-8
+n = int(input())
+
+for i in range(n):
+    s = input()
+
+    hash = 0
+    for j in range(len(s)):
+        hash += (j+1) * (ord(s[j])-ord('a')+1)
+    
+    hash %= 100
+
+    print(hash)
+'''
+同じ入力に対して、同じ出力を返す という条件さえ満たしていれば良いです。
+以下の解答例では、文字列 'a' に 1 を、'b' に 2 を、... 、'z' に 26 を割り当てた上で、
+入力文字列 s = c_1c_2...c_n に対して H(s) = (c_1 * 1 + c_2 * 2 + ... + c_n * n) % 100 をハッシュ関数として採用しています。
+'''
 
 <ハッシュテーブルを使おう>
 step1　ハッシュテーブル(オープンアドレス法)
+# utf-8
+table = [-1] * 10
+
+n = int(input())
+
+for i in range(n):
+    x = int(input())
+
+    hash = x % 10
+
+    while table[hash] != -1:
+        hash = (hash + 1) % 10
+
+    table[hash] = x
+
+for i in range(10):
+    print(table[i])
+'''
+要素数 10 の整数型配列 table を用意し、初期値を -1 とします。
+入力されたデータ x のハッシュ値 h(x) を計算し、table[h(x)] が -1 かどうかを調べます。
+table[h(x)] が -1 ならば、そこにはまだデータが格納されていないので、table[h(x)] にデータ x を格納します。
+-1 でないならば、そこにはすでにデータが格納されているので、空いている添字が見つかるまでハッシュ値を再計算します。
+これは、while ループなどを用いると簡単に実装することができます。
+'''
+
 step2　ハッシュテーブル(チェイン法)
+# utf-8
+table = [[] for i in range(10)]
+
+n = int(input())
+
+for i in range(n):
+    x = int(input())
+    hash = x % 10
+    table[hash].append(x)
+
+for i in range(10):
+    print(" ".join(map(str, table[i])))
+'''
+要素数 10 の配列 table を用意し、初期値を 空リスト とします。
+入力されたデータ x のハッシュ値 h(x) を計算し、table[h(x)] の末尾にデータ x を格納します。
+'''
+
 final　ハッシュテーブルを使おう
+# utf-8
+table = [[] for i in range(100)]
+
+a, b = map(int, input().split())
+q = int(input())
+
+for i in range(q):
+    op, x = map(int, input().split())
+    hash = (a * x + b) % 100
+
+    if op == 1:
+        table[hash].append(x)
+    elif op == 2:
+        if x in table[hash]:
+            print("Yes")
+        else:
+            print("No")
+
+for i in range(100):
+    print(" ".join(map(str, table[i])))
+'''
+チェイン法によるハッシュテーブルを作成し、各クエリを処理すればよいです。
+'''
