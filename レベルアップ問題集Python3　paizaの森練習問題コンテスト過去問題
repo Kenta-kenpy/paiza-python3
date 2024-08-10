@@ -1349,8 +1349,188 @@ print("No")
 
 # paizaの森練習問題コンテスト過去問題16　★
 # Q.　3つの数
+# utf-8
+print(8)
+print(1)
+print(3)
+
 # Q.  税込価格
+# utf-8
+p = int(input())
+s = input()
+
+if s == 'T':
+    print(int(p * 1.1))
+else:
+    print(int(p * 1.08))
+
 # Q.  パターン検出
+# utf-8
+import sys
+
+def main():
+    # 標準入力から全てのデータを読み込み、一度に取得する
+    input = sys.stdin.read().strip().split('\n')
+    
+    # 最初の行は文字列の個数 N
+    N = int(input[0])
+    
+    # 次の N 行は N 個の文字列 S_i
+    strings = input[1:N+1]
+    
+    # 最後の行は対象文字列 T
+    T = input[N+1]
+    
+    # 各 S_i が T の部分文字列に含まれているか確認する
+    for s in strings:
+        # s が T の部分文字列に含まれていれば "Yes" を出力して終了
+        if s in T:
+            print("Yes")
+            return
+    
+    # どの S_i も T の部分文字列に含まれていなかった場合は "No" を出力
+    print("No")
+
+if __name__ == "__main__":
+    main()
+
+'''
+標準入力から全てのデータを一度に読み込み、行ごとに分割します。最初の行から整数 N を取得します。
+次の N 行を strings リストに格納します。最後の行を対象文字列 T に設定します。
+各文字列 s が T の部分文字列として含まれているかを確認します。含まれていれば "Yes" を出力し、プログラムを終了します。
+すべての文字列 s が T に含まれていない場合、 "No" を出力します。
+'''
+
 # Q.  連続ホームラン
+import sys
+
+def calculate_home_run_probability(n, m):
+    """
+    m 打席連続でホームランを打つ確率を計算する関数
+    
+    Args:
+    n (int): ホームランを打つのに必要な打席数
+    m (int): 連続でホームランを打つ打席数
+    
+    Returns:
+    float: m 打席連続でホームランを打つ確率
+    """
+    # ホームランを打つ確率は 1 / n
+    # したがって m 打席連続でホームランを打つ確率は (1 / n) の m 乗
+    probability = (1 / n) ** m
+    return probability
+
+if __name__ == "__main__":
+    # 標準入力からデータを読み込む
+    input_line = sys.stdin.read().strip()
+    # 入力値を整数に変換
+    n, m = map(int, input_line.split())
+    # 確率を計算
+    result = calculate_home_run_probability(n, m)
+    # 結果を小数点以下6桁で出力
+    print(f"{result:.6f}")
+'''
+calculate_home_run_probability 関数では、m 打席連続でホームランを打つ確率を計算します。この関数は、引数として n と m を受け取り、計算した確率を返します。
+if __name__ == "__main__": の部分で、標準入力から入力値を読み取り、スペースで区切って n と m に分解します。
+calculate_home_run_probability 関数を使って確率を計算し、結果を小数点以下6桁で出力します。
+'''
+
 # Q.  辞書順で 3 番目に小さい文字列
+# utf-8
+import itertools
+
+# 入力の受け取り
+n = int(input())  # 文字列の長さ（問題文では使用しませんが、サンプル入力に合わせて読み取ります）
+s = input().strip()  # 文字列の読み取り
+
+# 文字列をソートして辞書順で最小の並びにする
+sorted_s = "".join(sorted(s))
+
+# itertools.permutations を使用して、すべての順列を生成
+# ここで重複する順列はないので、そのまま利用できます
+perms = itertools.permutations(sorted_s)
+
+# 辞書順で3番目の順列を取得
+i = 0
+for k in perms:
+    i += 1
+    if i == 3:  # 3番目の順列に達したら、その順列を出力
+        print("".join(k))
+        break  # 3番目を見つけたので、ループを終了
+'''
+入力の受け取り:
+
+n は文字列の長さですが、この問題では具体的な用途はありません。ただし、コードの整合性のために読み取っています。
+s は処理対象の文字列です。strip() メソッドで末尾の改行を取り除いています。
+文字列をソート:
+
+sorted(s) により、文字列の文字を辞書順に並び替えたリストを取得し、"".join() で再度文字列として結合します。これにより、辞書順で最小の順列を生成するための出発点を作ります。
+順列の生成:
+
+itertools.permutations(sorted_s) によって、文字列のすべての順列を生成します。
+3番目の順列の取得:
+
+順列を一つずつ確認し、3番目の順列に達したら出力します。その後、ループを終了します。
+この方法は、文字列の長さが最大で10文字のため、全順列を列挙しても十分に処理可能です。
+'''
 # Q.  村人の友好関係(easy)
+# utf-8
+# 入力の読み取り
+n, m, q = map(int, input().split())
+
+# 隣接行列の作成（友好度の初期化）
+# ga[i][j] は村人 i と村人 j の友好度を示す
+# 初期状態ではすべての友好度は 0 で、後で値を更新します
+ga = [[0 for j in range(n)] for i in range(n)]
+
+# 友好度の情報を読み取る
+for _ in range(m):
+    a, b, f = map(int, input().split())
+    a -= 1
+    b -= 1
+    ga[a][b] = ga[b][a] = f
+
+# 同好会のメンバーを追跡するための配列
+# is_member[i] は村人 i が同好会に属しているかどうかを示す
+is_member = [False for _ in range(n)]
+
+# ログの処理
+for _ in range(q):
+    line = input().split()
+    op = line[0]  # 操作（+ または -）
+    v = int(line[1]) - 1  # 村人の番号（0-indexed）
+    if op == '+':
+        is_member[v] = True
+    elif op == '-':
+        is_member[v] = False
+
+# 人気度の計算
+max_f = 0
+for a in range(n):
+    for b in range(n):
+        if is_member[a] != is_member[b]:  # 片方だけが同好会に属している
+            max_f = max(max_f, ga[a][b])
+
+# 結果の出力
+print(max_f)
+'''
+入力の読み取り
+n: 村人の人数
+m: 友好度の情報の数
+q: 同好会の更新操作の数
+
+隣接行列の作成
+gaは村人間の友好度を保持する二次元リストです。初期状態ではすべて0に設定されています。
+for _ in range(m): 友好度の情報を読み取り、gaに設定します。
+
+同好会メンバーの管理
+is_memberは村人が同好会に所属しているかどうかを管理するリストです。
+for _ in range(q): ログに基づき、同好会に村人を追加または削除します。
+
+人気度の計算
+max_fは人気度の最大値を保持します。
+二重ループを使って、全ての村人の組み合わせに対して、片方が同好会メンバーで片方が非メンバーである場合の友好度の最大値を計算します。
+
+結果の出力
+print(max_f): 計算された人気度を出力します。
+'''
