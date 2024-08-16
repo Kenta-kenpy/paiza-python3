@@ -7950,9 +7950,56 @@ calculate_ranks関数を呼び出して、得点リストから順位リストra
 ranksリストの各順位を一行ずつ標準出力に出力します。
 '''
 
-# B149 仲間探し
+# B149 仲間探し　※入力例全てでNG
 # utf-8
+def find_max_adventurers(H, W, Y, X, map_grid):
+    # Convert 1-based index to 0-based index
+    Y -= 1
+    X -= 1
+    
+    # Initialize counters for each direction
+    adventurers = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
+    
+    # Count adventurers in the North direction
+    for i in range(Y - 1, -1, -1):
+        if map_grid[i][X] != '#':
+            adventurers['N'] += int(map_grid[i][X])
+    
+    # Count adventurers in the East direction
+    for j in range(X + 1, W):
+        if map_grid[Y][j] != '#':
+            adventurers['E'] += int(map_grid[Y][j])
+    
+    # Count adventurers in the South direction
+    for i in range(Y + 1, H):
+        if map_grid[i][X] != '#':
+            adventurers['S'] += int(map_grid[i][X])
+    
+    # Count adventurers in the West direction
+    for j in range(X - 1, -1, -1):
+        if map_grid[Y][j] != '#':
+            adventurers['W'] += int(map_grid[Y][j])
+    
+    # Find the direction with the maximum adventurers
+    max_direction = max(adventurers, key=lambda k: (adventurers[k], -'NESW'.index(k)))
+    max_adventurers = adventurers[max_direction]
+    
+    return f"{max_direction} {max_adventurers}"
 
+# Input reading
+import sys
+input = sys.stdin.read
+data = input().strip().split('\n')
+
+# Read the map dimensions
+H, W = map(int, data[0].split())
+# Read the starting position
+Y, X = map(int, data[1].split())
+# Read the map grid
+map_grid = data[2:]
+
+# Output the result
+print(find_max_adventurers(H, W, Y, X, map_grid))
 
 # B150 最適な投資
 # utf-8
