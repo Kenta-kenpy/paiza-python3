@@ -1,4 +1,22 @@
-# Q. Eメールアドレス D(殿堂入り)
+問題一覧(殿堂入り・掲載期間外含む)
+Eメールアドレス D
+N倍の文字列 D(殿堂入り)
+検索履歴 C
+単語のカウント C
+宝くじ C
+野球の審判 C
+みかんの仕分け C
+残り物の量 C(殿堂入り)
+日別訪問者数の最大平均区間 B
+みんなでしりとり B
+3Dプリンタ B
+神経衰弱(オリジナル) B
+名刺バインダー管理 B(殿堂入り)
+日別訪問者数の最大平均区間(large) A
+お菓子の詰め合わせ A(殿堂入り)
+村人の友好関係 S(殿堂入り)
+
+# Q. Eメールアドレス D
 # utf-8
 s = input()
 t = input()
@@ -13,6 +31,27 @@ print(f"{s}@{t}")
 # utf-8
 N = int(input())
 print("*" * N)
+
+# Q. 検索履歴 C
+# utf-8
+n = int(input())
+
+re = []
+
+for i in range(n):
+    s = input()
+
+    if s in re:
+        re.pop(re.index(s))
+
+    re.append(s)
+
+for i in range(len(re)):
+    print(re[-i - 1])
+'''
+連結リスト等のデータ構造を用いて、問題文にある通りに履歴を作ってもよいのですが、以下のようにすると簡単に解くことが出来ます。
+検索ワードを W_N から W_1 まで逆順に見ていき、そのワードが既出でなければ出力する。
+'''
 
 # Q. 単語のカウント C
 step2 「単語のカウント」を解くために:part1
@@ -152,27 +191,6 @@ for i in range(len(m)):
 '''
 英単語を出現した順番で保存しておく配列と、その出現回数を記録する配列を用意し、
 英単語を順に見ていきながら処理していけばよいです。
-'''
-
-# Q. 検索履歴 C
-# utf-8
-n = int(input())
-
-re = []
-
-for i in range(n):
-    s = input()
-
-    if s in re:
-        re.pop(re.index(s))
-
-    re.append(s)
-
-for i in range(len(re)):
-    print(re[-i - 1])
-'''
-連結リスト等のデータ構造を用いて、問題文にある通りに履歴を作ってもよいのですが、以下のようにすると簡単に解くことが出来ます。
-検索ワードを W_N から W_1 まで逆順に見ていき、そのワードが既出でなければ出力する。
 '''
 
 # Q. 宝くじ C
@@ -637,7 +655,37 @@ for i in range(n):
 単語リストは集合の形で、しりとりから脱落せずに残っているプレイヤーは配列か集合の形で持つようにすると比較的楽に実装できるでしょう。
 '''
 
-# Q. 神経衰弱 B
+# Q. 3Dプリンタ B(殿堂入り)
+# utf-8
+X, Y, Z = map(int, input().split())
+grid = [[0] * Y for _ in range(Z)]
+
+for z in range(Z):
+    for x in range(X):
+        s = input().strip()
+        for y in range(Y):
+            if s[y] == '#':
+                grid[z][y] = 1
+
+    bar = input()
+
+for z in range(Z - 1, -1, -1):
+    for y in range(Y):
+        if grid[z][y] == 1:
+            print("#", end="")
+        else:
+            print(".", end="")
+    print()
+'''
+与えられた図形を x 軸と水平方向から見た時のシルエットを出力する問題です。
+x 軸と水平方向から見たシルエットとは、y-z 二次元平面に影を落とした影そのものです。
+影をおとす y-z 平面に対応するグリッド : G を用意します。
+点 (px , py , pz) にセルが存在するならば、G[ py ][ pz ] にメモする
+以上の操作を行うことで、y-z に落ちる影が G にメモされます。
+G にメモされた影を、出力する順番に注意して出力してください。
+'''
+
+# Q. 神経衰弱(オリジナル) B
 step2 「神経衰弱」を解くために:part1
 # utf-8
 # 1 行の入力を文字列として受け取り、半角スペースで区切ったものを整数に変換する
@@ -832,35 +880,6 @@ for i in player:
 トランプの配置を二次元配列で受け取り、問題文の通りに実装をすればよいです。
 '''
 
-# Q. 3Dプリンタ B(殿堂入り)
-# utf-8
-X, Y, Z = map(int, input().split())
-grid = [[0] * Y for _ in range(Z)]
-
-for z in range(Z):
-    for x in range(X):
-        s = input().strip()
-        for y in range(Y):
-            if s[y] == '#':
-                grid[z][y] = 1
-
-    bar = input()
-
-for z in range(Z - 1, -1, -1):
-    for y in range(Y):
-        if grid[z][y] == 1:
-            print("#", end="")
-        else:
-            print(".", end="")
-    print()
-'''
-与えられた図形を x 軸と水平方向から見た時のシルエットを出力する問題です。
-x 軸と水平方向から見たシルエットとは、y-z 二次元平面に影を落とした影そのものです。
-影をおとす y-z 平面に対応するグリッド : G を用意します。
-点 (px , py , pz) にセルが存在するならば、G[ py ][ pz ] にメモする
-以上の操作を行うことで、y-z に落ちる影が G にメモされます。
-G にメモされた影を、出力する順番に注意して出力してください。
-'''
 # Q. 名刺バインダー管理　B(殿堂入り)
 # utf-8
 n, m = map(int, input().split())
