@@ -4643,8 +4643,49 @@ if __name__ == "__main__"::
 この条件文は、スクリプトが直接実行されたときに main() 関数を呼び出すために使用します。これにより、他のモジュールからインポートされたときに main() が実行されないようにします。
 '''
 
-# C153 本棚選び
+# C153 本棚選び ※入力例すら通過せず
+# utf-8
+import sys
+import math
 
+def main():
+    input = sys.stdin.read
+    data = input().split()
+    
+    # 手持ちの本のサイズごとの冊数を読み込む
+    A = int(data[0])
+    B = int(data[1])
+    C = int(data[2])
+    
+    # 本棚の数を読み込む
+    N = int(data[3])
+    
+    # 最小価格を初期化
+    min_price = math.inf
+    
+    index = 4
+    # 各本棚の情報を読み込む
+    for _ in range(N):
+        P_i = int(data[index])
+        X_i = int(data[index + 1])
+        Y_i = int(data[index + 2])
+        Z_i = int(data[index + 3])
+        index += 4
+        
+        # 本棚がすべての本を収納できるかをチェック
+        if X_i >= A and Y_i >= B and Z_i >= C:
+            # 価格を更新する
+            if P_i < min_price:
+                min_price = P_i
+    
+    # 最小価格が更新されていない場合は -1 を出力
+    if min_price == math.inf:
+        print(-1)
+    else:
+        print(min_price)
+
+if __name__ == "__main__":
+    main()
 
 # C154
 # C155
