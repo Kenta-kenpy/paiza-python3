@@ -22,6 +22,28 @@ print(math.gcd(a, b))
 '''
 
 step2 3つ以上の整数の最大公約数
+# utf-8
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+N = int(input())
+gcd_all = int(input())
+
+for i in range(N - 1):
+    a = int(input())
+    gcd_all = gcd(gcd_all, a)
+
+print(gcd_all)
+'''
+問題文にある通り、3 つ以上の整数 a,b,c,d,e,... の最大公約数はgcd(...gcd(gcd(gcd(gcd(a,b),c),d),e)...)といった具合に求めることができます。
+そのため、初めの整数を受け取ったのち、次の処理を残りの入力について行えば良いです。
+「ループ処理を用いて変数を 1 つ受け取り、その時点での gcd の値と受け取った変数の gcd を求める。」
+2 変数の gcd を求める処理は関数化しておくと再利用しやすくなります。
+'''
+
 step3 最小公倍数
 step4 ax + by = c
 final 拡張ユークリッドの互除法
