@@ -7950,59 +7950,65 @@ calculate_ranks関数を呼び出して、得点リストから順位リストra
 ranksリストの各順位を一行ずつ標準出力に出力します。
 '''
 
-# B149 仲間探し　※入力例全てでNG
+# B149 仲間探し
 # utf-8
-def count_adventurers_in_direction(grid, start_row, start_col, dr, dc):
-    count = 0
-    r, c = start_row, start_col
-    while 0 <= r < len(grid) and 0 <= c < len(grid[0]):
-        if grid[r][c] == '#':
-            break
-        if grid[r][c].isdigit():
-            count += int(grid[r][c])
-        r += dr
-        c += dc
-    return count
+# 入力の取得
+H, W = map(int, input().split())  # 地図の縦と横のサイズ
+Y, X = map(int, input().split())  # プレイヤーの位置（1-based index）
+map_data = [input().strip() for _ in range(H)]  # 地図データ
 
-def find_max_adventurers(grid, start_row, start_col):
-    directions = {
-        'N': (-1, 0),
-        'S': (1, 0),
-        'E': (0, 1),
-        'W': (0, -1)
-    }
-    
-    max_adventurers = -1
-    best_direction = None
+# 方角ごとの冒険者の数
+adventurers = {'N': 0, 'E': 0, 'S': 0, 'W': 0}
 
-    for direction, (dr, dc) in directions.items():
-        count = count_adventurers_in_direction(grid, start_row, start_col, dr, dc)
-        if count > max_adventurers or (count == max_adventurers and direction < best_direction):
-            max_adventurers = count
-            best_direction = direction
+# 北方向の探索（自分の位置より上の行全て）
+for i in range(Y - 1):  # 0-based indexに対応
+    for j in range(W):
+        if map_data[i][j].isdigit():
+            adventurers['N'] += int(map_data[i][j])
 
-    return best_direction, max_adventurers
+# 南方向の探索（自分の位置より下の行全て）
+for i in range(Y, H):  # 0-based indexに対応
+    for j in range(W):
+        if map_data[i][j].isdigit():
+            adventurers['S'] += int(map_data[i][j])
 
-# Input handling
-import sys
-input = sys.stdin.read
-data = input().splitlines()
+# 西方向の探索（自分の位置より左の列全て）
+for i in range(H):
+    for j in range(X - 1):  # 0-based indexに対応
+        if map_data[i][j].isdigit():
+            adventurers['W'] += int(map_data[i][j])
 
-# Read the dimensions
-H, W = map(int, data[0].split())
-# Read the starting position (convert to zero-indexed)
-start_row, start_col = map(int, data[1].split())
-start_row -= 1
-start_col -= 1
+# 東方向の探索（自分の位置より右の列全て）
+for i in range(H):
+    for j in range(X, W):  # 0-based indexに対応
+        if map_data[i][j].isdigit():
+            adventurers['E'] += int(map_data[i][j])
 
-# Read the map grid
-grid = data[2:2 + H]
+# 方角の優先順位
+priority_order = ['N', 'E', 'S', 'W']
 
-# Find the best direction and number of adventurers
-direction, adventurers = find_max_adventurers(grid, start_row, start_col)
+# 最大人数を持つ方角を見つける
+max_adventurers = -1
+max_direction = None
+for direction in priority_order:
+    if adventurers[direction] > max_adventurers:
+        max_adventurers = adventurers[direction]
+        max_direction = direction
 
-# Output the result
-print(f"{direction} {adventurers}")
+# 結果の出力
+print(f"{max_direction} {adventurers[max_direction]}")
+'''
+このコードは、プレイヤーの位置から4つの方角（北、東、南、西）それぞれにおいて、数字で示された冒険者の数を集計し、その中で最も多くの冒険者がいる方角を優先順位に従って選ぶ問題を解決します。
+地図のサイズ (H 行と W 列) を取得します。プレイヤーの位置 (Y 行と X 列、1-based index) を取得します。地図データを map_data として、各行のデータをリストとして読み込みます。
+北（N）、東（E）、南（S）、西（W）それぞれの方角に対する冒険者の数を記録するための辞書を初期化します。
+プレイヤーの位置より上の行（Y-1 行まで）を探索し、その行の各列を調べます。各セルに数字がある場合、その値を北方向の冒険者のカウントに加算します。
+プレイヤーの位置より下の行（Y 行から最後まで）を探索し、その行の各列を調べます。各セルに数字がある場合、その値を南方向の冒険者のカウントに加算します。
+全行を対象にし、プレイヤーの位置より左の列（X-1 列まで）を探索します。各セルに数字がある場合、その値を西方向の冒険者のカウントに加算します。
+全行を対象にし、プレイヤーの位置より右の列（X 列から最後まで）を探索します。各セルに数字がある場合、その値を東方向の冒険者のカウントに加算します。
+方角の優先順位リスト (priority_order) を使って、最大の冒険者数を持つ方角を選びます。max_adventurers 変数に最大人数を保持し、max_direction 変数にその方角を保持します。
+各方角を優先順位リストの順に確認し、冒険者の数が現在の最大人数より多い場合は更新します。
+最も多くの冒険者がいる方角 (max_direction) とその人数 (adventurers[max_direction]) を出力します。
+'''
 
 # B150 最適な投資
 # utf-8
