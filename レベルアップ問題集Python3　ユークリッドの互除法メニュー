@@ -45,6 +45,21 @@ print(gcd_all)
 '''
 
 step3 最小公倍数
+# utf-8
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+a, b = map(int, input().split())
+print(a * b // gcd(a, b))
+'''
+最大公約数 gcd の値を求めて、問題文中の式 lcm(A,B) = A×B/gcd(A,B) の値を求めれば良いです。
+gcd で a と b の積を割る際に、返す値が整数値となるように // 演算子で除算をしています。
+/ 演算子で除算をすると、返す値が浮動小数点数となり、正答できないことに注意してください。
+'''
+
 step4 ax + by = c
 final 拡張ユークリッドの互除法
 
