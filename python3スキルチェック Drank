@@ -2538,7 +2538,12 @@ print(24*n)
 D = int(input())
 print(int(D*1.4)) # 型変換
 
-# D305
+# D305 調理時間
+# お湯を沸かす時間 n 分とお湯を注いでからカップラーメンができるまでの時間 m 分
+n = int(input())
+m = int(input())
+print(n+m)
+
 # D306
 # D307
 # D308
