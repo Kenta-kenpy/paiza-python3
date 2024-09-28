@@ -8117,7 +8117,46 @@ packs は、各パックの情報をリストとして受け取ります。リ�
 動的計画法を使って効率的に解を求めることができます。dp 配列を使って、各状態を少しずつ更新していくことで、N個以上のまんじゅうを購入するための最小金額を計算します。
 '''
 
-# B152
+# B152 選べる日替わり弁当
+# utf-8
+from itertools import combinations  # 組み合わせを生成するためのモジュールをインポート
+
+# 入力を受け取る
+N, X = map(int, input().split())  # Nはおかずの種類数、Xは目標金額
+prices = list(map(int, input().split()))  # おかずの値段リスト
+satisfactions = list(map(int, input().split()))  # おかずの満足度リスト
+
+# 最大満足度を格納する変数を負の無限大で初期化（最悪のケースでも最大値を見つけるため）
+max_satisfaction = float('-inf')
+
+# 1つ、2つ、3つのおかずの組み合わせを列挙する
+for r in range(1, 4):  # おかずを1個〜3個選ぶ組み合わせを試す
+    for comb in combinations(range(N), r):  # 組み合わせを生成
+        total_price = sum(prices[i] for i in comb)  # 現在の組み合わせの値段の合計を計算
+        total_satisfaction = sum(satisfactions[i] for i in comb)  # 現在の組み合わせの満足度の合計を計算
+        
+        # 合計金額がX円になるか確認
+        if total_price == X:
+            # 満足度がこれまでの最大値より大きければ更新
+            max_satisfaction = max(max_satisfaction, total_satisfaction)
+
+# 結果を出力
+print(max_satisfaction)
+'''
+最初に、標準入力からおかずの種類の数 N と、弁当の目標価格 X を読み取ります。次に、各おかずの値段と満足度をそれぞれリストに格納します。
+N はおかずの数であり、X は弁当の合計価格として目標にする値です。
+例えば、入力が 6 1000 の場合、6種類のおかずがあり、弁当の価格を1000円にする必要があります。
+次に、prices というリストにおかずの値段、satisfactions というリストに各おかずの満足度が保存されます。
+次に、最大満足度を追跡するための変数 max_satisfaction を初期化します。この変数は、後に最適な組み合わせが見つかった際に更新されます。初期値として、負の無限大（float('-inf')）を使います。
+これにより、どの満足度も最初はこの値より大きくなるため、正しく更新されます。
+itertools.combinations を用いて、おかずを1つ、2つ、3つ選ぶ全ての可能な組み合わせを生成します。combinations(range(N), r) で、N種類のおかずのインデックスから r 個選ぶ組み合わせを作ります。
+ここで、r は 1 から 3 まで動かし、1つ、2つ、3つのおかずの組み合わせを試します。comb には選ばれたおかずのインデックスが含まれています。そのインデックスを使って、各おかずの値段の合計と満足度の合計を計算します。
+total_price には、その組み合わせのおかずの合計値段が入ります。total_satisfaction には、その組み合わせのおかずの満足度の合計が入ります。
+計算した total_price が目標の X 円と一致するかどうかを確認します。もし total_price == X なら、その組み合わせは条件を満たすことになります。
+条件を満たした組み合わせに対して、その満足度の合計 total_satisfaction がこれまでの最大満足度 max_satisfaction より大きいかを確認し、もし大きければ max_satisfaction を更新します。この過程で、最も満足度が高い組み合わせが記録されます。
+すべての組み合わせを試し終わった後、最終的に得られた最大満足度 max_satisfaction を出力します。この値が、X円の条件を満たし、かつ最大の満足度を持つ組み合わせの満足度です。
+'''
+
 # B153
 # B154
 # B155
