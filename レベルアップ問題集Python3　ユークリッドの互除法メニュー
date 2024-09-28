@@ -94,6 +94,58 @@ print(x, y)
 
 <意地悪すごろく>
 step1 分数
+# utf-8
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+a, b, cal, c, d = input().split()
+a, b, c, d = map(int, [a, b, c, d])
+
+if cal == "+":
+    numerator = a * d + b * c
+    denominator = b * d
+elif cal == "-":
+    numerator = a * d - b * c
+    denominator = b * d
+elif cal == "*":
+    numerator = a * c
+    denominator = b * d
+else:
+    numerator = a * d
+    denominator = b * c
+
+if numerator == 0:
+    denominator = 1
+else:
+    div = gcd(abs(numerator), abs(denominator))
+    numerator //= div
+    denominator //= div
+    if denominator < 0:
+        denominator *= -1
+        numerator *= -1
+
+print(numerator, denominator)
+'''
+各演算の約分前の分子 n の値は次の通りです。
+A × D + C × B    // cal が +
+A × D - C × B    // cal が -
+A × C    // cal が *
+A × D    // cal が /
+また、約分前の分母 d の値は次の通りです。
+B × D    // cal が + , - , *
+B × C    // cal が /
+これであとは、n と d を gcd(n , d) で割ることで約分ができ答えが求められます。
+ここで注意しなければいけないのが、一般に gcd は負の数を扱うことができない点と、答えが負の場合では n を負の数にしなければいけない点です。
+場合分けが面倒ですが、gcd に n , d を渡す際には正の数に直してから渡したり、 n , d の正負の組み合わせに応じて答えの正負を調整する必要があります。
+n , d のうち、1 つが負である場合は答え全体が負になり、それ以外の場合は正になります。
+
+map(int, [a,b,c,d]) では、文字列型として受け取った a,b,c,d を、map() 関数を用いて、まとめて整数(int)型に変換しています。
+約分するときに、分子と分母を / 演算子で割らないように注意しましょう。（/ 演算子で割った値は、整数型ではなく浮動小数点数型となります。）
+'''
+
 final 意地悪すごろく
 
 <RSA暗号の基本原理>
