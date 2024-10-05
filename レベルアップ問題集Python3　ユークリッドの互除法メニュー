@@ -147,9 +147,45 @@ map(int, [a,b,c,d]) では、文字列型として受け取った a,b,c,d を、
 '''
 
 final 意地悪すごろく
+# utf-8
+def gcd(a, b):
+    if b == 0:
+        return a
+    return gcd(b, a % b)
+
+
+n, a = map(int, input().split())
+none = True
+for b in range(1, 1001):
+    min_move = gcd(a, b)
+    if n % min_move != 0 and b != a:
+        print(b)
+        none = False
+if none:
+    print(-1)
+'''
+-A , -B , 0 , 0 , A , B の 6 つの目の出た回数をそれぞれ a 〜 f とすると、移動したマス数は -Aa-Bb+Ae+Bfとなります。
+これを整理すると A(e-a) + B(f-b) となります。
+a 〜 f は回数であり整数であるので、e-a , f-b は整数となります。
+よって、paiza 君が移動したマス数は、ある整数 x , y を用いて、 Ax + By と表すことができます。
+paiza 君がゴールするための条件は、移動の結果 N マスちょうど進むことができること、すなわち Ax + By = Nを満たす整数の組 (x , y) が存在することです。
+ここで、paiza 君が移動できる最小のマス数を考えます。Ax + By = Nを満たす (x , y) が存在するときの最小の N の値は gcd(A , B) であるから、paiza君の最小の移動のマス数は gcd(A , B) となります。
+つまり、paiza くんが移動できるのは gcd(A, B) の倍数マスのみです。
+よって N が gcd(A , B) の倍数マスでない、つまり N が gcd(A, B)で割り切れない時 paiza 君はゴールすることができません。
+'''
 
 <RSA暗号の基本原理>
 step1 合同式
+# utf-8
+n, a = map(int, input().split())
+
+for i in range(1, 100001):
+    if a % n == i % n:
+        print(i)
+'''
+1 〜 100,000 の全ての数 i について、「i を N で割った余りが A を N で割った余りに等しい場合、i を出力する。」　という処理を行えば良いです。
+'''
+
 step2 modの演算
 step3 modの逆元
 step4 高速な累乗の計算
