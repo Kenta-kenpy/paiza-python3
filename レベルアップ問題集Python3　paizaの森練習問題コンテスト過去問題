@@ -1537,5 +1537,100 @@ print(max_f): 計算された人気度を出力します。
 
 # paizaの森練習問題コンテスト過去問題17　★
 # Q. 最大値と最小値
-# Q. 神経衰弱
+# utf-8
+a = int(input())
+b = int(input())
+c = int(input())
 
+print(max(a, max(b, c)))
+print(min(a, min(b, c)))
+
+# Q. 神経衰弱
+# utf-8
+cards = list(map(int, input().split()))
+cards.sort()
+
+if cards[0] == cards[1] and cards[2] == cards[3]:
+    print("Yes")
+else:
+    print("No")
+
+# Q. じゃんけん(忖度)
+# utf-8
+y, h = input().split()
+rps = "RPS"
+
+ans_index = rps.find(h)
+if int(y) < 10:
+    ans_index -= 1
+else:
+    ans_index += 1
+
+ans_index = (ans_index + 3) % 3
+
+print(rps[ans_index])
+
+# Q. n→10進法
+# utf-8
+n = int(input())
+a = input()
+a = list(a)
+ans = 0
+for i in range(len(a)):
+    ans *= n
+    ans += int(a[i])
+print(ans)
+
+# Q.お菓子の価格帯
+# utf-8
+n = int(input())
+a = list(map(int, input().split()))
+q = int(input())
+for _ in range(q):
+    ans = 0
+    l, r = map(int, input().split())
+    for i in range(n):
+        if l <= a[i] and a[i] <= r:
+            ans += 1
+    print(ans)
+
+# Q.ぴったり卵を生産 その2
+# utf-8
+import bisect
+
+n, k = map(int, input().split())
+
+a = list(map(int, input().split()))
+
+
+def calc(l, t):
+    sum_l = []
+    for i in range(2 ** len(l)):
+        sum = 0
+        for j in range(len(l)):
+            if i & (1 << j):
+                if t == 0:
+                    sum += a[j]
+                else:
+                    sum += a[j + (n // 2)]
+        sum_l.append(sum)
+    return sum_l
+
+
+h1 = a[0 : (n // 2)]
+h2 = a[(n // 2) : n]
+P = calc(h1, 0)
+Q = calc(h2, 1)
+Q.sort()
+Q_mi = Q.copy()
+for i in range(len(Q_mi)):
+    Q_mi[i] = -Q_mi[i]
+Q_mi.sort()
+ans = 0
+for i in range(len(P)):
+    pos1 = bisect.bisect_left(Q, k - P[i])
+    if pos1 < len(Q) and Q[pos1] == k - P[i]:
+        pos2 = len(Q_mi) - 1 - bisect.bisect_left(Q_mi, -(k - P[i]))
+        ans += pos2 - pos1 + 1
+
+print(ans)
