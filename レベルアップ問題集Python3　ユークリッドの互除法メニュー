@@ -187,6 +187,35 @@ for i in range(1, 100001):
 '''
 
 step2 modの演算
+# utf-8
+n = int(input())
+a, cal, b = input().split()
+a, b = map(int, [a, b])
+
+if cal == "+":
+    print(((a % n) + (b % n)) % n)
+elif cal == "-":
+    print(((a % n) - (b % n) + n) % n)
+elif cal == "*":
+    print((a % n) * (b % n) % n)
+else:
+    ans = 1
+    for i in range(b):
+        ans *= a
+        ans %= n
+    print(ans)
+'''
+問題文中の関係式に基づいて mod N での計算を行うプログラムを作成しましょう。
+引き算の場合のみ注意が必要です。a ≡ b(mod N) , c ≡ d(mod N)のとき、
+a < c の場合は
+a % N - c % N
+の値が負になってしまうため、答えが 0 以上 N 未満 になりません。
+mod N の演算では、N % N = 0 であるため、+ N , - N は演算結果に影響を及ぼしません。
+そのため、引き算の結果が負になってしまった場合は + N を繰り返すことで必ず 0 以上 N 未満にすることができます。
+（今回の場合は -N < a - c < Nであるため + N すれば良いです。）
+この問題で出てきた 4 つの演算については、計算の途中のどのタイミングであっても mod N の値 (N で割った余り) に直して良いという風に覚えておくと良いと思います。
+'''
+
 step3 modの逆元
 step4 高速な累乗の計算
 final RSA暗号の基本原理
