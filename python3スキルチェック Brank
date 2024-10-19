@@ -8158,7 +8158,86 @@ total_price には、その組み合わせのおかずの合計値段が入り�
 '''
 
 # B153 蚊取線香
+# utf-8
+def spiral_burning_time(grid, N):
+    total_blocks = N * N
+    times = []  # 渦巻き順にブロックの燃焼時間を保存するリスト
 
+    # 渦巻き順にグリッドをトラバースする
+    left, right, top, bottom = 0, N - 1, 0, N - 1
+    while left <= right and top <= bottom:
+        # 上側の行を左から右へ
+        for i in range(left, right + 1):
+            times.append(grid[top][i])
+        top += 1
+
+        # 右側の列を上から下へ
+        for i in range(top, bottom + 1):
+            times.append(grid[i][right])
+        right -= 1
+
+        # 下側の行を右から左へ
+        if top <= bottom:
+            for i in range(right, left - 1, -1):
+                times.append(grid[bottom][i])
+            bottom -= 1
+
+        # 左側の列を下から上へ
+        if left <= right:
+            for i in range(bottom, top - 1, -1):
+                times.append(grid[i][left])
+            left += 1
+
+    # 1/4, 2/4, 3/4, 4/4 燃えた時の時間を計算する
+    total_time = sum(times)
+    quarter_times = [total_blocks // 4, total_blocks // 2, 3 * total_blocks // 4, total_blocks]  # 各段階で燃えるブロック数
+    cumulative_time = 0
+    results = []
+    q_idx = 0
+
+    for idx, time in enumerate(times):
+        cumulative_time += time
+        if idx + 1 == quarter_times[q_idx]:
+            results.append(cumulative_time)
+            q_idx += 1
+            if q_idx == 4:
+                break
+
+    return results
+
+# 入力処理
+import sys
+input = sys.stdin.read
+data = input().splitlines()
+
+# Nを取得
+N = int(data[0])
+
+# グリッドを作成
+grid = [list(map(int, row.split())) for row in data[1:N+1]]
+
+# 結果を計算
+result = spiral_burning_time(grid, N)
+
+# 結果を出力
+for time in result:
+    print(time)
+'''
+N = int(data[0]) で、最初の行（1行目）の値を整数に変換し、蚊取り線香の一辺の長さ N として取得します。
+次に、data[1:N+1] で2行目から N+1 行目までを取り出します。それぞれの行をスペース区切りで分割し、map(int, row.split()) によって文字列から整数に変換します。それをリストにして、グリッド grid に格納します。この grid は、燃焼時間を保持する2次元リスト（
+N×N）です。次に、与えられた grid に基づき、渦巻き状に燃焼時間を計算していきます。total_blocks = N * N は、全体のブロック数を計算します。
+times = [] は、渦巻き順に燃えたブロックの燃焼時間を格納するリストです。left, right, top, bottom は、現在の範囲の境界を管理します。初期状態では、それぞれグリッドの左端 (0), 右端 (N-1), 上端 (0), 下端 (N-1) です。
+この境界を使って、ブロックを渦巻き状にトラバースしながら燃焼時間を収集します。上側の行の左から右に向かってブロックを処理します。grid[top][i] により上端行の各要素を取得し、times リストに追加します。
+top += 1 で、上端の境界を一つ下に下げます（次の行を処理する準備）。次に右側の列を上から下に向かって処理します。grid[i][right] により右端の各要素を取得し、times に追加します。
+right -= 1 で右端の境界を左に一つずらします。下側の行を右から左に向かって処理します。grid[bottom][i] により下端の各要素を取得し、times に追加します。
+bottom -= 1 で下端の境界を上に一つずらします。最後に左側の列を下から上に向かって処理します。grid[i][left] により左端の各要素を取得し、times に追加します。
+left += 1 で左端の境界を右に一つずらします。total_time = sum(times) で、渦巻き順にトラバースした全ブロックの燃焼時間の合計を計算します。
+quarter_times は、全ブロックの1/4、2/4、3/4、4/4（完全燃焼）のタイミングで処理すべきブロック数をリストに格納します。
+cumulative_time で累積時間を計算し、results に各段階での累積時間を格納します。
+times リストをループし、各ブロックの燃焼時間を累積します。累積時間が quarter_times[q_idx] に達したら、その時点の累積時間を results に追加します。q_idx を増やして次のチェックポイントに移動します。
+q_idx == 4 となった時点でループを終了します（4つの段階全てをカバーしたため）。最終的な結果は spiral_burning_time 関数から results リストとして返されます。このリストをループして各時間を出力します。
+出力フォーマットの指示に従い、結果を改行区切りで出力します。
+'''
 
 # B154
 # B155
