@@ -304,5 +304,39 @@ print(afterM)
 
 <RSA暗号の作成(文字列)>
 step1 RSA暗号の解読(1文字)
+# utf-8
+def extgcd(a, b):
+    if b != 0:
+        c, y, x = extgcd(b, a % b)
+        y -= (a // b) * x
+        return c, x, y
+    return a, 1, 0
+
+
+def modpow(a, b, m):
+    ans = 1
+    while 0 < b:
+        if b & 1 == 1:
+            ans = (ans * a) % m
+        a = (a * a) % m
+        b >>= 1
+    return ans
+
+
+p, q, e, E = map(int, input().split())
+n = p * q
+n_prime = (p - 1) * (q - 1)
+
+c, x, y = extgcd(e, n_prime)
+d = (x + n_prime) % n_prime
+M = modpow(E, d, n)
+
+print(chr(M))
+'''
+この問題では、あなたは受信者であるので、E^d mod n の値を求めることで暗号化前の数値を得ることができます。
+E と n の値は与えられているので、d の値が求まれば良いです。前の問題でやった暗号を解読した後、その値を ASCII コードに基づいて文字に直せば良いです。
+Python3 では、ASCII コードに基づいて整数 N を文字に変換する場合は chr(N) と書けば良いです。
+'''
+
 step2 RSA暗号の解読(文字列)
 final RSA暗号の作成(1文字)
