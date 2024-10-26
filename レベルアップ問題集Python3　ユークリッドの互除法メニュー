@@ -339,4 +339,63 @@ Python3 では、ASCII コードに基づいて整数 N を文字に変換する
 '''
 
 step2 RSA暗号の解読(文字列)
+# utf-8
+def extgcd(a, b):
+    if b != 0:
+        c, y, x = extgcd(b, a % b)
+        y -= (a // b) * x
+        return c, x, y
+    return a, 1, 0
+
+
+def modpow(a, b, m):
+    ans = 1
+    while 0 < b:
+        if b & 1 == 1:
+            ans = (ans * a) % m
+        a = (a * a) % m
+        b >>= 1
+    return ans
+
+
+def divisor(n):
+    for i in range(2, int(n ** (1 / 2))):
+        if n % i == 0:
+            p = i
+            q = n // i
+            return p, q
+
+
+n, e, E = map(int, input().split())
+p, q = divisor(n)
+n_prime = (p - 1) * (q - 1)
+
+c, x, y = extgcd(e, n_prime)
+d = (x + n_prime) % n_prime
+M = modpow(E, d, n)
+
+letter = [0] * 4
+for i in range(4):
+    for j in range(7):
+        if M % 2 == 1:
+            letter[i] += pow(2, j)
+        M //= 2
+
+output = ""
+for i in range(4):
+    if letter[3 - i] != 0:
+        output += chr(letter[3 - i])
+print(output)
+'''
+この問題では、あなたは受信者であるので、E^d mod n の値を求めることで暗号化前の数値を得ることができます。
+E と n の値は与えられているので、d の値が求まれば良いです。二つの素数 p と q に関しては、n がある整数で割り切れるかどうかひとつずつ調べることで求められます。前の問題でやった暗号を解読した後、次の操作を行えば良いです。
+1. 求めた値を 2 進数に直し 7 ビットずつに区切った時の値を求める。
+2. 区切った値をそれぞれ 10 進数に直し、それらを ASCII コードに基づいて文字に直す。
+暗号の解読に必要な計算は、この問題集の他の問題や素数問題集にて扱っているので、わからない箇所がある方はこれらの問題に取り組んでみてください。
+1. については、10 進数の整数 N を 2 で i 回割ったときの余りが、 N を 2 進数で表したときの下から i 桁目になるという 10 進数から 2 進数への変換を行いましょう。
+7 桁ずつ（１文字分）区切って 2 進数の値を求めて、それらを配列などに格納し、各数字を ASCII コードに基づいて文字に変換すれば良いです。
+2 進数から 10 進数の変換は、i = 1, 2, ..., 7 に対して 「2 進数の下から i 桁目が 1 のとき、10 進数の値に + 2^(i-1) を足す」 を行えば良いです。
+Python3 では、ASCII コードに基づいて整数 N を文字に変換する場合は chr(N) と書けば良いです。
+'''
+
 final RSA暗号の作成(1文字)
