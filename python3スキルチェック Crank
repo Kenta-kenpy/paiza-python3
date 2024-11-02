@@ -4754,8 +4754,59 @@ unique_flowers = set(flowers): リスト flowers をセットに変換するこ�
 print(len(unique_flowers)): セットの長さを出力することで、異なる種類の花の本数（最大で使える花の本数）を求めます。
 '''
 
-# C157
-# C158
+# C157 ◆
+# C158 定期購読の価格計算　※間違い
+# utf-8
+def calculate_total_cost(n, m, subscriptions):
+    total_cost = 0  # 合計支払額
+
+    # 各週に対する処理
+    for week in range(1, m + 1):
+        weekly_cost = 0
+        delivered_products = 0
+
+        # 各商品がその週に配送されるかどうか確認
+        for freq, price in subscriptions:
+            if week % freq == 0:  # 週が商品頻度の倍数であるかを確認
+                weekly_cost += price
+                delivered_products += 1
+
+        # 割引の適用（整数計算のために切り捨て演算）
+        if delivered_products >= 3:
+            weekly_cost = int(weekly_cost * 0.85)  # 15% 割引
+        elif delivered_products == 2:
+            weekly_cost = int(weekly_cost * 0.90)  # 10% 割引
+
+        # 合計支払額に加算
+        total_cost += weekly_cost
+
+    return total_cost
+
+# 入力処理
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().splitlines()
+    
+    # 1行目の処理
+    n, m = map(int, data[0].strip().split())
+    subscriptions = []
+
+    # 商品の購入頻度と価格を取得
+    for i in range(1, n + 1):
+        freq, price = map(int, data[i].strip().split())
+        subscriptions.append((freq, price))
+    
+    # 合計金額の計算
+    result = calculate_total_cost(n, m, subscriptions)
+    
+    # 結果を出力
+    print(result)
+
+# 実行部分
+if __name__ == "__main__":
+    main()
+
 # C159
 # C160
 --------------------------------------------- C161　※欠番 ◆
