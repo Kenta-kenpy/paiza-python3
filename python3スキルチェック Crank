@@ -4755,57 +4755,58 @@ print(len(unique_flowers)): セットの長さを出力することで、異な�
 '''
 
 # C157 ◆
-# C158 定期購読の価格計算　※間違い
+# C158 定期購読の価格計算
 # utf-8
-def calculate_total_cost(n, m, subscriptions):
-    total_cost = 0  # 合計支払額
+# 最初の入力を取得し、NとMに分解
+data1 = input().strip()
+N, M = map(int, data1.split())
 
-    # 各週に対する処理
-    for week in range(1, m + 1):
-        weekly_cost = 0
-        delivered_products = 0
+# 商品情報のリストを初期化
+subscriptions = []
+for _ in range(N):
+    data2 = input().strip()
+    freq, price = map(int, data2.split())
+    subscriptions.append((freq, price))
 
-        # 各商品がその週に配送されるかどうか確認
-        for freq, price in subscriptions:
-            if week % freq == 0:  # 週が商品頻度の倍数であるかを確認
-                weekly_cost += price
-                delivered_products += 1
+# 合計金額を初期化
+total_cost = 0
 
-        # 割引の適用（整数計算のために切り捨て演算）
-        if delivered_products >= 3:
-            weekly_cost = int(weekly_cost * 0.85)  # 15% 割引
-        elif delivered_products == 2:
-            weekly_cost = int(weekly_cost * 0.90)  # 10% 割引
+# 各週について計算
+for week in range(1, M + 1):
+    weekly_cost = 0
+    delivered_products = 0
 
-        # 合計支払額に加算
-        total_cost += weekly_cost
+    # 各商品がその週に配送されるか確認
+    for freq, price in subscriptions:
+        # 配送される場合、カウントを増やして価格を加算
+        if week == 1 or freq == 1 or (freq >= 2 and week % freq == 1):
+            delivered_products += 1
+            weekly_cost += price
 
-    return total_cost
+    # 割引の適用
+    if delivered_products == 2:
+        weekly_cost *= 0.90
+    elif delivered_products >= 3:
+        weekly_cost *= 0.85
 
-# 入力処理
-def main():
-    import sys
-    input = sys.stdin.read
-    data = input().splitlines()
-    
-    # 1行目の処理
-    n, m = map(int, data[0].strip().split())
-    subscriptions = []
+    # 週ごとの金額を合計
+    total_cost += int(weekly_cost)
 
-    # 商品の購入頻度と価格を取得
-    for i in range(1, n + 1):
-        freq, price = map(int, data[i].strip().split())
-        subscriptions.append((freq, price))
-    
-    # 合計金額の計算
-    result = calculate_total_cost(n, m, subscriptions)
-    
-    # 結果を出力
-    print(result)
-
-# 実行部分
-if __name__ == "__main__":
-    main()
+# 結果を出力
+print(total_cost)
+'''
+このコードは、N種類の定期購入商品に対し、M週目までに支払う金額の合計を計算します。商品ごとに異なる購入頻度と価格が設定されており、同時に複数の商品が届くと割引が適用されるため、その割引を考慮した合計金額を求めます。
+各商品に関する情報（購入頻度 freq と価格 price）を取得し、subscriptions リストにタプル形式で保存します。
+これにより、各商品の頻度と価格を使った計算が可能になります。合計金額 total_cost を初期化します。
+week が 1 から M 週までループし、各週ごとにその週の支払額 weekly_cost と、その週に配送される商品数 delivered_products を初期化します。
+各商品に対し、その週に配送されるかどうかを確認します。
+条件を満たす場合（1週目、または購入頻度が1週に1回のもの、または他の頻度で配送日が該当するもの）、商品価格を weekly_cost に加算し、delivered_products カウントを増やします。
+配送された商品の種類数 delivered_products に応じて割引を適用します。
+2種類が配送された場合は10%割引
+3種類以上が配送された場合は15%割引
+割引後の weekly_cost が計算されます。その週の金額を int() で小数点以下を切り捨て、total_cost に加算します。
+全ての週の計算が終了後、合計金額 total_cost を出力します。
+'''
 
 # C159
 # C160
