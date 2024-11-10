@@ -15,6 +15,26 @@ for i in range(N):
 '''
 
 final スタック・キュー実装編(共通問題) step2
+# utf-8
+Q = int(input())
+
+A = []  # キュー, スタック本体
+for i in range(Q):
+    query = input().split()
+    if query[0] == "1":
+        # PUSH
+        A.append(query[1])
+    elif query[0] == "2":
+        # STAY(何もしない)
+        continue
+print(len(A))
+for i in range(len(A)):
+    print(A[i])
+'''
+スタック・キューの実装において共通で使用する、クエリの処理部分を作成します。
+入力で与えられた数値によって、おこなう処理を分岐させることができれば正解できます。
+if 文などで分岐させることができれば、残りは前問と同じように正解できます。
+'''
 
 <スタック実装編>
 step1 スタック実装編 step1
