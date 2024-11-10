@@ -8295,7 +8295,60 @@ count_explosion_cells 関数を呼び出し、爆風が広がるマスの数を�
 このプログラムは、爆弾が置かれた行と列を一度記録することで、効率的に爆風の広がる範囲を算出します。
 '''
 
-# B155
+# B155 スタンプアート
+# utf-8
+# 入力処理
+import sys
+input = sys.stdin.read
+data = input().splitlines()
+
+# 基本情報の取得
+H, W, N = map(int, data[0].split())
+stamps = []
+
+# スタンプの情報を取得
+line_idx = 1
+for _ in range(N):
+    stamp = [data[line_idx + i] for i in range(H)]
+    stamps.append(stamp)
+    line_idx += H
+
+# アートサイズと配置の取得
+R, C = map(int, data[line_idx].split())
+layout = []
+for i in range(R):
+    layout.append(list(map(int, data[line_idx + 1 + i].split())))
+
+# アートを作成する
+result = []
+
+for i in range(R):
+    for h in range(H):
+        row = []
+        for j in range(C):
+            stamp_idx = layout[i][j] - 1  # スタンプ番号をインデックスに変換
+            row.append(stamps[stamp_idx][h])
+        result.append("".join(row))
+
+# 結果を出力
+print("\n".join(result))
+'''
+データの取得とスタンプ情報の格納: 各スタンプの行情報をリスト stamps に格納します。
+アートの作成: 各行ごとにスタンプを並べて result リストに追加していきます。layout に基づいて適切なスタンプを連結します。
+出力処理: result リストの各行を改行で区切り出力します。
+
+入力データの処理:
+スタンプのサイズ HとW、スタンプの個数 N を取得。
+各スタンプの情報を保存するために、2次元リスト stamps を使用。
+アートの縦横サイズ RとC を取得。
+アートに貼り付けるスタンプの配置を layout として保存。
+アートの組み立て:
+最終出力のアートを保持するためのリスト result を用意。
+各行ごとに、対応するスタンプを result に連結していく。
+出力のフォーマット:
+最終結果を出力形式に合わせて改行付きで表示。
+'''
+
 # B156
 # B157
 # B158
