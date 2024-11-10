@@ -2596,9 +2596,24 @@ print(s_1[0] + s_2[0] + s_3[0])
 A, B = map(int, input().split())
 print(B//A)
 
-# D312
-# D313
-# D314
+# D312 同じ長さ
+# utf-8
+A = input().strip()
+B = input().strip()
+
+if len(A) == len(B):
+    print("Yes")
+else:
+    print("No")
+
+# D313 ◆
+# D314 コピー用紙の枚数
+# utf-8
+# 資料は n ページあり m 部を印刷する必要があります
+n = int(input())
+m = int(input())
+print(n*m)
+
 # D315
 # D316
 # D317
