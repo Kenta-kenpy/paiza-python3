@@ -2614,7 +2614,14 @@ n = int(input())
 m = int(input())
 print(n*m)
 
-# D315
+# D315 実験の用意
+# utf-8
+# 総量が n ミリリットルの薬品を a ミリリットルずつ取り分けた残量
+n = int(input())
+a = int(input())
+
+print(n%a)
+
 # D316
 # D317
 # D318
