@@ -17,7 +17,7 @@ N倍の文字列 D(殿堂入り)
 「地下アイドルの夢」B
 部外者をはじけ B
 決まり字 B
-PV調査 B
+「PV調査」 B
 日別訪問者数の最大平均区間(large) A
 お菓子の詰め合わせ A(殿堂入り)
 ひとりすごろく A(殿堂入り)
@@ -1898,6 +1898,14 @@ for i in range(n):
 
 print(S[m - 1][: lcp_length + 1])
 '''
+
+# Q.「PV調査」 B
+step2 「PV調査」を解くために:part1
+step3 「PV調査」を解くために:part2
+step4 「PV調査」を解くために:part3
+step5 「PV調査」を解くために:part4
+step1・final 「PV調査」
+
 
 # Q. お菓子の詰め合わせ　A(殿堂入り)
 # utf-8
