@@ -4808,7 +4808,42 @@ week が 1 から M 週までループし、各週ごとにその週の支払額
 全ての週の計算が終了後、合計金額 total_cost を出力します。
 '''
 
-# C159
+# C159 当選通知
+# utf-8
+# 標準入力を受け取る
+import sys
+input = sys.stdin.read
+
+# 入力の読み込み
+data = input().splitlines()
+N, K = map(int, data[0].split())
+winning_numbers = set(map(int, data[1].split()))
+voting_numbers = list(map(int, data[2].split()))
+
+# 当選した投票IDを格納するリスト
+winners = []
+
+# 投票番号を順にチェック
+for i in range(K):
+    if voting_numbers[i] in winning_numbers:
+        winners.append(i + 1)
+
+# 結果の出力
+if winners:
+    print("\n".join(map(str, winners)))
+else:
+    print(-1)
+'''
+当選番号をsetで管理:
+当選番号は重複がないため、集合（set）を使うことで効率的に存在確認ができます。
+
+投票番号の確認:
+投票番号を順に調べて、setに含まれているかを確認します。含まれていれば、その投票 ID（インデックス+1）をリストに追加します。
+
+出力:
+当選した投票 ID を改行区切りで出力し、当選がない場合は -1 を出力します。
+'''
+
 # C160
 --------------------------------------------- C161　※欠番 ◆
 # C161
