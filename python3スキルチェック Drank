@@ -2622,7 +2622,33 @@ a = int(input())
 
 print(n%a)
 
-# D316
+# D316 最低気温
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    
+    # 標準入力を行ごとにリスト化
+    lines = input().strip().split("\n")
+    
+    # 入力を整数に変換
+    temperatures = list(map(int, lines))
+    
+    # 最低気温を取得
+    min_temperature = min(temperatures)
+    
+    # 結果を出力
+    print(min_temperature)
+
+if __name__ == "__main__":
+    main()
+'''
+1日の6時間ごとの気温データ（4つの値）が標準入力から与えられた場合に、その中で最も低い気温を求めて出力します。
+標準入力（sys.stdin.read）を用いて、改行区切りで与えられた4行の気温データを一括で取得します。入力データは文字列として扱われるため、strip()で末尾の余分な改行を削除し、split("\n")で改行を基準に分割します。これにより、気温データがリスト形式になります。
+各要素は文字列のため、map(int, lines)を使って整数型に変換します。これにより、演算が可能になります。Pythonの組み込み関数min()を使い、リストの中から最も小さい値を取得します。
+最低気温の値を出力します。余計な文字や空行を含めないために、単純にprint()で値のみを出力します。
+'''
+
 # D317
 # D318
 # D319
