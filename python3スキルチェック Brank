@@ -8350,7 +8350,87 @@ print("\n".join(result))
 '''
 
 # B156 うずまき
+# utf-8
+def spiral_read(H, W, L, R, grid):
+    result = []
+    # 累積文字数を追跡
+    accumulated = 0
+    layer = 0
+    
+    while accumulated < R:
+        # 現在の層の幅と高さを計算
+        width = W - 2 * layer
+        height = H - 2 * layer
+        
+        # 層ごとの各辺の長さ
+        top = width
+        right = height - 1
+        bottom = width - 1
+        left = height - 2
+        
+        # 現在の層に含まれる文字数
+        layer_chars = top + max(0, right) + max(0, bottom) + max(0, left)
+        
+        # L, R がこの層に入っているか確認
+        if accumulated + layer_chars >= L:
+            # L から R をこの層内で処理
+            for i in range(layer_chars):
+                # 現在の文字インデックス
+                char_index = accumulated + i + 1
+                
+                # L 未満の文字はスキップ
+                if char_index < L:
+                    continue
+                # R を超える文字は処理不要
+                if char_index > R:
+                    break
+                
+                # 現在のインデックスを座標に変換
+                if i < top:
+                    x, y = layer, layer + i
+                elif i < top + right:
+                    x, y = layer + (i - top + 1), W - layer - 1
+                elif i < top + right + bottom:
+                    x, y = H - layer - 1, W - layer - 1 - (i - top - right + 1)
+                else:
+                    x, y = H - layer - 1 - (i - top - right - bottom + 1), layer
+                
+                # 結果に追加
+                result.append(grid[x][y])
+        # 累積文字数を更新
+        accumulated += layer_chars
+        # 次の層に進む
+        layer += 1
+    
+    return ''.join(result)
 
+# 入力処理
+import sys
+input = sys.stdin.read
+data = input().splitlines()
+
+# H, W, L, R の取得
+H, W = map(int, data[0].split())
+L, R = map(int, data[1].split())
+# グリッドの取得
+grid = data[2:]
+
+# 渦巻き順序の文字列を取得して出力
+print(spiral_read(H, W, L, R, grid))
+'''
+渦巻きの動きを再現するために、移動方向を右、下、左、上の順に決めます。これは directions リストで表現されます。
+(0, 1) は右（列が増加）
+(1, 0) は下（行が増加）
+(0, -1) は左（列が減少）
+(-1, 0) は上（行が減少）
+訪問状態を管理
+各セルの訪問状況を管理するため、visited という2次元リストを用意します。このリストは、各セルが訪問済みか未訪問かを追跡します。初期状態ではすべて False です。
+グリッドの訪問
+以下のようにしてグリッドを渦巻き順序で訪問します
+現在の位置 grid[x][y] の文字を結果リスト result に追加し、そのセルを訪問済みに設定します。
+現在の移動方向に基づいて、次の位置 (nx, ny) を計算します。次の位置がグリッドの境界を超えているか、すでに訪問済みである場合、方向を右回りに切り替えます。
+次の位置 (nx, ny) を現在の位置 (x, y) として更新します。すべてのセルを渦巻き順序で訪問した結果が result に格納されます。このリストから、L文字目からR文字目（インデックスで言えば L-1 から R-1）をスライスして出力します。
+'''
 
 # B157
 # B158
