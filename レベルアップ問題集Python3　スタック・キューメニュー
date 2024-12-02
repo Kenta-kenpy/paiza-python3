@@ -116,6 +116,34 @@ Pythonでキューを作成するには、Queueモジュールをインポート
 '''
 
 final キュー実装編 step2
+# utf-8
+import queue
+
+Q = int(input())
+
+q = queue.Queue()  # キュー本体
+for i in range(Q):
+    query = input().split()
+    if query[0] == "1":
+        # PUSH
+        q.put(query[1])
+    elif query[0] == "2":
+        print(q.get())
+    for j in range(q.qsize()):  # キューの要素分だけループを回す
+        tmp = q.get()
+        if j < q.qsize():
+            print(tmp, end=" ")
+        else:
+            print(tmp, end="")
+        q.put(tmp)
+    print()
+'''
+キューとしての基本的な機能を完成させます。前問との違いは大きく 2 点です。
+1 つ目はキューへ与えられるデータが文字になっています。今までは整数型でキューの配列を用意していましたが、これを文字型に変えましょう。これでさまざまなデータが与えられても簡単に変更ができるキューになります。
+2 つ目は POP をする際に、削除する予定の要素を出力します。ここで、 今まで削除した要素数 + 1 を L, キュー本体の配列を A とします( 配列は 1 - indexed で説明します )。
+このとき、削除される要素は A[L] であり、これを出力したのちに削除の処理として L を 1 つ増やします。
+Pythonでキューを作成するには、Queueモジュールをインポートしたのちに queue.Queue() と記述することにより可能です。末尾に追加する場合は「put」、先頭の取り出しには「get」を使用します。
+'''
 
 <箱とボール>
 step1 2つのキュー
