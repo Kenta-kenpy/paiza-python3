@@ -147,6 +147,33 @@ Pythonでキューを作成するには、Queueモジュールをインポート
 
 <箱とボール>
 step1 2つのキュー
+# utf-8
+import queue
+
+Q = int(input())
+
+q1 = queue.Queue()
+q2 = queue.Queue()  # キュー本体
+for i in range(Q):
+    query = input().split()
+    if query[0] == "1":
+        if query[1] == "1":
+            q1.put(query[2])
+        else:
+            q2.put(query[2])
+    elif query[0] == "2":
+        if query[1] == "1":
+            print(q1.get())
+        else:
+            print(q2.get())
+    else:
+        print(q1.qsize(), q2.qsize())
+'''
+キューを 2 つ用意します。キューのプログラムをコピー&ペーストして同じようなコードを 2 つ記述してもよいですし、キュークラスなどを定義してもよいです。
+Pythonでキューを作成するには、Queueモジュールをインポートしたのちに queue.Queue() と記述することにより可能です。末尾に追加する場合は「put」、先頭の取り出しには「get」を使用します。
+キューの要素数を取得は q.qsize() により可能です。
+'''
+
 step2 最大の区間和
 step3 逆ポーランド記法
 step4 括弧列
