@@ -4844,7 +4844,26 @@ else:
 当選した投票 ID を改行区切りで出力し、当選がない場合は -1 を出力します。
 '''
 
-# C160
+# C160 降水量の計測
+# utf-8
+import math
+
+# 標準入力からデータを取得
+N = int(input().strip())  # 箱の数
+depths = list(map(int, input().strip().split()))  # 各箱の水深
+
+# 平均を計算し、小数点以下を切り上げ
+average_depth = math.ceil(sum(depths) / N)
+
+# 結果を出力
+print(average_depth)
+'''
+箱の数と各箱の水深を取得する。
+sum(depths) で水深の合計を計算します。
+箱の数N で割ることで平均を算出します。
+math.ceil を使い、小数点以下を切り上げます。
+'''
+
 --------------------------------------------- C161　※欠番 ◆
 # C161
 # C162
