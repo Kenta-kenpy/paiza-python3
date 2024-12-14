@@ -8,6 +8,7 @@ N倍の文字列 D(殿堂入り)
 みかんの仕分け C
 残り物の量 C(殿堂入り)
 1を数えよ[ビット演算] C
+文字列の抽出 C
 日別訪問者数の最大平均区間 B
 みんなでしりとり B
 3Dプリンタ B
@@ -689,6 +690,162 @@ N を 2 進数にしたとき最下位の桁が 1 かどうか判定するには
 N と 1 の論理積によって処理が変わる条件分岐を書きます。
 　　論理積が 1 なら Yes を出力します。
 　　そうでないなら No を出力します。
+'''
+
+# Q. 文字列の抽出 C
+step2 文字列の抽出 : part1
+# utf-8
+def solve():
+    S1 = input()
+    S2 = list(S1)
+    print(S1)
+    print("".join(S2))
+if __name__ == "__main__":
+    solve()
+'''
+文字列の受け取り方には、いくつかの方法がありますが代表的な方法は以下の 2 つです。
+1 つめは、単純に文字列型で受け取る方法、 2 つ目は、配列に 1 つずつ文字を格納する方法です。
+文字列型で受け取れば、 1 つの固まりとして扱うことができますが、Pythonなど一部の言語では、文字を変更することが困難な場合があるなどどちらにもメリット、デメリットがあります。
+そのため、どちらも使用できるようになっておきましょう。
+実装例では、どちらも使用し、文字列型として受け取ったものを S1 、配列として受け取ったものを S2 としています。
+'''
+
+step3 文字列の抽出 : part2
+# utf-8
+def solve():
+    tag_a, tag_b = input().split()
+    search_str = input()
+    m = len(tag_a)
+    a_index,b_index = map(int,input().split())
+    if a_index+m == b_index:
+        print('<blank>')
+    else:
+        print(search_str[a_index+m-1:b_index-1])
+if __name__ == "__main__":
+    solve()
+'''
+文字列のどの部分を出力すべきか考えてみましょう。
+単純に開始タグと終了タグの開始点を切り抜いてしまうと、開始タグを含めて出力してしまいます。
+開始タグを含まずに出力するには、タグの文字数分切り抜く開始位置をずらす必要があります。
+図を書いて考えて見ると分かりやすいです。
+また、切り抜く部分が 0 文字の場合、 blank と出力する必要があることに注意しましょう。
+'''
+
+step4 文字列の抽出 : part3
+# utf-8
+def solve():
+    tag_a, tag_b = input().split()
+    search_str = input()
+    n,m = len(search_str),len(tag_a)
+    a_index = search_str.find(tag_a)+1
+    b_index = search_str.find(tag_b)+1
+    print(a_index,b_index)
+if __name__ == "__main__":
+    solve()
+'''
+part2 のコードに加え、それぞれのタグの開始位置を求めればこの問題に正答できます。
+これは、for 文や文字列検索を行う組み込み関数で行うことができます。
+実装例では、Python3 では組み込み関数、C++ ではfor 文で実装しています。
+なお、解説では、タグを探す文字列を search_str 、開始タグと終了タグをtag_aとtag_bという変数名の文字列とします。
+for文の場合
+開始位置の候補となる 1 文字目から N-M+1 文字目について、タグの条件を満たしているかチェックします。
+　　具体的には、for 文で変数 i を (i=0~N-M) として、2 ~ 3 の手順が繰り返します。
+変数jを使ってi文字目から i+M-1 文字目までの search_str が tag_aとtag_b に全て一致しているかを確認します。
+　　具体的には、変数 j を (j=0~m-1) として、search_str[i+j] と tag_a[j] が全ての j で一致しているか、search_str[i+j] と tag_b[j] が全ての j で一致しているかを for 文で確認してみましょう。
+tag_a と完全に一致していれば開始タグ、tag_b であれば終了タグです。 i+1 の値が開始位置なので、保持しましょう。
+組み込み関数を利用する場合
+組み込み関数で行う場合、タグを引数にとることで簡単に行うことができます。
+例えば、Python3 では find 関数が該当します。
+'''
+
+step5 文字列の抽出 : part4
+# utf-8
+def solve():
+    tag_a, tag_b = input().split()
+    search_str = input()
+    n,m = len(search_str),len(tag_a)
+    a_index,b_index  = [],[]
+    for i in range(n-m+1):
+        check_a = True
+        check_b = True
+        for j in range(m):
+            if search_str[i+j] != tag_a[j]:
+                check_a = False
+            if search_str[i+j] != tag_b[j]:
+                check_b = False
+        if check_a:
+            a_index.append(i+1)
+        if check_b:
+            b_index.append(i+1)
+    for i in range(len(a_index)):
+        print(a_index[i],b_index[i])
+if __name__ == "__main__":
+    solve()
+'''
+part3 のコードを変更して、開始位置を全て保持するようにしましょう。for 文と文字列検索を行う組み込み関数場合では以下のようにして実装しましょう。
+for 文の場合
+組み込み関数で行う場合、保持に使用するオブジェクトを数値型から、空の配列などに変更して開始位置を全て追加していけばよいです。
+そうすればあとは、位置をそれぞれ出力すればよいです。
+組み込み関数を利用する場合
+文字列検索を行う関数の多くは、複数の部分文字列が含まれる場合、一番左側の部分文字列の位置のみが返されることに注意しましょう。
+その場合、以下のように while 文で行いましょう。
+以下の文字検索を行う関数を find 関数とします。
+while 文で変数 j を j=0 として、n-m を超えるまで、以下の操作を繰り返します　
+find 関数で、検索を行う開始位置を j として、開始タグと終了タグの位置 (s_i,g_i) をそれぞれ取得して保持します。
+　　この際、タグが見つからなかった場合、break して処理を打ち切りましょう。
+j を終了タグの終了位置、つまり、g_i+m に更新します。
+'''
+
+step1 文字列の抽出（力試し編）& final 文字列の抽出
+# utf-8
+def solve():
+    tag_a, tag_b = input().split()
+    search_str = input()
+    p = 0
+    s = 0
+    while True:
+        s = search_str[p::].find(tag_a)
+        p += s + len(tag_a)
+        e = search_str[p::].find(tag_b) + p
+        if s == -1:
+            break
+        elif p == e:
+            print('<blank>')
+        elif p < e:
+            print(search_str[p:e:])
+        p = e
+if __name__ == "__main__":
+    solve()
+
+# utf-8
+def solve():
+    tag_a, tag_b = input().split()
+    search_str = input()
+    n,m = len(search_str),len(tag_a)
+    a_index,b_index  = [],[]
+    for i in range(n-m+1):
+        check_a = True
+        check_b = True
+        for j in range(m):
+            if search_str[i+j] != tag_a[j]:
+                check_a = False
+            if search_str[i+j] != tag_b[j]:
+                check_b = False
+        if check_a:
+            a_index.append(i+1)
+        if check_b:
+            b_index.append(i+1)
+    for i in range(len(a_index)):
+        if a_index[i]+m == b_index[i]:
+            print('<blank>')
+        else:
+            print(search_str[a_index[i]+m-1:b_index[i]-1])
+if __name__ == "__main__":
+    solve()
+'''
+part4 で求めたタグの位置を利用しましょう。
+タグの位置から、part2 のようにして切り抜く場所を求め、出力すればよいです。
+part2 同様、切り抜く部分が 0 文字の場合、blank と出力する必要があることに注意しましょう。
 '''
 
 # Q. 日別訪問者数の最大平均区間 B
