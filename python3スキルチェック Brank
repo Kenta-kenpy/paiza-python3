@@ -8432,7 +8432,58 @@ print(spiral_read(H, W, L, R, grid))
 次の位置 (nx, ny) を現在の位置 (x, y) として更新します。すべてのセルを渦巻き順序で訪問した結果が result に格納されます。このリストから、L文字目からR文字目（インデックスで言えば L-1 から R-1）をスライスして出力します。
 '''
 
-# B157
+# B157 節約魂
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().splitlines()
+
+    # 入力の解析
+    N, K = map(int, data[0].split())  # N: スーパーの数, K: 野菜の種類数
+    prices = [list(map(int, line.split())) for line in data[1:]]  # 各スーパーの野菜価格リスト
+
+    # 野菜ごとに最安値のスーパーを特定
+    vegetable_to_stores = [None] * K  # 各野菜について最安値を持つスーパー
+    for veg_idx in range(K):
+        min_price = float('inf')
+        for store_idx in range(N):
+            if prices[store_idx][veg_idx] < min_price:
+                min_price = prices[store_idx][veg_idx]
+                vegetable_to_stores[veg_idx] = {store_idx}
+            elif prices[store_idx][veg_idx] == min_price:
+                vegetable_to_stores[veg_idx].add(store_idx)
+
+    # スーパーごとにカバーできる野菜を特定
+    store_to_vegetables = [set() for _ in range(N)]  # 各スーパーがカバーできる野菜の集合
+    for veg_idx in range(K):
+        for store_idx in vegetable_to_stores[veg_idx]:
+            store_to_vegetables[store_idx].add(veg_idx)
+
+    # 最小限のスーパーを貪欲法で探索
+    uncovered_vegetables = set(range(K))  # 未カバーの野菜
+    selected_stores = set()  # 選択されたスーパー
+
+    while uncovered_vegetables:
+        # 未カバーの野菜を最も多くカバーするスーパーを選ぶ
+        best_store = max(range(N), key=lambda store: len(store_to_vegetables[store] & uncovered_vegetables))
+        selected_stores.add(best_store)
+        uncovered_vegetables -= store_to_vegetables[best_store]  # カバー済みの野菜を削除
+
+    print(len(selected_stores))  # 必要なスーパーの数を出力
+
+if __name__ == "__main__":
+    main()
+'''
+1行目でスーパーの数 N と野菜の種類数 K を読み取ります。2行目以降で各スーパーの野菜価格リストを格納します。
+各野菜について最安値の価格を調べ、その価格を持つスーパーを記録します。vegetable_to_stores[veg_idx] は、野菜 veg_idx を最安値で販売するスーパーの集合です。
+各スーパーについて、そのスーパーで最安値で購入できる野菜をリスト化します。store_to_vegetables[store_idx] は、スーパー store_idx がカバーできる野菜の集合です。
+カバーされていない野菜の集合 (uncovered_vegetables) を管理します。ループ内で、未カバーの野菜を最も多くカバーするスーパーを選択します。
+選択されたスーパーでカバーできる野菜を uncovered_vegetables から削除し、次のスーパーを選びます。すべての野菜がカバーされるまでこの操作を繰り返します。
+選択されたスーパーの数 (selected_stores) を出力します。
+貪欲法: 未カバーの野菜を最も多くカバーできるスーパーを順次選択することで、効率よく解を求めます。
+'''
+
 # B158
 # B159
 # B160
