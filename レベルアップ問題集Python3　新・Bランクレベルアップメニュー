@@ -1,5 +1,86 @@
 <マップの扱い1　マップの書き換え・1マス>
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    
+    data = input().splitlines()
+
+    # H, W
+    H, W = map(int, data[0].split())
+
+    # 盤面
+    board = [list(data[i + 1]) for i in range(H)]
+
+    # 書き換える座標
+    y, x = map(int, data[H + 1].split())
+
+    # 書き換え
+    if board[y][x] == '.':
+        board[y][x] = '#'
+    else:
+        board[y][x] = '.'
+
+    # 出力
+    for row in board:
+        print("".join(row))
+
+if __name__ == "__main__":
+    main()
+'''
+入力の読み込み:
+標準入力から全ての行を取得します。
+最初の行から盤面サイズ H,W を取得。
+続く H 行から盤面をリストとして格納。
+最終行で変更する座標 y,x を取得。
+文字の反転:
+指定された座標の文字をチェック。
+"." なら "#" に、"#" なら "." に置き換えます。
+結果の出力:
+各行を連結して出力。
+'''
+
 <マップの扱い2　マップの書き換え・縦横>
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    
+    data = input().splitlines()
+
+    # H, W
+    H, W = map(int, data[0].split())
+
+    # 盤面
+    board = [list(data[i + 1]) for i in range(H)]
+
+    # 書き換える座標
+    y, x = map(int, data[H + 1].split())
+
+    # 隣接する座標を含む座標リスト
+    directions = [(0, 0), (-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    for dy, dx in directions:
+        ny, nx = y + dy, x + dx
+        if 0 <= ny < H and 0 <= nx < W:
+            # 書き換え
+            if board[ny][nx] == '.':
+                board[ny][nx] = '#'
+            else:
+                board[ny][nx] = '.'
+
+    # 出力
+    for row in board:
+        print("".join(row))
+
+if __name__ == "__main__":
+    main()
+'''
+指定された座標とその上下左右のマスを反転するロジックを追加しました。
+上下左右の判定: 現在のマスを含めて、最大5マスを対象とするように修正しました。
+範囲チェック: 配列外参照を防ぐため、座標が有効な場合のみ反転を行います。
+'''
+
 <マップの扱い3　マップの判定・縦横斜め>
 <マップの扱い4　マップのナンバリング>
 <シミュレーション1　反復横跳び>
