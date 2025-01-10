@@ -278,4 +278,35 @@ S の ( の文字数と ) の文字数は同数
 '''
 
 step5 エスカレーター
+# utf-8
+import queue
+
+n, k = map(int, input().split())
+a = list(map(int, input().split()))
+
+que = queue.Queue()
+next_person = 0
+person_on_escalator = 0
+for time in range(1, 50000):
+    if next_person < n and time == a[next_person]:
+        que.put(1)
+        person_on_escalator += 1
+    else:
+        que.put(0)
+    if que.qsize() > k:
+        person_on_escalator -= que.get()
+    if next_person < n and time == a[next_person]:
+        print(person_on_escalator)
+        next_person += 1
+'''
+エスカレーターをキューとして考え、時刻を 1 から順に増やし、シミュレートします。
+時刻 t に社員がエスカレーターに乗る場合、キューに 1 を PUSH します。逆に時刻 t に人がエスカレーターに乗らない場合、キューに 0 を PUSH します。 1 を PUSH した場合は、答えとなるエスカレーター上にいる人数を表す変数を 1 増やします。
+また時刻 t にエスカレーターから降りる社員もいるかもしれません。既に k 秒経っているなら( キューに k + 1 個の要素がある場合 )はキューの先頭を削除します。この要素が 1 のときはエスカレーターから社員が 1 人降りたということなので、答えを保持する変数を 1 減らします。
+最後に、時刻 t に社員がエスカレーターに乗る場合は答えを出力すればよいです。
+
+キューを用いた方法です。方針に記載されているアルゴリズム通りにPython で実装すると、このようになります。変数 person_on_escalator がエスカレーター上にいる社員の数です。また、 next_person は次にエスカレーターに乗る社員のインデックスです。 9 行目の条件で time と a[next_person] が等しいということは、今の時刻に社員が 1 人エスカレーターに乗るということです。ただし、 next_person が n になることがあるので、 next_person < n という条件をつけてインデックスエラーを防ぐ必要があります。
+そして 2 つ目の条件式の中 if que.qsize() > k: では社員をエスカレーターから降ろす処理をしています。
+最後に、時刻 time に社員がエスカレーターに乗る場合は person_on_escalator を出力すればよいです。
+'''
+
 final 箱とボール
