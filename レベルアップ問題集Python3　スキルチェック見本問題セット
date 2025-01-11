@@ -55,6 +55,280 @@ x % 3 == x % 5 == 0 の条件式は最初に置く必要があることに注意
 
 <Bランク>
 # 長テーブルのうなぎ屋
+[step1] 長テーブルのうなぎ屋 (力試し編)　※91点
+# utf-8
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().strip().split("\n")
+
+    # 初期値を読み取る
+    n, m = map(int, data[0].split())
+    groups = [list(map(int, line.split())) for line in data[1:]]
+
+    # 座席管理配列 (False = 空いている, True = 埋まっている)
+    seats = [False] * n
+
+    # 各グループについて処理
+    for a, b in groups:
+        if not (1 <= a <= n and 1 <= b <= n):
+            raise ValueError("Invalid input: a_i or b_i out of range.")
+
+        start = b - 1  # 0-indexed
+        can_seat = True
+
+        # グループが座る予定の範囲を確認
+        for i in range(a):
+            if seats[(start + i) % n]:
+                can_seat = False
+                break
+
+        # 座れる場合、座席を埋める
+        if can_seat:
+            for i in range(a):
+                seats[(start + i) % n] = True
+
+    # 最終的な着席人数を計算
+    result = sum(seats)
+    print(result)
+
+if __name__ == "__main__":
+    main()
+'''
+※未通貨のテストケース入力データ
+90 62
+51 17
+43 24
+85 36
+5 30
+28 61
+5 5
+44 40
+16 5
+67 71
+58 86
+52 53
+3 29
+19 43
+71 60
+38 6
+6 30
+60 87
+73 3
+43 26
+5 65
+8 71
+1 34
+41 87
+26 88
+81 48
+31 12
+3 48
+90 10
+62 56
+1 38
+38 51
+56 19
+84 59
+35 51
+42 75
+6 3
+67 61
+26 58
+36 12
+50 28
+29 37
+74 9
+45 51
+14 53
+63 16
+35 1
+88 67
+31 42
+52 64
+13 9
+59 71
+16 30
+17 8
+60 41
+32 20
+64 29
+54 12
+53 7
+33 33
+51 88
+34 48
+53 38
+46 21
+74 54
+54 83
+48 19
+87 20
+76 16
+51 5
+24 56
+82 63
+1 19
+9 74
+8 86
+29 87
+86 62
+28 48
+86 43
+51 79
+20 70
+64 34
+84 38
+57 38
+22 36
+43 16
+68 4
+83 67
+14 76
+89 60
+38 84 
+'''
+
+[step2] 「長テーブルのうなぎ屋」を解くために：part1
+# utf-8
+n, m = map(int, input().split())
+
+print(n, m)
+
+for _ in range(m):
+    a, b = map(int, input().split())
+    print(a, b)
+'''
+1 行目の入力を標準入力を用いて受け取り、受け取った値をそれぞれ変数に代入します。
+M 回実行される繰り返し処理を書きます。
+標準入力を用いて入力を受け取り、受け取った値を変数に代入します。
+繰り返し処理の中で入力を受け取り、それぞれの値を出力します。
+'''
+
+[step3] 「長テーブルのうなぎ屋」を解くために：part2
+# utf-8
+n = int(input())
+table = [int(n) for n in input().split()]
+
+count = 0
+
+for i in range(n):
+    if table[i] == 0:
+        count += 1
+
+print(count)
+'''
+1 行目の入力を標準入力を用いて受け取り、長さ n の配列を用意します。
+n 回実行される繰り返し処理を書きます。
+繰り返し処理の中で入力を受け取り、それぞれの座席の状況を入力します。
+最後に、空席の数を数えて出力します。
+'''
+
+[step4] 「長テーブルのうなぎ屋」を解くために：part3
+# utf-8
+n = int(input())
+a, b = map(int, input().split())
+
+for i in range(b, b+a):
+    # 余計な空白を入れないための処理
+    if i > b:
+        print(" ",end="")
+    print(i,end="")
+    
+print("")
+'''
+それぞれの整数を受け取ります。
+着席開始座席番号 b から a 回繰り返す処理を書きます。
+繰り返し処理の中で a 人それぞれの座席番号を空白区切りで出力します。
+'''
+
+[step5] 「長テーブルのうなぎ屋」を解くために：part4
+# utf-8
+n = int(input())
+a, b = map(int, input().split())
+
+for i in range(b, b+a):
+    # 余計な空白を入れないための処理
+    if i > b:
+        print(" ",end="")
+    
+    if i > n:
+        print(i-n, end="")
+    else:
+        print(i, end="")
+    
+print("")
+'''
+それぞれの整数を受け取ります。
+着席開始座席番号 b から a 回繰り返す処理を書きます。
+繰り返し処理の中で a 人それぞれの座席番号を空白区切りで出力します。
+座席番号が n を超える場合には番号から n を引いて出力します。
+'''
+
+[step6] 「長テーブルのうなぎ屋」を解くために：part5
+# utf-8
+n, m = map(int, input().split())
+
+for i in range(m):
+    a, b = map(int, input().split())
+    
+    for j in range(b, b+a):
+        if j > b:
+            print(' ', end="")
+        
+        if j > n:
+            print(j-n, end="")
+        else:
+            print(j, end="")
+
+    print("")
+'''
+それぞれの整数を受け取ります。
+m 組のグループに対応するために m 回の繰り返し処理を書きます。
+繰り返し処理の中で各グループの人数 a と着席開始座席番号 b を受け取ります。
+さらに a 回の繰り返し処理を書き、各グループの着席番号を出力します。
+この際、先ほどの問題と同様に着席番号が n を超える場合には番号から n を引いた値を出力します。
+'''
+
+[step7] 「長テーブルのうなぎ屋」を解くために：part6
+# utf-8
+import sys
+
+n = int(input())
+a, b = map(int, input().split())
+table = list(map(int, input().split()))
+
+for i in range (b, b+a):
+    pos = 0
+    if i > n:
+        pos = i-n
+    else:
+        pos = i
+    
+    if table[pos-1] == 1:
+        print("No")
+        sys.exit()
+    else:
+        table[pos-1] = 1
+        
+
+print("Yes")
+for i in range(n):
+    if i > 0:
+        print(' ', end="")
+    
+    print(table[i], end="")
+    
+print("")
+'''
+それぞれの整数と座席の状況を受け取ります。
+a 回の繰り返し処理を書き、それぞれの座席番号を求めます。
+求めた番号の座席が埋まっている場合はNoと出力してプログラムを終了します。座席が空いている場合には、座席の状況を空席から更新します。
+a 人がすべて座ることができた場合はYesと出力し、次の行に更新後の座席状況を出力します。
+'''
+
+[final] 長テーブルのうなぎ屋
+# utf-8
 n,m = map[int, input().split()]
 
 vacant = [True] * n  # 空席状態 Trueで空席
