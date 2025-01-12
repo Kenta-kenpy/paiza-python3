@@ -329,30 +329,29 @@ a 人がすべて座ることができた場合はYesと出力し、次の行に
 
 [final] 長テーブルのうなぎ屋
 # utf-8
-n,m = map[int, input().split()]
+n, m = map(int, input().split())
 
-vacant = [True] * n  # 空席状態 Trueで空席
+vacant = [True] * n
 for _ in range(m):
-    a,b = map(int, input().split())
-# 座席番号bから連続してa人の客が座ることができるかを確認して　可能な場合はvacantを更新
+    a, b = map(int, input().split())
 
     can_sit = True
-    for i in range(b, b+a):
-        if not vacant(i%n):
+    for i in range(b, b + a):
+        if not vacant[i % n]:
             can_sit = False
             break
-        
+
     if not can_sit:
         continue
-    
-    for i in range(b, b+a):
-        vacant[i%n] = False
+
+    for i in range(b, b + a):
+        vacant[i % n] = False
 
 ans = 0
 for v in vacant:
     if not v:
         ans += 1
-        
+
 print(ans)
 
 <Aランク>
