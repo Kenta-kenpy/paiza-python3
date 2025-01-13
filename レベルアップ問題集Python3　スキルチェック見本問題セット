@@ -189,6 +189,35 @@ if __name__ == "__main__":
 38 84 
 '''
 
+※C++での模範解答
+#include<iostream>
+#include<vector>
+using namespace std;
+
+int main(){
+    int n, m;
+    cin >> n >> m;
+    int answer = 0;
+    vector<bool> vacant(n, true);
+    for(int i = 0; i < m; i++){
+        int a, b;
+        cin >> a >> b;
+        b--;
+        bool valid = true;
+        for(int j = 0; j < a; j++){
+            if(!vacant[(b+j)%n]) valid = false;
+        }
+        if(valid){
+            answer += a;
+            for(int j = 0; j < a; j++){
+                vacant[(b+j)%n] = false;
+            }
+        }
+    }
+    cout << answer << endl;
+    return 0;
+}
+
 [step2] 「長テーブルのうなぎ屋」を解くために：part1
 # utf-8
 n, m = map(int, input().split())
