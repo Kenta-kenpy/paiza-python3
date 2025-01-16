@@ -8442,8 +8442,57 @@ if __name__ == "__main__":
 貪欲法: 未カバーの野菜を最も多くカバーできるスーパーを順次選択することで、効率よく解を求めます。
 '''
 
-# B158
-# B159
+# B158 ◆
+# B159 カロリー制限
+# utf-8
+from itertools import product
+
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().splitlines()
+
+    # 入力のパース
+    N, M = map(int, data[0].split())
+    C = list(map(int, data[1].split()))
+    S = list(map(int, data[2].split()))
+    D = list(map(int, data[3].split()))
+
+    # おかずごとに分類
+    bento = {1: [], 2: [], 3: []}
+    for i in range(N):
+        bento[D[i]].append((C[i], S[i]))
+
+    # 全ての種類のお弁当がなければ-1を出力
+    if any(len(bento[i]) == 0 for i in range(1, 4)):
+        print(-1)
+        return
+
+    max_satisfaction = -1
+
+    # それぞれの種類のお弁当から1つ選ぶ組み合わせを全探索
+    for b1, b2, b3 in product(bento[1], bento[2], bento[3]):
+        total_calories = b1[0] + b2[0] + b3[0]
+        if total_calories <= M:
+            total_satisfaction = b1[1] + b2[1] + b3[1]
+            max_satisfaction = max(max_satisfaction, total_satisfaction)
+
+    # 結果を出力
+    print(max_satisfaction if max_satisfaction != -1 else -1)
+
+if __name__ == "__main__":
+    main()
+'''
+標準入力からデータを受け取り、それぞれの情報（カロリー、満足度、おかずの種類）をリストに格納します。
+1行目で弁当の種類数 N とカロリー制限 M を取得。2行目で各弁当のカロリー C をリストに保存。3行目で各弁当の満足度 S をリストに保存。4行目で各弁当のメインおかずの種類 D をリストに保存。
+各お弁当を、豚肉（1）、鶏肉（2）、魚（3）ごとに分類します。bento という辞書を用いて、D[i]（おかずの種類）が1なら豚肉リスト、2なら鶏肉リスト、3なら魚リストにカロリーと満足度のペア (C[i], S[i]) を追加します。
+朝昼晩で異なるおかずが必要なため、それぞれのリストが空でないかを確認します。もし一つでも空のリストがある場合、その条件を満たすことは不可能なので -1 を出力して終了します。
+各種類（豚肉、鶏肉、魚）から1つずつ選ぶ全ての組み合わせを試します。具体的には、itertools.product を使って、豚肉リスト、鶏肉リスト、魚リストの要素を1つずつ取り出す全通りの組み合わせを生成します。
+生成した組み合わせごとに以下を計算します：
+総カロリー：3つの弁当のカロリーを合計。総満足度：3つの弁当の満足度を合計。総カロリーがカロリー制限 M を超えていない場合に限り、その組み合わせの総満足度をチェックし、これまでの最大値を更新します。
+全ての組み合わせを調べた後、最大満足度が -1 のまま（条件を満たす組み合わせがない）なら -1 を出力。条件を満たす組み合わせがあれば、その最大満足度を出力します。
+'''
+
 # B160
 -----------------------------------------------B161　※欠番◆
 # B161
