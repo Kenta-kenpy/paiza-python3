@@ -55,7 +55,7 @@ x % 3 == x % 5 == 0 の条件式は最初に置く必要があることに注意
 
 <Bランク>
 # 長テーブルのうなぎ屋
-[step1] 長テーブルのうなぎ屋 (力試し編)　※91点
+[step1] 長テーブルのうなぎ屋 (力試し編)
 # utf-8
 def main():
     import sys
@@ -64,159 +64,81 @@ def main():
 
     # 初期値を読み取る
     n, m = map(int, data[0].split())
-    groups = [list(map(int, line.split())) for line in data[1:]]
 
-    # 座席管理配列 (False = 空いている, True = 埋まっている)
-    seats = [False] * n
+    # 制約チェック (n と m)
+    if not (1 <= n <= 100 and 1 <= m <= 100):
+        raise ValueError("Invalid input: n or m out of range.")
+
+    groups = []
+    for line in data[1:]:
+        a, b = map(int, line.split())
+
+        # 制約チェック (a_i と b_i)
+        if not (1 <= a <= n and 1 <= b <= n):
+            raise ValueError(f"Invalid input: a ({a}) or b ({b}) out of range.")
+
+        groups.append((a, b))
+
+    # 座席管理配列 (True = 空いている)
+    vacant = [True] * n
+    answer = 0
 
     # 各グループについて処理
     for a, b in groups:
-        if not (1 <= a <= n and 1 <= b <= n):
-            raise ValueError("Invalid input: a_i or b_i out of range.")
-
-        start = b - 1  # 0-indexed
-        can_seat = True
+        b -= 1  # 0-indexedに変換
+        valid = True
 
         # グループが座る予定の範囲を確認
-        for i in range(a):
-            if seats[(start + i) % n]:
-                can_seat = False
+        for j in range(a):
+            if not vacant[(b + j) % n]:  # 座席が埋まっている場合
+                valid = False
                 break
 
         # 座れる場合、座席を埋める
-        if can_seat:
-            for i in range(a):
-                seats[(start + i) % n] = True
+        if valid:
+            answer += a
+            for j in range(a):
+                vacant[(b + j) % n] = False
 
-    # 最終的な着席人数を計算
-    result = sum(seats)
-    print(result)
+    # 結果を出力
+    print(answer)
 
 if __name__ == "__main__":
     main()
 '''
-※未通過のテストケース入力データ
-90 62
-51 17
-43 24
-85 36
-5 30
-28 61
-5 5
-44 40
-16 5
-67 71
-58 86
-52 53
-3 29
-19 43
-71 60
-38 6
-6 30
-60 87
-73 3
-43 26
-5 65
-8 71
-1 34
-41 87
-26 88
-81 48
-31 12
-3 48
-90 10
-62 56
-1 38
-38 51
-56 19
-84 59
-35 51
-42 75
-6 3
-67 61
-26 58
-36 12
-50 28
-29 37
-74 9
-45 51
-14 53
-63 16
-35 1
-88 67
-31 42
-52 64
-13 9
-59 71
-16 30
-17 8
-60 41
-32 20
-64 29
-54 12
-53 7
-33 33
-51 88
-34 48
-53 38
-46 21
-74 54
-54 83
-48 19
-87 20
-76 16
-51 5
-24 56
-82 63
-1 19
-9 74
-8 86
-29 87
-86 62
-28 48
-86 43
-51 79
-20 70
-64 34
-84 38
-57 38
-22 36
-43 16
-68 4
-83 67
-14 76
-89 60
-38 84 
+入力を受け取る
+標準入力で与えられたデータを読み取り、座席数 n、グループ数 m、各グループの情報 (a_i, b_i) を取得します。
+
+制約を確認
+入力された値が問題の制約を満たしているかをチェックします。制約を満たさない場合は、エラーメッセージを出力してプログラムを終了します。
+
+座席の管理
+空いている座席を True、埋まっている座席を False とする配列を用意します。この配列を用いて座席の状態を管理します。
+
+グループごとの処理
+各グループが座席に座れるかどうかを確認し、座れる場合は座席を埋め、座席に座れた人数をカウントします。
+
+最終結果の出力
+全てのグループの処理が終わった後、無事に座席に座れた人数の合計を出力します。
+data は入力を行単位に分割したリストです。
+最初の行から n (座席数) と m (グループ数) を取得します。
+残りの行は各グループの情報 (a_i, b_i) としてリストに格納します。
+問題で指定された制約 (1 ≤ n ≤ 100, 1 ≤ m ≤ 100) を確認します。
+各グループの人数 a と開始座席番号 b について、条件 (1 ≤ a ≤ n, 1 ≤ b ≤ n) をチェックします。
+制約を満たさない場合は ValueError を発生させます。
+vacant は座席の状態を表すリストです。長さ n で、全て True (空いている) に初期化します。
+answer は座れた人数の累計を記録します。
+
+グループの座席範囲確認
+b -= 1 で、1-indexed の開始座席番号を 0-indexed に変換します。
+各グループが座ろうとする座席範囲 (b, b + a) を時計回りに確認します。
+vacant[(b + j) % n] で円状の座席を考慮しています。
+もし範囲内の座席が埋まっている場合、フラグ valid を False にし、処理をスキップします。
+
+座席を埋める
+valid が True の場合、グループ全員が座れることを意味します。この場合、answer にグループの人数 a を加算し、該当座席を埋めます。
+全ての処理が終了した後、最終的な着席人数を出力します。
 '''
-
-※C++での模範解答
-#include<iostream>
-#include<vector>
-using namespace std;
-
-int main(){
-    int n, m;
-    cin >> n >> m;
-    int answer = 0;
-    vector<bool> vacant(n, true);
-    for(int i = 0; i < m; i++){
-        int a, b;
-        cin >> a >> b;
-        b--;
-        bool valid = true;
-        for(int j = 0; j < a; j++){
-            if(!vacant[(b+j)%n]) valid = false;
-        }
-        if(valid){
-            answer += a;
-            for(int j = 0; j < a; j++){
-                vacant[(b+j)%n] = false;
-            }
-        }
-    }
-    cout << answer << endl;
-    return 0;
-}
 
 [step2] 「長テーブルのうなぎ屋」を解くために：part1
 # utf-8
