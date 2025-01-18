@@ -1,19 +1,59 @@
 # 1つのデータの入力
+# utf-8
 s = input()
 print(s)
 
 # 1行のデータの入力
+# utf-8
 n = input()
 print(n)
 
 # 3行のデータの入力
+# utf-8
 for i in range(3):
     s = input()
     print(s)
 
 # N行のデータの入力
+# utf-8
 n = int(input())
 
 for i in range(n):
     s = input()
     print(s)
+
+# 3つのデータの入力
+# utf-8
+a = input().split()
+
+for i in a:
+    print(i)
+# 入力を 1 行受け取り、半角スペース区切りで 3 つに分割します。
+
+# N個のデータの入力
+# utf-8
+n = int(input())
+a = input().split()
+
+for i in range(n):
+    print(a[i])
+
+# カンマ区切りの3つのデータの入力
+# utf-8
+a = input().split(",")
+
+for i in a:
+    print(i)
+# 入力を 1 行受け取り、カンマを区切り文字として 3 つに分割します。
+
+# カンマ区切りのN個のデータの入力
+# utf-8
+n = int(input())
+a = input().split(",")
+
+for i in range(n):
+    print(a[i])
+'''
+初めに文字列の個数 N を受け取ります。
+入力を 1 行受け取り、カンマを区切り文字として N 個に分割します。
+'''
