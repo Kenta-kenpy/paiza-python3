@@ -1,0 +1,3 @@
+print("name: Kenta")
+print("language: python")
+print("hitokoto: Hello World!")
