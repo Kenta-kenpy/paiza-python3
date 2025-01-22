@@ -2692,8 +2692,13 @@ else:
 n = int(input())
 print(n*3)
 
-# D324
-# D325
+# D324　◆
+# D325　名前の結合
+# utf-8
+a = input()
+b = input()
+print(a + b)
+
 # D326
 # D327
 # D328
