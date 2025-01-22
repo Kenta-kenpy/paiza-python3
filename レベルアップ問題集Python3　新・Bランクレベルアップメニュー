@@ -145,6 +145,86 @@ toggle_char関数を使って、文字が.の場合は#に、#の場合は.に�
 '''
 
 <マップの扱い4　マップのナンバリング>
+# utf-8
+def generate_map(H, W, D):
+    # マップ全体を0で初期化
+    count = 1
+    map_grid = [[0] * W for _ in range(H)]
+
+    if D == 1:  # 斜め右下方向
+        # 最初のセルを1で初期化
+        map_grid[0][0] = count
+        count += 1
+        # 上半分（左上から斜め右下）
+        for i in range(1, H):
+            for j in range(min(i, W - 1) + 1):
+                map_grid[i - j][j] = count
+                count += 1
+        # 下半分（右上から斜め右下）
+        for i in range(1, W):
+            for j in range(min(H, W - i)):
+                map_grid[H - 1 - j][i + j] = count
+                count += 1
+
+    elif D == 2:  # 水平方向
+        # 左から右に行ごとにナンバリング
+        for i in range(H):
+            for j in range(W):
+                map_grid[i][j] = count
+                count += 1
+
+    elif D == 3:  # 垂直方向
+        # 上から下に列ごとにナンバリング
+        for j in range(W):
+            for i in range(H):
+                map_grid[i][j] = count
+                count += 1
+
+    elif D == 4:  # 斜め右上方向
+        # 最初のセルを1で初期化
+        map_grid[0][0] = count
+        count += 1
+        # 上半分（左下から斜め右上）
+        for i in range(1, W):
+            for j in range(min(i, H - 1) + 1):
+                map_grid[j][i - j] = count
+                count += 1
+        # 下半分（右下から斜め右上）
+        for i in range(1, H):
+            for j in range(min(H - i, W)):
+                map_grid[i + j][W - 1 - j] = count
+                count += 1
+
+    return map_grid
+
+# 入力処理
+import sys
+input = sys.stdin.read
+H, W, D = map(int, input().strip().split())
+
+# マップ生成
+result_map = generate_map(H, W, D)
+
+# 結果出力
+for row in result_map:
+    print(" ".join(map(str, row)))
+'''
+このプログラムは、与えられた行数 𝐻 列数 𝑊、ナンバリングの向き 𝐷 に基づいて、マップ全体に番号を振る機能を実装しています。以下に、プログラムの流れを説明します。
+入力の受け取り: 標準入力から、マップの行数 (𝐻)、列数 (𝑊)、ナンバリングの向き (𝐷) を読み取ります。
+
+マップの生成:
+指定された向きに応じて異なるロジックを使用し、マップの各セルに番号を割り当てます。
+各向きの詳細は以下の通りです:
+D=1: 斜め右下方向に番号を振る。
+D=2: 水平方向（左から右、上から下に行ごと）に番号を振る。
+D=3: 垂直方向（上から下、左から右に列ごと）に番号を振る。
+D=4: 斜め右上方向に番号を振る。
+
+結果の出力:
+生成されたマップを1行ずつ出力します。
+各セルの値は半角スペースで区切られます。
+'''
+
 <シミュレーション1　反復横跳び>
 <シミュレーション2　perfect shuffle>
 <シミュレーション3　燃費>
