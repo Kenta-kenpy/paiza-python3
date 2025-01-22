@@ -82,6 +82,68 @@ if __name__ == "__main__":
 '''
 
 <マップの扱い3　マップの判定・縦横斜め>
+# utf-8
+# 入力の受け取り
+import sys
+input = sys.stdin.read
+
+data = input().splitlines()
+
+# H: 行数, W: 列数
+H, W = map(int, data[0].split())
+
+# マップの初期状態を取得
+map_grid = [list(data[i + 1]) for i in range(H)]
+
+# y, x: 書き換え開始座標
+y, x = map(int, data[H + 1].split())
+
+# 文字を書き換える関数を定義
+def toggle_char(c):
+    return '#' if c == '.' else '.'
+
+# 書き換え対象の座標を集めるためのセット（重複を防ぐためセットを使用）
+target_coords = set()
+
+# 縦・横の座標を追加
+for i in range(H):
+    target_coords.add((i, x))  # 縦方向
+for j in range(W):
+    target_coords.add((y, j))  # 横方向
+
+# 斜め方向の座標を追加
+directions = [(-1, -1), (-1, 1), (1, -1), (1, 1)]  # 斜めの4方向
+for dy, dx in directions:
+    ny, nx = y, x
+    while 0 <= ny < H and 0 <= nx < W:
+        target_coords.add((ny, nx))
+        ny += dy
+        nx += dx
+
+# 対象座標を走査して文字を書き換える
+for ty, tx in target_coords:
+    map_grid[ty][tx] = toggle_char(map_grid[ty][tx])
+
+# 結果を出力
+for row in map_grid:
+    print(''.join(row))
+'''
+マップを二次元配列で管理しましょう。
+今回の座標系において、(y,x)と同じ縦列のマスは 0 ≦ i < W であるような i を用いて (i,x) の通り表されます。同様にして、横列のマスは 0 ≦ i < H であるような i を用いて (i,x), 斜めの列のマスは 0 ≦ i < min(h,w) であるような i を用いて (y±i,x±i) (ただし、0 ≦ y±i < H かつ 0 ≦ x±i < W を満たすもの) と表すことができます。
+このことと for 文などの繰り返しを用いて、縦横斜めの全ての列について問題文の通りの処理をおこないましょう。
+入力の受け取り:
+マップの行数(H)と列数(W)、各行の文字列、書き換え対象の座標(y, x)を入力から取得します。
+文字の書き換え関数:
+toggle_char関数を使って、文字が.の場合は#に、#の場合は.に切り替えます。
+書き換え対象座標の計算:
+縦方向のすべてのマス、横方向のすべてのマスを計算します。
+斜め方向(4方向)について、範囲内の座標を計算し、すべての対象座標を集合target_coordsに追加します。
+座標の書き換え:
+計算した対象座標に従って、マスの文字を切り替えます。
+結果の出力:
+書き換えた後のマップを1行ずつ出力します。
+'''
+
 <マップの扱い4　マップのナンバリング>
 <シミュレーション1　反復横跳び>
 <シミュレーション2　perfect shuffle>
