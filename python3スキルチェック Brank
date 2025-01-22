@@ -8442,7 +8442,55 @@ if __name__ == "__main__":
 貪欲法: 未カバーの野菜を最も多くカバーできるスーパーを順次選択することで、効率よく解を求めます。
 '''
 
-# B158 ◆
+# B158 石の積まれた部屋
+# utf-8
+def calculate_stones_to_remove():
+    import sys
+    input = sys.stdin.read
+    data = input().splitlines()
+
+    # 入力の最初の行から部屋のサイズNを読み取る
+    N = int(data[0])
+
+    # 続く行から石の配置を読み取り、2次元リストに格納する
+    stone_grid = [list(map(int, data[i + 1].split())) for i in range(N)]
+
+    # ピラミッド状の理想的な石の数を格納する2次元リストを初期化
+    mid = N // 2  # 中心の座標を計算
+    required_stones = [[0] * N for _ in range(N)]
+
+    # 各セルにおける理想的な石の数を計算
+    for i in range(N):
+        for j in range(N):
+            # 中心からの距離（層）を計算
+            layer = max(abs(i - mid), abs(j - mid))
+            # 理想的な石の数を設定
+            required_stones[i][j] = mid + 1 - layer
+
+    # 運び出す必要がある石の総数を計算
+    total_to_remove = 0
+    for i in range(N):
+        for j in range(N):
+            # 実際の石の数から理想の石の数を引き、余剰分を合計
+            total_to_remove += max(0, stone_grid[i][j] - required_stones[i][j])
+
+    # 結果を出力
+    print(total_to_remove)
+
+# 関数を呼び出して処理を実行
+calculate_stones_to_remove()
+'''
+標準入力を通じて与えられるデータを取得します。取得したデータは行ごとに分割してリスト data に格納します。
+データの最初の行には部屋の一辺の長さ N が書かれています。これを整数として読み取ります。
+2行目から N+1 行目までのデータを取得し、2次元リスト stone_grid に格納します。
+各行はスペースで区切られているため、split() を使い、それぞれの数値を整数に変換します。
+ピラミッドの中心となるセルを計算します。この位置は N // 2 で求められます。各セルに理想的な石の数を格納するための2次元リスト required_stones を初期化します。
+各セルの理想的な石の数を計算します。
+セルがピラミッドの中心からどの「層」に属するかを計算します。層は中心からの距離（縦横方向の最大値）で表されます。層に応じて、必要な石の数は 中心の値−層 で決定されます。
+実際の石の数（stone_grid[i][j]）から理想の石の数（required_stones[i][j]）を引きます。差分が正の場合、それが余分な石の数になります。すべてのセルについて余分な石を合計します。
+計算した余分な石の合計を出力します。上記のロジックを実行するため、関数 calculate_stones_to_remove を呼び出します。
+'''
+
 # B159 カロリー制限
 # utf-8
 from itertools import product
