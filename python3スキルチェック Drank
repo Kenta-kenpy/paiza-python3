@@ -2692,7 +2692,11 @@ else:
 n = int(input())
 print(n*3)
 
-# D324　◆
+# D324　節分の豆と年齢
+# utf-8
+n = int(input())
+print(100-n)
+
 # D325　名前の結合
 # utf-8
 a = input()
