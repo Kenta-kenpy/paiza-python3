@@ -289,6 +289,80 @@ print(result):
 '''
 
 <シミュレーション2　perfect shuffle>
+# utf-8
+import sys
+
+def perfect_shuffle(deck):
+    """デッキをパーフェクトシャッフルする関数"""
+    half1 = deck[:26]  # 上半分
+    half2 = deck[26:]  # 下半分
+    shuffled_deck = []
+    
+    # 交互にカードを配置
+    for i in range(26):
+        shuffled_deck.append(half1[i])  # 上半分のカード
+        shuffled_deck.append(half2[i])  # 下半分のカード
+    
+    return shuffled_deck
+
+def main():
+    """メイン処理関数"""
+    # 標準入力からKを取得
+    K = int(sys.stdin.read().strip())
+    
+    # 初期デッキの作成（S, H, D, C の順に1から13）
+    suits = ['S', 'H', 'D', 'C']
+    deck = [f"{suit}_{num}" for suit in suits for num in range(1, 14)]
+    
+    # K回シャッフル
+    for _ in range(K):
+        deck = perfect_shuffle(deck)
+    
+    # 結果を出力
+    print("\n".join(deck))
+
+if __name__ == "__main__":
+    main()
+'''
+perfect_shuffle(deck) 関数
+この関数は、渡されたデッキ (deck) を 1回のパーフェクトシャッフル で並べ替える役割を担います。
+
+処理の流れ
+デッキを2つの半分に分割
+
+half1 = deck[:26] → 上半分（先頭26枚）
+half2 = deck[26:] → 下半分（後ろ26枚）
+交互にカードを配置
+
+shuffled_deck.append(half1[i]) で 上半分のカードを追加
+shuffled_deck.append(half2[i]) で 下半分のカードを追加
+これを i=0 から i=25 までループして繰り返し、新しいシャッフル後のデッキを作成
+シャッフル後のデッキを返す
+
+main() 関数
+この関数はプログラムのメイン処理を行います。
+
+処理の流れ
+標準入力からKを取得
+
+K = int(sys.stdin.read().strip()) でKを取得し、整数型に変換
+初期デッキの作成
+
+suits = ['S', 'H', 'D', 'C'] で4種類のマークを定義
+リスト内包表記を使い、 'S_1', 'S_2', ..., 'C_13' のように 順番通りのデッキ を作成
+K回のシャッフル
+
+for _ in range(K): のループで、 K 回 perfect_shuffle(deck) を実行
+そのたびにデッキが更新される
+結果の出力
+
+print("\n".join(deck)) で、デッキのカードを 1枚ずつ改行して出力
+
+if __name__ == "__main__":
+これは、スクリプトが 直接実行されたときに main() を呼び出す ための構文です。
+（他のスクリプトからインポートされたときは実行されません）
+'''
+
 <シミュレーション3　燃費>
 <シミュレーション4　位置情報システム>
 <条件判定1　郵便料金>
