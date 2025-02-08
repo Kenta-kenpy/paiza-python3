@@ -4898,7 +4898,76 @@ print(difference)
 各皿の価格をすべて足し合わせて、合計金額を total_price に格納します。合計金額 (total_price) から食べ放題料金 (X) を引き、得失額を計算します。計算した得失額を出力します。
 '''
 
-# C162
+# C162　パーフェクトシャッフル
+# utf-8
+import sys
+
+def perfect_shuffle(cards):
+    """
+    パーフェクトシャッフルを実行する関数。
+    カードを半分に分け、右側の束の1枚、左側の束の1枚の順に交互に重ねる。
+    
+    :param cards: シャッフル前のカードのリスト
+    :return: シャッフル後のカードのリスト
+    """
+    M = len(cards)
+    mid = M // 2
+    left, right = cards[:mid], cards[mid:]
+    shuffled = []
+    for r, l in zip(right, left):
+        shuffled.append(r)
+        shuffled.append(l)
+    return shuffled
+
+def main():
+    # 入力を受け取る
+    M, N = map(int, sys.stdin.readline().strip().split())
+    
+    # 初期のカードの並び
+    cards = list(range(1, M + 1))
+    
+    # N 回のシャッフル
+    for _ in range(N):
+        cards = perfect_shuffle(cards)
+    
+    # 結果を出力
+    print(" ".join(map(str, cards)))
+
+if __name__ == "__main__":
+    main()
+'''
+perfect_shuffle(cards) 関数
+この関数は、与えられたカードのリスト cards に対して1回のパーフェクトシャッフルを行います。
+
+カードの分割
+M = len(cards) でカードの枚数を取得。
+mid = M // 2 でカードを2つの束に分ける。
+left = cards[:mid] は前半部分（上半分の束）。
+right = cards[mid:] は後半部分（下半分の束）。
+交互に重ねる
+zip(right, left) を使い、後半の束 (right) の1枚、前半の束 (left) の1枚の順に新しいリストに追加。
+shuffled.append(r) で後半の束の1枚を追加。
+shuffled.append(l) で前半の束の1枚を追加。
+シャッフル後のリストを返す
+完成した shuffled リストを返す。
+
+main() 関数
+プログラムのメイン部分で、標準入力からデータを受け取り、シャッフルを実行し、結果を出力します。
+
+入力の読み込み
+sys.stdin.readline().strip().split() を使い、1行の入力を読み取る。
+M, N = map(int, ...) で M（カードの枚数）と N（シャッフル回数）を整数として取得。
+カードの初期化
+cards = list(range(1, M + 1)) により、1からMまでの数値リストを作成。
+シャッフルの実行
+for _ in range(N): で N 回ループし、perfect_shuffle(cards) を呼び出して cards を更新。
+結果の出力
+print(" ".join(map(str, cards))) で、シャッフル後のリストをスペース区切りで表示。
+
+if __name__ == "__main__":
+Pythonスクリプトとして直接実行された場合に main() を呼び出し、プログラムを実行する。
+'''
+
 # C163
 # C164
 # C165
