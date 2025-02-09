@@ -364,6 +364,44 @@ if __name__ == "__main__":
 '''
 
 <シミュレーション3　燃費>
+import sys
+
+def calculate_fuel(X, F1, F2, L, stops):
+    fuel = 0
+    prev_position = 0
+    
+    # 各区間の燃料消費を計算
+    for stop in stops + [L]:
+        distance = stop - prev_position
+        if distance <= X:
+            fuel += distance * F1
+        else:
+            fuel += X * F1 + (distance - X) * F2
+        prev_position = stop
+    
+    return fuel
+
+# 入力の読み込み
+X = int(sys.stdin.readline().strip())
+F1, F2 = map(int, sys.stdin.readline().strip().split())
+L, N = map(int, sys.stdin.readline().strip().split())
+stops = list(map(int, sys.stdin.readline().strip().split())) if N > 0 else []
+
+# 計算と出力
+print(calculate_fuel(X, F1, F2, L, stops))
+'''
+s_N ≦ L ≦ 1,000,000,000という制約より、車が 1 m ずつ進んでいく様子をシミュレーションして燃料を計算すると最大でループが 1,000,000,000 回おこなわれる可能性があり実行時間制限をオーバーしてしまう可能性があります。
+そこで、1 ≦ N ≦ 1000という制約に注目して計算と場合分けを用いて燃料の総量を求めてみましょう。A m 地点から出発して B m 地点で一時停止するまでに必要な燃料を求めることを考えます。
+出発から X m 移動するまでは 1 m あたり F_1 ml, それ以降は F_2 ml の燃料が必要なので、B-A が X m 以下か否かで場合分けをすることで次の式で燃料を計算することができます。
+B-A ≦ X のとき・・・ F_1 × (B-A)
+X ≦ B-A のとき・・・ F_1 × X + F_2 × (B-A-X)
+この計算を全ての一時停止地点についておこなうことで O(N) で答えを求めることができます。最初の区間（スタートから最初の一時停止地点まで）と最後の区間（最後の一時地点から L m まで）の計算を忘れないように注意しましょう。
+各停止地点（stops）と最終地点（L）を順に処理します。
+停止地点間の距離を計算し、発進距離 X 以内なら F1 を適用し、それ以降は F2 を適用します。
+すべての区間を加算して最終的な燃料消費量を出力します。
+'''
+
+
 <シミュレーション4　位置情報システム>
 <条件判定1　郵便料金>
 <条件判定2　視力検査>
