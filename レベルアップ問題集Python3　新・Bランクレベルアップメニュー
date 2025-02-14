@@ -401,8 +401,57 @@ X ≦ B-A のとき・・・ F_1 × X + F_2 × (B-A-X)
 すべての区間を加算して最終的な燃料消費量を出力します。
 '''
 
-
 <シミュレーション4　位置情報システム>
+# utf-8
+import sys
+
+def interpolate_positions(n, positions):
+    result = []
+    index = 0  # 現在の位置情報のインデックス
+
+    for T in range(101):  # T = 0 から 100 までの時刻を処理
+        # T をカバーするデータ範囲を探す
+        while index < n - 1 and positions[index + 1][0] <= T:
+            index += 1
+        
+        t1, y1, x1 = positions[index]
+
+        # ちょうどデータ点がある場合はそのまま出力
+        if T == t1:
+            result.append(f"{y1} {x1}")
+        else:
+            # 線形補間による計算
+            if index < n - 1:
+                t2, y2, x2 = positions[index + 1]
+                yT = y1 + (T - t1) * (y2 - y1) // (t2 - t1)
+                xT = x1 + (T - t1) * (x2 - x1) // (t2 - t1)
+            else:
+                # 最後のデータ点以降はそのまま維持
+                yT, xT = y1, x1
+
+            result.append(f"{yT} {xT}")
+    
+    return result
+
+if __name__ == "__main__":
+    input_data = sys.stdin.read().strip().split("\n")
+    n = int(input_data[0])
+    positions = [tuple(map(int, line.split())) for line in input_data[1:]]
+
+    output = interpolate_positions(n, positions)
+    print("\n".join(output))
+'''
+このコードは、与えられた時間 t における座標 (y, x) を補間しながら、T = 0 から 100 までの各時刻に対応する (y, x) を出力するプログラムです。
+sys.stdin.read() を使って入力全体を取得し、改行 \n で分割。1行目の数値 n を取得（n は与えられた (t, y, x) のデータ数）。残りの行を (t, y, x) のタプルとして positions リストに格納。
+result というリストを作成し、結果を格納する。index を使って positions のどこを見ているかを追跡。T = 0 から T = 100 まで順番に処理。
+index は positions のどこを参照するかを示す変数。positions[index + 1][0]（次のデータの t）が T より小さい場合、次の index に進める。これにより リストを1回しかスキャンしない ので、効率的に動作する（O(n)）。
+ちょうど T == t の場合すなわちT が positions[index] の t に一致している場合、その (y, x) をそのまま記録。補間せずにそのまま出力する。
+補間が必要な場合index < n - 1 なら、次の t2, y2, x2 を取得。線形補間 で T に対応する yT, xT を計算：
+(y2 - y1) / (t2 - t1) * (T - t1) を整数除算 // で計算。小数点以下を切り捨てる ことで、整数座標を求める。
+ T が最後の t を超えた場合index == n - 1 で、補間するデータがないときは、最後の y1, x1 をそのまま出力。
+interpolate_positions で求めた結果を改行で結合して出力。
+'''
+
 <条件判定1　郵便料金>
 <条件判定2　視力検査>
 <条件判定3　過剰コンプライアンス>
