@@ -179,7 +179,7 @@ for i in range(len(N)):
 
 print()
 
-final　 大きな数値を3桁ごとにカンマ区切りで出力2
+final　大きな数値を3桁ごとにカンマ区切りで出力2
 # utf-8
 N = input()
 x = len(N) % 3
