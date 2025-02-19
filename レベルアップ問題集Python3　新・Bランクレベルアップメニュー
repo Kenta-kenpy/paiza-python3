@@ -578,6 +578,67 @@ vision_order のリスト順（最も良い視力から順番に確認）で、�
 '''
 
 <条件判定3　過剰コンプライアンス>
+import sys
+
+def censor_words(N, S, words):
+    result = []
+    len_S = len(S)
+    half = (len_S + 1) // 2  # 奇数の場合、中央の文字を前後に含む
+    
+    for word in words:
+        len_V = len(word)
+        if len_V == len_S:
+            if word == S:
+                result.append("banned")  # 完全一致の場合 "banned" を追加
+            elif word[:half] == S[:half]:
+                result.append("x" * half + word[half:])  # 前半が一致する場合、該当部分を x に置換
+            elif word[-half:] == S[-half:]:
+                result.append(word[:-half] + "x" * half)  # 後半が一致する場合、該当部分を x に置換
+            else:
+                result.append(word)  # どちらも一致しない場合は変更なし
+        else:
+            result.append(word)  # 長さが異なる場合は変更なし
+    
+    return result
+
+# 入力処理
+input_data = sys.stdin.read().strip().split("\n")
+N = int(input_data[0])  # 単語の数を取得
+S = input_data[1]  # 放送禁止用語を取得
+words = input_data[2:]  # 検閲対象の単語リストを取得
+
+# 結果出力
+for word in censor_words(N, S, words):
+    print(word)  # 変換後の単語を出力
+'''
+放送禁止用語と各単語 V_1, ... について前半分・後ろ半分・文字列全体が一致するかを判定し、判定結果に応じて文字の一部を x に置き換えましょう。
+S_i の文字数が奇数の場合は、文字列の前半と後半に中央の文字が含まれることに注意してください。
+
+入力処理:
+sys.stdin.read() を使用して入力データを一括で読み取り、改行 (\n) で分割。
+N（単語の数）を取得。
+S（放送禁止用語）を取得。
+words（検閲対象の単語リスト）を取得。
+検閲処理 (censor_words 関数):
+放送禁止用語 S の長さを取得。
+S の 前半部分・後半部分 を判定するために half = (len_S + 1) // 2 を計算。
+len_S が奇数の場合、中央の文字も前半・後半に含まれるようにする。
+各 V_i について以下の処理を行う：
+V_i の長さが S と一致するか確認
+一致する場合のみ、次の条件分岐へ進む。
+一致しない場合はそのまま V_i をリストに追加。
+V_i と S が完全一致する場合
+"banned" に置き換える。
+V_i の前半部分が S の前半部分と一致する場合
+V_i の前半部分を "x" に置き換える。
+V_i の後半部分が S の後半部分と一致する場合
+V_i の後半部分を "x" に置き換える。
+それ以外の場合
+V_i をそのままリストに追加。
+結果の出力:
+censor_words 関数からの変換後リストを出力する。
+'''
+
 <全探索1　高い寿司を食いたい!>
 <全探索2　コップの水>
 <全探索3　+1,-1,'1'+,+'1'>
