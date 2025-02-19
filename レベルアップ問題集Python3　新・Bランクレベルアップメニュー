@@ -516,6 +516,67 @@ calculate_postage 関数：この関数は、荷物の 縦(y), 横(x), 高さ(h)
 '''
 
 <条件判定2　視力検査>
+# utf-8
+import sys
+
+def determine_vision(n, results):
+    vision_order = ["TA", "TB", "TC", "TD"]
+    vision_map = {"TA": "A", "TB": "B", "TC": "C", "TD": "D"}
+    success_count = {test: 0 for test in vision_order}
+    fail_count = {test: 0 for test in vision_order}
+    passed_tests = set()
+    
+    for test, result in results:
+        if fail_count[test] >= 2:
+            continue  # すでに不合格確定のテストは無視
+        
+        if result == "ok":
+            success_count[test] += 1
+            if success_count[test] >= 2:
+                passed_tests.add(test)
+        else:
+            fail_count[test] += 1
+    
+    for test in vision_order:
+        if test in passed_tests:
+            return vision_map[test]
+    
+    return "E"
+
+if __name__ == "__main__":
+    input_lines = sys.stdin.read().strip().split("\n")
+    N = int(input_lines[0])
+    results = [line.split() for line in input_lines[1:N+1]]
+    
+    print(determine_vision(N, results))
+'''
+このコードは、視力検査の結果を解析し、被験者の視力を判定するプログラムです。
+入力の読み込み
+sys.stdin.read() を用いて標準入力からデータを読み込み、行ごとに分割 (split("\n")) する。
+最初の行 (N) はテスト回数を表す整数として取得。
+次の N 行は T_i J_i の形式（テストの種類と成功・失敗結果）なので、リスト results に格納。
+変数の初期化
+vision_order = ["TA", "TB", "TC", "TD"]
+→ 視力の良い順にテストを並べたリスト。
+vision_map = {"TA": "A", "TB": "B", "TC": "C", "TD": "D"}
+→ テストの種類 (TA, TB など) と視力 (A, B など) の対応関係を定義。
+success_count と fail_count の辞書を作成し、各テストの成功回数・失敗回数を記録。
+passed_tests を空のセットとして用意し、合格したテスト を記録。
+テスト結果の処理
+ループを用いて results の各テスト (test, result) を処理する。
+すでに2回失敗したテストは以降のデータを無視 (fail_count[test] >= 2 の場合 continue)。
+結果が "ok"（成功）なら success_count[test] を増やし、2回成功でそのテストを合格とみなす。
+結果が "ng"（失敗）なら fail_count[test] を増やす。
+視力の決定
+vision_order のリスト順（最も良い視力から順番に確認）で、合格したテストがあるかをチェック。
+最も良いテストの合格 (passed_tests に存在) を見つけたら、vision_map から対応する視力 (A, B, C, D) を返す。
+どのテストにも合格しなかった場合は "E" を出力。
+ポイント
+2回失敗で不合格が確定し、それ以降の成功はカウントしない。
+2回成功したテストを合格とし、最も良いテスト結果を採用する。
+すべて不合格なら "E" を出力する。
+'''
+
 <条件判定3　過剰コンプライアンス>
 <全探索1　高い寿司を食いたい!>
 <全探索2　コップの水>
