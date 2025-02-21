@@ -1,3 +1,4 @@
+※回答コード例があとから追加された
 <マップの扱い1　マップの書き換え・1マス>
 # utf-8
 def main():
@@ -640,6 +641,43 @@ censor_words 関数からの変換後リストを出力する。
 '''
 
 <全探索1　高い寿司を食いたい!>
+# utf-8
+import sys
+
+def max_sushi_sum(N, K, P):
+    # 配列を2倍にする（円環をリストで表現）
+    P_extended = P + P  # 2N 個のリストになる
+    
+    # 最初のK個の合計
+    current_sum = sum(P_extended[:K])
+    max_sum = current_sum
+    
+    # スライディングウィンドウで最大値を求める
+    for i in range(1, N):
+        current_sum = current_sum - P_extended[i - 1] + P_extended[i + K - 1]
+        max_sum = max(max_sum, current_sum)
+    
+    return max_sum
+
+if __name__ == "__main__":
+    # 入力を受け取る
+    N, K = map(int, sys.stdin.readline().split())
+    P = [int(sys.stdin.readline()) for _ in range(N)]
+    
+    # 計算して出力
+    print(max_sushi_sum(N, K, P))
+'''
+配列を2倍にする:
+P の最後と最初が隣接しているため、リストを2回繰り返した P_extended を作成し、N 個目まで見れば全ての区間を考慮できる。
+スライディングウィンドウを使う:
+先に最初の K 枚の合計 (current_sum) を計算。
+その後、ウィンドウを 1 枚ずつずらしながら最大値を更新。
+
+P_extended = P + P でリストを2倍にし、円形の繋がりを考慮。
+current_sum に最初の K 枚の合計を入れる。
+1 つずつスライドしながら max_sum を更新。
+'''
+
 <全探索2　コップの水>
 <全探索3　+1,-1,'1'+,+'1'>
 <全探索4　ストラックアウト>
