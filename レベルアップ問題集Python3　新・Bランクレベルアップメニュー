@@ -679,6 +679,35 @@ current_sum に最初の K 枚の合計を入れる。
 '''
 
 <全探索2　コップの水>
+＃ utf-8
+import sys
+from itertools import combinations
+
+def max_water(N, X, w):
+    max_fill = 0
+    # 部分集合の全探索
+    for i in range(1, N + 1):  # 1個以上のコップを選ぶ
+        for comb in combinations(w, i):
+            total = sum(comb)
+            if total <= X:
+                max_fill = max(max_fill, total)
+    return max_fill
+
+if __name__ == "__main__":
+    # 入力の読み込み
+    N, X = map(int, sys.stdin.readline().split())
+    w = [int(sys.stdin.readline()) for _ in range(N)]
+    
+    # 最適な水の量を計算して出力
+    print(max_water(N, X, w))
+'''
+この問題は、与えられた N 個の水の入った小さなコップの中から、合計が X ml を超えない範囲で最大量の水を選択する問題です。
+ナップサック問題の部分和問題（Subset Sum Problem）に類似しており、ビット全探索または動的計画法で解くことができます。
+itertools.combinations を使い、1 個以上のコップを選ぶすべての組み合わせを生成します。
+各組み合わせの水の合計量を計算し、X を超えない最大値を探します。
+max_fill を更新しながら最適解を見つけます。
+'''
+
 <全探索3　+1,-1,'1'+,+'1'>
 <全探索4　ストラックアウト>
 <文字列1　疑似数字>
