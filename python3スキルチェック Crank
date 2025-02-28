@@ -4968,7 +4968,43 @@ if __name__ == "__main__":
 Pythonスクリプトとして直接実行された場合に main() を呼び出し、プログラムを実行する。
 '''
 
-# C163
+# C163　ころころどんぐり
+# utf-8
+import sys
+
+def will_acorn_fall(N, heights):
+    energy = 0  # どんぐりの持つ上るためのエネルギー
+    
+    for h in heights:
+        if h < 0:
+            # 下り坂（エネルギーを得る）
+            energy += abs(h)
+        else:
+            # 上り坂（エネルギーを消費）
+            if energy < h:
+                return "NO"  # エネルギー不足で池にたどり着けない
+            energy -= h
+    
+    return "YES"  # 最後まで進めるなら池に落ちる
+
+if __name__ == "__main__":
+    N = int(sys.stdin.readline().strip())
+    heights = list(map(int, sys.stdin.readline().strip().split()))
+    print(will_acorn_fall(N, heights))
+'''
+どんぐりが坂道を転がり、池に落ちるかどうかを判定するものです。どんぐりは 下り坂でエネルギーを得て、上り坂でエネルギーを消費する というルールに従って移動します。
+
+処理の流れ
+エネルギーの初期化
+どんぐりのエネルギーを 0 に設定します。
+坂道の高さデータを順番に処理
+もし h < 0 であれば、下り坂なので、その高さ分のエネルギーを獲得します（energy += abs(h)）。
+もし h > 0 であれば、上り坂なので、その高さ分のエネルギーを消費します（energy -= h）。
+もし消費するエネルギーが足りなくなったら、どんぐりは途中で止まり、"NO" を出力します。
+最終判定
+すべての坂を通り抜けることができれば "YES" を出力します。
+'''
+
 # C164
 # C165
 # C166
