@@ -709,7 +709,124 @@ max_fill を更新しながら最適解を見つけます。
 '''
 
 <全探索3　+1,-1,'1'+,+'1'>
+# utf-8
+# 操作を関数化すると見やすい.
+def sousa(number, pat):
+    if pat == 0:
+        return number
+    elif pat == 1:
+        return number+1
+    elif pat == 2:
+        return number-1
+    elif pat == 3:
+        return number+10**len(str(number))
+    else:
+        return number*10+1
+
+N = int(input())
+X = []
+for i in range(N):
+    X.append(int(input()))
+ans = 10**8
+for i in range(N):
+    for j in range(i+1, N):
+        for k in range(5):
+            for l in range(5):
+                ans = min(ans, abs(sousa(X[i], k)-sousa(X[j], l)))
+print(ans)
+'''
+今回の問題では 2 ≦ N ≦ 8 という小さな制約が与えられているので、手順 2 で求めることができる値を実際に全て求めてそれらのうち最小の値を求めましょう。
+X_1,...,X_N のそれぞれについて 2.1 で作ることができる値を求めておき、それらの全ての組み合わせをループ処理などで列挙し、差の絶対値を求めて最小であれば更新するという操作をおこないましょう。
+数字の先頭や末尾に 1 をつける操作を行う際は数値⇔文字列の変換を利用すると便利です。
+'''
+
 <全探索4　ストラックアウト>
+# utf-8
+import sys
+import itertools
+
+def calculate_max_score(scores, bingo_scores):
+    # 全パネルの組み合わせ
+    panels = list(range(9))
+    max_add = 0
+    base_score = sum(scores)
+    
+    # すべてのパネルの倒し方の順列を試す
+    for perm in itertools.permutations(panels):
+        opened_panel = [False] * 9
+        tmp_add = 0
+        
+        for i in range(9):
+            panel = perm[i]
+            line = 0
+            
+            if panel == 0:
+                line += (opened_panel[1] and opened_panel[2])
+                line += (opened_panel[3] and opened_panel[6])
+                line += (opened_panel[4] and opened_panel[8])
+            elif panel == 1:
+                line += (opened_panel[0] and opened_panel[2])
+                line += (opened_panel[4] and opened_panel[7])
+            elif panel == 2:
+                line += (opened_panel[0] and opened_panel[1])
+                line += (opened_panel[5] and opened_panel[8])
+                line += (opened_panel[4] and opened_panel[6])
+            elif panel == 3:
+                line += (opened_panel[0] and opened_panel[6])
+                line += (opened_panel[4] and opened_panel[5])
+            elif panel == 4:
+                line += (opened_panel[0] and opened_panel[8])
+                line += (opened_panel[2] and opened_panel[6])
+                line += (opened_panel[1] and opened_panel[7])
+                line += (opened_panel[3] and opened_panel[5])
+            elif panel == 5:
+                line += (opened_panel[2] and opened_panel[8])
+                line += (opened_panel[3] and opened_panel[4])
+            elif panel == 6:
+                line += (opened_panel[0] and opened_panel[3])
+                line += (opened_panel[2] and opened_panel[4])
+                line += (opened_panel[7] and opened_panel[8])
+            elif panel == 7:
+                line += (opened_panel[1] and opened_panel[4])
+                line += (opened_panel[6] and opened_panel[8])
+            elif panel == 8:
+                line += (opened_panel[2] and opened_panel[5])
+                line += (opened_panel[6] and opened_panel[7])
+                line += (opened_panel[0] and opened_panel[4])
+            
+            if line > 0:
+                tmp_add += bingo_scores[panel][line - 1]
+            opened_panel[panel] = True
+        
+        max_add = max(max_add, tmp_add)
+    
+    return base_score + max_add
+
+def main():
+    input_data = sys.stdin.read().strip().split("\n")
+    
+    # パネルの得点取得
+    scores = list(map(int, " ".join(input_data[:3]).split()))
+    
+    # ビンゴの得点取得
+    bingo_scores = []
+    for i, line in enumerate(input_data[3:]):
+        bingo_scores.append(list(map(int, line.split())))
+    
+    # 最大スコアの計算
+    max_score = calculate_max_score(scores, bingo_scores)
+    
+    # 結果を出力
+    print(max_score)
+
+if __name__ == "__main__":
+    main()
+'''
+まず、問題の制約よりパネルを倒すことによって獲得する得点は必ず正の値となるので得点を最大化させるには明らかに全てのパネルを倒した方が良いということがわかります。
+得点が最大のとき、全てのパネルを倒すので答えとなる値は s_1 + ... + s_9 + ビンゴができた時に得られる得点の最大値 となります。
+この問題ではパネルの枚数が 9 枚であるので、全てのパネルを倒す順番の順列についてビンゴで獲得できる得点を計算し、その最大値を求めることができます。この処理でおこなわれるループの回数は 1 ~ 9 の値の並べ方の数と一致するので 9! となり、実行時間制限に間に合います。
+'''
+
 <文字列1　疑似数字>
 <文字列2　super long int>
 <文字列3　p4!2@>
