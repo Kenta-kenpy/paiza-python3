@@ -828,6 +828,22 @@ if __name__ == "__main__":
 '''
 
 <文字列1　疑似数字>
+# utf-8
+S = input()
+for i in range(len(S)):
+    moji = []
+    for j in range(len(S)):
+        if(i<=j):
+            if('0'<=S[i]<='9' and '0'<=S[j]<='9'):
+                moji.append(S[i:j+1])
+    moji.sort()
+    for ss in moji:
+        print(ss)
+'''
+最初の文字と最後の文字が数字(0~9)であるような文字列を「疑似数字」としているので、
+与えられた文字列 S に含まれる全ての 2 文字の組み合わせ S[i], S[j] (i ≦ j) について「S[i] が数字である かつ S[j] が数字である」かを判定することで全ての疑似数字を列挙することができます。
+'''
+
 <文字列2　super long int>
 <文字列3　p4!2@>
 <配列1　平面で計算>
