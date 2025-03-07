@@ -8601,7 +8601,82 @@ while y < H - 1: のループの条件で、y が最下行に達するまで繰�
 最後に、y + 1 と x + 1 を出力することで、1-indexedの座標で出口の位置を表示します。
 '''
 -----------------------------------------------B161　※欠番◆
-# B161
+# B161 射撃訓練
+# utf-8
+import sys
+
+def main():
+    # 入力の読み込み
+    H, W = map(int, sys.stdin.readline().split())
+    N = int(sys.stdin.readline())
+    
+    targets = {}  # 的の位置をキーとする辞書 (r, c) -> (p, q)
+    for _ in range(N):
+        r, c, p, q = map(int, sys.stdin.readline().split())
+        targets[(r, c)] = (p, q)
+    
+    M = int(sys.stdin.readline())
+    shots = [tuple(map(int, sys.stdin.readline().split())) for _ in range(M)]
+    
+    total_score = 0
+    
+    # 8方向の相対座標
+    directions = [(-1, -1), (-1, 0), (-1, 1),
+                  (0, -1),         (0, 1),
+                  (1, -1), (1, 0), (1, 1)]
+    
+    for a, b in shots:
+        # 的に命中した場合
+        if (a, b) in targets:
+            total_score += targets[(a, b)][0]
+        else:
+            # 周囲8マスを確認
+            for dr, dc in directions:
+                adj_r, adj_c = a + dr, b + dc
+                if (adj_r, adj_c) in targets:
+                    total_score += targets[(adj_r, adj_c)][1]
+                    break  # 一つの的にのみ隣接する仕様のため、最初の得点で終了
+    
+    print(total_score)
+
+if __name__ == "__main__":
+    main()
+'''
+入力の読み込み
+最初に、標準入力からデータを受け取ります。
+
+H, W: 枠のサイズ（縦×横）
+N: 的の数
+N 個の的の情報（r, c, p, q）
+r, c: 的の座標
+p: 直接命中時の得点
+q: 隣接マス命中時の得点
+M: 射撃回数
+M 個の射撃座標（a, b）
+
+的の情報を辞書に格納
+的の位置 (r, c) をキーとして、得点 (p, q) を値にした辞書 targets を作成します。
+これにより、各的の位置と得点情報を素早く取得できるようになります。
+
+射撃の座標をリストに格納
+射撃の回数 M を読み取り、M 個の (a, b) 座標をリスト shots に格納します。
+
+得点計算
+変数 total_score を用いて、最終的な合計得点を計算します。
+
+8方向の相対座標を定義
+8方向の相対座標（左上、上、右上、左、右、左下、下、右下）をリスト directions に格納します。
+
+直接命中の判定
+(a, b) に的がある場合、p 点を加算します。
+隣接命中の判定
+(a, b) に的がない場合、周囲8マスを確認します。
+directions のリストを使って、(a, b) の隣接マスを計算し、的があれば q 点を加算します。
+一度 q 点を加算したら、以降の確認は不要なので break します。
+
+最後に、計算した合計得点を出力します。
+'''
+
 # B162
 # B163
 # B164
