@@ -845,7 +845,43 @@ for i in range(len(S)):
 '''
 
 <文字列2　super long int>
+# utf-8
+X = input()
+print(int(X[0:8])+int(X[8:16])+int(X[16:24])+int(X[24:32]))
+'''
+問題文中で与えられた通りハッシュ値を求めましょう。
+入力された数値が大きいため、入力を数値として受け取ってしまうと言語によってはオーバーフローなどが発生してしまいます。
+そこで入力を文字列して扱い、部分文字列を取得してそれを数値に変換することで 8 桁ずつに区切って得られる数字を取得しましょう。
+'''
+
 <文字列3　p4!2@>
+# utf-8
+S = input()
+ans = -1
+pai = [["p"],["a","4","@"],["i","1","!"],["z","2"],["a","4","@"]]
+ego = []
+for a in pai[0]:
+    for b in pai[1]:
+        for c in pai[2]:
+            for d in pai[3]:
+                for e in pai[4]:
+                    ego.append(a+b+c+d+e)
+for i in range(len(S)-4):
+    if S[i:i+5] in ego:
+        ans = max(ans,0)
+    if S[i:i+5]=="paiza":
+        ans = max(ans,1)
+if(ans==1):
+    print("paiza")
+elif(ans==0):
+    print("leet")
+else:
+    print("nothing")
+'''
+"paiza" も Leet 表記された "paiza" も 5 文字であるため、与えられた文字列の全ての連続した 5 文字について "paiza" か Leet かいずれでもないかを判定すれば良いです。
+Leet かを判定するためにあらかじめ考えられる Leet 文字列を列挙しておくと良いです。列挙の際は Leet を 「aとそのLeet + iとそのLeet + zとそのLeet + aとそのLeet」 という具合に組み合わせて列挙すると良いでしょう。
+'''
+
 <配列1　平面で計算>
 <配列2　立体で計算>
 <計算1　マンハッタン距離>
