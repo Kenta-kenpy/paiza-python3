@@ -883,6 +883,40 @@ Leet かを判定するためにあらかじめ考えられる Leet 文字列を
 '''
 
 <配列1　平面で計算>
+# utf-8
+N=int(input())
+A = []
+for i in range(N):
+    A.append(list(map(int,input().split())))
+ans = 0
+# 横列
+for i in range(N):
+    res = 0
+    for j in range(N):
+        res += A[i][j]
+    ans = max(ans,res)
+# 縦列
+for i in range(N):
+    res = 0
+    for j in range(N):
+        res += A[j][i]
+    ans = max(ans,res)
+# 斜め（左上から右下へ）
+res = 0
+for i in range(N):
+    res += A[i][i]
+    ans = max(ans,res)
+# 斜め（左下から右上へ）
+res = 0
+for i in range(N):
+    res += A[N-1-i][i]
+    ans = max(ans,res)
+print(ans)
+'''
+縦列・横列・斜め列の和を全て求めてそれらの最大値を求めましょう。
+和を求める際にどの列・行を扱っているかわからなくなったら、インデックスの値を出力したり、配列の小さいケースを用いてデバッグするなどしましょう。
+'''
+
 <配列2　立体で計算>
 <計算1　マンハッタン距離>
 <計算2　疑似乱数>
