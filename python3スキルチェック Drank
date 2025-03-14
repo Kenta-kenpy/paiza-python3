@@ -2750,7 +2750,16 @@ m = int(input())
 print(n*m)
 
 ---------------------------------------------D331　※欠番 ◆
-# D331
+# D331 ファイル名の変更
+# utf-8
+def replace_space_with_underscore(s: str) -> str:
+    return s.replace(" ", "_")
+
+# 入力を受け取る
+s = input().strip()
+# 変換して出力
+print(replace_space_with_underscore(s))
+
 # D332
 # D333
 # D334
