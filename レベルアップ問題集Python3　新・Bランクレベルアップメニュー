@@ -918,5 +918,78 @@ print(ans)
 '''
 
 <配列2　立体で計算>
+import sys
+
+def max_3d_sum(N, A):
+    max_sum = float('-inf')
+    
+    # 各軸に沿った和を計算
+    for i in range(N):
+        for j in range(N):
+            # Z軸方向（縦列）
+            max_sum = max(max_sum, sum(A[k][i][j] for k in range(N)))
+            # Y軸方向（横列）
+            max_sum = max(max_sum, sum(A[i][k][j] for k in range(N)))
+            # X軸方向（横列）
+            max_sum = max(max_sum, sum(A[i][j][k] for k in range(N)))
+    
+    # 斜め列（各面内の対角線）
+    for i in range(N):
+        max_sum = max(max_sum, sum(A[i][k][k] for k in range(N)))  # 各XY面の対角線
+        max_sum = max(max_sum, sum(A[i][k][N-1-k] for k in range(N)))
+        max_sum = max(max_sum, sum(A[k][i][k] for k in range(N)))  # 各YZ面の対角線
+        max_sum = max(max_sum, sum(A[k][i][N-1-k] for k in range(N)))
+        max_sum = max(max_sum, sum(A[k][k][i] for k in range(N)))  # 各XZ面の対角線
+        max_sum = max(max_sum, sum(A[k][N-1-k][i] for k in range(N)))
+    
+    # 立方体全体を貫く斜め列
+    max_sum = max(max_sum, sum(A[k][k][k] for k in range(N)))  # 主対角線
+    max_sum = max(max_sum, sum(A[k][k][N-1-k] for k in range(N)))
+    max_sum = max(max_sum, sum(A[k][N-1-k][k] for k in range(N)))
+    max_sum = max(max_sum, sum(A[N-1-k][k][k] for k in range(N)))
+    
+    return max_sum
+
+# 入力処理
+if __name__ == "__main__":
+    input_data = sys.stdin.read().strip().split("\n")
+    N = int(input_data[0])
+    values = list(map(int, " ".join(input_data[1:]).split()))
+    
+    # 3Dリストに変換
+    A = [[[values[i * N * N + j * N + k] for k in range(N)] for j in range(N)] for i in range(N)]
+    
+    print(max_3d_sum(N, A))
+'''
+sys.stdin.read() を使って標準入力を一括で読み込みます。
+strip() で前後の不要な改行を除去し、split("\n") で改行ごとに分割してリスト input_data に格納します。最初の行には N（立方体のサイズ）が与えられるので、int に変換して取得します。
+2行目以降には数値が空白区切りで並んでいるため、それらを " ".join(input_data[1:]) で1つの文字列に統合し、split() で分割して int に変換し、リスト values に格納します。
+リスト values を N × N × N の三次元リスト A に変換します。
+i は立方体の奥行き方向（Z軸）
+j は行（Y軸）
+k は列（X軸）
+要素のインデックスは i * N * N + j * N + k で計算できます。変数 max_sum を初期化し、負の無限大（-inf）に設定します。
+(1) 軸方向の列の和
+各方向の直線上の和を計算します。
+A[k][i][j] → Z軸方向（高さ方向）の列の和
+A[i][k][j] → Y軸方向（縦列）の和
+A[i][j][k] → X軸方向（横列）の和
+(2) 各面内の対角線の和
+各 XY・YZ・XZ 平面内の対角線の和を計算します。
+A[i][k][k] → XY 平面の主対角線
+A[i][k][N-1-k] → XY 平面の副対角線
+A[k][i][k] → YZ 平面の主対角線
+A[k][i][N-1-k] → YZ 平面の副対角線
+A[k][k][i] → XZ 平面の主対角線
+A[k][N-1-k][i] → XZ 平面の副対角線
+(3) 立方体全体を貫く対角線
+立方体全体を貫く4本の斜め線の和を求めます。
+(0,0,0) → (N-1,N-1,N-1)
+(0,0,N-1) → (N-1,N-1,0)
+(0,N-1,0) → (N-1,0,N-1)
+(N-1,0,0) → (0,N-1,N-1)
+計算された max_sum を出力します。
+'''
+
 <計算1　マンハッタン距離>
 <計算2　疑似乱数>
