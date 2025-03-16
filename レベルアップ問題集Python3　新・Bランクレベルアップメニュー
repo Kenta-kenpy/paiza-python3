@@ -992,4 +992,61 @@ A[k][N-1-k][i] → XZ 平面の副対角線
 '''
 
 <計算1　マンハッタン距離>
+P_x, P_y = map(int, input().split())
+N = int(input())
+yu1 = -1
+yuk1 = 10**10
+yu2 = -1
+yuk2 = 10**10
+yu3 = -1
+yuk3 = 10**10
+ma1 = -1
+man1 = 10**10
+ma2 = -1
+man2 = 10**10
+ma3 = -1
+man3 = 10**10
+for i in range(N):
+    x, y = map(int, input().split())
+    if (P_x-x)**2 + (P_y-y)**2 < yuk1:
+        yuk3 = yuk2
+        yu3 = yu2
+        yuk2 = yuk1
+        yu2 = yu1
+        yuk1 = (P_x-x)**2 + (P_y-y)**2
+        yu1 = i+1
+    elif (P_x-x)**2 + (P_y-y)**2 < yuk2:
+        yuk3 = yuk2
+        yu3 = yu2
+        yuk2 = (P_x-x)**2 + (P_y-y)**2
+        yu2 = i+1
+    elif (P_x-x)**2 + (P_y-y)**2 < yuk3:
+        yuk3 = (P_x-x)**2 + (P_y-y)**2
+        yu3 = i+1
+    if abs(P_x-x)+abs(P_y-y) < man1:
+        man3 = man2
+        ma3 = ma2
+        man2 = man1
+        ma2 = ma1
+        man1 = abs(P_x-x)+abs(P_y-y)
+        ma1 = i+1
+    elif abs(P_x-x)+abs(P_y-y) < man2:
+        man3 = man2
+        ma3 = ma2
+        man2 = abs(P_x-x)+abs(P_y-y)
+        ma2 = i+1
+    elif abs(P_x-x)+abs(P_y-y) < man3:
+        man3 = abs(P_x-x)+abs(P_y-y)
+        ma3 = i+1
+print(yu1)
+print(yu2)
+print(yu3)
+print(ma1)
+print(ma2)
+print(ma3)
+'''
+各地点についてユークリッド距離とマンハッタン距離を求めて、比較や並び替えをおこないましょう。
+ユークリッド距離を求める際は小数の扱いに注意しましょう。また小数を用いずとも sqrt(A) < sqrt(B) であるならば A < B であり、その逆も成り立つため sqrt の中身 (x_1 - x_2)^2 + (y_1 - y_2)^2 を比較することで距離の大小関係を求めることができます。
+'''
+
 <計算2　疑似乱数>
