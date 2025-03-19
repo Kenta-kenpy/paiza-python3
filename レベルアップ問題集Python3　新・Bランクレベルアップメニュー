@@ -918,6 +918,7 @@ print(ans)
 '''
 
 <配列2　立体で計算>
+# utf-8
 import sys
 
 def max_3d_sum(N, A):
@@ -1050,3 +1051,18 @@ print(ma3)
 '''
 
 <計算2　疑似乱数>
+# utf-8
+X, M, N=map(int, input().split())
+ans = 0
+res = 1
+for i in range(N):
+    res *= X
+    res %= M
+    ans += res
+    ans %= M
+    print(ans)
+'''
+rnd_i = (X^i + X^{i-1} ... + X^1) mod M の計算をおこないましょう。
+(X^i + X^{i-1} ... + X^1) は大きな値になりオーバーフローの可能性があるので、細かく mod M に変換して計算をおこないましょう。
+'''
+
