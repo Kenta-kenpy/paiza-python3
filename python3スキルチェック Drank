@@ -2760,7 +2760,17 @@ s = input().strip()
 # 変換して出力
 print(replace_space_with_underscore(s))
 
-# D332
+# D332 セット割引
+# utf-8
+# p 円の食べ物と q 円の飲み物を頼んだ時に合計金額が 1000 円以上の場合に 100 円引きされます。
+p = int(input())
+q = int(input())
+
+if (p + q) >= 1000:
+    print(p+q-100)
+else:
+    print(p+q)
+    
 # D333
 # D334
 # D335
