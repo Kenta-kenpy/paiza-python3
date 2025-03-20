@@ -5005,7 +5005,36 @@ if __name__ == "__main__":
 すべての坂を通り抜けることができれば "YES" を出力します。
 '''
 
-# C164
+# C164 並び替えの検証
+# utf-8
+def is_sorted_after_swaps():
+    import sys
+    input = sys.stdin.read
+    
+    # 入力の読み込み
+    data = input().split("\n")
+    N = int(data[0])
+    A = list(map(int, data[1].split()))
+    Q = int(data[2])
+    
+    # スワップ処理
+    for i in range(3, 3 + Q):
+        L, R = map(int, data[i].split())
+        A[L-1], A[R-1] = A[R-1], A[L-1]  # 1-indexed なので 0-indexed に調整
+    
+    # 昇順かチェック
+    if A == sorted(A):
+        print("Yes")
+    else:
+        print("No")
+
+if __name__ == "__main__":
+    is_sorted_after_swaps()
+'''
+与えられた 入れ替え操作 (L, R) を そのまま適用し
+最後に sorted(A) と比較して 昇順かどうかを判定している
+'''
+
 # C165
 # C166
 # C167
