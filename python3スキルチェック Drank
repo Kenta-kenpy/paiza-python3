@@ -2771,7 +2771,11 @@ if (p + q) >= 1000:
 else:
     print(p+q)
     
-# D333
+# D333 さくらの花びら
+# utf-8
+n = int(input())
+print(n*5)
+
 # D334
 # D335
 # D336
