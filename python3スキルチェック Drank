@@ -2776,7 +2776,25 @@ else:
 n = int(input())
 print(n*5)
 
-# D334
+# D334　1週間の食費
+# utf-8
+costs = []
+
+for _ in range(7):
+    cost = int(input())
+    costs.append(cost)
+
+total = 0
+for c in costs:
+    total += c
+
+print(total)
+'''
+map 関数の使い方として、map(関数, イテラブル) という形が正しいです。list() は引数を1つだけ受け取ります。
+cost はリストや map オブジェクトなので、数値の加算になっていません。i に対して処理するべきです（for i in cost: としているなら、sum += i にする）。
+sum は Python の組み込み関数（sum()）と同じ名前であるため、関数を上書きしてしまうリスクがあります。小規模コードではすぐに問題にはなりませんが、推奨されない書き方です。
+'''
+
 # D335
 # D336
 # D337
