@@ -2804,7 +2804,12 @@ n = int(input())
 m = int(input())
 print(n*m)
 
-# D336
+# D336 レジの列
+# utf-8
+n = int(input())
+m = int(input())
+print(n+m+1)
+
 # D337
 # D338
 # D339
