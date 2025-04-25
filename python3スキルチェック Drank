@@ -2810,7 +2810,14 @@ n = int(input())
 m = int(input())
 print(n+m+1)
 
-# D337
+# D337 最高気温
+# utf-8
+t_1 = int(input())
+t_2 = int(input())
+t_3 = int(input())
+
+print(max(t_1,t_2,t_3))
+
 # D338
 # D339
 # D340
