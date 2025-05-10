@@ -2834,8 +2834,8 @@ n = int(input())
 m = int(input())
 x = int(input())
 
-if n >x:
-    print(m +(n-x))
+if x <= n:
+    print(x + m)
 else:
     print(x)
 
