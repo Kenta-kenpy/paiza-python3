@@ -1,1 +1,46 @@
+# ダウンロード(Easy)
+# utf-8
+S, A, T = map(int,input().split()) #入力
 
+Already_downroad = T*A #ダウンロードが終わったファイルのデータ量の総和
+All_downroad = S*A #全てのファイルのデータ量の総和
+
+print((100 * Already_downroad) // All_downroad)
+'''
+この問題では、1 行に空白で区切られた 3 つの整数が与えられます。
+入力はPythonでは map(int,input().split()) で受け取ることが出来ます。
+計算は掛け算、割り算を使用します。Pythonでは、A×B の値は A * B、A÷B を小数点以下を切り捨てた値は A // B で求めることが出来ます。
+(A×B)÷C を小数点以下を切り捨てた値を求めるとき、先に B÷C を小数点以下を切り捨てた値を求めてしまうと誤った計算結果になってしまうので、計算の順番に気をつけてください。
+出力はPythonでは、print関数を用いて行うことが出来ます。
+'''
+
+# オリンピックのスコア
+# utf-8
+S = list(map(int,input().split()))
+print(sum(S) - max(S) - min(S))
+'''
+入力はPythonでは list(map(int,input().split())) で受け取ることが出来ます。
+総和を求める関数 sum() 、最大値を求める関数 max() 、最小値を求める関数 min() を用いて、sum(S) - max(S) - min(S) と求めることが出来ます。関数 sum() は、実数の入ったリストを引数として与えるとそれらの総和を計算します。その他の関数も同様です。
+
+<別解>
+S = list(map(int,input().split()))
+
+MAX = -1 #最大値を探す
+MIN = 10**9    #最小値を探す
+SUM = 0     #総和をとる
+for i in range(5):
+  SUM += S[i]
+  if MIN > S[i]:#最小値更新
+    MIN = S[i]
+  if MAX < S[i]:#最大値更新
+    MAX = S[i]
+
+print(SUM - MAX - MIN)
+'''
+for文によって、総和を求めながら最大値と最小値を探すことによって計算することもできます。初期値としては、十分に小さい数、大きい数を設定しましょう。
+'''
+'''
+
+# 次のごはん
+
+# ダウンロード(Hard)
