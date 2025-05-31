@@ -2856,7 +2856,15 @@ d_3 = int(input())
 # 税所に収穫できるのは日数の最小値
 print(min(d_1,d_2,d_3))
 
-# D342
+# D342 湿度の管理
+# utf-8
+h = int(input())
+
+if h > 60:
+    print("NG")
+else:
+    print("OK")
+
 # D343
 # D344
 # D345
