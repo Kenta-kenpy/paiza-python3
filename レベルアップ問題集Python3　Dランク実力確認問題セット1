@@ -56,3 +56,43 @@ if,elif,else文を用いて、判定を行うことが可能です。朝ごは�
 '''
 
 # ダウンロード(Hard)
+# utf-8
+A = list(map(int,input().split()))
+T = list(map(str,input().split()))
+
+Already_downroad = 0 #ダウンロードが終わったファイルのデータ量の総和を管理する変数
+All_downroad = sum(A) #全てのファイルのデータ量の総和
+
+for i in range(5):
+    if T[i] == "o": #もしファイルのダウンロードが終わっているならば、データ量をAll_downloadに足す
+        Already_downroad += A[i]
+        
+print((100 * Already_downroad) // All_downroad)
+'''
+入力はPythonでは 1 行目も 2 行目も list(map(int,input().split())) で受け取ることが出来ます。
+始めにダウンロードが終わったファイルのデータ量の総和を管理する変数を用意し、for文を用いて、T のそれぞれの文字を調べ、o ならば、用意した変数にデータ量を足し算することで、始めにダウンロードが終わったファイルのデータ量の総和を求めることが出来ます。
+for文を使わなかったとしても、実装例 2 のように、if文 5 つで判定することが出来ます。indexに注意してください。
+<実装例2>
+A_0, A_1, A_2, A_3, A_4 = map(int,input().split())
+T = list(map(str,input().split()))
+
+Already_downroad = 0 #ダウンロードが終わったファイルのデータ量の総和を管理する変数
+All_downroad = A_0 + A_1 + A_2 + A_3 + A_4 #全てのファイルのデータ量の総和
+
+if T[0] == "o": #もしファイルのダウンロードが終わっているならば、データ量をAll_downloadに足す
+    Already_downroad += A_0
+
+if T[1] == "o": 
+    Already_downroad += A_1
+
+if T[2] == "o": 
+    Already_downroad += A_2
+
+if T[3] == "o": 
+    Already_downroad += A_3
+
+if T[4] == "o": 
+    Already_downroad += A_4
+
+print((100 * Already_downroad) // All_downroad)
+'''
