@@ -1,4 +1,15 @@
 # 外貨計算
+# utf-8
+N = int(input())
+print(N*360)
+
 # タイピング練習
+# utf-8
+N = int(input())
+S = input()
+
+for _ in range(N):
+    print(S)
+
 # taぬき
 # 格闘ゲーム
