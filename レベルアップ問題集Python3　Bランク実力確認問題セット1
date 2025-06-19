@@ -10,6 +10,55 @@ S = input()
 
 for _ in range(N):
     print(S)
+'''
+この問題では、文字列 S と整数 N が 2 行に分けて与えられます。
+"S を出力して改行する操作" を N 回実行したいため、forを用いたループ処理が適しています。
+'''
 
 # taぬき
+# utf-8
+S = input()
+N = len(S)
+ANS = ""
+for i in range(N):
+    if S[i] == "t" or S[i] == "a":
+        continue
+    ANS += S[i]
+print(ANS)
+'''
+forを用いて文字列 S に含まれる文字を 1 つずつ確認する方法が有効です。
+出力用の文字列を保持しておく変数(python の回答例では ANS)を用意し、't' や 'a' ではないことを確認したときに ANS に連結する方法をとることで、どの言語でも確実に処理できます。
+'''
+
 # 格闘ゲーム
+# utf-8
+S = input()
+N = len(S)
+remain_inputs = ""
+for i in range(N):
+    remain_inputs += S[i]
+    if len(remain_inputs) < 5:
+        continue
+    current_inputs = remain_inputs[-5:]
+    if current_inputs == "LLLRB":
+        print("rolling")
+        remain_inputs = ""
+    elif current_inputs == "DDRRA":
+        print("upper")
+        remain_inputs = ""
+    elif current_inputs == "AAAAA":
+        print("rush")
+        remain_inputs = ""
+'''
+この問題では、1 行に文字列 S が与えられます。
+全てのコマンドは 5 つの連続する入力からなるので、文字列 S を 5 文字ずつ確認することでコマンドかどうかの確認を行うことができます。
+一度コマンドに使用されたボタン入力を確認に使用しないことで、"DDRRAAAAA" のような入力にも対応することができます。
+具体的な手順例
+
+未使用の入力を保持する文字列 remain_inputs を用意する。
+S の各文字についてループ処理を用いて以下の処理を行う。
+remain_inputs に S の i 文字目を連結する。
+remain_inputs の先頭 5 文字を確認する。
+コマンドでない場合次の文字へ
+コマンドである場合コマンド名を出力し、remain_inputs を空文字列で更新する。
+'''
