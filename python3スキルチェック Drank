@@ -2884,7 +2884,13 @@ m = int(input())
 
 print(n*m)
 
-# D345
+# D345 気温の計測
+# utf-8
+a = int(input())
+b = int(input())
+c = int(input())
+print(max(a,b,c))
+
 # D346
 # D347
 # D348
