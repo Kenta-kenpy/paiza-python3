@@ -2891,7 +2891,12 @@ b = int(input())
 c = int(input())
 print(max(a,b,c))
 
-# D346
+# D346 ペットの餌
+# utf-8
+m = int(input())
+n = int(input())
+print(m%n)
+
 # D347
 # D348
 # D349
