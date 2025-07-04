@@ -2897,7 +2897,16 @@ m = int(input())
 n = int(input())
 print(m%n)
 
-# D347
+# D347 再配達の時間
+# utf-8
+n = int(input())
+m = int(input())
+
+if n > m:
+    print("OK")
+else:
+    print("NG")
+
 # D348
 # D349
 # D350
