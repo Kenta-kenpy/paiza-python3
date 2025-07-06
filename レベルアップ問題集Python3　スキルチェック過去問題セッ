@@ -25,6 +25,7 @@ N倍の文字列 D(殿堂入り)
 お菓子の詰め合わせ A(殿堂入り)
 ひとりすごろく A(殿堂入り)
 落ちものシミュレーション A
+ある数でつくられた数列 A
 村人の友好関係 S(殿堂入り)
 
 # Q. Eメールアドレス D
@@ -2875,7 +2876,40 @@ field[i][j] = "#" と更新します。
 解答を出力します。field の要素を問題文の出力形式に従って出力してください。
 '''
 
-村人の友好関係　S(殿堂入り)
+# ある数でつくられた数列 A
+step2 「ある数でつくられた数列」を解くために：part1
+step3 「ある数でつくられた数列」を解くために：part2
+step4 「ある数でつくられた数列」を解くために：part3
+step5 「ある数でつくられた数列」を解くために：part4
+step6 「ある数でつくられた数列」を解くために：part5
+step1 & final ある数でつくられた数列
+# utf-8
+from heapq import heapify,heappush,heappop
+if __name__ == '__main__':
+    *P,k = map(int,input().split())
+    X = [1]
+    check = {1}
+    heapify(X)
+    for _ in range(k-1):
+        x = heappop(X)
+        for p in P:
+            xp = x*p
+            if not xp in check:
+                heappush(X,xp)
+                check.add(xp)
+    print(X[0])
+
+
+
+
+
+
+
+
+
+
+
+# 村人の友好関係　S(殿堂入り)
 # utf-8
 class UnionFind:
 	def __init__(self, size):
