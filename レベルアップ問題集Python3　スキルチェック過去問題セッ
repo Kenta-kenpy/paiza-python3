@@ -2890,9 +2890,113 @@ print(P1, P2, P3, k)
 '''
 
 step3 「ある数でつくられた数列」を解くために：part2
+# utf-8
+# 入力を受け取る
+A1, A2, A3 = map(int, input().split())
+
+# 3つの整数を掛け合わせる
+result = A1 * A2 * A3
+
+# 結果を出力
+print(result) 
+'''
+標準入力を用いて入力を受け取り、受け取った値を変数に代入します。
+オーバーフローに注意しながらそれぞれの整数を掛け合わせます。
+掛け合わせた結果を出力します。
+'''
+
 step4 「ある数でつくられた数列」を解くために：part3
+# utf-8
+# 入力を受け取る
+A1, A2, A3 = map(int, input().split())
+N = int(input())
+
+# 重複を除いた結果を格納するセット
+unique_results = set()
+
+# N個の整数を受け取り、掛け算結果をセットに追加
+for _ in range(N):
+    b = int(input())
+    # 3つの整数との掛け算結果をセットに追加
+    unique_results.add(b * A1)
+    unique_results.add(b * A2)
+    unique_results.add(b * A3)
+
+# 結果の種類数を出力
+print(len(unique_results))
+'''
+標準入力を用いて入力を受け取り、受け取った値を変数に代入します。
+掛け合わせてできる整数を数えるためにsetを用意します
+N 回のループの中で変数を受け取り、A_1, A_2, A_3 との積をsetに追加します
+最後に集合のサイズを出力します。
+'''
+
 step5 「ある数でつくられた数列」を解くために：part4
+# utf-8
+import heapq
+
+# 入力を受け取る
+P1, P2, P3, k = map(int, input().split())
+
+# 優先度付きキュー（最小ヒープ）を初期化
+heap = [1]
+# 生成済みの数を管理するセット
+seen = {1}
+
+# k番目の数を見つけるまで繰り返す
+for _ in range(k):
+    # 最小の数を取り出す
+    current = heapq.heappop(heap)
+    
+    # 3つの素数を掛け合わせた結果をキューに追加
+    for p in [P1, P2, P3]:
+        next_num = current * p
+        if next_num not in seen:
+            seen.add(next_num)
+            heapq.heappush(heap, next_num)
+
+# k番目の数を出力
+print(current)
+'''
+3つの素数P_1, P_2, P_3を受け取ります。
+優先度付きキュー（最小ヒープ）を使用して、小さい順に数を生成していきます。
+各数を生成する際に、その数に3つの素数を掛け合わせた結果をキューに追加します。
+重複を避けるために、生成済みの数をsetで管理します。
+k番目の数が見つかるまで、上記の操作を繰り返します。
+'''
+
 step6 「ある数でつくられた数列」を解くために：part5
+# utf-8
+import heapq
+
+# 入力を受け取る
+A1, A2, A3 = map(int, input().split())
+N = int(input())
+
+# 優先度付きキュー（最小ヒープ）を初期化
+heap = []
+
+# N個の整数を受け取り、処理を行う
+for _ in range(N):
+    b = int(input())
+    
+    # b_iにA_1, A_2, A_3を掛けた値をキューに追加
+    for a in [A1, A2, A3]:
+        heapq.heappush(heap, b * a)
+    
+    # 最小の値を取り出して出力
+    min_val = heapq.heappop(heap)
+    print(min_val)
+'''
+3つの整数A_1, A_2, A_3を受け取ります。
+整数Nを受け取ります。
+優先度付きキュー（最小ヒープ）を初期化します。
+N回のループで各b_iを受け取り、以下の処理を行います：
+b_iにA_1, A_2, A_3を掛けた値をキューに追加します。
+キューから最小の値を取り出して出力します。
+取り出した値をキューから削除します。
+'''
+
 step1 & final ある数でつくられた数列
 # utf-8
 from heapq import heapify,heappush,heappop
@@ -2909,16 +3013,6 @@ if __name__ == '__main__':
                 heappush(X,xp)
                 check.add(xp)
     print(X[0])
-
-
-
-
-
-
-
-
-
-
 
 # 村人の友好関係　S(殿堂入り)
 # utf-8
