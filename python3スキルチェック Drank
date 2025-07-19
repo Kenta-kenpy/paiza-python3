@@ -2907,6 +2907,12 @@ if m <= n:
 else:
     print("NG")
 
-# D348
+# D348 n色のペン
+# utf-8
+n = int(input())
+p = int(input())
+
+print(n*p)
+
 # D349
 # D350
