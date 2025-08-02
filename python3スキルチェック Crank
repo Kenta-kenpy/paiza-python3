@@ -5339,7 +5339,47 @@ print(total)
 7日間で使えた合計ポイント、すなわち「ポイントだけで買い物できた金額」を出力します。毎日全ポイントを使い切る → 翌日に還元された分だけポイントが戻る → また使う
 '''
 
-# C170
+# C170 目標ポイント
+# utf-8
+# 入力の読み取り
+N_M = input().split()
+N = int(N_M[0])
+M = int(N_M[1])
+
+t_list = input().split()
+transactions = []
+for i in range(N):
+    transactions.append(int(t_list[i]))
+
+# 現在のポイントを計算（1回ずつ加算）
+current_points = 0
+for i in range(N):
+    points = transactions[i] // 100  # 小数点以下切り捨て
+    current_points += points
+
+# 残りポイントの計算
+if current_points >= M:
+    required_money = 0
+else:
+    remaining_points = M - current_points
+    required_money = remaining_points * 100
+
+# 出力
+print(required_money)
+'''
+最初の入力行から お会計の回数 N と 目標ポイント M を受け取っています。
+input().split() でスペース区切りの文字列をリストに変換し、それを int() で数値にしています。
+次に、2行目に与えられた N 回分のお会計金額 をリストとして読み取り、それぞれを整数に変換して transactions というリストに格納します。
+この transactions に、お会計の金額（整数）が N 件入っている状態になります。
+ここでは、各お会計に対して「100円ごとに1ポイント」付与されるルールを用いて、現在の累計ポイントを計算しています。
+transactions[i] // 100 によって、小数点以下を切り捨てたポイントを求めます。
+それを current_points に加算していきます。
+もしすでに目標ポイント（M）を達成していれば、追加の買い物は不要ですので 0 円とします。
+まだ不足している場合は、**あと何ポイント必要か（remaining_points）**を計算し、それに 100 円を掛けて、必要な買い物金額を出します。
+最後に、計算した 必要な買い物金額を出力します。
+この出力が最終的な答えとなります。
+'''
+
 --------------------------------------------- C171　※欠番 ◆
 # C171
 # C172
