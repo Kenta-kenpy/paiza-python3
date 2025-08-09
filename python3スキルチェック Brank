@@ -9104,7 +9104,77 @@ for row in grid:
 　最終的に、修復済みの地図を出力します。マスの間にスペースなどを入れず、改行のみで区切られた N 行の出力になります。
 '''
 
-# B168
+# B168 ナンバープレートで遊ぼう
+# utf-8
+#!/usr/bin/env python3
+import sys
+from itertools import product
+
+def values_from_plate(s: str):
+    """4桁文字列 s から d1 ± d2 ± d3 ± d4 で得られる全値の集合を返す"""
+    s = s.strip()
+    digits = [int(ch) for ch in s]
+    results = set()
+    # 3箇所に + または - を置く (順序は左から)
+    for signs in product((1, -1), repeat=3):
+        val = digits[0]
+        val += signs[0] * digits[1]
+        val += signs[1] * digits[2]
+        val += signs[2] * digits[3]
+        results.add(val)
+    return results
+
+def main():
+    data = sys.stdin.read().strip().splitlines()
+    if len(data) < 3:
+        # 入力が想定より短ければ何もしない（仕様上あり得ませんが安心のため）
+        return
+    a, b, c = data[0], data[1], data[2]
+    set_a = values_from_plate(a)
+    set_b = values_from_plate(b)
+    set_c = values_from_plate(c)
+
+    common = sorted(set_a & set_b & set_c)
+    if not common:
+        print("NO")
+    else:
+        print("YES")
+        # 昇順に半角スペース区切りで出力
+        print(" ".join(str(x) for x in common))
+
+if __name__ == "__main__":
+    main()
+'''
+問題の整理
+自分の車と前後の車、3台分のナンバープレートが与えられます。
+各ナンバープレートは4桁の数字（例：3491）。
+各桁の間（3か所）に「+」か「-」を入れて式を作ります。
+たとえば「3+4-9+1」なら計算結果は -1。
+その結果として作れる数の中で、3台とも共通して作れる数があるかを判定します。
+
+解法の方針
+各ナンバーで作れるすべての数を列挙する
+桁の間は3か所なので、入れられる符号は + か - の2通り。
+よって組み合わせは 
+2^3 = 8通りしかありません。
+例：[+, +, +], [+, +, -], [+, -, +], … の8パターン。
+
+最上位桁はマイナス禁止
+3台分の結果の共通部分を求める
+
+それぞれのナンバーから作れる結果の集合（set型）を求め、3つの集合の積集合を取ります。
+共通部分が空なら "NO"、そうでなければ "YES" と共通の値を昇順で表示。
+
+処理の流れ
+標準入力から3台分のナンバーを読み込む。
+各ナンバーに対して次を行う：
+文字列を1桁ずつ整数に変換。
+3か所の符号組み合わせを全探索（itertools.product で ±1 の組み合わせを生成）。
+計算して結果を集合に追加。
+3つの集合の積集合を取る。
+積集合が空なら "NO"、そうでなければ "YES" と結果を昇順に出力。
+'''
+
 # B169
 # B170
 -----------------------------------------------B171　※欠番◆
