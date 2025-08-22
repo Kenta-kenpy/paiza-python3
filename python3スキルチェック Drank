@@ -2938,9 +2938,16 @@ x_3 = int(input())
 
 print(max(x_1,x_2,x_3))
 
-# D352 ◆
+# D352 チェット料金の計算
+# utf-8
+x = int(input())
+y = int(input())
+n = int(input())
+m = int(input())
 
-# D353　813円のレシート
+print(x*n + y*m)
+
+# D353 813円のレシート
 # utf-8
 x = int(input())
 y = int(input())
