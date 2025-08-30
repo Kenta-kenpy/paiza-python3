@@ -2954,7 +2954,14 @@ y = int(input())
 
 print(813 - (x+y))
 
-# D354
+# D354 外出時の気温
+# utf-8
+t = int(input())
+if t >= 30:
+    print("DANGER")
+else:
+    print(t)
+
 # D355
 # D356
 # D357
