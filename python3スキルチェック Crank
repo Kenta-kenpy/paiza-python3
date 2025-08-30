@@ -5381,7 +5381,38 @@ transactions[i] // 100 によって、小数点以下を切り捨てたポイン
 '''
 
 --------------------------------------------- C171　※欠番 ◆
-# C171
+# C171 N-しりとり
+# utf-8
+# 入力の読み込み
+N, M = map(int, input().split())
+words = input().split()
+
+is_valid = True
+
+for i in range(M - 1):
+    last_part = words[i][-N:]      # 現在の単語の末尾 N 文字
+    next_part = words[i + 1][:N]   # 次の単語の先頭 N 文字
+
+    # 条件をわかりやすく
+    if last_part == next_part:
+        continue  # 一致していれば次へ
+    else:
+        is_valid = False
+        break
+
+# 結果を出力
+if is_valid:
+    print("YES")
+else:
+    print("NO")
+'''
+words[i][-N:] … i番目の単語の末尾 N 文字を取得
+words[i+1][:N] … 次の単語の先頭 N 文字を取得
+どこかで一致しなければ即座に break して効率アップ
+条件を満たす場合のみ "YES"、そうでない場合は "NO" を一発で出力
+continue を入れて、一致した場合は次のループへ進むという流れ
+'''
+
 # C172
 # C173
 # C174
