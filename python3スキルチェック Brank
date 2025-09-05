@@ -9175,8 +9175,129 @@ if __name__ == "__main__":
 積集合が空なら "NO"、そうでなければ "YES" と結果を昇順に出力。
 '''
 
-# B169
-# B170
+# B169 ◆
+# B170 paiza食堂
+# utf-8
+import sys
+from collections import deque
+
+def main():
+    it = iter(map(int, sys.stdin.buffer.read().split()))
+    N = next(it); M = next(it)
+
+    # g[i][j]: 料理 i に必要な食材 j の個数（0-index）
+    g = [[next(it) for _ in range(M)] for _ in range(N)]
+
+    # e[j]: 食材 j の「仕入れ時刻を含めて e[j] 時間以内に消費」
+    # つまり「最後に使える時刻」は (仕入れ時刻 + e[j] - 1)
+    e = [next(it) for _ in range(M)]
+
+    Q = next(it)
+
+    # 各食材ごとに (deadline, count) を時刻昇順に保持
+    dqs = [deque() for _ in range(M)]
+    # 期限内の合計在庫を食材ごとに高速参照
+    total = [0] * M
+
+    out_lines = []
+    cur_time = -1
+
+    def purge(to_time: int):
+        """全食材について、期限切れ(deadline < to_time)を除去し total を更新"""
+        for j in range(M):
+            dq = dqs[j]
+            while dq and dq[0][0] < to_time:
+                total[j] -= dq.popleft()[1]
+
+    for _ in range(Q):
+        a = next(it)
+        t = next(it)
+
+        # 時刻が進んだときのみ期限整理
+        if t != cur_time:
+            purge(t)
+            cur_time = t
+
+        if a == 0:
+            # 仕入れ: a t b c
+            b = next(it) - 1
+            c = next(it)
+            deadline = t + e[b] - 1  # この時刻まで使用可（含む）
+            dqs[b].append((deadline, c))
+            total[b] += c
+            out_lines.append(str(total[b]))
+        else:
+            # 調理: a t d
+            d = next(it) - 1
+            need = g[d]
+
+            # 在庫総量チェック（期限内のみ total に反映済み）
+            ok = True
+            for j in range(M):
+                req = need[j]
+                if req and total[j] < req:
+                    ok = False
+                    break
+
+            if not ok:
+                out_lines.append("NO")
+            else:
+                # 実際に期限の早いバッチから消費
+                for j in range(M):
+                    req = need[j]
+                    if req == 0:
+                        continue
+                    total[j] -= req
+                    dq = dqs[j]
+                    while req > 0:
+                        dl, cnt = dq[0]
+                        if cnt <= req:
+                            req -= cnt
+                            dq.popleft()
+                        else:
+                            dq[0] = (dl, cnt - req)
+                            req = 0
+                out_lines.append("YES")
+
+    sys.stdout.write("\n".join(out_lines))
+
+if __name__ == "__main__":
+    main()
+'''
+入力処理
+N（料理の種類数）と M（食材の種類数）を読み込みます。
+次に g[i][j]（料理 i に必要な食材 j の数）を読み込み、二次元リストに格納します。
+食材ごとの消費期限 e[j] を読み込みます。
+クエリ数 Q を読み込み、以降のクエリを順に処理します。
+
+データ構造の初期化
+dqs[j]: 食材 j の仕入れバッチを保持する deque。
+total[j]: 食材 j の期限内の在庫数の合計。
+
+クエリ処理
+クエリの時刻 t が前回と異なる場合は、全食材について期限切れを削除（purge 関数）。
+仕入れクエリ (a=0)
+(期限, 個数) を対応する食材の deque に追加。
+total を更新し、その食材の在庫数を出力。
+調理クエリ (a=1)
+料理に必要な食材数を total と照合。足りなければ即 NO。
+足りていれば、deque の先頭から必要数だけ消費して total を減らし、YES を出力。
+
+出力
+クエリごとの結果（数値または YES/NO）を out_lines に追加し、最後にまとめて出力。
+
+アルゴリズムの考え方
+食材ごとに「仕入れバッチ」を管理
+仕入れ時刻 t と消費期限 e により「最後に使える時刻 t + e - 1」が決まります。
+各食材について (期限時刻, 個数) を並べたキュー（deque）で管理します。
+これにより「いつ仕入れた在庫が、いつ切れるか」を順序よく追跡できます。
+時刻が進んだら期限切れを削除
+入力されるクエリは時刻が単調増加なので、時刻が変わるたびに期限切れバッチを先頭から削除するだけでよいのです。
+在庫合計を別変数で保持
+食材ごとに「期限内の合計個数」を変数 total に保持し、在庫チェックは O(1) で高速に行えます。
+実際の消費時だけバッチを操作して、どの仕入れ分を減らすかを調整します。
+'''
+
 -----------------------------------------------B171　※欠番◆
 # B171
 # B172
