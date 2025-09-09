@@ -2962,9 +2962,24 @@ if t >= 30:
 else:
     print(t)
 
-# D355 ◆
-# D356 ◆
-# D357 ◆
+# D355 宿泊の日程
+# utf-8
+n = input()
+m = input()
+
+print(int(n)-int(m))
+
+# D356 水分補給
+# utf-8
+# 15 分あたり 200 ml 
+n = input()
+
+print(200*(int(n)//15))
+
+# D357 文字列の最後
+# utf-8
+S = input()
+print(S[-1])
 
 # D358 数字の桁数
 # utf-8
