@@ -5413,8 +5413,116 @@ words[i+1][:N] … 次の単語の先頭 N 文字を取得
 continue を入れて、一致した場合は次のループへ進むという流れ
 '''
 
-# C172
-# C173
+# C172 イルミネーション
+# utf-8
+def main():
+    # 1行目の N, M を取得
+    N, M = map(int, input().split())
+    
+    # LED の明るさを保持するリスト（最初は全部 0）
+    leds = [0] * N  
+
+    # M 回の信号を処理
+    for _ in range(M):
+        a, b = map(int, input().split())
+        leds[a - 1] = b  # LED a の明るさを更新
+
+        # すべての LED が点灯しているかを確認
+        all_on = True
+        for brightness in leds:
+            if brightness == 0:   # 一つでも消えていたら
+                all_on = False
+                break
+        
+        # 全部点灯していたら合計を出力して終了
+        if all_on:
+            total = 0
+            for brightness in leds:
+                total += brightness
+            print(total)
+            return
+
+if __name__ == "__main__":
+    main()
+'''
+入力の受け取り
+最初に N（LED の数）と M（信号の数）を読み取ります。
+例：「3 8」と入力されたら LED が3個、信号が8個あるという意味です。
+
+LED の状態を用意
+長さ N のリスト leds を作り、最初はすべて 0（消灯状態）にしておきます。
+例えば N=3 なら [0, 0, 0] というリストです。
+
+信号を1つずつ処理
+2行目以降で与えられる「LED番号 a と 明るさ b」を読み取ります。
+そのたびに、leds[a-1] = b として、該当のLEDの明るさを更新します。
+例：「2 9」なら LED2 の明るさを 9 に変更します。
+
+すべて点灯しているかの確認
+信号を処理した後に、リスト leds を最初から最後まで順番に確認します。
+もし1つでも「0（消灯）」があれば「まだ全部点灯していない」と判断します。
+全部が 0 より大きければ「すべて点灯」となります。
+
+合計の計算
+「すべて点灯」と判断された時点で、リストの中の値をすべて足し算します。
+足した結果を出力し、その時点でプログラムを終了します。
+'''
+
+# C173 数列の調査
+# utf-8
+def main():
+    N = int(input().strip())
+    A = list(map(int, input().split()))
+
+    # N が 2 の場合は、等差数列・等比数列のどちらも Yes とする
+    if (N == 2):
+        print("Yes")
+        print("Yes")
+        return
+
+    # 等差数列 (AP) 判定
+    d = A[1] - A[0]
+    is_AP = True
+    for i in range(N - 1):
+        if (A[i + 1] - A[i] != d):
+            is_AP = False
+            break
+
+    # 等比数列 (GP) 判定
+    is_GP = True
+    for i in range(1, N - 1):
+        if (A[i] * A[0] != A[1] * A[i - 1]):
+            is_GP = False
+            break
+
+    if (is_AP):
+        print("Yes")
+    else:
+        print("No")
+
+    if (is_GP):
+        print("Yes")
+    else:
+        print("No")
+
+
+if (__name__ == "__main__"):
+    main()
+'''
+項が2つしかない場合は、必ず等差数列でもあり等比数列でもあると定義します。
+等差数列 (AP) 判定
+最初の2項の差を公差 d と仮定します。
+
+すべての隣接する差 
+A[i+1]−A[i] が d と等しいかどうかを調べます。
+途中で違う差が見つかったら、is_AP を False にして終了します。
+
+等比数列 (GP) 判定
+公比 r=A[1]/A[0] を仮定したいのですが、割り算だと浮動小数点の誤差が出ます。
+そこで「交差乗算」の形にして整数だけで判定します。
+すべての項が同じ比を持つかどうかを確認し、途中で違う比が出たら is_GP = False とします。
+'''
+
 # C174
 # C175
 # C176
