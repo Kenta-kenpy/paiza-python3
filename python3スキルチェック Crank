@@ -5470,17 +5470,28 @@ LED の状態を用意
 
 # C173 数列の調査
 # utf-8
+from fractions import Fraction
+
 def main():
     N = int(input().strip())
     A = list(map(int, input().split()))
 
-    # N が 2 の場合は、等差数列・等比数列のどちらも Yes とする
-    if (N == 2):
+    # 入力条件チェック
+    if not (2 <= N <= 5):
+        raise ValueError("N は 2 から 5 の範囲")
+    for ai in A:
+        if not (-1000000 <= ai <= 1000000):
+            raise ValueError("A_i は -1,000,000 から 1,000,000 の範囲")
+        if ai == 0:
+            raise ValueError("A_i は 0 であってはいけません")
+
+    # N=2 の場合は両方 Yes
+    if N == 2:
         print("Yes")
         print("Yes")
         return
 
-    # 等差数列 (AP) 判定
+    # 等差判定
     d = A[1] - A[0]
     is_AP = True
     for i in range(N - 1):
@@ -5488,39 +5499,47 @@ def main():
             is_AP = False
             break
 
-    # 等比数列 (GP) 判定
+    # 等比判定
+    r = Fraction(A[1], A[0])  # 初項と第2項の比
     is_GP = True
     for i in range(1, N - 1):
-        if (A[i] * A[0] != A[1] * A[i - 1]):
+        if Fraction(A[i + 1], A[i]) != r:
             is_GP = False
             break
 
-    if (is_AP):
-        print("Yes")
-    else:
-        print("No")
-
-    if (is_GP):
-        print("Yes")
-    else:
-        print("No")
+    print("Yes" if is_AP else "No")
+    print("Yes" if is_GP else "No")
 
 
-if (__name__ == "__main__"):
+if __name__ == "__main__":
     main()
 '''
-項が2つしかない場合は、必ず等差数列でもあり等比数列でもあると定義します。
+まず数列の長さ N と要素 A を標準入力から取得します。
+条件チェックで、すべてのテストケースに対応する安全性を確保：
+2 ≤ N ≤ 5
+|A_i| ≤ 1,000,000
+A_i ≠ 0
+これで範囲外の入力やゼロ除算を避ける。
+
 等差数列 (AP) 判定
-最初の2項の差を公差 d と仮定します。
+最初の2項の差を 公差 d と仮定します。
+隣接項の差がすべてこの d と等しいかを順にチェックします。
+違う差が1つでもあれば is_AP = False にして判定終了。
 
-すべての隣接する差 
-A[i+1]−A[i] が d と等しいかどうかを調べます。
-途中で違う差が見つかったら、is_AP を False にして終了します。
+等比数列 (GP) 判定（Fraction で安全に）
+公比 r を整数の比として Fraction で表現します。
+これにより、浮動小数点誤差や符号反転による誤判定を完全に回避できます。
+すべての隣接比が初期の公比 r と一致するかを確認。
+一致しなければ is_GP = False。
 
-等比数列 (GP) 判定
-公比 r=A[1]/A[0] を仮定したいのですが、割り算だと浮動小数点の誤差が出ます。
-そこで「交差乗算」の形にして整数だけで判定します。
-すべての項が同じ比を持つかどうかを確認し、途中で違う比が出たら is_GP = False とします。
+判定結果の出力
+等差数列なら1行目に "Yes"、そうでなければ "No"。
+等比数列なら2行目に "Yes"、そうでなければ "No"。
+出力形式は問題文の条件通り、末尾改行のみ。
+
+エントリーポイント
+このファイルが直接実行されたときのみ main() を呼び出す仕組み。
+他ファイルから import された場合は、関数を呼び出すまで実行されません。
 '''
 
 # C174
