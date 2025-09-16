@@ -26,6 +26,7 @@ else:
     print(-1)
 
 # 宿題管理
+# utf-8
 N, M = map(int, input().split(" "))
 ANS = 0
 for _ in range(N):
@@ -36,3 +37,14 @@ for _ in range(N):
 print(ANS)
 
 # M件目の仕事
+# utf-8
+N, M = map(int, input().split(" "))
+S = [None] * N
+for i in range(N):
+    S[i] = input()
+print(S[M % N - 1])
+'''
+N 人で順番に仕事を担当するので、M を N で割ったあまりを用いることで、M 番目の仕事の担当者を求めることができます。
+このとき、M % N は 0 ですが、仕事を担当するのは 3 番目のメンバー (配列では 2 番目の要素) になります。
+Python の場合: 配列の最後尾の要素を -1 で指定することができるため、M % N - 1 とすることで正しいインデックスを指定できます。
+'''
