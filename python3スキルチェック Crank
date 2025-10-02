@@ -5544,7 +5544,30 @@ A_i ≠ 0
 
 # C174 文字列の比較
 # utf-8
+from collections import Counter
+import sys
 
+def main():
+    input = sys.stdin.read().splitlines()
+    N = int(input[0])
+    results = []
+    for i in range(N):
+        S = input[2*i + 1]
+        T = input[2*i + 2]
+        if Counter(S) == Counter(T):
+            results.append("Yes")
+        else:
+            results.append("No")
+    print("\n".join(results))
+
+if __name__ == "__main__":
+    main()
+'''
+sys.stdin.read().splitlines() でまとめて入力を読み込みます。
+Counter(S) と Counter(T) が一致すれば、文字の種類・個数が完全一致している → 並べ替えで一致可能 → "Yes"。
+一致しなければ "No"。
+すべての結果をリストに貯めて、最後に改行で結合して出力
+'''
 
 # C175
 # C176
