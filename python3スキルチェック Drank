@@ -3009,7 +3009,14 @@ n = input()
 
 print(c + "-" + n)
 
-# D362
+# D362 お菓子の用意
+# utf-8
+n = int(input())
+p = int(input())
+m = int(input())
+
+print(n*p*m)
+
 # D363
 # D364
 # D365
