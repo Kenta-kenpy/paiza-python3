@@ -5569,7 +5569,34 @@ Counter(S) と Counter(T) が一致すれば、文字の種類・個数が完全
 すべての結果をリストに貯めて、最後に改行で結合して出力
 '''
 
-# C175
+# C175 新聞の切り抜き
+# utf-8
+# 入力の受け取り
+N = int(input())
+words = input().split()
+
+# すべての単語を順番通りに結合
+text = ''.join(words)
+
+target = "paiza"
+count = 0      # 完成した "paiza" の数
+pos = 0        # 現在の target の位置 (0〜4)
+
+# 文字を順に見ていく
+for c in text:
+    if c == target[pos]:
+        pos += 1
+        if pos == len(target):  # "paiza" 完成
+            count += 1
+            pos = 0             # 新しい "paiza" 探しを再開
+
+print(count)
+'''
+「paiza」の1文字ずつを順に追いかけていき、現在どの位置（何文字目）まで作れたかを管理。
+各文字を走査して、次に必要な文字なら進める。
+"paiza" を完成させたらカウントを増やし、再び最初の 'p' から探し始める。
+'''
+
 # C176
 # C177
 # C178
