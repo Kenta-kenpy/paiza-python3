@@ -3017,7 +3017,14 @@ m = int(input())
 
 print(n*p*m)
 
-# D363
+# D363 冬日の判定
+# utf-8
+T = int(input())
+if T < 0:
+    print("W")
+else:
+    print(T)
+    
 # D364
 # D365
 # D366
