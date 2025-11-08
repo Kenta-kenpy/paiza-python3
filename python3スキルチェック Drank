@@ -3025,7 +3025,13 @@ if T < 0:
 else:
     print(T)
     
-# D364
+# D364 往復の燃料
+# utf-8
+n = int(input())
+x = int(input())
+
+print(n*x*2)
+
 # D365
 # D366
 # D367
