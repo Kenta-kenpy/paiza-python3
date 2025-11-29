@@ -3050,7 +3050,13 @@ s = input()
 for _  in range(n):
     print(s)
     
-# D367
+# D367 肉の焼き方
+# utf-8
+n = int(input())
+m = int(input())
+
+print(n*m*2)
+
 # D368
 # D369
 # D370
