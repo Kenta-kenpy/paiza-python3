@@ -3063,7 +3063,11 @@ a = int(input())
 b = int(input())
 print(a*b)
 
-# D369
+# D369 クリスマスの準備
+# utf-8
+n, m = map(int,input().split())
+print(n//m)
+
 # D370
 ---------------------------------------------D371　※欠番 ◆
 # D371
