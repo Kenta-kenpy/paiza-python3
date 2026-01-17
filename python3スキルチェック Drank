@@ -3082,7 +3082,14 @@ b = int(input())
 
 print((a+b)-n)
 
-# D372
+# D372 年月日の出力
+# utf-8
+y = input()
+m = input()
+d = input()
+
+print(y + "/" + m + "/" + d)
+
 # D373
 # D374
 # D375
