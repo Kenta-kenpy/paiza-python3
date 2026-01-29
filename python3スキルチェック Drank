@@ -3090,7 +3090,11 @@ d = input()
 
 print(y + "/" + m + "/" + d)
 
-# D373
+# D373　ラーニングの料金
+# utf-8
+n = int(input())
+print(n * 1490)
+
 # D374
 # D375
 # D376
