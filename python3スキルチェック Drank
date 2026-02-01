@@ -3090,12 +3090,19 @@ d = input()
 
 print(y + "/" + m + "/" + d)
 
-# D373　ラーニングの料金
+# D373 ラーニングの料金
 # utf-8
 n = int(input())
 print(n * 1490)
 
-# D374
+# D374 午前と午後
+# utf-8
+h = int(input())
+if h < 12:
+    print("AM")
+else:
+    print("PM")
+
 # D375
 # D376
 # D377
