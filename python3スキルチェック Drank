@@ -3152,7 +3152,17 @@ x = int(input())
 print((n+m)*x)
 
 ---------------------------------------------D381　※欠番 ◆
-# D381
+# D381 エイプリルフール
+# utf-8
+S = input()
+
+if S == "True":
+    print("False")
+elif S == "False":
+    print("True")
+else:
+    print()
+    
 # D382
 # D383
 # D384
