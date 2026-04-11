@@ -10083,7 +10083,91 @@ i, j, k を 0〜N-1 で回す
 「これまでの最大値」と比較して更新
 '''
 
-# B178
+# B178 温度分布マップ
+# utf-8
+# 入力：グリッドサイズ（N行M列）
+N, M = map(int, input().split())
+
+# センサー数
+K = int(input())
+
+# グリッド初期化
+# -1 は「まだ温度が確定していない」ことを意味します
+grid = [[-1] * M for _ in range(N)]
+
+# センサーの位置と温度を設定
+for _ in range(K):
+    r, c, t = map(int, input().split())
+    # 入力は1-indexなので0-indexに変換して格納
+    grid[r - 1][c - 1] = t
+
+# 閾値（この温度以上をカウント）
+T_threshold = int(input())
+
+# 上下左右の移動方向（4近傍）
+dirs = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+# 温度が全て確定するまで繰り返す
+while True:
+    updates = []  # 今回の反復で更新するマスを一時保存
+
+    # 全マスを走査
+    for i in range(N):
+        for j in range(M):
+            # すでに確定しているマスはスキップ
+            if grid[i][j] != -1:
+                continue
+
+            neighbors = []  # 確定済み隣接マスの温度を格納
+
+            # 上下左右を確認
+            for dx, dy in dirs:
+                ni, nj = i + dx, j + dy
+
+                # グリッド内かどうかチェック
+                if 0 <= ni < N and 0 <= nj < M:
+                    # 温度が確定している場合のみ対象
+                    if grid[ni][nj] != -1:
+                        neighbors.append(grid[ni][nj])
+
+            # 1つでも確定済みの隣接があれば平均を計算
+            if neighbors:
+                # 平均値を整数（小数点以下切り捨て）で求める
+                avg = sum(neighbors) // len(neighbors)
+
+                # すぐに反映せず、一旦リストに保存（同時更新のため）
+                updates.append((i, j, avg))
+
+    # 今回の反復で更新が無ければ終了（全て確定）
+    if not updates:
+        break
+
+    # 一斉更新（ここが「同時更新アルゴリズム」の肝）
+    for i, j, val in updates:
+        grid[i][j] = val
+
+# 閾値以上のマスをカウント
+count = 0
+for i in range(N):
+    for j in range(M):
+        if grid[i][j] >= T_threshold:
+            count += 1
+
+# 結果出力
+print(count)
+'''
+解き方の要点
+グリッドを -1（未確定）で初期化
+センサー位置だけ温度を入れる
+毎ターン：
+未確定マスについて
+隣に確定済みが1つでもあれば平均を計算
+仮リストに保存
+全部計算してから一斉更新（←ここ重要ですわ！）
+更新が無くなったら終了
+最後に閾値以上をカウント
+'''
+
 # B179
 # B180
 -----------------------------------------------B181　※欠番◆
