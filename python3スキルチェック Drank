@@ -3193,7 +3193,13 @@ print(result)
 S = input()
 print(">" + S)
 
-# D384
+# D384 省略して表記
+# utf-8
+A = input()
+B = input()
+
+print(A[0] + B[0])
+
 # D385
 # D386
 # D387
