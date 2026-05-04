@@ -3200,7 +3200,16 @@ B = input()
 
 print(A[0] + B[0])
 
-# D385
+# D385 リンゴジュース
+# utf-8
+n = int(input())
+
+if n % 150 != 0:
+    print((n//150)+ 1)
+
+else:
+    print(n // 150)
+
 # D386
 # D387
 # D388
