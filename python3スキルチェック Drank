@@ -3210,7 +3210,16 @@ if n % 150 != 0:
 else:
     print(n // 150)
 
-# D386
+# D386 ゴミの分別
+# utf-8
+n = int(input())
+m = int(input())
+
+if n % m == 0:
+    print(n//m)
+else:
+    print((n//m)+1)
+
 # D387
 # D388
 # D389
