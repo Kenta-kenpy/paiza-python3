@@ -3220,7 +3220,12 @@ if n % m == 0:
 else:
     print((n//m)+1)
 
-# D387
+# D387 お菓子を配る
+# utf-8
+n = int(input())
+m = int(input())
+print(n%m)
+
 # D388
 # D389
 # D390
