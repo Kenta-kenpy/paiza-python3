@@ -1,0 +1,82 @@
+# 計算ドリル
+# utf-8
+S = input()
+if S[1] == "+":
+    print(int(S[0]) + int(S[2]))
+elif S[1] == "-":
+    print(int(S[0]) - int(S[2]))
+else:
+    print(int(S[0]) * int(S[2]))
+
+# 中間テスト
+# utf-8
+N = int(input())
+S = input()
+ans = 0
+for i in range(N):
+    if S[i] == "o":
+        ans = ans + 10
+print(ans)
+
+# 計算ドリル2
+# utf-8
+A, B, C = map(int, input().split())
+if A > C // B:
+    print('Yes')
+else:
+    print('No')
+'''
+今回の問題では 1 ≦ A, B, C ≦ 10^18 であるため、A × B は非常に大きな数になることがあり、一般的な 64 ビット整数ではオーバーフローを起こします。
+そのため、掛け算をせず A × B > C を判定する方法を考えます。
+A × B > C の両辺を B で割ると A > C / B です。
+A,B,C はすべて整数であるため、A > floor(C / B) を判定すれば十分です (floor(C / B) は C / B の計算結果の小数点以下を切り捨てたものを表します)。
+
+なお、Python では整数を多倍長整数として扱うため、そのまま A × B を計算しても本問題に正解できます。
+'''
+
+※おまけ問題
+3 つの整数 A,B,C が与えられます。
+A × B > C なら Yes、そうでないなら No を出力してください。
+なお、この問題の制約は A, B ≦ 10^18 であるため、入力例 3 のように A × B の計算結果が 64 ビット整数に収まらない (オーバーフローが起こる) 場合があることに注意してください。
+条件が「A × B ≧ C」に変更された場合、どうすればよいでしょうか？
+例えば、A = 5, B = 2, C = 11 のとき答えは No です。
+上記の解法と同じように A ≧ floor(C / B) を用いて判定しようとすると、5 ≧ floor(11 / 2) = 5 となるため Yes となってしまいます。
+この Bonus 問題の正しい解法は A ≧ ceil(C / B) であるかを判定することです (ceil(C / B) は C / B の計算結果の小数点以下を切り上げたものを表します)。
+ceil(C / B) をどのように計算するかは読者の課題とします。
+A, B, C = map(int, input().split())
+
+# Bが0の場合（通常制約では無いが安全策）
+if B == 0:
+    print("No")
+    exit()
+
+threshold = (C + B - 1) // B  # ceil(C / B)
+
+if A >= threshold:
+    print("Yes")
+else:
+    print("No")
+
+# 期末テスト
+# utf-8
+N = int(input())
+S = input()
+T = input()
+
+ans = ""
+for i in range(N):
+    if int(S[i]) > int(T[i]):
+        ans = 'Yes'
+        break
+    elif int(S[i]) < int(T[i]):
+        ans = 'No'
+        break
+print(ans)
+'''
+今回の問題では S,T は最大で 100 桁の整数になるため、一般的な 64 ビット整数では扱えません。
+そこで、S と T を文字列として受け取り、大小比較をする方法を考えます。
+S, T の上から i 桁目の値を S_i, T_i と表します。
+k を S_k ≠ T_k を満たす最小の k とすると、答えは以下の通りです。
+・S_k > T_k の場合 : 答えは Yes
+・S_k < T_k の場合 : 答えは No
+'''
