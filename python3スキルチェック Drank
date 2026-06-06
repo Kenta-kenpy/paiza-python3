@@ -3226,7 +3226,16 @@ n = int(input())
 m = int(input())
 print(n%m)
 
-# D388
+# D388 傘の用意
+# utf-8
+a = int(input()) #午前
+b = int(input()) #午後
+
+if (a + b) >= 50:
+    print("yes")
+else:
+    print("no")
+    
 # D389
 # D390
 ---------------------------------------------D391　※欠番 ◆
