@@ -3246,7 +3246,19 @@ c = input()
 
 print(a+b+c)
 
-# D390
+# D390 結果の表記
+# utf-8
+# チームAの点数の方が多ければ "A" 、チームBの点数の方が多ければ "B" 、同点であれば "DRAW" と出力してください。
+A = int(input())
+B = int(input())
+
+if A > B:
+    print("A")
+elif A < B:
+    print("B")
+elif A == B:
+    print("DRAW")
+
 ---------------------------------------------D391　※欠番 ◆
 # D391
 # D392
