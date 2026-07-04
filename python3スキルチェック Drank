@@ -3268,7 +3268,13 @@ z = int(input()) # 2つ目のバス停で乗ってきた人数
 
 print(x-y+z)
 
-# D392
+# D392 全巻の購入
+# utf-8
+p = int(input()) # 1冊の値段
+n = int(input()) # トータル全巻
+
+print(p*n)
+
 # D393
 # D394
 # D395
