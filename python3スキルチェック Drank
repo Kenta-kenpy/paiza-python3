@@ -3275,7 +3275,15 @@ n = int(input()) # トータル全巻
 
 print(p*n)
 
-# D393
+# D393 SOSの検出
+# "SOS" という文字列が含まれていれば "YES" 含まれていなければ "NO"
+# utf-8
+if "SOS" in S:
+    print("YES")
+else:
+    print("NO")
+
+
 # D394
 # D395
 # D396
