@@ -3317,7 +3317,7 @@ t = int(input())
 if t >= 25:
     print("OK")
 else:
-    print(t)
+    print("NG")
 
 # D395
 # D396
