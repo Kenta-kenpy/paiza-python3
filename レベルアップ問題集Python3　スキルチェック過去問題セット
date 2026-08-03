@@ -3572,10 +3572,203 @@ KB_{i + 1} = KB_{i - K + 1} + KB_{i - K + 2} + ... + KB_{i - 1} + KB_i
 
 ★# Q. paizaラーニングのお得な使い方  A
 step2 「paizaラーニングのお得な使い方」を解くために:part1
+# utf-8
+def main():
+    A, B = map(int, input().split())
+    print(A)
+    print(B)
+
+if __name__ == "__main__":
+    main()
+
 step3 「paizaラーニングのお得な使い方」を解くために:part2
+# utf-8
+def main():
+    A = int(input().strip())
+    
+    cost1, cost6, cost12 = 880, 4080, 7200
+
+    INF = 10**18
+    dp = [INF] * (A + 1)
+    dp[0] = 0
+
+    for i in range(1, A + 1):
+        dp[i] = min(dp[i], dp[i - 1] + cost1)
+        dp[i] = min(dp[i], dp[max(0, i - 6)] + cost6)
+        dp[i] = min(dp[i], dp[max(0, i - 12)] + cost12)
+
+    print(dp[A])
+
+if __name__ == "__main__":
+    main()
+'''
+目的は、1 か月・6 か月・12 か月の 3 種類のプランを組み合わせて、合計を A か月以上にしつつ料金を最小にすることです。
+各月数に対して「ここまでを最安で達成する方法」を少しずつ広げていく――いわゆる動的計画法を使うと確実に最小料金が求められます。
+具体的には、1 か月伸ばす・6 か月伸ばす・12 か月伸ばす、の３通りをすべて試し、その時点で得られる最安料金だけを残して次の月数に進めばよいです。
+この手順を 1 から A まで繰り返し、最後に得られた値が求める最小料金になります。
+なお、今回の料金体系のように、長期間プランほど単価が安い場合は、12か月プラン→6か月プラン→1か月プランの順で最大限まとめ買いしていく貪欲法でも最適解が得られます。ただし、料金体系やプラン期間によっては貪欲法が最適にならないケースもあるため、一般的には動的計画法で厳密に解くのが安全です。
+'''
+
 step4 「paizaラーニングのお得な使い方」を解くために:part3
+# utf-8
+def main():
+    A = int(input().strip())
+    plans = [
+        (1, 880),
+        (6, 4080),
+        (12, 7200),
+    ]
+    special = (2, 880)
+
+    INF = 10**18
+    dp = [[INF]*2 for _ in range(A+1)]
+    dp[0][0] = 0
+
+    for i in range(1, A+1):
+        for duration, cost in plans:
+            prev = max(0, i - duration)
+            for k in (0, 1):
+                dp[i][k] = min(dp[i][k], dp[prev][k] + cost)
+        prev = max(0, i - special[0])
+        dp[i][1] = min(dp[i][1], dp[prev][0] + special[1])
+
+    ans = min(dp[A][0], dp[A][1])
+    print(ans)
+
+if __name__ == "__main__":
+    main()
+'''
+A か月以上を満たすために、1・6・12 か月の通常プランを組み合わせて料金を最小にします。
+初回だけ「1 か月プランを続けて契約すると、2 か月目が無料」という特別プランが 1 回だけ使えます。
+月数を 0 から順に増やしながら、1.キャンペーンをまだ使っていない場合 2.キャンペーンをすでに使った場合の 2 パターンを並行して最安料金を更新していきます。
+更新方法は「通常プランで 1・6・12 か月伸ばす」か「残っているキャンペーンを 2 か月分まとめて使う」のいずれかです。
+すべての月数を埋め終わった後、キャンペーンを使った場合と使わなかった場合のどちらの料金が小さいかを比べて答えとします。
+'''
+
 step5 「paizaラーニングのお得な使い方」を解くために:part4
+# utf-8
+def solve_dp_segment(L):
+    plans = [(1, 880), (6, 4080), (12, 7200)]
+    special = (2, 880)
+    INF = 10**18
+
+    dp = [[INF]*2 for _ in range(L+1)]
+    prev = [[None]*2 for _ in range(L+1)]
+    dp[0][0] = 0
+
+    for i in range(1, L+1):
+        for dur, cost in plans:
+            pi = max(0, i - dur)
+            for k in (0,1):
+                c = dp[pi][k] + cost
+                if c < dp[i][k]:
+                    dp[i][k] = c
+                    prev[i][k] = (pi, k, dur)
+        pi = max(0, i - special[0])
+        c = dp[pi][0] + special[1]
+        if c < dp[i][1]:
+            dp[i][1] = c
+            prev[i][1] = (pi, 0, special[0])
+
+    end_k = 0 if dp[L][0] <= dp[L][1] else 1
+    cost = dp[L][end_k]
+
+    seq = []
+    i, k = L, end_k
+    while i > 0:
+        pi, pk, dur = prev[i][k]
+        seq.append(dur)
+        i, k = pi, pk
+    seq.reverse()
+    return cost, seq
+
+def main():
+    A, B = map(int, input().split())
+    costA, seqA = solve_dp_segment(A)
+    costB, seqB = solve_dp_segment(B)
+    
+    print(costA + costB)
+    print(*seqA if seqA else [0])
+    print(*seqB if seqB else [0])
+
+if __name__ == "__main__":
+    main()
+'''
+A ヶ月と B ヶ月を「別々の契約期間」と考え、まずはそれぞれ単独で最小料金を求めます。
+利用できる通常プランは 1・6・12 か月の 3 種類です。
+初回だけ使える「1 か月プランを続けて 2 か月 880 円」のキャンペーンが 1 回あります。
+動的計画法で、月数 i に対しキャンペーン未使用と使用済の 2 状態を保持して最小料金を更新します。
+それぞれの期間で得た最小料金を合計すれば、全体の最小料金になります。
+'''
+
 step1・final paizaラーニングのお得な使い方
+# utf-8
+if __name__ == '__main__':
+    A,B = map(int,input().split())
+    p1,p6,p12 = 880,4080,7200
+    dp = [10**9]*(1001)
+    dp[0] = 0
+    dpp = [[] for _ in range(1001)]
+    for i in range(1000):
+        if dp[i+1] > dp[i]+p1:
+            dp[i+1] = dp[i]+p1
+            dpi = dpp[i][:]
+            dpi.append(1)
+            dpp[i+1] = dpi
+
+        for j in range(1,7):
+            if i + j <= 1000:
+                if dp[i+j] > dp[i]+p6:
+                    dp[i+j] = dp[i]+p6
+                    dpi = dpp[i][:]
+                    dpi.append(6)
+                    dpp[i+j] = dpi
+        
+        for j in range(1,13):
+            if i + j <= 1000:
+                if dp[i+j] > dp[i]+p12:
+                    dp[i+j] = dp[i]+p12
+                    dpi = dpp[i][:]
+                    dpi.append(12)
+                    dpp[i+j] = dpi
+    
+    ans = dp[A]+dp[B]
+    ans1,ans2 = dpp[A],dpp[B]
+    if A >= 2:
+        if ans > p1+dp[A-2]+dp[B]:
+            ans = p1+dp[A-2]+dp[B]
+            ans1,ans2 = [1,1]+dpp[A-2],dpp[B]
+
+    
+    if B >= 2:
+        if ans > p1+dp[B-2]+dp[A]:
+            ans = p1+dp[B-2]+dp[A]
+            ans1,ans2 = [1,1]+dpp[B-2],dpp[A]
+    if not ans1:
+        ans1 = [0]
+    
+    if not ans2:
+        ans2 = [0]
+    
+    print(ans)  
+    print(*ans1)
+    print(*ans2)
+'''
+この問題は、DP、貪欲、場合分け、埋め込みなど様々な解法があります。
+ここでは、DPつまり動的計画法を使った解法を紹介します。
+まず、1,6,12ヶ月の利用料金をそれぞれp1,p6,p12とします。
+dp[i]:キャンペーンを利用せずにiヶ月以上利用したときの料金の最小値
+dpp[i]:dp[i]のときの利用プラン
+初期状態は、dp[0] = 0,dp[j] = inf (j≠0),dpp[0] = []としてi = 0~1000の順に以下のような更新を行っていけばよいです。
+dp[i+1]よりdp[i]+p1が小さいならdp[i+1]をdp[i]+p1,dpp[i+1]をdpp[i]に1を追加したものに更新
+dp[i+6]よりdp[i]+p6が小さいならdp[i+6]をdp[i]+p6,dpp[i+6]をdpp[i]に6を追加したものに更新
+dp[i+12]よりdp[i]+p12が小さいならdp[i+12]をdp[i]+p12,dpp[i+12]をdpp[i]に12を追加したものに更新
+キャンペーンを利用するには、最初に1ヶ月プランで二回契約すればよく、その場合料金はp1+dp[i-2]となります。
+なので答えは、キャンペーンを利用せずにAヶ月、Bヶ月利用する場合、Aで利用する場合、Bで利用する場合の内最小の場合となります。
+2ヶ月以下の場合キャンペーンを利用出来ないことに注意しましょう。
+また、少し難しいですが復元dpと呼ばれる方法を使えば、dppを保持することなくこの問題に正答することが出来ます。
+'''
+
 
 ★★★ S ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ★# Q. 村人の友好関係　S(殿堂入り)
