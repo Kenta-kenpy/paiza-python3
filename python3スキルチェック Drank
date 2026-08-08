@@ -3333,7 +3333,13 @@ S = input()
 
 print(m +"/" + d + "-" + S)
 
-# D397
+# D397 バナナの房
+# utf-8
+m = int(input())
+n = int(input())
+
+print(m*n)
+
 # D398
 # D399
 # D400
