@@ -3340,7 +3340,18 @@ n = int(input())
 
 print(m*n)
 
-# D398
+# D398 8の数
+# utf-8
+N = input()
+
+count = 0
+
+for x in N:
+    if x == "8":
+        count += 1
+
+print(count)
+
 # D399
 # D400
 ---------------------------------------------D401　※欠番 ◆
