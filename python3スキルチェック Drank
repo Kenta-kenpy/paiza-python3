@@ -3369,7 +3369,17 @@ print(n*m*p)
 n = int(input())
 print(n%15)
 ---------------------------------------------D401　※欠番 ◆
-# D401
+# D401 紅葉の基準
+# utf-8
+n = int(input())
+
+if n < 0 or n > 10:
+    print("入力エラー")
+elif n >= 8:
+    print("Yes")
+else:
+    print("No")
+
 # D402
 # D403
 # D404
