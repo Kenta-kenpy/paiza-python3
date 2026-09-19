@@ -3380,7 +3380,17 @@ elif n >= 8:
 else:
     print("No")
 
-# D402
+# D402 昼と夜の時間
+# utf-8
+# 日が出ている時間の長さ a と日が沈んでいる時間の長さ b 
+a = int(input())
+b = int(input())
+
+if a == b:
+    print("equinox")
+else:
+    print("no")
+
 # D403
 # D404
 # D405
