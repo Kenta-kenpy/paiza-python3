@@ -20,4 +20,37 @@ print(A * 2)
 '''
 
 # 最大の3桁整数
+from itertools import permutations
+
+A, B, C = input().split()
+numbers = [A, B, C]
+
+max_number = max(int("".join(p)) for p in permutations(numbers))
+print(max_number)
+'''
+max_number = max(int("".join(p)) for p in permutations(numbers)) は、全ての順列を整数に変換して、その中から最大のものを選ぶ処理です。
+処理の流れ
+permutations(numbers): 3つの数字の全順列を生成
+"".join(p): 各順列を1つの文字列に結合
+int(): 結合した文字列を整数に変換
+max(): 全ての整数から最大のものを選択
+'''
+
 # うるう年判定
+N = int(input())
+
+if N % 400 == 0:
+    print("Leap")
+elif N % 100 == 0:
+    print("Common")
+elif N % 4 == 0:
+    print("Leap")
+else:
+    print("Common")
+'''
+この問題は、if-else文の適切な条件整理がポイントです。
+うるう年の定義は以下の通りです。
+4 で割り切れる年はうるう年
+ただし、100 で割り切れる年はうるう年ではない
+しかし、400 で割り切れる年はうるう年
+'''
