@@ -3391,7 +3391,11 @@ if a == b:
 else:
     print("no")
 
-# D403
+# D403 カフェインの量
+# utf-8
+n = int(input())
+print(n*90)
+
 # D404
 # D405
 # D406
