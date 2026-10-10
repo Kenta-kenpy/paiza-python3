@@ -1,4 +1,28 @@
-# 前から足し算
-# 仲間外れ探し
-# 花の育成
-# カラーボム
+# 前から足し算 D
+# utf-8
+A_1, A_2, A_3 = map(int,input().split())
+print(A_1)
+print(A_1 + A_2)
+print(A_1 + A_2 + A_3)
+'''
+入力は Pythonでは map(int,input().split()) で受け取ることが可能です。
+'''
+
+# 仲間外れ探し D
+# utf-8
+A, B = map(int,input().split())
+S_1, S_2, S_3 = map(int,input().split())
+
+if S_1 != A+B and S_1 != A-B:
+    print(S_1)
+elif S_2 != A+B and S_2 != A-B:
+    print(S_2)
+else:
+    print(S_3)
+'''
+入力は Python では 1 行目も 2 行目も map(int,input().split()) で受け取ることが可能です。
+整数 C が A+B, A-B のどちらとも異なるという条件は、and を用いて、C != A+B and C != A-B と表すことが出来るので、if 文を用いて 3 つの要素をそれぞれ判定することで出力が可能です。
+'''
+
+# 花の育成 C
+# カラーボム B
