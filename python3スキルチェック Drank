@@ -2592,18 +2592,18 @@ else:
 入力された文字列には改行や前後の空白が含まれている可能性があるため、strip() メソッドを使ってそれらを取り除くのが良いです。
 '''
 
-# D313 所持金の合計
-# utf-8
-a = int(input())
-b = int(input())
-print(a+b)
-
-# D314 コピー用紙の枚数
+# D313 コピー用紙の枚数
 # utf-8
 # 資料は n ページあり m 部を印刷する必要があります
 n = int(input())
 m = int(input())
 print(n*m)
+
+# D314 所持金の合計
+# utf-8
+a = int(input())
+b = int(input())
+print(a+b)
 
 # D315 実験の用意
 # utf-8
