@@ -3417,7 +3417,11 @@ n = int(input())
 
 print((500*n)//600)
 
-# D406
+# D406 ケーキの箱
+# utf-8
+n = int(input())
+print(n+2)
+
 # D407
 # D408
 # D409
