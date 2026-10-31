@@ -3422,7 +3422,11 @@ print((500*n)//600)
 n = int(input())
 print(n+2)
 
-# D407
+# D407 ハロウィンのお菓子
+# utf-8
+n = int(input())
+print(n*3)
+
 # D408
 # D409
 # D410
