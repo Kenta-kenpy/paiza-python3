@@ -88,7 +88,7 @@ for i in range(10):
         
 final　入力された10個の文字列を出力（改行区切り）
 # utf-8
-strings = input8).split()
+strings = input().split()
 for s in strings:
     print(s)
  
