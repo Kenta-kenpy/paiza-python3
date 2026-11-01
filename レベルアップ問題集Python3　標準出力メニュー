@@ -77,14 +77,15 @@ print(T)
 step4　入力された10個の文字列を出力（半角スペース区切り）
 # utf-8
 strings = []
+
 for i in range(10):
     strings.append(input())
-    
+
 for i in range(10):
     if i != 9:
-        print(strings(i), end=" ")
+        print(strings[i], end=" ")
     else:
-        print(strings(i))
+        print(strings[i])
         
 final　入力された10個の文字列を出力（改行区切り）
 # utf-8
