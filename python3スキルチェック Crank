@@ -119,17 +119,27 @@ reverse=True を指定することで、降順になります。最後に、上�
 # C009 ◆
 # C010 安息の地を求めて
 # utf-8
-s = input().strip().split(" ")
-n1 = list(map(int, s))  # int変換
 
-cnt = int(input())
+# 工事現場の座標と騒音の範囲を入力
+a, b, R = map(int, input().split())
 
-for i in range(cnt):
-    s = input().strip().split(" ")
-    n3 = list(map(int, s))  # int変換
+# 木陰の数を入力
+N = int(input())
 
-    if ((n3[0] - n1[0]) ** 2) + ((n3[1] - n1[1]) ** 2) >= (n1[2] ** 2):
+# 木陰を1か所ずつ判定する
+for i in range(N):
+
+    # 木陰の座標を入力
+    x, y = map(int, input().split())
+
+    # 工事現場からの距離の2乗を計算
+    distance = (x - a) ** 2 + (y - b) ** 2
+
+    # 距離がR以上なら読書に適している
+    if distance >= R ** 2:
         print("silent")
+
+    # R未満なら騒音が大きい
     else:
         print("noisy")
 '''
