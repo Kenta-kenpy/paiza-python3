@@ -7,30 +7,43 @@
 # C004 ◆
 # C005　アドレス調査
 # utf-8
-def is_valid_ipv4(ip_string):
-    # 入力されたIPアドレスを"."で分割し、各部分が10進数の範囲内にあるかをチェック
-    parts = ip_string.split(".")
-    if len(parts) != 4:  # IPアドレスが4つの部分で構成されているかをチェック
-        return False
 
-    for part in parts:
-        if not part.isdigit():  # 数字以外の文字が含まれていないかをチェック
-            return False
+# IPアドレスの個数を入力
+cnt = int(input())
 
-        num = int(part)
-        if num < 0 or num > 255:  # 0から255の範囲内にあるかをチェック
-            return False
+# IPアドレスをcnt個判定する
+for i in range(cnt):
 
-    return True
+    # ピリオドで文字列を分割する
+    s = input().strip().split(".")
 
-# IPアドレスの数を取得
-M = int(input().rstrip())
+    # 判定結果の初期値
+    ans = "True"
 
-# M行の入力を受け取り、それぞれのIPアドレスの書式を判定して結果を出力
-for _ in range(M):
-    ip_string = input().rstrip()  # 入力文字列を取得し、末尾の改行を削除
-    valid = is_valid_ipv4(ip_string)
-    print(valid)  # 書式が合っているかどうかを出力
+    # 要素が4個でなければ不正
+    if len(s) != 4:
+        ans = "False"
+
+    else:
+
+        # 4つの要素を順番に調べる
+        for part in s:
+
+            # 数字だけで構成されているか確認
+            if not part.isdigit():
+                ans = "False"
+                break
+
+            # 文字列を整数に変換
+            n = int(part)
+
+            # 0～255の範囲か確認
+            if n < 0 or n > 255:
+                ans = "False"
+                break
+
+    # 判定結果を出力
+    print(ans)
     
 # C006 ハイスコアランキング
 # utf-8
