@@ -180,6 +180,27 @@ split()で1行分の入力を空白部分で分割します。
 map()で複数の入力に対して型を変換します。*/
 
 step4 整数を半角+改行区切りで入力3
+p_1, p_2 = map(int, input().split())
+p_3, p_4 = map(int, input().split())
+e_1, e_2, e_3, e_4 = map(int, input().split())
+a, b = map(int, input().split())
+print(p_1 + 1)
+print(p_2 + 1)
+print(p_3 + 1)
+print(p_4 + 1)
+print(e_1 + 1)
+print(e_2 + 1)
+print(e_3 + 1)
+print(e_4 + 1)
+print(a + 1)
+print(b + 1)
+/*整数 p_1、p_2、p_3、p_4、e_1、e_2、e_3、e_4、a、b を整数型で受け取った後、p_1、p_2、p_3、p_4、e_1、e_2、e_3、e_4、a、b に +1 した値を出力します。
+整数は int型で入力を受け取ります。
+input()で1行分の入力をまとめて受け取ります。デフォルトではstr型として入力を受け取ります。
+int()で型変換します。
+split()で1行分の入力を空白部分で分割します。
+map()で複数の入力に対して型を変換します。*/
+
 step5 整数と文字列を半角+改行区切りで入力1
 step6 整数と文字列を半角+改行区切りで入力2
 step7 整数と文字列を改行区切りで入力
