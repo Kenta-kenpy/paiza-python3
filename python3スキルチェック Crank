@@ -985,49 +985,51 @@ for i in range(H):
 --------------------------------------------- C031　※欠番 ◆
 # C031　時差を求めたい
 # utf-8
+
 # 都市ごとの時差を管理する辞書を作成
 time_difference = {}
 
-# 都市の総数を入力
+# 都市の総数 N を取得
 N = int(input())
 
-# 都市ごとの時差情報を入力
-for i in range(N):
-    city_info = input().split()
-    city_name = city_info[0]
-    time_difference[city_name] = int(city_info[1])
+# N個の都市名と時差を辞書に格納
+for _ in range(N):
+    city_name, diff = input().split()
+    time_difference[city_name] = int(diff)
 
-# ユーザの所在地の都市と投稿時刻を入力
+# 投稿元の都市と投稿時刻を取得
 user_city, user_time = input().split()
 
-# ユーザの所在地の都市の時差を取得
-user_time_difference = time_difference[user_city]
+# 投稿元の都市の時差を取得
+user_diff = time_difference[user_city]
 
-# ユーザの投稿時刻を時と分に分割
+# 投稿時刻を時と分に分割
 user_hour, user_minute = map(int, user_time.split(':'))
 
-# 各都市ごとに投稿時刻を修正して出力
+# 各都市の表示時刻を計算
 for city, diff in time_difference.items():
-    # ユーザの所在地の都市の場合はそのまま出力
-    if city == user_city:
-        print(user_time)
-    else:
-        # 各都市の時差を考慮して投稿時刻を修正
-        city_hour = (user_hour + diff - user_time_difference + 24) % 24
-        city_minute = user_minute
-        # 時と分を0埋め2桁の文字列に変換して出力
-        print('{:02d}:{:02d}'.format(city_hour, city_minute))
+
+    # 投稿元と表示先の時差の差を計算
+    city_hour = (user_hour + diff - user_diff) % 24
+
+    # 時刻を0埋め2桁の形式にして出力
+    print('{:02d}:{:02d}'.format(city_hour, user_minute))
+
 '''
-このプログラムは、各都市の時差を考慮して投稿時刻を修正し、それぞれの都市に住むユーザの画面に表示される投稿時刻を出力します。
-都市ごとの時差を管理する辞書を作成: time_difference という空の辞書を作成します。この辞書は都市名をキーとし、その都市の時差を値として持ちます。
-都市の総数を入力: N に都市の総数を入力します。
-都市ごとの時差情報を入力: N 回のループを通じて、各都市の名前と時差を入力し、time_difference 辞書に都市名をキーとして、時差を値として保存します。
-ユーザの所在地の都市と投稿時刻を入力: ユーザの所在地の都市と投稿時刻を入力し、それぞれ user_city と user_time に保存します。
-ユーザの所在地の都市の時差を取得: ユーザの所在地の都市の時差を time_difference 辞書から取得し、user_time_difference に保存します。
-ユーザの投稿時刻を時と分に分割: user_time を ":" で分割し、user_hour と user_minute にそれぞれ時と分を保存します。
-各都市ごとに投稿時刻を修正して出力: time_difference 辞書をループし、各都市の投稿時刻を修正して出力します。
-ユーザの所在地の都市の場合は、そのままユーザの投稿時刻を出力します。
-それ以外の都市の場合は、ユーザの投稿時刻にその都市の時差を加味して、投稿時刻を修正し、出力します。
+辞書の作成
+time_difference という辞書を作成し、都市名をキー、時差を値として保存します。
+都市情報の入力
+for 文でN個の都市情報を取得し、辞書に登録します。
+投稿元の情報を取得
+投稿元の都市名と投稿時刻を取得します。
+投稿元の時差を取得
+辞書から投稿元の都市の時差を取り出します。
+投稿時刻を分解
+split(':') で時と分に分け、map(int, ...) で整数に変換します。
+各都市の時刻を計算
+投稿元と表示先の時差の差を利用して、各都市の時刻を求めます。
+時刻を出力
+format() で時と分をそれぞれ2桁に整えて出力します。
 '''
 
 # C032　お得な買い物
