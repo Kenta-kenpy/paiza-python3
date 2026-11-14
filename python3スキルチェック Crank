@@ -1103,58 +1103,107 @@ print(answer)
 
 # C035　試験の合格判定
 # utf-8
-# 受験者の人数を入力
-N = int(input())
 
-# 2段階選抜を通過できる人数をカウントする変数を初期化
-passed_count = 0
+# 合格者数
+count = 0
 
-# 各受験者の情報を入力し、2段階選抜を通過できるかを判定
-for i in range(N):
-    # 受験者の情報を入力
+# 受験者数を入力
+n = int(input())
+
+# 受験者ごとに処理
+for i in range(n):
+
+    # 文理区分と5科目の点数を入力
     data = input().split()
-    t_i = data[0]  # 文理の区分
-    e_i = int(data[1])  # 英語の点数
-    m_i = int(data[2])  # 数学の点数
-    s_i = int(data[3])  # 理科の点数
-    j_i = int(data[4])  # 国語の点数
-    g_i = int(data[5])  # 地理歴史の点数
-    
-    # 各科目の合計得点を計算
-    total_score = e_i + m_i + s_i + j_i + g_i
-    
-    # 理系か文系かを判定
-    is_science_major = t_i == "s"
-    is_literature_major = t_i == "l"
-    
-    # 2段階選抜の条件を満たすかを判定
-    if total_score >= 350 and ((is_science_major and (m_i + s_i) >= 160) or (is_literature_major and (j_i + g_i) >= 160)):
-        passed_count += 1
 
-# 2段階選抜を通過できる人数を出力
+    # 文理区分を取り出す
+    subject = data[0]
+
+    # 5科目の点数を整数に変換
+    scores = list(map(int, data[1:]))
+
+    # 全科目の合計点を計算
+    total = sum(scores)
+
+    # 全科目が350点以上の場合
+    if total >= 350:
+
+        # 理系の場合
+        if subject == "s":
+            if scores[1] + scores[2] >= 160:
+                count += 1
+
+        # 文系の場合
+        elif subject == "l":
+            if scores[3] + scores[4] >= 160:
+                count += 1
+
+# 合格者数を出力
+print(count)
+
 print(passed_count)
 '''
-このプログラムは、与えられた受験者の情報を元に、paiza大学の入試の2段階選抜を通過する人数を計算します。
-受験者の情報を入力：各受験者について、文理の区分と各科目の点数を入力します。これはループを通じて行われます。
-合計得点を計算：各受験者の各科目の点数を合算して、その合計得点を算出します。
-文系か理系かを判定：受験者が文系か理系かを判定します。文系の場合は国語と地理歴史の合計点数、理系の場合は数学と理科の合計点数を考慮します。
-2段階選抜の条件を満たすかを判定：合計得点が350点以上で、かつ文系の場合は国語と地理歴史の合計点数が160点以上、理系の場合は数学と理科の合計点数が160点以上であるかを判定します。
-通過者の数をカウント：条件を満たす場合、通過者の数をカウントします。
-通過者の数を出力：最終的に、通過した受験者の数を出力します。
+最初に、合格者数を記録する変数countを0で初期化し、受験者数を入力します。
+for i in range(n)で受験者の人数分だけ繰り返し処理を行います。
+各受験者の入力データは、split()で空白ごとに分割し、最初の要素を文理区分（subject）、残りの5つの要素を点数として取得します。
+点数はmap(int, ...)とlist()を使って整数のリストに変換します。
+次に、sum(scores)で5科目の合計点を計算し、350点以上かどうかを判定します。
+350点以上の場合、文理区分によって追加条件を判定します。
+- 理系（s）：数学と理科の合計が160点以上。
+- 文系（l）：国語と地理歴史の合計が160点以上。
+両方の条件を満たした場合は、count += 1で合格者数を1人増やします。
+最後に、すべての受験者の判定が終わったら、print(count)で合格者数を出力します。
 '''
 
 # C036　犬ぞりトーナメント
 # utf-8
-f1 = [int(_) for _ in sorted(input().split())]
-f2 = [int(_) for _ in sorted(input().split())]
-t1 = [int(_) for _ in input().split()]
-t2 = [int(_) for _ in input().split()]
 
-s = [f1[0] if t1[f1[0]-1] < t1[f1[1]-1] else f1[1]]
-s += [f2[0] if t1[f2[0]-1] < t1[f2[1]-1] else f2[1]]
-s.sort()
-print(s[0] if t2[0] < t2[1] else s[1])
-print(s[1] if t2[0] < t2[1] else s[0])
+# 1回戦の組み合わせ
+group1 = list(map(int, input().split()))
+group2 = list(map(int, input().split()))
+
+# エントリーナンバー順の1回戦タイム
+times1 = list(map(int, input().split()))
+
+# 2回戦のタイム
+times2 = list(map(int, input().split()))
+
+# 参加者番号と1回戦タイムを対応させる辞書
+time_table = {}
+
+for i in range(4):
+    time_table[i + 1] = times1[i]
+
+# 1回戦の各組の勝者を決める
+winner1 = group1[0]
+if time_table[group1[1]] < time_table[group1[0]]:
+    winner1 = group1[1]
+
+winner2 = group2[0]
+if time_table[group2[1]] < time_table[group2[0]]:
+    winner2 = group2[1]
+
+# 2回戦進出者をエントリーナンバー順に並べる
+finalists = sorted([winner1, winner2])
+
+# 2回戦のタイムで優勝者と準優勝者を決める
+if times2[0] < times2[1]:
+    print(finalists[0])
+    print(finalists[1])
+else:
+    print(finalists[1])
+    print(finalists[0])
+'''
+レースは次の2段階です。
+1. 1回戦：2組それぞれでタイムの小さい参加者が勝ち抜ける。
+2. 2回戦：勝ち抜いた2人のうち、タイムの小さい人が優勝する。
+
+タイムを辞書で管理する 1回戦のタイムはエントリーナンバーの小さい順に入力されます。
+1回戦の勝者を決める 最初の参加者を仮の勝者にして、2人目のタイムが小さければ勝者を入れ替えます。2組目も同じ方法で判定します。
+決勝進出者を番号順に並べる 2回戦のタイムは、決勝進出者のエントリーナンバーが小さい順に与えられます。
+そのため、決勝進出者も番号順に並べておく必要があります。sorted() は小さい順に並べ替えた新しいリストを返します。
+決勝のタイムで順位を決める 決勝進出者は番号順なので、times2[0] は finalists[0] のタイム、times2[1] は finalists[1] のタイムです。タイムの小さい人を優勝者として先に出力します。
+'''
 
 # C037　アニメの日時
 # utf-8
@@ -1190,6 +1239,21 @@ if match:
 else:
     # パースに失敗した場合は入力の日付時刻をそのまま出力
     print(t)
+'''
+import re：正規表現を使うためのモジュールを読み込みます。
+input()：日時を文字列として受け取ります。
+re.match()：指定した形式に一致するか確認します。
+match.group(1) ～ group(4)：月・日・時・分を取り出します。
+
+時刻が24以上なら日付を繰り上げる
+hour >= 24：時刻が24時間以上ある間、繰り返します。
+hour -= 24：24時間を引いて、時刻を調整します。
+day += 1：日付を1日進めます。
+
+日時を指定形式で出力する
+{:02d} は、整数を2桁で表示する書式指定です。
+例えば、時刻が 1 でも 01 と表示できます。
+'''
 
 # C038　お菓子の分配
 # utf-8
