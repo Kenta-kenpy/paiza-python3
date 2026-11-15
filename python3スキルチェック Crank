@@ -1815,64 +1815,114 @@ print(ans)
 
 # C055　ログのフィルター
 # utf-8
-import re
 
-N = int(input())
-# print(N)
-string = input()
-# print(string)
-flag = 0
-for i in range(N):
-    abc = input()
-    
-    if string in abc:
-        print(abc)
-        flag = 1
-        
-if flag == 0:
-    print('None')
+# ログの件数
+n = int(input())
+
+# 抽出したい重要な文字列
+g = input()
+
+# 該当するログが存在するか
+flag = False
+
+# ログを1行ずつ調べる
+for i in range(n):
+    log = input()
+
+    # 重要な文字列が含まれているか判定
+    if g in log:
+        print(log)
+        flag = True
+
+# 該当するログがなかった場合
+if flag == False:
+    print("None")
+
+'''
+n でログの件数を取得します。
+g に抽出対象の重要な文字列を保存します。
+for 文でログを1行ずつ読み込みます。
+if g in log: で重要な文字列が含まれているか判定します。
+含まれていれば、そのログを出力して flag = True にします。
+最後まで該当するログがなければ None を出力します。
+
+覚えておきたいPython文法
+g = "ai"
+log = "paiza"
+
+if g in log:
+    print("含まれています")
+'''
     
 # C056　テストの採点
 # utf-8
-from sys import stdin
 
-n, m = map(int, stdin.readline().rstrip().split())
-test_results = [list(map(int, stdin.readline().rstrip().split())) for i in range(n)]
-# pass_students_id = [i + 1 for i, result in enumerate(test_results) if (result[0] - result[1] * 5) >= m]
-pass_students_id = []
-for i, result in enumerate(test_results):
-  r1 = result[0] - result[1] * 5
-  r = r1 if r1 >= 0 else 0
-  if r >= m:
-    pass_students_id.append(i+1)
-for i in pass_students_id:
-  print(i)
+# 学生数と合格点
+n, m = map(int, input().split())
+
+# 学生ごとの成績を判定
+for i in range(n):
+
+    # テストの点数と欠席回数
+    a, b = map(int, input().split())
+
+    # 欠席による減点
+    score = a - 5 * b
+
+    # 成績がマイナスなら0点にする
+    if score < 0:
+        score = 0
+
+    # 合格点以上なら学籍番号を出力
+    if score >= m:
+        print(i + 1)
+'''
+n に学生数、m に合格点を取得します。
+for 文で学生のデータを1人ずつ読み込みます。
+テストの点数から欠席回数×5点を引きます。
+成績がマイナスなら 0 に修正します。
+成績が合格点以上なら、学籍番号を出力します。
+'''
 
 # C057　シャボン玉飛ばし
 # utf-8
-# 入力を受け取る
-T, x, y = map(int, input().split())
-wind = []
-for _ in range(T):
-    a, b = map(int, input().split())
-    wind.append((a, b))
 
-# シャボン玉の位置を更新しながら最大の x 座標を求める
+# 初期位置と風が吹く回数
+T, x, y = map(int, input().split())
+
+# x座標の最大値
 max_x = x
+
+# 風の情報を順番に処理
 for i in range(T):
-    a, b = wind[i]
-    # シャボン玉の位置を更新
+
+    # 風による移動量
+    a, b = map(int, input().split())
+
+    # x座標を先に更新
     x += a
+
+    # y座標を更新
     y += b
-    # y 座標が 0 以下になったらシャボン玉が割れるので、最大の x 座標を出力して終了
+
+    # 地面に接触したらシャボン玉が割れる
     if y <= 0:
-        print(max_x)
-        exit()
-    # x 座標の最大値を更新
+        break
+
+    # x座標の最大値を更新
     max_x = max(max_x, x)
 
-# T 時間経過後までシャボン玉が割れずに生き残った場合、最終的な x 座標を出力
+# 最大のx座標を出力
 print(max_x)
+'''
+風が吹く回数 T と、シャボン玉の初期座標 x, y を取得します。
+最初のx座標を最大値 max_x に保存します。
+for 文で風の情報を1回ずつ読み込みます。
+風の影響で、まずx座標、その次にy座標を更新します。
+y座標が0以下になったらシャボン玉が割れるため、break で処理を終了します。
+シャボン玉が割れていなければ、現在のx座標と最大値を比較して更新します。
+最後に、x座標の最大値を出力します。
+'''
 
 # C058　模様そろえ
 # utf-8
