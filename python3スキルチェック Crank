@@ -1624,23 +1624,34 @@ while文を使い、コーヒーの価格が0円になるまで繰り返しま�
 
 # C049　エレベーター
 # utf-8
-# 入力を受け取る
-N = int(input())  # ログの行数
-floors = []  # エレベーターが止まった階のリスト
-for _ in range(N):
-    floor = int(input())
-    floors.append(floor)
+# ログの行数を入力
+n = int(input())
 
-# エレベーターが合計で何階分の距離を動いたか計算する
-total_distance = 0  # 合計の距離
-current_floor = 1  # 現在の階数は必ず1階とする
-for floor in floors:
-    distance = abs(floor - current_floor)  # 現在の階数から目的の階数までの距離
-    total_distance += distance  # 合計の距離に加算
-    current_floor = floor  # 現在の階数を更新
+# 初期位置は1階
+current_floor = 1
 
-# 結果を出力
+# 移動距離の合計
+total_distance = 0
+
+# ログを順番に読み込む
+for _ in range(n):
+    next_floor = int(input())
+
+    # 現在の階から次の階までの距離を加算
+    total_distance += abs(next_floor - current_floor)
+
+    # 現在の階を更新
+    current_floor = next_floor
+
+# 合計移動距離を出力
 print(total_distance)
+'''
+最初にログの行数を入力し、エレベーターの現在位置を1階、移動距離の合計を0に設定します。
+for文でログを1行ずつ読み込み、abs() を使って現在の階と次の階の差の絶対値を求めます。
+abs() 上昇でも下降でも、移動した階数を正の値で取得できます。
+その距離を合計に加算した後、現在の階を移動先の階に更新します。
+この処理をログの回数分繰り返し、最後に合計移動距離を出力します。
+'''
 
 # C050　オークションの結果
 # utf-8
