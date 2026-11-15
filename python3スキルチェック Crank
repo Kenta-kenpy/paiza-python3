@@ -1296,16 +1296,44 @@ print(cnt_k*10 + cnt_l)
 
 # C040　背比べ
 # utf-8
+# 身長がわかっている子供の人数を入力
 n = int(input())
-comps = [input().split() for x in range(n)]
-l,r=0,1000
-for comp in comps:
-  if comp[0] == 'ge':
-    l = max(l,float(comp[1]))
-  else:
-    r = min(r,float(comp[1]))
-print(l,r)
 
+# 身長の最小値と最大値を初期化
+min_height = 0.0
+max_height = 1000.0
+
+# 子供の人数分だけ比較結果を読み込む
+for _ in range(n):
+
+    # 比較結果(c)と身長(h)を取得
+    c, h = input().split()
+
+    # 身長を文字列から小数型(float)に変換
+    h = float(h)
+
+    # 身長が h 以上の場合
+    if c == "ge":
+
+        # 現在の最小値と比較し、大きい方を採用
+        min_height = max(min_height, h)
+
+    # 身長が h 以下の場合
+    else:
+
+        # 現在の最大値と比較し、小さい方を採用
+        max_height = min(max_height, h)
+
+# 最小値と最大値を小数第1位まで表示
+print(f"{min_height:.1f} {max_height:.1f}")
+'''
+n で比較する子供の人数を取得する。
+身長の最小値と最大値を初期化する。
+for 文で人数分の比較結果を読み込む。
+ge なら max() で最小値を引き上げる。
+le なら min() で最大値を引き下げる。
+最後に身長の範囲を出力する。
+'''
 --------------------------------------------- C041　※欠番 ◆
 # C041　メダルランキングの作成
 # utf-8
