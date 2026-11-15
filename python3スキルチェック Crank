@@ -1435,50 +1435,110 @@ for x in mc:
 l.sort()
 
 print(" ".join([str(x) for x in l]))
+'''
+この問題は、プレイヤー ID の出現回数を数え、その中から最も出現回数が多い ID をすべて取り出す問題です。
+まず、collections モジュールの Counter を使用するため、import collections で読み込みます。
+次に、input() で課金アイテムの使用回数 N を取得し、2行目のプレイヤー ID を split() で分割します。その後、map(int, ...) を使って文字列を整数に変換し、リストに格納します。
+続いて、collections.Counter() を使って、それぞれのプレイヤー ID が何回出現したかを集計します。Counter は、リスト内の各要素の出現回数を自動的に数えてくれる機能です。
+さらに、most_common() を使用すると、出現回数が多い順に ID と出現回数を取り出せます。最初の要素 mc[0][1] から最も多い出現回数を取得し、変数 mx に保存します。
+その後、for 文で集計結果を順番に確認します。出現回数が最大値と同じ ID はリスト l に追加し、最大値より少なくなった時点で break によって繰り返し処理を終了します。
+最後に、sort() で ID を昇順に並べ替え、str() で文字列に変換してから、" ".join() で半角スペース区切りにして出力します。
+
+今回覚えておきたいPython文法
+文法	役割
+import collections	collectionsモジュールを読み込む
+split()	文字列を分割する
+map(int, ...)	各要素を整数に変換する
+Counter()	要素の出現回数を集計する
+most_common()	出現回数の多い順に取り出す
+break	繰り返し処理を終了する
+sort()	リストを昇順に並べ替える
+str()	整数を文字列に変換する
+join()	文字列を指定した区切り文字で連結する
+'''
 
 # C044　手の組み合わせ
 # utf-8
+# 参加者の人数を入力
 n = int(input())
 
-h = []
-for i in range(n):
-    h.append(input())
+# 参加者が出した手を格納するリスト
+hands = []
 
-h = sorted(set(h))
+# 参加者全員の手を読み込む
+for _ in range(n):
+    hands.append(input())
 
-if len(h) == 2:
-    if h[0] == 'paper':
-        if h[1] == 'rock':
-            print(h[0])
-        else:
-            print(h[1])
-    else:
-        print(h[0])
+# 重複を取り除き、手の種類だけを取得
+h = set(hands)
 
-else:
+# 出された手が1種類または3種類の場合は引き分け
+if len(h) != 2:
     print("draw")
+
+# 2種類の場合は勝者を判定
+else:
+
+    # グーとチョキの場合はグーの勝ち
+    if "rock" in h and "scissors" in h:
+        print("rock")
+
+    # チョキとパーの場合はチョキの勝ち
+    elif "scissors" in h and "paper" in h:
+        print("scissors")
+
+    # グーとパーの場合はパーの勝ち
+    else:
+        print("paper")
+'''
+まず、参加者の人数 N を入力し、for 文を使って参加者全員の出した手をリストに格納します。
+次に、set() を使用してリスト内の重複した要素を取り除き、出された手の種類だけを取得します。
+len() で手の種類の数を調べ、1種類または3種類の場合は引き分けと判定します。1種類なら全員が同じ手を出しており、3種類ならグー・チョキ・パーがすべて出されているためです。
+
+手の種類が2種類の場合は、if 文と in 演算子を使って組み合わせを判定します。
+- "rock" と "scissors" の場合はグーが勝つ。
+- "scissors" と "paper" の場合はチョキが勝つ。
+- "rock" と "paper" の場合はパーが勝つ。
+最後に、勝者の手、または "draw" を出力します。
+'''
     
 # C045　ページネーション
 # utf-8
-def paginate_search_results(n, s, p):
-    start = (p - 1) * s + 1 # 開始番号
-    end = min(n, p * s) # 終了番号
-    if start > n:
-        return "none" # 検索結果が存在しない場合は"none"を返す
-    else:
-        return list(range(start, end + 1)) # 開始番号から終了番号までのリストを返す
-
-# 入力の取得
+# 検索結果の件数、ページサイズ、ページ番号を入力
 n, s, p = map(int, input().split())
 
-# ページネーションの実行
-result = paginate_search_results(n, s, p)
+# 指定ページの最初の検索結果番号を計算
+start = (p - 1) * s + 1
 
-# 出力
-if result == "none":
-    print(result)
+# 指定ページの最後の検索結果番号を計算
+end = min(p * s, n)
+
+# 指定ページに表示する検索結果が存在するか判定
+if start > n:
+    print("none")
+
 else:
+    # 開始番号から終了番号までの整数をリストに格納
+    result = list(range(start, end + 1))
+
+    # 半角スペースで区切って出力
     print(*result)
+'''
+まず、input().split() で検索結果の件数 n、ページサイズ s、ページ番号 p の3つの値を取得し、map(int, ...) で整数に変換します。
+次に、指定されたページの最初の検索結果番号を計算します。ページ番号は1から始まるため、(p - 1) * s + 1 で開始番号を求めます。
+続いて、最後の検索結果番号を p * s で求めます。ただし、検索結果の総数 n を超えてはいけないため、min() を使って n と比較し、小さい方を終了番号とします。
+その後、開始番号が検索結果の総数 n を超えている場合は、指定されたページに表示する検索結果が存在しないため、"none" を出力します。
+検索結果が存在する場合は、range() を使って開始番号から終了番号までの整数を生成し、list() でリストに変換します。
+最後に、print(*result) でリストの要素を半角スペース区切りで出力します。
+
+文法	役割
+map(int, ...)	複数の値を整数に変換
+split()	文字列を分割
+range()	指定範囲の整数を生成
+list()	リストを作成
+min()	小さい方の値を取得
+*result	リストの要素を展開して出力
+'''
     
 # C046　書籍購入費ランキング
 # utf-8
