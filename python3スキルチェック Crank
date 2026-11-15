@@ -1542,24 +1542,55 @@ min()	小さい方の値を取得
     
 # C046　書籍購入費ランキング
 # utf-8
-member = int(input())
-name = input()
-names = name.split()
+# エンジニアの人数を入力
+n = int(input())
 
-book = int(input())
-buy = [input() for i in range(book)]
+# エンジニアの名前をリストに格納
+names = input().split()
 
-dic = {}
+# 各社員の書籍購入費を管理する辞書を作成
+# 最初は全員の購入費を0円にする
+total = {}
 
-for members in range(member):
-	dic[names[members]] = 0
+for name in names:
+    total[name] = 0
 
-for books in buy:
-	temp = books.split()
-	dic[temp[0]] += int(temp[1])
-	
-for k, v in sorted(dic.items(), key=lambda x: x[1], reverse=True):
-	print(k)
+# 購入された書籍の数を入力
+m = int(input())
+
+# 書籍の購入情報を読み込む
+for _ in range(m):
+
+    # 購入者の名前と金額を取得
+    name, price = input().split()
+
+    # 金額を整数に変換して購入費に加算
+    total[name] += int(price)
+
+# 購入費の高い順に並べ替える
+ranking = sorted(total.items(), key=lambda x: x[1], reverse=True)
+
+# ランキング順に社員の名前を出力
+for name, price in ranking:
+    print(name)
+'''
+まず、エンジニアの人数 N を取得し、続いて社員の名前を split() で分割してリストに格納します。
+次に、各社員の書籍購入費を集計するため、辞書を作成します。辞書のキーには社員の名前、値には購入金額を設定し、最初は全員の購入金額を0円に初期化します。
+その後、購入された書籍の数 M を取得し、for 文で各書籍の購入情報を読み込みます。購入者の名前と金額を取得し、金額を int() で整数に変換して、辞書に登録されている該当社員の購入費に加算します。
+すべての購入情報を集計したら、sorted() を使って辞書の内容を購入金額の高い順に並べ替えます。
+このとき、key=lambda x: x[1] で購入金額を並べ替えの基準に指定し、reverse=True で降順にします。
+最後に、並べ替えた結果から社員の名前を順番に取り出して出力します。
+
+文法	役割
+split()	文字列を分割する
+dict	キーと値を組み合わせて管理する
+total[name] = 0	辞書に初期値を登録する
+total[name] += price	辞書の値に金額を加算する
+items()	辞書のキーと値を取り出す
+sorted()	データを並べ替える
+key=lambda x: x[1]	2番目の要素を基準にする
+reverse=True	降順に並べ替える
+'''
     
 # C047　◆
 # C048　タダ飲みコーヒー
