@@ -1959,81 +1959,65 @@ find() は先頭を0として位置を返すため、その値がそのまま回
 
 # C059　パリティチェック
 # utf-8
-# 入力データの取得
-N = int(input())  # 2進数の数
-binary_list = []  # 2進数のリスト
-for i in range(N):
-    binary = input().strip()
-    binary_list.append(binary)
+# 2進数の個数
+n = int(input())
 
-# 排他的論理和(XOR)を計算して結果を出力する関数
-def calculate_xor(binary_list):
-    result = ""
-    for i in range(4):  # 4桁の2進数なので4回繰り返す
-        count = 0
-        for j in range(N):
-            if binary_list[j][i] == '1':
-                count += 1
-        if count % 2 == 1:
-            result += '1'
-        else:
-            result += '0'
-    return result
+# 各桁の1の個数を記録するリスト
+a = [0 for _ in range(4)]
 
-# 排他的論理和(XOR)を計算して結果を出力
-result = calculate_xor(binary_list)
-print(result)
+# 2進数を1つずつ調べる
+for i in range(n):
+    b = input()
+
+    # 4桁それぞれの1を数える
+    for j in range(4):
+        if b[j] == '1':
+            a[j] += 1
+
+# 1の個数が奇数なら1、偶数なら0にする
+for i in range(4):
+    if a[i] % 2 == 1:
+        a[i] = 1
+    else:
+        a[i] = 0
+
+# 数値を文字列に変換して連結
+l = map(str, a)
+s = ''.join(l)
+
+# 結果を出力
+print(s)
+'''
+4桁分のカウンターを用意する 各桁に含まれる 1 の個数を数えるため、4個の要素を持つリストを作ります。最初はすべて0です。
+入力された2進数を1つずつ調べる 外側の for 文でデータを1つずつ読み込み、内側の for 文で4桁を調べます。文字が '1' なら、その桁のカウンターを1増やします。
+1の個数が奇数か偶数かを判定する % 2 は2で割った余りを求めます。
+- 余りが1なら奇数なので 1
+- 余りが0なら偶数なので 0
+4桁の文字列に変換する map(str, a) でリストの数値を文字列に変換し、''.join(l) で連結します。例えば、リストが [0, 1, 0, 1] なら、文字列 "0101" になります。
+'''
 
 # C060　辞書の作成
 # utf-8
-def get_words_on_page(N, K, P, words):
-    # 辞書順に単語を並び替える
-    words.sort()
-
-    # P ページ目に載る単語のインデックスを計算
-    start_idx = (P - 1) * K
-    end_idx = min(start_idx + K, N)
-
-    # P ページ目に載る単語のリストを取得
-    words_on_page = words[start_idx:end_idx]
-
-    return words_on_page
-
-# 入力の受け取り
+# 単語数、1ページの掲載数、ページ番号
 N, K, P = map(int, input().split())
-words = input().strip().split()
 
-# 入力のバリデーション
-if not (3 <= N <= 1000) or not (1 <= K <= N) or not (1 <= P <= N):
-    print("入力値が条件を満たしていません。")
-    exit(1)
+# 単語を取得して辞書順に並べ替える
+words = input().split()
+words.sort()
 
-if len(words) != N or len(set(words)) != N:
-    print("入力される単語が条件を満たしていません。")
-    exit(1)
+# 指定ページの開始位置と終了位置
+start = (P - 1) * K
+end = P * K
 
-for word in words:
-    if not (0 <= len(word) <= 10):
-        print("入力される単語の長さが条件を満たしていません。")
-        exit(1)
-
-# P ページ目に載る単語のリストを取得
-words_on_page = get_words_on_page(N, K, P, words)
-
-# 結果を改行区切りで出力
-print("\n".join(words_on_page))
-
+# 指定ページの単語を出力
+for word in words[start:end]:
+    print(word)
 '''
-# 別解
-N, K, P = map(int,input().split())
-s = input().split()
-s.sort()
-j = []
-for i in range(0, N, K):
-    j.append(s[i:i+K])
-for k in j[P-1]:
-    print(k)
-
+N（単語数）、K（1ページの掲載数）、P（ページ番号）を取得します。
+単語をリストに格納し、sort() で辞書順に並べ替えます。
+start = (P - 1) * K で指定ページの開始位置を求めます。
+end = P * K で終了位置を求めます。
+words[start:end] で指定ページの単語を取り出し、1行ずつ出力します。
 '''
 --------------------------------------------- C061　※欠番 ◆
 # C061　繰り上がりのない足し算
