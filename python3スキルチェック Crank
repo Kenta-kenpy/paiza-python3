@@ -1697,11 +1697,24 @@ break	繰り返しを終了する
 --------------------------------------------- C051　※欠番 ◆
 # C051　カード並べ
 # utf-8
-numlist=list(map(int,input().split()))#a, b, c, d はそれぞれ 4 枚のカード
-newlist=sorted(numlist)#昇順に並び替え #例： 2, 3, 8 , 9
-num1=str(newlist[3])+str(newlist[1])
-num2=str(newlist[2])+str(newlist[0])
-print(int(num1)+int(num2))
+# 4枚のカードを入力
+cards = list(map(int, input().split()))
+
+# 数字を昇順に並べ替える
+cards.sort()
+
+# 大きい2枚を十の位に、小さい2枚を一の位に配置
+num1 = cards[3] * 10 + cards[1]
+num2 = cards[2] * 10 + cards[0]
+
+# 2つの整数の合計を出力
+print(num1 + num2)
+'''
+最初に4枚のカードの数字を入力し、リストに格納します。
+sort() を使って数字を昇順に並べ替えます。
+最大の合計を得るには、大きい2つの数字をそれぞれ十の位に配置し、小さい2つの数字を一の位に配置します。
+その組み合わせで2桁の整数を2つ作り、それらを足して最大スコアを出力します。
+'''
 
 # C052　ゲームの画面
 # utf-8
