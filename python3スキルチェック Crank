@@ -2022,39 +2022,38 @@ words[start:end] で指定ページの単語を取り出し、1行ずつ出力�
 --------------------------------------------- C061　※欠番 ◆
 # C061　繰り上がりのない足し算
 # utf-8
-A, B = map(str,input().split())
-s = ""
-if max(len(A), len(B)) == 3:
-    s += str((int(A) // 100 + int(B) // 100) % 10)
-if max(len(A), len(B)) >= 2:
-    s += str((int(A) // 10 + int(B) // 10) % 10)
-s += str((int(A) + int(B)) % 10)
-print(s)
+A, B = input().split()
 
-# 別解
-def add_with_kids_method(num1, num2):
-    len_diff = abs(len(num1) - len(num2))
+# 桁数をそろえるため、先頭に0を追加する
+length = max(len(A), len(B))
 
-    if len(num1) > len(num2):
-        num2 = '0' * len_diff + num2
-    else:
-        num1 = '0' * len_diff + num1
+A = A.zfill(length)
+B = B.zfill(length)
 
-    result = ''
-    for i in range(len(num1)-1, -1, -1):
-        digit1 = int(num1[i])
-        digit2 = int(num2[i])
-        sum_digits = digit1 + digit2
-        result = str(sum_digits % 10) + result
+result = ""
 
-    return result
+# 右端の桁から順番に計算する
+for i in range(length - 1, -1, -1):
+    digit_a = int(A[i])
+    digit_b = int(B[i])
 
+    # 繰り上がりを無視して足し算する
+    digit_sum = (digit_a + digit_b) % 10
 
-# 入力を受け取る
-input_str = input().rstrip()  # 入力を1行受け取り、末尾の改行を削除
-num1, num2 = input_str.split()  # スペース区切りで入力を分割
-result = add_with_kids_method(num1, num2)  # 繰り上がりを無視して足し算を実行
-print(result)  # 結果を出力
+    result = str(digit_sum) + result
+
+print(result)
+'''
+※zfill(桁数) は、文字列の先頭に 0 を追加して、指定した桁数にそろえるメソッド
+まず、zfill() を使って2つの数値の桁数をそろえます。
+次に、右端（一の位）から1桁ずつ取り出して足し算し、% 10 で10で割った余りを求めます。これにより、繰り上がりを無視できます。
+最後に、各桁の計算結果をつなげて出力します。
+A = "58"
+A = A.zfill(3)
+
+print(A)
+出力：058
+'''
 
 # C062　回転寿司のメロン
 # utf-8
