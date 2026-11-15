@@ -1728,6 +1728,20 @@ ful = w[0] * w[1]
 used = (w[0] - abs(n[0])) * (w[1] - abs(n[1]))
 
 print(ful - used)
+'''
+map(int, input().split())	入力を整数に変換する
+abs(x)	絶対値を求める
+h * w	縦と横を掛ける
+h - abs(dy)	コピー可能な高さを求める
+w - abs(dx)	コピー可能な幅を求める
+full - used	新しく描画する画素数を求める
+
+この問題は、画面の画素を一つずつ調べる必要はありません。
+必要なのは次の3段階です。
+1. 画面全体の面積を求める。
+2. スクロール後も重なっている部分の面積を求める。
+3. 全体から重なっている部分を引く。
+'''
 
 # C053　カードの合計
 # utf-8
@@ -1754,35 +1768,50 @@ if zero is True:
 res = sum(cards_split_i) * bonus
 
 print(res)
+'''
+最初にプレイヤーの人数とカードを入力し、split() でカードをリストに分割します。
+次に、"x10" in cards_split で10倍カードがあるかを確認します。存在する場合はリストから取り除き、倍率を 10 に変更します。
+残ったカードを整数に変換した後、"0" in cards_split で0点カードがあるか確認します。存在する場合は、max() で最大の点数を調べ、そのカードをリストから取り除きます。
+最後に、sum() で残った点数カードの合計を求め、倍率を掛けて出力します。
+'''
 
 # C054　スピード違反の取り締まり
 # utf-8
-n = input().strip().split(" ")
-n = list(map(int, n))   # int変換
+# 入力
+n, v = map(int, input().split())
 
-t = []
-p = []
-while True:
-    try:
-        a = input().strip().split(" ")
-        a = list(map(int, a))   # int変換
-        t.append(a[0])
-        p.append(a[1])
-
-    except EOFError:
-        break
+# 最初の観測データ
+prev_t, prev_p = map(int, input().split())
 
 ans = "NO"
 
-for i in range(n[0]):
-    if i == 0:
-        continue
+# 2番目以降の観測データを処理
+for i in range(n - 1):
 
-    if (p[i] - p[i-1]) / (t[i] - t[i-1]) > n[1]:
+    t, p = map(int, input().split())
+
+    # 前回からの距離と時間の差
+    distance = p - prev_p
+    time = t - prev_t
+
+    # 平均速度が制限速度を超えているか
+    if distance / time > v:
         ans = "YES"
         break
 
+    # 今回のデータを次回の比較用に保存
+    prev_t = t
+    prev_p = p
+
 print(ans)
+'''
+最初に観測地点数 n と制限速度 v を取得します。
+最初の観測データを prev_t と prev_p に保存します。
+2番目以降の観測データを順番に読み込みます。
+前回との距離の差を時間の差で割り、平均速度を計算します。
+平均速度が制限速度を超えていれば YES を設定して処理を終了します。
+最後まで違反がなければ NO を出力します。
+'''
 
 # C055　ログのフィルター
 # utf-8
