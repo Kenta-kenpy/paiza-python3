@@ -2282,59 +2282,62 @@ print(plaintext)
 
 # C069　お祭りの日付
 # utf-8
-def is_leap_year(year):
-    if year % 4 == 1:
-        return True
-    else:
-        return False
-
-def days_in_month(month, leap_year=False):
+# 月の日数を返す関数
+def days_in_month(month):
     if month % 2 == 0:
         return 15
     else:
         return 13
 
-def days_until_next_paiza_festival(y, m, d, a, b):
-    if m % 2 == 0:
-        c = 15 - d
-    else:
-        c = 13 - d
-    m += 1
 
-    while not is_leap_year(y):
-        c += days_in_month(m)
-        m += 1
-        if m == 14:
-            m = 1
-            y += 1
-
-    for i in range(1, a):
-        c += days_in_month(i)
-
-    if a % 2 == 0:
-        c += b
-    else:
-        c += b
-
-    return c
-
-# 1行目の入力を受け取る
 y, m, d = map(int, input().split())
-
-# 2行目の入力を受け取る
 a, b = map(int, input().split())
 
-# 入力値の範囲チェック
-if not (1 <= y <= 10000) or not (1 <= m <= 13) or not (1 <= d <= days_in_month(m)) or not (1 <= a <= 13) or not (1 <= b <= days_in_month(a)):
-    print("入力値が範囲外です。")
-elif y % 4 == 1:
-    print("入力値 y は 4 で割った余りが 1 になることはありません。")
-else:
-    # パイーザ祭の開催日までの日数を計算
-    days = days_until_next_paiza_festival(y, m, d, a, b)
+# 現在の月の残り日数を加算
+count = days_in_month(m) - d
 
-    # 結果の出力
-    print(days, end="\n")
+# 次の月へ進む
+m += 1
+if m == 14:
+    m = 1
+    y += 1
+
+# 次のパイーザ祭の開催年まで月の日数を加算
+while y % 4 != 1:
+    count += days_in_month(m)
+
+    m += 1
+    if m == 14:
+        m = 1
+        y += 1
+
+# 開催年の1月から開催月の前月までの日数を加算
+for i in range(1, a):
+    count += days_in_month(i)
+
+# 開催日までの日数を加算
+count += b
+
+print(count)
+'''
+1. 現在の月の残り日数を計算する
+月の日数から今日の日付を引きます。
+
+2. 次の開催年まで進める
+月の日数を加算しながら、年が4で割って余り1になるまで進めます。13月まで進んだら翌年の1月に戻します。
+
+3. 開催年の開催月まで進める
+1月から開催月の前月までの日数を加算します。
+
+4. 開催日の日数を加算する
+開催月の何日目に開催されるかを加算して出力します。
+
+処理	意味
+days_in_month(m)	月の日数を取得
+m += 1	翌月へ進む
+if m == 14	13月の次は翌年1月
+y % 4 != 1	開催年になるまで繰り返す
+'''
 
 # C070　簡易カードゲーム
 # utf-8
