@@ -2100,26 +2100,37 @@ print(a)
 # utf-8
 N = int(input())
 
-flowers = [[int(i) for i in input().split()] for j in range(N)]
-bloom_days = []
+bloom_count = {}
+
+for i in range(N):
+    a, b = map(int, input().split())
+
+    # 花が咲く日を計算する
+    day = a + b
+
+    # その日に咲く花の数を数える
+    if day not in bloom_count:
+        bloom_count[day] = 0
+
+    bloom_count[day] += 1
+
+# 最も多くの花が咲く日を探す
 max_count = 0
-max_date = 10000
+answer = 0
 
-for i, j in flowers:
-    bloom_day = i + j
-    bloom_days.append(bloom_day)
-
-for day in bloom_days:
-    count = bloom_days.count(day)
-    if count > max_count or (count == max_count and day < max_date):
+for day, count in bloom_count.items():
+    if count > max_count:
         max_count = count
-        max_date = day
+        answer = day
+    elif count == max_count and day < answer:
+        answer = day
 
-print(max_date)
+print(answer)
 '''
-x リストを使用せずに、bloom_days リストに直接花が咲く日数を追加しました。
-2 重の for ループを使用する代わりに、count() メソッドを使用して同じ日数の花の個数を数えました。
-最大の花の個数と日数を更新する際に、max_count と max_date の比較を行い、必要に応じて更新しました。
+day = a + b で、それぞれの花が咲く日を計算します。
+辞書 bloom_count を使って、同じ日に咲く花の数を数えます。
+辞書を調べて、最も花の数が多い日を探します。
+花の数が同じ場合は、日付が早い方を選びます。
 '''
 
 # C064　paizaでお食事
