@@ -2341,28 +2341,54 @@ y % 4 != 1	開催年になるまで繰り返す
 
 # C070　簡易カードゲーム
 # utf-8
+
+# 手札の個数を入力
 N = int(input())
+
+# N個の手札を1つずつ判定する
 for i in range(N):
     k = input()
+
+    # ペアの数を数える
     pair = 0
-    for j in range(9):
-        kazu = k.count(str(j+1))
+
+    # 1から9までの数字を順番に調べる
+    for j in range(1, 10):
+
+        # 手札の中に同じ数字が何枚あるか数える
+        kazu = k.count(str(j))
+
+        # 同じ数字が4枚ならFour Card
         if kazu == 4:
             print('Four Card')
-            pair = -1
-            break
+            pair = -1 # すでに役を出力したことを示し、最後の役判定を回避
+            break # Four CardまたはThree Cardが見つかった時点でループを終了
+
+        # 同じ数字が3枚ならThree Card
         elif kazu == 3:
             print('Three Card')
-            pair = -1
-            break
+            pair = -1 # すでに役を出力したことを示し、最後の役判定を回避
+            break # Four CardまたはThree Cardが見つかった時点でループを終了
+
+        # 同じ数字が2枚ならペアを1つ加算
         elif kazu == 2:
-            pair += 1
+            pair += 1 # ペアが見つかるたびに1+
+
+    # ペアの数によって役を判定する
     if pair == 2:
         print('Two Pair')
     elif pair == 1:
         print('One Pair')
     elif pair == 0:
         print('No Pair')
+'''
+for i in range(N) で、N個の手札を1つずつ調べます。
+k.count(str(j)) で、手札にある数字が何枚含まれているかを数えます。
+4枚なら Four Card、3枚なら Three Card と判定します。
+2枚なら pair に1を加算します。
+最後にペアの数によって役を判定します。
+'''
+
 --------------------------------------------- C071　※欠番 ◆
 # C071　直角三角形
 '''
