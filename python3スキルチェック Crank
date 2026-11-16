@@ -2137,13 +2137,28 @@ day = a + b で、それぞれの花が咲く日を計算します。
 # utf-8
 M, N = map(int, input().split())
 
-c = [int(input()) for i in range(M)]
-a = [list(map(int, input().split())) for i in range(N)]
+# 各料理の100gあたりのカロリー
+calories = [int(input()) for _ in range(M)]
 
-for i in range(N):
-    total_calories = sum([c[j-1]*a[i][j-1]//100 for j in range(1, M+1)])
-    print(total_calories)
+# 就活生ごとの摂取カロリーを計算
+for _ in range(N):
+    amounts = list(map(int, input().split()))
 
+    total = 0
+
+    for calorie, amount in zip(calories, amounts):
+        total += calorie * amount // 100
+
+    print(total)
+'''
+calories に各料理の100gあたりのカロリーを保存します。
+就活生ごとに食べた量を amounts に読み込みます。
+zip() で料理のカロリーと食べた量を1組ずつ取り出します。
+calorie * amount // 100 で料理ごとの摂取カロリーを計算し、小数点以下を切り捨てます。
+合計を出力します。
+//：小数点以下を切り捨てる整数除算。
+zip()：複数のリストから同じ位置の要素を組み合わせて取り出す。
+'''
 # C065　数字あてゲーム
 # utf-8
 def find_unique_integer(N, hints):
