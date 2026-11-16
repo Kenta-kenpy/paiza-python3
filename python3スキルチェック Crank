@@ -2224,29 +2224,23 @@ print(c)
 
 # C067　数字の調査
 # utf-8
-def binary_digit_check(N, X, k):
-    # Xを2進数に変換し、0bを除いた2進数文字列に変換する
-    binary = bin(X)[2:]
-    # binaryの先頭に0を追加して、指定された桁が存在しない場合に備える
-    binary = '0' + binary
-
-    result = []
-    for ki in k:
-        # 指定された桁の値を判定し、0ならFalse、1ならTrueを追加する
-        result.append(binary[-int(ki)] == '1')
-
-    return result
-
-# 入力の受け取り
 N, X = map(int, input().split())
-k = [int(input()) for _ in range(N)]
 
-# プログラムの実行
-result = binary_digit_check(N, X, k)
+# Xを2進数の文字列に変換する
+binary = bin(X)[2:]
 
-# 結果の出力
-for res in result:
-    print(int(res))
+# 指定された桁を右から取り出す
+for _ in range(N):
+    k = int(input())
+
+    # 右からk番目の数字を出力する
+    print(binary[-k])
+'''
+bin(X) で整数Xを2進数に変換します。
+[2:] で先頭の 0b を取り除きます。
+binary[-k] で右からk番目の桁を取り出します。
+取り出した数字を1行ずつ出力します。
+'''
 
 # C068　秘密の手紙
 # utf-8
