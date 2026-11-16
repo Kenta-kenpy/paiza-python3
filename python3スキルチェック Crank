@@ -2161,42 +2161,39 @@ zip()：複数のリストから同じ位置の要素を組み合わせて取り
 '''
 # C065　数字あてゲーム
 # utf-8
-def find_unique_integer(N, hints):
-    nums = set(range(1, 101))
-
-    for hint in hints:
-        op = hint[0]
-        num = hint[1]
-        temp = set()
-
-        if op == '>':
-            for i in nums:
-                if i > num:
-                    temp.add(i)
-        elif op == '<':
-            for i in nums:
-                if i < num:
-                    temp.add(i)
-        elif op == '/':
-            for i in nums:
-                if i % num == 0:
-                    temp.add(i)
-
-        nums = temp
-
-    return nums.pop()
-
-
-# 入力の読み込み
 N = int(input())
-hints = []
-for i in range(N):
-    hint = input().split()
-    hints.append((hint[0], int(hint[1])))
 
-# 一意の正整数を探す
-result = find_unique_integer(N, hints)
-print(result)
+# 1～100の整数を候補として用意する
+candidates = list(range(1, 101))
+
+# ヒントを1つずつ読み込む
+for _ in range(N):
+    op, x = input().split()
+    x = int(x)
+
+    # 「>」の場合、xより大きい整数だけ残す
+    if op == '>':
+        candidates = [a for a in candidates if a > x]
+
+    # 「<」の場合、xより小さい整数だけ残す
+    elif op == '<':
+        candidates = [a for a in candidates if a < x]
+
+    # 「/」の場合、xで割り切れる整数だけ残す
+    elif op == '/':
+        candidates = [a for a in candidates if a % x == 0]
+
+# すべての条件を満たした整数を出力する
+print(candidates[0])
+'''
+最初に1〜100の整数を候補として用意します。
+
+次に、ヒントを1つずつ読み込み、条件に合わない整数を候補から除外します。
+- >：指定された数より大きい整数だけ残す。
+- <：指定された数より小さい整数だけ残す。
+- /：指定された数で割り切れる整数だけ残す。
+すべてのヒントを確認すると、条件を満たす整数は1つだけ残るので、その数を出力します。
+'''
 
 # C066　金魚すくい
 # utf-8
