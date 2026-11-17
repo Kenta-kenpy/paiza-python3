@@ -2724,36 +2724,56 @@ evaluate_report() で学生ごとの点数を計算します。
 
 # C078　株の売買
 # utf-8
+
 # 入力値の取得
 N, c1, c2 = map(int, input().split())
+
+# N日分の株価を取得
 prices = []
-for _ in range(N):
+for i in range(N):
     prices.append(int(input()))
 
 # 初期設定
 stocks = 0
+total_cost = 0
 total_profit = 0
 
-# N日間の売買ルールに従って処理
+# N日間の売買処理
 for i in range(N):
-    # 株価がc1円以下の場合、1株買う
+
+    # N日目は通常の売買を行わず、すべて売却する
+    if i == N - 1:
+        total_profit += stocks * prices[i]
+        break
+
+    # 株価がc1円以下なら1株購入
     if prices[i] <= c1:
         stocks += 1
-    # 株価がc2円以上の場合、持ち株をすべて売る
+        total_cost += prices[i]
+
+    # 株価がc2円以上ならすべて売却
     elif prices[i] >= c2:
         total_profit += stocks * prices[i]
         stocks = 0
-    # 株価がc1円とc2円の間の場合は何もしない
-    # N日目には、持ち株をすべて売る
-    elif i == N - 1:
-        total_profit += stocks * prices[i]
-        stocks = 0
 
-# 残った持ち株を売った後の損益を計算
-total_profit -= stocks * c1
+# 最終的な損益を計算
+total_profit -= total_cost
 
 # 結果を出力
 print(total_profit)
+'''
+N、c1、c2 と、N日分の株価を入力します。
+stocks で現在の保有株数を管理します。
+total_cost で株を購入した金額の合計を管理します。
+株価が c1 以下なら、1株購入して購入金額を加算します。
+株価が c2 以上なら、保有株をすべて売却して売却金額を加算します。
+N日目には通常の売買をせず、残っている株をすべて売却します。
+最後に売却金額から購入金額を引いて損益を出力します。
+
+stocks	現在の保有株数
+total_cost	株の購入金額の合計
+total_profit	株の売却金額の合計
+'''
 
 # C079　カードを集める
 # utf-8
