@@ -2549,25 +2549,38 @@ X 文字表示するごとに改行します。
     
 # C075　ポイント払い
 # utf-8
-# 入力を受け取る
-N, M = map(int, input().split(' '))
-fare_list = list()
 
-# バスの運賃を入力してリストに格納
-for i in range(M):
-    fare = int(input())
-    fare_list.append(fare)
+# 初期残高とバスの利用回数を入力
+budget, rides = map(int, input().split())
 
+# ポイントを初期化
 point = 0
-for fare in fare_list:
-    if point >= fare:
-        point -= fare
-    else:
-        N -= fare
-        point += fare * 0.1
 
-    # カード残高とポイントを出力
-    print(N, int(point))
+# バスの利用回数分だけ繰り返す
+for i in range(rides):
+
+    # 今回の運賃を入力
+    price = int(input())
+
+    # ポイントが運賃以上ある場合
+    if point >= price:
+        point -= price
+
+    # ポイントが不足している場合
+    else:
+        budget -= price
+        point += price // 10
+
+    # 現在の残高とポイントを出力
+    print(budget, point)
+'''
+budget に初期チャージ金額、rides にバスの利用回数を格納します。
+point = 0 でポイントを初期化します。
+for 文でバスの利用回数分だけ運賃を入力します。
+ポイントが運賃以上ある場合は、ポイントから運賃を差し引きます。
+ポイントが不足している場合は、現金残高から運賃を差し引き、運賃の10%をポイントに加算します。
+毎回の降車時に、残高とポイントを出力します。
+'''
     
 # C076　給与の計算
 # utf-8
