@@ -2429,23 +2429,63 @@ isqrt() で平方根を求め、再び2乗して元の値と一致するか確�
 
 # C072　モンスターの進化
 # utf-8
-ATK, DEF, AGI = (int(x) for x in input().split())
-N = int(input())
-List = []
-for i in range(N):
-    List.append(input().split())
 
-flag = 0
-for l in List:
-    name = l[0]
-    MINATK, MAXATK, MINDEF, MAXDEF, MINAGI, MAXAGI = int(
-        l[1]), int(l[2]), int(l[3]), int(l[4]), int(l[5]), int(l[6])
-    if MINATK <= ATK and ATK <= MAXATK and MINDEF <= DEF and DEF <= MAXDEF and MINAGI <= AGI and AGI <= MAXAGI:
-        flag = 1
+# モンスターの現在の能力値を入力
+ATK, DEF, AGI = map(int, input().split())
+
+# 進化先のモンスター数を入力
+N = int(input())
+
+# 進化条件を満たしたモンスター名を格納するリスト
+result = []
+
+# 進化先のモンスターを1体ずつ確認
+for i in range(N):
+
+    # モンスター名と進化条件を取得
+    data = input().split()
+
+    # モンスター名を取得
+    name = data[0]
+
+    # 6つの進化条件を文字列から整数に変換
+    MINATK, MAXATK, MINDEF, MAXDEF, MINAGI, MAXAGI = map(int, data[1:])
+
+    # 攻撃力・防御力・素早さがすべて条件の範囲内か判定
+    if (MINATK <= ATK <= MAXATK
+        and MINDEF <= DEF <= MAXDEF
+        and MINAGI <= AGI <= MAXAGI):
+
+        # 条件を満たした場合、モンスター名をリストに追加
+        result.append(name)
+
+# 条件を満たしたモンスターが存在するか確認
+if len(result) > 0:
+
+    # リストからモンスター名を1つずつ取り出して出力
+    for name in result:
         print(name)
 
-if flag == 0:
-    print('no evolution')
+else:
+    # 条件を満たすモンスターがいない場合
+    print("no evolution")
+'''
+モンスターの現在の攻撃力・防御力・素早さを入力する。
+進化先のモンスター数を入力する。
+進化先のモンスター名と6つの進化条件を順番に取得する。
+3つの能力値がすべて指定された範囲内にあるか判定する。
+条件を満たしたモンスター名をリストに追加する。
+最後にリストのモンスター名を1つずつ出力する。
+条件を満たすモンスターがいなければ no evolution と出力する。
+
+文法	意味
+map(int, ...)	複数の値を整数に変換
+data[1:]	リストの2番目から最後まで取得
+result = []	空のリストを作成
+result.append(name)	リストに要素を追加
+len(result)	リストの要素数を取得
+for name in result:	リストから要素を順番に取り出す
+'''
     
 # C073　うさぎとかめ
 # utf-8
