@@ -2626,47 +2626,101 @@ print(ans)
 '''
 
 # C077　レポートの評価
+# レポートの評価を計算する関数
 def evaluate_report(k, n, submissions):
+
+    # 点数を保存するリスト
     scores = []
+
+    # 学生の人数分だけ繰り返す
     for i in range(k):
+
+        # 提出日数と正解数を取り出す
         d_i, a_i = submissions[i]
+
+        # 提出期限当日なら減点なし
         if d_i == 0:
             score = (a_i * 100 // n)
+
+        # 提出期限より前なら減点なし
         elif d_i < 0:
             score = (a_i * 100 // n)
+
+        # 1～9日遅れなら点数を80%にする
         elif d_i <= 9:
-            score = (0.8 * a_i * 100 // n)
+            score = (a_i * 100 * 8 // (n * 10))
+
+        # 10日以上遅れた場合は0点
         else:
             score = 0
 
+        # 計算した点数をリストに追加
         scores.append(score)
 
+    # 評価結果を保存するリスト
     results = []
+
+    # 学生ごとの点数を調べる
     for score in scores:
+
+        # 80点以上ならA評価
         if score >= 80:
             results.append('A')
+
+        # 70点以上ならB評価
         elif score >= 70:
             results.append('B')
+
+        # 60点以上ならC評価
         elif score >= 60:
             results.append('C')
+
+        # 59点以下ならD評価
         else:
             results.append('D')
 
+    # 評価結果を返す
     return results
+
 
 # 入力の受け取り
 k, n = map(int, input().split())
+
+# 学生の提出情報を保存するリスト
 submissions = []
+
+# 学生の人数分だけ提出情報を読み込む
 for i in range(k):
     d_i, a_i = map(int, input().split())
+
+    # 提出日数と正解数をリストに追加
     submissions.append([d_i, a_i])
+
 
 # レポートの評価を計算
 results = evaluate_report(k, n, submissions)
 
-# 結果を出力
+# 評価結果を1行ずつ出力
 for result in results:
     print(result)
+'''
+k と n を入力し、学生の人数と問題数を取得します。
+submissions に各学生の提出日数と正解数を保存します。
+evaluate_report() で学生ごとの点数を計算します。
+
+提出日数に応じて点数を調整します。
+- d_i <= 0：減点なし
+- 1 <= d_i <= 9：点数を80%にする
+- d_i >= 10：0点にする
+
+計算した点数に応じて評価を決めます。
+- 80点以上：A
+- 70点以上：B
+- 60点以上：C
+- 59点以下：D
+
+最後に各学生の評価を1行ずつ出力します。
+'''
 
 # C078　株の売買
 # utf-8
