@@ -2777,20 +2777,48 @@ total_profit	株の売却金額の合計
 
 # C079　カードを集める
 # utf-8
+
 # 入力の受け取り
-N, M = map(int, input().split()) # N: カードの枚数, M: カードの種類数
-cards = set() # 開封したカードの種類を格納するset
+N, M = map(int, input().split())
 
-# カードを開封して全種類が揃った回数をカウント
+# 開封したカードの種類を保存する
+cards = set()
+
+# カードを1枚ずつ開封する
 for i in range(N):
-    card = int(input()) # カード番号を受け取る
-    cards.add(card) # カードをsetに追加
-    if len(cards) == M: # カードの種類数が全種類になったらループを抜ける
-        print(i + 1) # 全種類が揃った回数を出力
-        exit()
 
-# カードを全て開封しても全種類が揃わなかった場合はunluckyを出力
-print("unlucky")
+    # カード番号を入力
+    card = int(input())
+
+    # カード番号をsetに追加
+    cards.add(card)
+
+    # 全種類のカードが揃ったか確認
+    if len(cards) == M:
+
+        # 揃ったときの開封枚数を出力
+        print(i + 1)
+        break
+
+# 最後まで揃わなかった場合
+else:
+    print("unlucky")
+'''
+N と M を入力します。
+cards = set() でカードの種類を保存する集合を作ります。
+for 文でカードを1枚ずつ開封します。
+cards.add(card) でカード番号を集合に追加します。
+len(cards) == M で全種類が揃ったか確認します。
+揃ったら開封枚数を出力して break でループを終了します。
+最後まで揃わなければ unlucky を出力します。
+
+文法	役割
+set()	重複しないデータを保存
+add()	集合にデータを追加
+len()	集合の要素数を取得
+break	繰り返しを途中終了
+for～else	breakされず終了した場合の処理
+'''
 
 # C080　ボタンを押すゲーム
 # utf-8
