@@ -3038,14 +3038,17 @@ ord(c) - ord('a') でアルファベットに対応するキーの番号を求�
 
 # C086　ハンドルネームの生成
 # utf-8
-# 名前を入力
-S = input().rstrip()
+import re
 
-# 母音を除去して子音のみを連結して生成
-handle_name = "".join(c for c in S if c not in "aeiouAEIOU")
+name = input()
 
-# ハンドルネームを出力
-print(handle_name)
+print(re.sub('[aeiouAEIOU]', '', name))
+'''
+import re：正規表現を使うためのモジュールを読み込む。
+[aeiouAEIOU]：母音のいずれか1文字を表す。
+''：該当する文字を空文字に置き換える。
+re.sub()：指定した文字を別の文字に置換する。
+'''
 
 # C087　数字の規則
 # utf-8
