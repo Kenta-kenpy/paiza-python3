@@ -2980,16 +2980,22 @@ for a in ans:
 
 # C084　枠で囲む
 # utf-8
-# 入力を受け取る
-S = input().rstrip()
+S = input()
 
-# 枠で囲んで装飾した文字列を生成
-decorated_string = "+" * (len(S) + 2) + "\n"
-decorated_string += "+" + S + "+" + "\n"
-decorated_string += "+" * (len(S) + 2) + "\n"
+frame = "+" * (len(S) + 2)
 
-# 結果を出力
-print(decorated_string, end='')
+print(frame)
+print("+" + S + "+")
+print(frame)
+
+'''
+input() で装飾したい文字列を受け取る。
+len(S) で文字列の長さを取得し、左右の + 2個分を加えて、枠の横幅を求める。
+"+" * (len(S) + 2) で横幅分の + を作成し、変数 frame に格納する。
+print(frame) で枠の上段を出力する。
+"+" + S + "+" で文字列の左右に + を付け、中央部分を出力する。
+最後に print(frame) で枠の下段を出力する。
+'''
 
 # C085　壊れかけのキーボード
 # utf-8
