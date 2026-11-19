@@ -2999,30 +2999,42 @@ print(frame) で枠の上段を出力する。
 
 # C085　壊れかけのキーボード
 # utf-8
-# 入力を受け取る
-t = list(map(int, input().split()))
+# キーの耐久度を入力
+T = list(map(int, input().split()))
+
+# 入力する文字列
 S = input()
 
-# 出力文字列を初期化
-output_str = ""
+# 表示される文字列を保存
+result = ""
 
-# 入力された文字列を一文字ずつ処理
-for char in S:
-    # 文字に対応するキーの耐久度を取得
-    durability = t[ord(char) - ord('a')]
-    
-    # キーの耐久度を減らす
-    durability -= 1
-    
-    # キーの耐久度が0以上の場合、出力文字列に追加
-    if durability >= 0:
-        output_str += char
-        
-    # キーの耐久度を更新
-    t[ord(char) - ord('a')] = durability
+# 文字列を1文字ずつ確認
+for c in S:
 
-# 出力文字列を表示
-print(output_str)
+    # アルファベットの位置を取得
+    index = ord(c) - ord('a')
+
+    # キーの耐久度が残っている場合
+    if T[index] > 0:
+
+        # 文字を追加
+        result = result + c
+
+        # 耐久度を1減らす
+        T[index] -= 1
+
+# 結果を出力
+print(result)
+
+'''
+input().split() で26個のキーの耐久度を受け取り、整数のリスト T に保存する。
+input() で入力する文字列 S を受け取る。
+for c in S で文字列を1文字ずつ取り出す。
+ord(c) - ord('a') でアルファベットに対応するキーの番号を求める。:ord() は文字を数値に変換する関数
+対応するキーの耐久度が1以上なら、その文字を result に追加する。
+文字を追加したら、そのキーの耐久度を1減らす。
+最後に完成した文字列を出力する。
+'''
 
 # C086　ハンドルネームの生成
 # utf-8
