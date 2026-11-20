@@ -3245,6 +3245,13 @@ elif bob_digit_sum < alice_digit_sum:
     print("Alice")
 else:
     print("Draw")
+'''
+input().split() でボブとアリスの点数を文字列として受け取ります。
+map(int, X) で点数を1桁ずつ整数に変換します。
+sum() で各桁の合計を求めます。
+% 10 で合計の一の位を取り出します。
+二人の数値を比較して、勝敗を出力します。
+'''
 
 # C094　国民の税金
 # utf-8
