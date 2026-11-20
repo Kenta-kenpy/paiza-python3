@@ -3323,44 +3323,40 @@ tを並び替えてsができると判定し "YES" を出力します。
 
 # C095　バスの時間(番号ダブり)
 # utf-8
-# 入力の読み込み
+# バスの時刻数 N と、乗りたい時刻 K を入力
 N, K = map(int, input().split())
-bus_times = []
-for _ in range(N):
-    bus_time = int(input())
-    bus_times.append(bus_time)
 
-# K 分後に最も近いバスの時間を求める
-nearest_buses = []
+# 最も近い時刻の候補を格納するリスト
+best = []
+
+# 現時点での最小差を十分大きな値で初期化
 min_diff = float('inf')
 
-for time in bus_times:
-    diff = abs(K - time)
+# 各バスの時刻を読み込みながら判定
+for _ in range(N):
+    t = int(input())
+
+    # K との距離（差の絶対値）を求める
+    diff = abs(t - K)
+
+    # より近い時刻を発見した場合
     if diff < min_diff:
-        min_diff = diff
-        nearest_buses = [time]
+        min_diff = diff      # 最小差を更新
+        best = [t]           # 候補をこの時刻だけにする
+
+    # 同じ距離の時刻を発見した場合
     elif diff == min_diff:
-        nearest_buses.append(time)
+        best.append(t)       # 候補に追加
 
-# 最も近いバスの時間を時間の昇順でソート
-nearest_buses.sort()
+# 出力は昇順にする
+for t in sorted(best):
+    print(t)
+'''
+各バスの時刻と希望する時刻 K との差を調べ、最も差が小さいバスを探します。
+より近いバスが見つかった場合は候補を更新し、同じ差のバスが見つかった場合は候補に追加します。
+最後に、最も近いバスが1つならその時刻を、2つある場合は昇順で出力します。
+'''
 
-# 結果の出力
-for bus in nearest_buses:
-    print(bus)
-'''
-入力の読み込み: 最初に N と K を入力として読み込みます。N はバスの時間帯の数を表し、K は K 分後を表します。
-次に、N 回のループでバスの時間帯を入力として読み込み、bus_times というリストに格納しています。
-K 分後に最も近いバスの時間を求める: bus_times に格納されたバスの時間帯ごとに、K 分後に最も近い時間を計算します。
-これには、min_diff という変数を用意し、初期値を正の無限大に設定します。
-次に、bus_times の各要素 time について、abs(K - time) を計算し、K との差分を絶対値で求めます。この差分を diff として取得し、
-diff が min_diff より小さければ、min_diff を diff に更新し、nearest_buses を time で初期化します。
-また、diff が min_diff と等しい場合には、nearest_buses に time を追加します。
-最も近いバスの時間を時間の昇順でソート: 最も近いバスの時間を格納した nearest_buses を時間の昇順でソートします。これには sort() メソッドを使用しています。
-結果の出力: ソートされた nearest_buses の各要素を順に出力します。
-これにより、K 分後に最も近いバスの時間を 2 行で時間の昇順に出力することができます。
-以上の手順を経て、このコードは K 分後に最も近いバスの時間を求め、時間の昇順に出力する処理を行っています。
-'''
 # C096　夏休み
 # utf-8
 # 入力の読み込み
