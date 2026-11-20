@@ -3145,51 +3145,31 @@ sはゲーム終了時のパネルの状態を示す文字列のリストで、p
 
 # C090　黒電話
 # utf-8
-def calculate_dial_distance(phone_number):
-    pho_dic = {"0": 12, "1": 3, "2": 4, "3": 5, "4": 6,
-               "5": 7, "6": 8, "7": 9, "8": 10, "9": 11}
-    dial_distance = 0
-    for digit in phone_number:
-        if digit.isdigit():
-            dial_distance += pho_dic[digit]
-    return dial_distance * 2
+# 数字ごとのダイヤル回転距離
+dial = {
+    "0": 12, "1": 3, "2": 4, "3": 5, "4": 6,
+    "5": 7, "6": 8, "7": 9, "8": 10, "9": 11
+}
 
-# 電話番号の入力
-S = input().strip().replace("-", "")
+# 電話番号を入力
+S = input().replace("-", "")
 
-# ダイヤルが回る必要のある総距離を計算
-dial_distance = calculate_dial_distance(S)
+# 総回転距離を計算
+total = 0
 
-# 総距離を整数で出力
-print(dial_distance)
+for c in S:
+    total += dial[c] * 2
+
+# 結果を出力
+print(total)
 '''
-def calculate_dial_distance(phone_number):
-電話番号の文字列を引数として受け取り、ダイヤルが回る必要のある総距離を計算する関数です。
-
-pho_dic = {"0": 12, "1": 3, "2": 4, "3": 5, "4": 6, "5": 7, "6": 8, "7": 9, "8": 10, "9": 11}:
-数字に対するダイヤル回転距離の辞書を定義します。例えば、数字 "0" の場合は 12 が対応しています。
-
-dial_distance = 0:
-ダイヤルが回る必要のある総距離を初期化します。
-
-for digit in phone_number::
-電話番号の各文字を順に取り出してループします。
-
-if digit.isdigit(): dial_distance += pho_dic[digit]:
-文字が数字であれば、対応するダイヤル回転距離を dial_distance に加算します。
-
-return dial_distance * 2:
-ダイヤルが回る必要のある総距離を計算し、その値を返します。
-
-S = input().strip().replace("-", ""):
-入力された電話番号を受け取り、不要な空白文字を削除し、ハイフンを除去して S に代入します。
-
-dial_distance = calculate_dial_distance(S):
-S を引数として calculate_dial_distance 関数を呼び出し、ダイヤルが回る必要のある総距離を計算し、dial_distance に代入します。
-
-print(dial_distance):
-計算されたダイヤル回転距離を整数として出力します。
+数字ごとのダイヤル回転距離を辞書 dial に登録する。
+input() で電話番号を受け取り、replace("-", "") でハイフンを取り除く。
+for 文で電話番号を1文字ずつ取り出す。
+辞書から対応する数字の回転距離を取得し、往復分として2倍して合計に加算する。
+最後に合計した回転距離を出力する。
 '''
+
 --------------------------------------------- C091　※欠番 ◆
 # C091　みかんの仕分け
 # utf-8
