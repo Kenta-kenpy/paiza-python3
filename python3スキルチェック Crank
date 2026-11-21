@@ -3489,27 +3489,55 @@ print(banner_area)
 
 # C100　選曲の方法
 # utf-8
-def max_songs(N, M, S, songs):
-    total_time = M * 60 + S  # 持ち時間を秒に変換
-    songs.sort()  # 曲を時間順にソート
-    count = 0  # 流すことのできる曲の数をカウントする変数
-    for song in songs:
-        if total_time >= song[0] * 60 + song[1]:
-            total_time -= song[0] * 60 + song[1]
-            count += 1
-        else:
-            break  # 持ち時間を超えたらループを終了
-    return count
 
-# 入力の読み込み
+# 流したい曲数 N、持ち時間 M分 S秒を入力
 N, M, S = map(int, input().split())
+
+# 持ち時間を秒に変換
+total_time = M * 60 + S
+
+# 各曲の長さを秒に変換してリストに保存
 songs = []
+
 for i in range(N):
     x, y = map(int, input().split())
-    songs.append((x, y))
+    song_time = x * 60 + y
+    songs.append(song_time)
 
-# 結果の出力
-print(max_songs(N, M, S, songs))
+# 曲の長さを短い順に並べ替える
+songs.sort()
+
+# 流すことができた曲数を数える
+count = 0
+
+# 短い曲から順番に確認する
+for song in songs:
+
+    # 残り時間で曲を流せる場合
+    if total_time >= song:
+
+        # 曲の長さを残り時間から引く
+        total_time -= song
+
+        # 流した曲数を1増やす
+        count += 1
+
+    # 残り時間で流せない場合
+    else:
+
+        # これ以降の曲はさらに長いため終了
+        break
+
+# 最大で流せる曲数を出力
+print(count)
+'''
+イベントの持ち時間を秒に変換します。
+それぞれの曲の長さも秒に変換してリストに保存します。
+sort() で曲を短い順に並べ替えます。
+短い曲から順番に、残り時間で流せるか確認します。
+流せる場合は残り時間を減らし、曲数を1増やします。
+流せない場合は、それ以降の曲も流せないため、ループを終了します。
+'''
 
 --------------------------------------------- C101　※欠番 ◆
 # C101　ラッキーデイ
