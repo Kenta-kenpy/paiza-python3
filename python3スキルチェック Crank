@@ -3387,28 +3387,34 @@ else:
 '''
 # C097　プレゼント応募企画の実施
 # utf-8
-def present_lottery(N, X, Y):
-    result = []
-    for i in range(1, N+1):
-        if i % X == 0 and i % Y == 0:
-            result.append("AB")
-        elif i % X == 0:
-            result.append("A")
-        elif i % Y == 0:
-            result.append("B")
-        else:
-            result.append("N")
-    return result
-
-# 入力の読み込み
+# 応募者数 N、プレゼントAの当選条件 X、プレゼントBの当選条件 Y を入力
 N, X, Y = map(int, input().split())
 
-# 当選情報の計算
-result = present_lottery(N, X, Y)
+# 応募者の番号を1番からN番まで順番に確認する
+for i in range(1, N + 1):
 
-# 当選情報の出力
-for res in result:
-    print(res)
+    # XとYの両方の倍数なら、AとBの両方に当選
+    if i % X == 0 and i % Y == 0:
+        print("AB")
+
+    # Xの倍数なら、プレゼントAに当選
+    elif i % X == 0:
+        print("A")
+
+    # Yの倍数なら、プレゼントBに当選
+    elif i % Y == 0:
+        print("B")
+
+    # どちらの倍数でもなければ、当選なし
+    else:
+        print("N")
+'''
+map(int, input().split()) で、応募者数 N と当選条件 X・Y を整数として受け取ります。
+range(1, N + 1) で、応募者の番号を1番からN番まで順番に調べます。
+i % X == 0 なら、Aの当選者です。
+i % Y == 0 なら、Bの当選者です。
+両方の条件を満たす場合は AB、片方だけなら A または B、どちらも満たさなければ N を出力します。
+'''
 
 # C098　多重パス回し
 # utf-8
