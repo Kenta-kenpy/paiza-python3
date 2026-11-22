@@ -3754,47 +3754,56 @@ for 文で競技者を1人ずつ確認し、点数に応じて金メダル（G�
 
 # C107　ランクの計算
 # utf-8
-n, k = map(int, input().split())
 
-# 各馬のN回分の順位を取得
-horse_a = [int(input()) for _ in range(n)]
-horse_b = [int(input()) for _ in range(n)]
-horse_c = [int(input()) for _ in range(n)]
+# レース回数 N と、平均を求める回数 K を入力
+N, K = map(int, input().split())
+
+# 3頭の馬の順位をそれぞれ入力
+horse_a = [int(input()) for i in range(N)]
+horse_b = [int(input()) for i in range(N)]
+horse_c = [int(input()) for i in range(N)]
 
 # 連続するK回分の平均値の最小値を求める関数
 def calc_min_avg(horse):
-    min_avg = float('inf')
-    for i in range(n - k + 1):
-        avg = sum(horse[i:i+k]) / k
+
+    # 最小平均値を初期化
+    min_avg = float("inf")
+
+    # K回分の範囲をずらしながら調べる
+    for i in range(N - K + 1):
+
+        # 連続するK回分の平均値を計算
+        avg = sum(horse[i:i + K]) / K
+
+        # これまでの最小値より小さければ更新
         if avg < min_avg:
             min_avg = avg
+
+    # 最小平均値を返す
     return min_avg
 
-# 各馬の連続するK回分の平均値を計算
+# それぞれの馬の最小平均値を求める
 avg_a = calc_min_avg(horse_a)
 avg_b = calc_min_avg(horse_b)
 avg_c = calc_min_avg(horse_c)
 
-# ランクを計算
-rank_a = sum(avg_a > avg for avg in [avg_b, avg_c]) + 1
-rank_b = sum(avg_b > avg for avg in [avg_a, avg_c]) + 1
-rank_c = sum(avg_c > avg for avg in [avg_a, avg_b]) + 1
+# 3頭の平均値をリストにまとめる
+averages = [avg_a, avg_b, avg_c]
 
-# ランクが最も小さい馬を出力
-if rank_a < rank_b and rank_a < rank_c:
-    print(1)
-elif rank_b < rank_a and rank_b < rank_c:
-    print(2)
-else:
-    print(3)
-
+# 最小平均値を持つ馬の番号を出力
+print(averages.index(min(averages)) + 1)
 '''
-この問題は、与えられたデータに対して順位の平均値を求めることが求められているので、
-以下のようなアルゴリズムで解くことができます。
+N回分の順位を、3頭の馬それぞれについて読み込みます。
+calc_min_avg() 関数で、連続するK回分の順位の平均値を計算します。
+計算する範囲を1回ずつずらしながら、最小平均値を求めます。
+3頭それぞれの最小平均値をリストにまとめます。
+min() で最小値を求め、index() でその値がある位置を調べます。
+馬の番号は1から始まるため、位置に + 1 して出力します。
 
-各馬の順位を入力として受け取る
-1位からK位までの順位の平均値を求める
-順位の平均値が最小となる馬を出力する
+命令	役割
+float("inf")	無限大を表す値
+min()	リストの中から最小値を取得
+index()	指定した値が最初に登場する位置を取得
 '''
 
 # C108　観光の計画
