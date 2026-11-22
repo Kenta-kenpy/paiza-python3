@@ -3716,42 +3716,40 @@ print(total_score)
 
 # C106　メダル授与式
 # utf-8
-# 入力から取得する変数
-N = int(input())  # 競技者の人数
-scores = list(map(int, input().split()))  # 競技者の点数をリストとして取得
 
-# 出力する結果を格納するリスト
-medals = []
+# 競技者の人数を入力
+N = int(input())
 
-# 競技者ごとにメダルの色を判定して medals リストに追加
-for i in range(N):
-    if scores[i] == max(scores):
-        medals.append("G")
-    elif scores[i] == sorted(scores, reverse=True)[1]:
-        medals.append("S")
-    elif scores[i] == sorted(scores, reverse=True)[2]:
-        medals.append("B")
+# 各競技者の点数を入力
+scores = list(map(int, input().split()))
+
+# 点数を高い順に並べ替える
+ranking = sorted(scores, reverse=True)
+
+# 1位、2位、3位の点数を取得
+first = ranking[0]
+second = ranking[1]
+third = ranking[2]
+
+# 各競技者のメダルを判定する
+for score in scores:
+
+    if score == first:
+        print("G")
+
+    elif score == second:
+        print("S")
+
+    elif score == third:
+        print("B")
+
     else:
-        medals.append("N")
-
-# 結果を出力
-for medal in medals:
-    print(medal)
+        print("N")
 '''
-入力の受け取り
-最初に、input() 関数を使って競技者の人数を表す整数 N を入力から受け取ります。
-次に、input() 関数と split() メソッドを組み合わせて、半角スペースで区切られた競技者の点数を一度に取得し、リスト scores として格納します。
-
-メダルの色の判定
-次に、for ループを使って、競技者ごとにメダルの色を判定します。scores リストを順番に参照し、
-以下の条件に従ってメダルの色を判定し、medals リストに追加していきます。
-
-競技者の点数が最大値であれば、"G" (金メダル)
-競技者の点数が2番目に高い値であれば、"S" (銀メダル)
-競技者の点数が3番目に高い値であれば、"B" (銅メダル)
-上記のいずれにも該当しない場合は、"N" (メダルなし)
-結果の出力
-for ループを使って medals リストの中身を順番に出力し、競技者ごとのメダルの色を表示します。
+競技者の人数と、それぞれの点数を入力します。
+sorted() を使って点数を高い順に並べ替えます。
+1位、2位、3位の点数をそれぞれ変数に保存します。
+for 文で競技者を1人ずつ確認し、点数に応じて金メダル（G）、銀メダル（S）、銅メダル（B）、メダルなし（N）を出力します。
 '''
 
 # C107　ランクの計算
