@@ -3599,33 +3599,52 @@ print('\n'.join(R))
 '''
 # C103　ロボット芸人
 # utf-8
-# 入力を取得
+# ロボットの動作時間 N と動作規則の数 M を入力
 N, M = map(int, input().split())
+
+# 動作規則を保存するリスト
 conditions = []
+
+# M 個の動作規則を読み込む
 for i in range(M):
     a, b = input().split()
+
+    # 動作する間隔と動作名を保存
     conditions.append((int(a), b))
 
-# ロボットの動きのシミュレーション
-output = []
+# 1秒目からN秒目までシミュレーションする
 for i in range(1, N + 1):
-    result = ""
-    for condition in conditions:
-        a = condition[0]
-        b = condition[1]
-        if i % a == 0:
-            result += b + " "
-    if result == "":
-        output.append(str(i))
-    else:
-        output.append(result.rstrip())
 
-# 結果を出力
-for line in output:
-    print(line)
+    # その秒に行う動作を保存するリスト
+    result = []
+
+    # 登録された動作規則を順番に確認する
+    for a, b in conditions:
+
+        # 現在の秒数が動作間隔の倍数なら
+        if i % a == 0:
+
+            # 対応する動作名を追加する
+            result.append(b)
+
+    # 何らかの動作を行う場合
+    if len(result) > 0:
+
+        # 動作名を半角スペースで区切って出力する
+        print(" ".join(result))
+
+    # 何も動作しない場合
+    else:
+
+        # 経過した秒数を出力する
+        print(i)
 '''
-入力された条件に基づいてロボットの動きをシミュレーションし、期待される形式で結果を出力します。
-各条件について、ロボットが条件を満たす場合には対応する文字列を、満たさない場合にはそのままの数字を出力します。
+ロボットの動作時間 N と、動作規則の数 M を読み込みます。
+動作間隔 a と動作名 b をセットにして、conditions に保存します。
+range(1, N + 1) で1秒目からN秒目まで繰り返します。
+各秒について、登録された動作規則を順番に確認します。
+i % a == 0 なら、その秒数は動作間隔の倍数なので、動作名を result に追加します。
+動作名があれば join() で結合して出力し、なければ経過秒数を出力します。
 '''
 
 # C104　虫食い算
