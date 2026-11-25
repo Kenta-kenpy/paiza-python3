@@ -4254,29 +4254,55 @@ else:
 
 # C119　お菓子かいたずらか
 # utf-8
+
+# 家の数 N、男の子の人数 M、泣いて帰る条件 K を入力
 N, M, K = map(int, input().split())
-houses = set(range(1, N+1))
-trick_houses = set(int(input()) for _ in range(M))
+
+# 男の子たちが隠れている家の番号を集合に格納
+trick_houses = set()
+for i in range(M):
+    trick_houses.add(int(input()))
+
+# お菓子をもらえた個数
 satisfy_count = 0
+
+# 驚かされた連続回数
 unsatisfy_count = 0
-for house in houses:
+
+# 1番からN番までの家を順番に回る
+for house in range(1, N + 1):
+
+    # 男の子が隠れている家の場合
     if house in trick_houses:
         unsatisfy_count += 1
+
+        # K軒連続で驚かされたら帰宅する
         if unsatisfy_count == K:
             break
+
+    # 男の子が隠れていない家の場合
     else:
         satisfy_count += 1
+
+        # 驚かされる連続回数をリセット
         unsatisfy_count = 0
+
+# もらえたお菓子の個数を出力
 print(satisfy_count)
 '''
-まず、入力から町の家の数 N、男の子の数 M、K 軒の家で連続して驚かされると泣いて帰る Alice の条件を読み込みます。
-そして、range(1, n+1)で全ての家の集合を作り、男の子たちが隠れている家の集合を作ります。
-その後、for文で、全ての家について以下の処理を行います。
-その家が男の子たちが隠れている家である場合、Alice は驚かされたので、unsatisfy_count を1増やします。
-その家が男の子たちが隠れていない家である場合、Alice は驚かされていないので、satisfy_count を1増やします。
-unsatisfy_count が K に等しくなった場合、Alice は驚かされた家が K 軒以上であるため泣いて帰ってしまうため、for文を抜けます。
-最後に、Alice が貰えるお菓子の個数である satisfy_count を出力します。
+まず、男の子たちが隠れている家の番号を集合 trick_houses に格納します。
+
+次に、Alice が1番から順番に家を回る処理を行います。
+- 男の子が隠れている家では、驚かされた連続回数 unsatisfy_count を1増やします。
+- 男の子が隠れていない家では、お菓子の個数 satisfy_count を1増やし、連続回数を0に戻します。
+- 驚かされた回数が K 回連続になったら、そこで家を回るのを終了します。
+最後に、お菓子をもらえた個数 satisfy_count を出力します。
+
+今回のポイントは2つです。
+1. set を使うと、男の子が隠れている家を効率よく調べられます。
+2. range(1, N + 1) を使うことで、家を必ず1番から順番に調べられます。
 '''
+
 # C120　花のリース
 # utf-8
 N = int(input())  # リースを構成する花の数
