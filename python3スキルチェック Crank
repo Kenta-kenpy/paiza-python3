@@ -4106,15 +4106,31 @@ else:
 
 # C115　渋滞の距離
 # utf-8
-n, m = map(int, input().split(' '))
+
+# 車の数 N と渋滞と判定する車間距離 M を入力
+N, M = map(int, input().split())
+
+# 渋滞区間の合計距離を初期化
 traffic = 0
 
-for i in range(n-1):
+# 車と車の間の距離を順番に調べる
+for i in range(N - 1):
+
+    # 車間距離を入力
     distance = int(input())
-    if distance <= m:
+
+    # 車間距離が M 以下なら渋滞区間として加算
+    if distance <= M:
         traffic += distance
 
+# 渋滞区間の合計距離を出力
 print(traffic)
+'''
+車の数 N と渋滞と判定する車間距離 M を入力します。
+車間距離を順番に読み込みます。
+車間距離が M 以下の場合、その距離を合計に加算します。
+すべての車間距離を調べたら、合計距離を出力します。
+'''
 
 # C116　あたり棒の検査
 # utf-8
