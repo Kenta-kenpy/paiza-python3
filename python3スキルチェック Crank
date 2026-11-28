@@ -4419,80 +4419,123 @@ sum() で全商品の合計金額を計算します。
 
 # C123　節分ロボット
 # utf-8
-n = int(input())
 
-people = []
-ans = [(0, 0) for i in range(n)]
-for i in range(n):
-    people.append((int(input()), 0))
+# 参加者の人数
+N = int(input())
 
-m = int(input())
+# 各参加者の年齢をリストに格納
+ages = []
+for i in range(N):
+    ages.append(int(input()))
 
-for command in range(m):
-    a, b, c = map(int, list(input().split(" ")))
+# 各参加者が持っている豆の数（最初は全員0個）
+beans = [0] * N
 
-    for j in range(a - 1, b):
-        year, mame = people[j]
-        mame += c
-        if mame >= year:
-            people[j] = (year, year)
-        else:
-            people[j] = (year, mame)
+# 豆を配る命令の数
+M = int(input())
 
-for year, mame in people:
-    print(mame)
+# すべての命令を順番に実行
+for i in range(M):
+
+    # 配る範囲 A～B と、配る豆の数 C
+    A, B, C = map(int, input().split())
+
+    # 指定された範囲の参加者に豆を配る
+    for j in range(A - 1, B):
+
+        # 現在の豆の数に C 個を加える
+        beans[j] += C
+
+        # 年齢を超える場合は、年齢と同じ数にする
+        if beans[j] > ages[j]:
+            beans[j] = ages[j]
+
+# 各参加者が持っている豆の数を出力
+for bean in beans:
+    print(bean)
 '''
-まず、people というリストを用意して、その中に各参加者が持つ年齢と豆の数をタプルとして格納します。
-ここでは、全員が最初は豆を持っていないため、すべての人の豆の数を 0 に設定しています。
-ans というリストは、最終的に各参加者が持つ豆の数を格納するために使われる予定でしたが、実際には使用されませんでした。
-このため、ans は不要であり、削除してもプログラムの動作には影響がありません。
-次に、命令の数 m を入力し、それだけ繰り返し処理を行います。1回の処理では、ある範囲の参加者に対して豆の数を加算する命令が与えられます。
-命令は a b c の形式で与えられ、a 以上 b 以下の参加者すべての豆の数に c を加算することを意味します。
-具体的には、与えられた a から b の範囲に対して、people リストの対応する要素の豆の数に c を加算します。
-そして、もし加算後の豆の数がその参加者の年齢以上になってしまう場合には、豆の数を年齢と同じ値に固定します。
-最後に、people リストの各要素について、その参加者が持つ豆の数を出力します。
-ここで、タプルを year と mame に分割して、mame の値を出力しています。
+各参加者の年齢を ages に格納します。
+豆の数を管理する beans を用意し、全員の初期値を0にします。
+命令を順番に読み込み、指定された範囲の参加者に豆を配ります。
+豆の数が年齢を超えた場合は、年齢と同じ数に修正します。
+最後に各参加者の豆の数を出力します。
 '''
 
 # C124　インターンへの応募
 # utf-8
-n = int(input())
-companies = [[] for _ in range(n)]  # 各企業の日程リスト
 
-# 各企業の日程を取得
-for i in range(n):
-    c_i = int(input())
-    for j in range(c_i):
-        s_j, p_j = map(int, input().split())
-        companies[i].append((s_j, s_j + p_j))  # (開始日, 終了日)のタプルを格納
+# 志望する企業の数
+N = int(input())
 
-# 企業1がすべての期間を確保する場合
-company1_periods = companies[0]
-used_periods = company1_periods.copy()  # すでに使用された期間
-count = 1  # 企業1は初期段階で確保している
+# 各企業のインターン日程を格納するリスト
+companies = []
 
-# 他の企業が確保できる期間を調べる
-for i in range(1, n):
+# 各企業の日程を入力
+for i in range(N):
+
+    # その企業のインターン日程の数
+    C = int(input())
+
+    # その企業の日程を格納するリスト
+    schedules = []
+
+    for j in range(C):
+
+        # 開始日と日数を入力
+        S, P = map(int, input().split())
+
+        # 開始日と終了日をタプルで保存
+        schedules.append((S, S + P))
+
+    companies.append(schedules)
+
+# すでに確保したインターンの日程
+used_periods = []
+
+# 応募できる企業の数
+count = 0
+
+# 志望度の高い企業から順番に調べる
+for schedules in companies:
+
+    # 今回の企業で応募できる日程
     free_periods = []
-    for period in companies[i]:
-        if all(period[1] <= used_period[0] or used_period[1] <= period[0] for used_period in used_periods):
-            free_periods.append(period)
-    if not free_periods:
-        continue
-    count += 1
-    # 企業1の期間を参照して重複しない期間を確保する
-    for period in free_periods:
-        for company1_period in company1_periods:
-            if period[1] <= company1_period[0] or company1_period[1] <= period[0]:
-                used_periods.append(period)
+
+    # その企業の各日程を調べる
+    for start, end in schedules:
+
+        # すでに確保した日程と重複しているか確認
+        overlap = False
+
+        for used_start, used_end in used_periods:
+
+            # 日程が重複している場合
+            if start < used_end and used_start < end:
+                overlap = True
                 break
+
+        # 重複していない日程だけを追加
+        if overlap == False:
+            free_periods.append((start, end))
+
+    # 1つでも応募できる日程があれば
+    if len(free_periods) > 0:
+
+        # 応募できる企業数を増やす
+        count += 1
+
+        # 今回確保した日程を追加
+        used_periods.extend(free_periods)
+
+# 応募できる企業数を出力
 print(count)
 '''
-この問題は、企業のインターン期間が重複しないようにスケジュールを組む問題です。
-まず、各企業の日程を (開始日, 終了日) のタプルとしてリストに格納します。次に、企業1から順に、その日程が他の企業の日程と被っていないかどうかを確認します。
-被っていない場合、その企業の日程を確保し、カウントします。被っている場合は、他の企業の日程をキャンセルする必要があります。このとき、すでにキャンセルした企業を再度カウントしないように注意しなければなりません。
-最終的に、カウントした企業数が答えとなります。
-この問題の時間計算量は O(N^2) となります。企業数が多くなると処理に時間がかかるため、より高速なアルゴリズムを考える必要があるかもしれません。
+各企業のインターン日程を、開始日と終了日の組み合わせで保存します。
+志望度の高い企業から順番に日程を確認します。
+すでに確保した日程と重複する場合、その日程には応募しません。
+重複しない日程が1つでもあれば、その企業を応募可能な企業としてカウントします。
+応募可能だった日程を確保済みリストに追加します。
+最後に応募できる企業数を出力します。
 '''
 
 # C125　カードの積
