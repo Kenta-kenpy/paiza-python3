@@ -4382,30 +4382,39 @@ else:
 
 # C122　プレゼントのセール
 # utf-8
+
+# 商品数 N、割引条件 X、無料になる商品数 Y を入力
 N, X, Y = map(int, input().split())
+
+# 各商品の価格をリストに格納
 prices = []
 for i in range(N):
     price = int(input())
     prices.append(price)
 
+# 商品を安い順に並べ替える
 prices.sort()
 
+# 購入金額の合計を計算
 total_price = sum(prices)
-for i in range(Y):
-    if X + i > N:
-        break
-    discount_items = prices[i:X + i]
-    total_price -= min(discount_items)
 
+# X個以上購入している場合
+if N >= X:
+
+    # 安い方からY個の商品を無料にする
+    free_price = sum(prices[:Y])
+
+    # 無料商品の金額を合計から引く
+    total_price -= free_price
+
+# 支払う金額を出力
 print(total_price)
-'''
-入力された商品価格のリストを昇順にソートします。
-セール対象となる購入数 X 個までの商品を全て購入し、価格をtotal_priceに加算します。
-Y 品のうち、最も安い商品を1つ選んで無料にします。total_priceからその商品の価格を引きます。
-total_priceを出力します。
-このアプローチは、まず最初に商品価格のリストを昇順にソートすることで、最も安い商品から順に購入していくことを保証します。その後、セール対象となる購入数 X 個までの商品を全て購入することで、最低限の割引を適用します。そして、Y 品のうち最も安い商品を1つ選んで無料にすることで、最大限の割引を適用します。
-このアプローチにより、どのようなテストケースにも対応できるようになっています。
-'''
+/*商品の価格をリストに格納します。
+sort() で価格を安い順に並べ替えます。
+sum() で全商品の合計金額を計算します。
+商品数が割引条件の X 個以上なら、安い方から Y 個の価格を合計して、全体の金額から引きます。
+最後に支払う金額を出力します。*/
+
 # C123　節分ロボット
 # utf-8
 n = int(input())
