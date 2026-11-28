@@ -4599,15 +4599,37 @@ print(sum + A * 2)
 
 # C127　割引キャンペーン
 # utf-8
+# 対象期間 N 日と、調査する期間 M 日を入力
 N, M = map(int, input().split())
-names = set()
+
+# 直近M日間に来店した客の名前をリストに格納
+names = []
 for i in range(M):
-    name = input().strip()
-    names.add(name)
-    if M - i <= N:
-        if name in names:
-            names.remove(name)
-print(len(names))
+    name = input()
+    names.append(name)
+
+# リストの後ろN個を取り出し、直近N日間の来店者を集合にする
+# set()を使うことで、同じ名前の重複を取り除く
+recent_names = set(names[M - N:])
+
+# リストの先頭からM-N個を取り出し、前半の来店者を集合にする
+past_names = set(names[:M - N])
+
+# 前半の来店者から、直近N日間にも来店した客を除外する
+target_names = past_names - recent_names
+
+# キャンペーン対象者の人数を出力
+print(len(target_names))
+'''
+names[:3]	先頭から3個取り出す
+names[3:]	3番目の位置から最後まで取り出す
+
+直近M日間に来店した客の名前をリストに格納します。
+リストの後ろN個を取り出し、直近N日間に来店した客を集合にします。
+残りの期間に来店した客も集合にします。
+差集合を使い、直近N日間に来店していない客だけを取り出します。
+len() で対象となる客の人数を数えます。
+'''
 
 # C128　連分数
 # utf-8
